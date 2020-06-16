@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "446930676547",
+    "firebase_url": "https://imagine-6214f.firebaseio.com",
+    "project_id": "imagine-6214f",
+    "storage_bucket": "imagine-6214f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446930676547:android:3e0aa065c8b9552f14ddf6",
+        "android_client_info": {
+          "package_name": "com.example.imagine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446930676547-893i25a6f4kpmcj42abko2dvdt0mr3hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4Fm_QfJH0WOLeWZcYwJrghxcmAXeL9vU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446930676547-893i25a6f4kpmcj42abko2dvdt0mr3hp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "446930676547-kugqmsd2hqdtkcf5rhl6g4995j9ncvfu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Malte.Imagine"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446930676547:android:f92e084ed8e5111214ddf6",
+        "android_client_info": {
+          "package_name": "com.imagine.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446930676547-q0172ndbop5ostqehaed8h4q48g2q3pb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.imagine.myapplication",
+            "certificate_hash": "43ad79d63a5025b59fb38674fecec62cf2e259bf"
+          }
+        },
+        {
+          "client_id": "446930676547-893i25a6f4kpmcj42abko2dvdt0mr3hp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4Fm_QfJH0WOLeWZcYwJrghxcmAXeL9vU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446930676547-893i25a6f4kpmcj42abko2dvdt0mr3hp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "446930676547-kugqmsd2hqdtkcf5rhl6g4995j9ncvfu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Malte.Imagine"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
