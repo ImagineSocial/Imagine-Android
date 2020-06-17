@@ -3,6 +3,7 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,10 +37,10 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     public void init(final Post post){
         final VoteHelper vote = new VoteHelper();
 
-        Button thanksButton = mItemView.findViewById(R.id.thanks_button);
-        Button wowButton = mItemView.findViewById(R.id.wow_button);
-        Button haButton = mItemView.findViewById(R.id.ha_button);
-        Button niceButton = mItemView.findViewById(R.id.nice_button);
+        ImageButton thanksButton = mItemView.findViewById(R.id.thanks_button);
+        ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
+        ImageButton haButton = mItemView.findViewById(R.id.ha_button);
+        ImageButton niceButton = mItemView.findViewById(R.id.nice_button);
 
         thanksButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,24 +75,24 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     public void upDateButtonUI(String type, Post post){
         switch(type){
             case "thanks":
-                Button thanksBUtton = mItemView.findViewById(R.id.thanks_button);
+                ImageButton thanksBUtton = mItemView.findViewById(R.id.thanks_button);
                 thanksBUtton.setBackground(null);
-                thanksBUtton.setText(post.thanksCount+"");
+//                thanksBUtton.setText(post.thanksCount+"");
                 break;
             case "wow":
-                Button wowButton = mItemView.findViewById(R.id.wow_button);
+                ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
                 wowButton.setBackground(null);
-                wowButton.setText(post.wowCount+"");
+//                wowButton.setText(post.wowCount+"");
                 break;
             case "ha":
-                Button haButton = mItemView.findViewById(R.id.ha_button);
+                ImageButton haButton = mItemView.findViewById(R.id.ha_button);
                 haButton.setBackground(null);
-                haButton.setText(post.haCount+"");
+//                haButton.setText(post.haCount+"");
                 break;
             case "nice":
-                Button niceButton = mItemView.findViewById(R.id.nice_button);
+                ImageButton niceButton = mItemView.findViewById(R.id.nice_button);
                 niceButton.setBackground(null);
-                niceButton.setText(post.niceCount+"");
+//                niceButton.setText(post.niceCount+"");
                 break;
             default:
                 Log.d(TAG,"Invalid type String!");
