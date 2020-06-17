@@ -1,5 +1,6 @@
 package com.imagine.myapplication.nav_fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +9,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.Community.Communities_Helper;
+import com.imagine.myapplication.Community.Community;
+import com.imagine.myapplication.Community.Community_Adapter;
+import com.imagine.myapplication.CommunityCallback;
+import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
+import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.Post;
+
+import java.util.ArrayList;
 
 public class Communities_Fragment extends Fragment {
 
-    Communities_Helper communities_helper = new Communities_Helper();
+    Communities_Helper helper = new Communities_Helper();
+    ArrayList<Community> commList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -23,8 +36,22 @@ public class Communities_Fragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        helper.getCommunities(new CommunityCallback() {
+            @Override
+            public void onCallback(ArrayList<Community> communities) {
+                commList = communities;
+                initRecyclerView(view);
+            }
+        });
+    }
 
+    private void initRecyclerView (final View view){
+        RecyclerView recyclerView = view.findViewById(R.id.communites_recyclerview);
+        Context context = view.getContext();
+        Community_Adapter adapter = new Community_Adapter(commList,context);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
     }
 }
