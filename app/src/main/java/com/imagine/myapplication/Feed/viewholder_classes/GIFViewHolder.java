@@ -1,7 +1,9 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,7 @@ public class GIFViewHolder extends CustomViewHolder {
         TextView name_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-        VideoView videoView = itemView.findViewById(R.id.gif_videoView);
+        final VideoView videoView = itemView.findViewById(R.id.gif_videoView);
 
         String date = dateToString(post.createTime);
         title_textView.setText(post.title+"  GIFPOST");
@@ -55,6 +57,39 @@ public class GIFViewHolder extends CustomViewHolder {
                 }
             });
         }
+
+        //Adjust the videoView to show the right ratio
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                //Get your video's width and height
+                int videoWidth = mp.getVideoWidth();
+                int videoHeight = mp.getVideoHeight();
+
+                //Get VideoView's current width and height
+                int videoViewWidth = videoView.getWidth();
+                int videoViewHeight = videoView.getHeight();
+
+                float xScale = (float) videoViewWidth / videoWidth;
+                float yScale = (float) videoViewHeight / videoHeight;
+
+                //For Center Crop use the Math.max to calculate the scale
+                //float scale = Math.max(xScale, yScale);
+                //For Center Inside use the Math.min scale.
+                //I prefer Center Inside so I am using Math.min
+                float scale = Math.max(xScale, yScale);
+
+                float scaledWidth = scale * videoWidth;
+                float scaledHeight = scale * videoHeight;
+
+                //Set the new size for the VideoView based on the dimensions of the video
+                ViewGroup.LayoutParams layoutParams = videoView.getLayoutParams();
+                layoutParams.width = (int)scaledWidth;
+                layoutParams.height = (int)scaledHeight;
+                videoView.setLayoutParams(layoutParams);
+            }
+        });
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

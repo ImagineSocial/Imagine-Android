@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         actionBar.setTitle("Imagine");
     }
 

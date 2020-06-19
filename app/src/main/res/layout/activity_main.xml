@@ -21,6 +21,8 @@
         app:labelVisibilityMode="unlabeled"
         android:layout_alignParentBottom="true"
         app:menu="@menu/bottom_navigation"
+        app:itemIconTint="@color/bottom_menu_selector"
+        app:itemTextColor="@color/bottom_menu_selector"
         android:background="?android:attr/windowBackground"
         />
 
