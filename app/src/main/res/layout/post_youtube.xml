@@ -12,8 +12,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_picture_imageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="Malte Schoppe"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/topicImageView"
         app:layout_constraintStart_toEndOf="@+id/profile_picture_imageView"
         app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
 
@@ -38,29 +38,41 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:fontFamily="@font/ibm_light"
-        android:text="Vor 3 Tagen"
-        android:textSize="8sp"
+        android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_picture_imageView"
         app:layout_constraintEnd_toEndOf="@+id/name_textView"
         app:layout_constraintStart_toStartOf="@+id/name_textView"
         app:layout_constraintTop_toBottomOf="@+id/name_textView" />
+
+    <ImageView
+        android:id="@+id/topicImageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:radius="1dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
 
     <TextView
         android:id="@+id/title_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="@+id/name_textView"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/profile_picture_imageView"
         app:layout_constraintTop_toBottomOf="@+id/profile_picture_imageView" />
+
     <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
         android:id="@+id/youtube_player"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_marginTop="10dp"
         app:videoId="https://www.youtube.com/watch?v=S0Q4gqBUs7c"
         app:layout_constraintStart_toStartOf="parent"

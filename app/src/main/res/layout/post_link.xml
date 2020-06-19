@@ -13,14 +13,13 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_picture_imageView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@drawable/default_user" />
-
 
     <TextView
         android:id="@+id/name_textView"
@@ -29,8 +28,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/topicImageView"
         app:layout_constraintStart_toEndOf="@+id/profile_picture_imageView"
         app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
 
@@ -38,14 +37,24 @@
         android:id="@+id/createDate_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/ibm_regular"
-        android:text="TextView"
-        android:textSize="8sp"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/ibm_light"
+        android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_picture_imageView"
         app:layout_constraintEnd_toEndOf="@+id/name_textView"
         app:layout_constraintStart_toStartOf="@+id/name_textView"
         app:layout_constraintTop_toBottomOf="@+id/name_textView" />
+
+    <ImageView
+        android:id="@+id/topicImageView"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:scaleType="centerCrop"
+        android:radius="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
+
 
     <TextView
         android:id="@+id/title_textView"
@@ -53,53 +62,42 @@
         android:layout_height="85dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/preView_image"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toStartOf="@+id/preView_image"
         app:layout_constraintStart_toStartOf="@+id/profile_picture_imageView"
         app:layout_constraintTop_toBottomOf="@+id/profile_picture_imageView" />
+
     <ImageView
         android:id="@+id/preView_image"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
+        android:layout_width="110dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#FFFEFE"
+        android:bottomLeftRadius="2dp"
+        android:bottomRightRadius="2dp"
         android:scaleType="centerCrop"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/profile_picture_imageView"
-        app:layout_constraintTop_toBottomOf="@+id/title_textView"
+        android:topLeftRadius="2dp"
+        android:topRightRadius="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createDate_textView"
+        app:srcCompat="@drawable/link_preview_image" />
 
-        />
-    <TextView
-        android:id="@+id/preView_title"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/preView_image"
-        app:layout_constraintTop_toBottomOf="@+id/title_textView"
-        app:layout_constraintEnd_toEndOf="@+id/title_textView"
-        />
-    <TextView
-        android:id="@+id/preView_description"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/preView_image"
-        app:layout_constraintEnd_toEndOf="@+id/title_textView"
-        app:layout_constraintTop_toBottomOf="@+id/preView_title"
-        app:layout_constraintBottom_toBottomOf="@+id/preView_image"
-        />
     <LinearLayout
-        android:weightSum="1"
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="25dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="5dp"
         android:orientation="horizontal"
+        android:weightSum="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,13 +105,13 @@
 
         <ImageButton
             android:id="@+id/thanks_button"
-            android:layout_weight="0.2"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="2dp"
+            android:layout_weight="0.2"
             android:background="@drawable/button_border"
             android:scaleType="centerInside"
             android:src="@drawable/thanks_button1" />
@@ -168,5 +166,19 @@
             android:layout_weight="0.2"
             app:srcCompat="@drawable/ic_notifications_black_24dp" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/preView_link"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:background="#80807F7F"
+        android:maxLines="1"
+        android:textAlignment="viewStart"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        app:autoSizeMinTextSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/preView_image"
+        app:layout_constraintEnd_toEndOf="@+id/preView_image"
+        app:layout_constraintStart_toStartOf="@+id/preView_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

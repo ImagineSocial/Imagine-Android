@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_feed"
-        android:icon="@drawable/ic_view_list_black_24dp"
+        android:icon="@drawable/feed_icon"
         android:title="Feed"
         />
     <item
         android:id="@+id/nav_new_post"
-        android:icon="@drawable/ic_present_to_all_black_24dp"
+        android:icon="@drawable/add_post_icon"
         android:title="Neuer Post"
         />
     <item
         android:id="@+id/nav_communities"
-        android:icon="@drawable/ic_group_black_24dp"
+        android:icon="@drawable/community_icon"
         android:title="Communities"
         />
 </menu>

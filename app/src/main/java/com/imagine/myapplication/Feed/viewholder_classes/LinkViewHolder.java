@@ -36,8 +36,7 @@ public class LinkViewHolder extends CustomViewHolder {
                 R.id.profile_picture_imageView);
         // PreView Widgets
         final ImageView preViewImage = itemView.findViewById(R.id.preView_image);
-        final TextView preViewTitle = itemView.findViewById(R.id.preView_title);
-        final TextView preViewDescription = itemView.findViewById(R.id.preView_description);
+        final TextView preViewLink = itemView.findViewById(R.id.preView_link);
 
         String dateString =dateToString(post.createTime);
         title_textView.setText(post.title);
@@ -46,16 +45,12 @@ public class LinkViewHolder extends CustomViewHolder {
             @Override
             public void onData(MetaData metaData) {
                 String imageURL = metaData.getImageurl();
-                String description = metaData.getDescription();
-                String title = metaData.getTitle();
+                String link = metaData.getSitename();
                 if((imageURL != null) && (!imageURL.equals(""))){
                     Glide.with(itemView).load(imageURL).into(preViewImage);
                 }
-                if((description != null) && (!description.equals(""))){
-                   preViewDescription.setText(description);
-                }
-                if((title != null) && (!title.equals(""))){
-                    preViewTitle.setText(title);
+                if((link != null) && (!link.equals(""))){
+                    preViewLink.setText(link);
                 }
             }
 
@@ -93,7 +88,7 @@ public class LinkViewHolder extends CustomViewHolder {
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-        username_textView.setText(post.user.name+ "  LinkPost");
+        username_textView.setText(post.user.name);
         if(post.user.imageURL == null || post.user.imageURL == ""){
             Glide.with(itemView).load(R.drawable.default_user).into(
                     profilePicture_imageView

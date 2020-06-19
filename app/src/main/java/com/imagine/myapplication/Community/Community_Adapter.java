@@ -28,6 +28,11 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.community, parent, false);
         Community_ViewHolder commVH = new Community_ViewHolder(view);
+
+        Integer spacing = 30;
+        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        layoutParams.height = (int) ((parent.getWidth() / 2) - spacing);
+        view.setLayoutParams(layoutParams);
         return commVH;
     }
 
