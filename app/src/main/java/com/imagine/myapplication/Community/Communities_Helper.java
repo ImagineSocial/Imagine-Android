@@ -3,6 +3,7 @@ package com.imagine.myapplication.Community;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,16 +21,19 @@ public class Communities_Helper {
 
     ArrayList<Community> commList = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentSnapshot lastSnap = null;
 
     public void getCommunities(final CommunityCallback callback){
-        Query commQuery = db.collection("Facts").orderBy("popularity", Query.Direction.DESCENDING)
-                .limit(20);
+        Query commQuery = db.collection("Facts").orderBy("popularity", Query.Direction.DESCENDING).limit(20);
         commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                    QuerySnapshot result = task.getResult();
                     List<DocumentSnapshot> docMap = result.getDocuments();
+                    if(docMap.size() >0){
+                        lastSnap = docMap.get(docMap.size()-1);
+                    }
                     for(DocumentSnapshot docSnap : docMap){
                         addCommunity(docSnap);
                     }
@@ -40,6 +44,35 @@ public class Communities_Helper {
                 }
             }
         });
+    }
+
+    public void getMoreCommunities(final CommunityCallback callback){
+        if(lastSnap == null){
+            return;
+        }
+        Query commQuery = db.collection("Facts")
+                .orderBy("popularity", Query.Direction.DESCENDING)
+                .startAfter(lastSnap)
+                .limit(20);
+        commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot result = task.getResult();
+                    List<DocumentSnapshot> docMap = result.getDocuments();
+                    if(docMap.size() >0){
+                        lastSnap = docMap.get(docMap.size()-1);
+                    }
+                    for(DocumentSnapshot docSnap : docMap){
+                        addCommunity(docSnap);
+                    }
+                    callback.onCallback(commList);
+                } else if(task.isCanceled()){
+                    System.out.println("More Communitys Fetch FAILED!");
+                }
+            }
+        });
+
     }
 
     public void addCommunity(DocumentSnapshot docSnap){

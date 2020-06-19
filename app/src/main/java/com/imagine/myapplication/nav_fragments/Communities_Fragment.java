@@ -53,5 +53,34 @@ public class Communities_Fragment extends Fragment {
         Community_Adapter adapter = new Community_Adapter(commList,context);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            boolean loading = true;
+            int previousTotal =0;
+            @Override
+            public void onScrolled(@NonNull final RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int visibleItemCount = lm.getChildCount();
+                int totalItemCount = lm.getItemCount();
+                int pastVisibleItems = lm.findFirstVisibleItemPosition();
+
+                if(loading && totalItemCount > previousTotal){
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+                if((totalItemCount-(pastVisibleItems+visibleItemCount))<=4&&!loading){
+                    loading = true;
+                    helper.getMoreCommunities(new CommunityCallback() {
+                        @Override
+                        public void onCallback(ArrayList<Community> comms) {
+                            commList = comms;
+                            Community_Adapter adapter =(Community_Adapter) recyclerView.getAdapter();
+                            adapter.addMoreCommunities(commList);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
     }
 }

@@ -134,7 +134,9 @@ public class Post_Helper {
 
     public  void getPostsForCommunityFeed(String commID,final FirebaseCallback callback){
         this.commID = commID;
-        Query postsColl = db.collection("Facts").document(commID).collection("posts").limit(20);
+        Query postsColl = db.collection("Facts").document(commID).collection("posts")
+                .orderBy("createTime", Query.Direction.DESCENDING)
+                .limit(20);
         postsColl.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -205,51 +207,78 @@ public class Post_Helper {
     }
 
     public void getMorePostsForCommunityFeed(final FirebaseCallback callback){
-        if(lastSnap == null){
+        if(lastSnap == null || this.commID == null){
             return;
         }
-        Query postsRef = db.collection("Posts");
-        Task<QuerySnapshot> task1 = postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        Query postsColl = db.collection("Facts").document(commID).collection("posts")
+                .orderBy("createTime", Query.Direction.DESCENDING)
+                .startAfter(lastSnap)
+                .limit(20);
+        postsColl.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(queryDocumentSnapshots != null){
-                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
-                    System.out.println(queryDocumentSnapshots.size());
-                    for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
-                        System.out.println("aa");
-                        switch((String)docSnap.get("type")){
-                            case "thought":
-                                addThoughtPost(docSnap);
-                                break;
-                            case "youTubeVideo":
-                                addYouTubePost(docSnap);
-                                break;
-                            case "link":
-                                addLinkPost(docSnap);
-                                break;
-                            case "GIF":
-                                addGIFPost(docSnap);
-                                break;
-                            case "picture":
-                                addPicturePost(docSnap);
-                                break;
-                            case "multiPicture":
-                                addMultiPicturePost(docSnap);
-                                break;
-                            case "translation":
-                                addTranslationPost(docSnap);
-                                break;
-                            case "repost":
-                                addRepostPost(docSnap);
-                                break;
-                            default:
-                                addDefaulPost(docSnap);
-                                break;
+                for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                    String postID = queryDocumentSnapshot.getId();
+                    String type = queryDocumentSnapshot.getString("type") == null ?
+                            "feedPost"
+                            : queryDocumentSnapshot.getString("type") ;
+
+                    DocumentReference docRef = type.equals("topicPost") ?
+                            db.collection("TopicPosts").document(postID) :
+                            db.collection("Posts").document(postID);
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()){
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                String id = documentSnapshot.getId();
+                                String type = documentSnapshot.getString("type");
+                                if(type == null ){
+                                    return;
+                                }
+                                System.out.println(id+"   "+type);
+                                switch(documentSnapshot.getString("type")){
+                                    case "thought":
+                                        addThoughtPost(documentSnapshot);
+                                        break;
+                                    case "youTubeVideo":
+                                        addYouTubePost(documentSnapshot);
+                                        break;
+                                    case "link":
+                                        addLinkPost(documentSnapshot);
+                                        break;
+                                    case "GIF":
+                                        addGIFPost(documentSnapshot);
+                                        break;
+                                    case "picture":
+                                        addPicturePost(documentSnapshot);
+                                        break;
+                                    case "multiPicture":
+                                        addMultiPicturePost(documentSnapshot);
+                                        break;
+                                    case "translation":
+                                        addTranslationPost(documentSnapshot);
+                                        break;
+                                    case "repost":
+                                        addRepostPost(documentSnapshot);
+                                        break;
+                                    default:
+                                        addDefaulPost(documentSnapshot);
+                                        break;
+                                }
+
+                                callback.onCallback(postList);
+
+
+                            }else if(task.isCanceled()){
+
+                            }
                         }
-                    }
-                    callback.onCallback(postList);
-                    System.out.println("FERTIG");
+                    });
                 }
+
+
+
             }
         });
     }

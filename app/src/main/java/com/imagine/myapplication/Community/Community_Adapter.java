@@ -21,7 +21,9 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
         this.commList = commList;
         this.mContext = context;
     }
-
+    public void addMoreCommunities(ArrayList<Community> comms){
+        this.commList = comms;
+    }
     @NonNull
     @Override
     public Community_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
