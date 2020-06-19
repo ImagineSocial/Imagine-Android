@@ -26,10 +26,10 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         TextView description_tv = itemView.findViewById(R.id.comm_description);
         ImageView imageView = itemView.findViewById(R.id.comm_picture);
 
-        String name = comm.name;
-        String description = comm.description;
-        String imageURL = comm.imageURL;
-        String commID = comm.topicID;
+        final String name = comm.name;
+        final String description = comm.description;
+        final String imageURL = comm.imageURL;
+        final String commID = comm.topicID;
 
         title_tv.setText(name);
         description_tv.setText(description);
@@ -41,7 +41,13 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(itemView.getContext(),Community_Activity.class);
+                intent.putExtra("name", name);
+                intent.putExtra("description",description);
+                intent.putExtra("imageURL", imageURL);
+                intent.putExtra("commID", commID);
+                mContext.startActivity(intent);
             }
         });
     }
+
 }

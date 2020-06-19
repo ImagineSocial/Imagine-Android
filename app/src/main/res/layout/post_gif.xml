@@ -70,7 +70,7 @@
             android:id="@+id/gif_videoView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             android:background="@drawable/corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

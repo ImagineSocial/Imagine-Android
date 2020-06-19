@@ -38,7 +38,7 @@ public class Feed_Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        helper.getPostsForMainFeed(false, new FirebaseCallback() {
+        helper.getPostsForMainFeed( new FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<Post> values) {
                 postList = values;

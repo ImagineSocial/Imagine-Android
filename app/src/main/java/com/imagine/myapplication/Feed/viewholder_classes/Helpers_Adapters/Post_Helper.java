@@ -2,8 +2,14 @@ package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -22,6 +28,9 @@ import com.imagine.myapplication.post_classes.TranslationPost;
 import com.imagine.myapplication.post_classes.YouTubePost;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.zip.DeflaterInputStream;
 
 public class Post_Helper {
 
@@ -29,8 +38,9 @@ public class Post_Helper {
     public DocumentSnapshot lastSnap;
     public ArrayList<Post> postList = new ArrayList<Post>();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public String commID;
 
-    public  void getPostsForMainFeed(boolean getMore, final FirebaseCallback callback){
+    public  void getPostsForMainFeed( final FirebaseCallback callback){
         Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(20);
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -121,6 +131,129 @@ public class Post_Helper {
             }
         });
     }
+
+    public  void getPostsForCommunityFeed(String commID,final FirebaseCallback callback){
+        this.commID = commID;
+        Query postsColl = db.collection("Facts").document(commID).collection("posts").limit(20);
+        postsColl.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                    String postID = queryDocumentSnapshot.getId();
+                    String type = queryDocumentSnapshot.getString("type") == null ?
+                            "feedPost"
+                            : queryDocumentSnapshot.getString("type") ;
+
+                    DocumentReference docRef = type.equals("topicPost") ?
+                            db.collection("TopicPosts").document(postID) :
+                            db.collection("Posts").document(postID);
+                    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()){
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                String id = documentSnapshot.getId();
+                                String type = documentSnapshot.getString("type");
+                                if(type == null ){
+                                    return;
+                                }
+                                System.out.println(id+"   "+type);
+                                switch(documentSnapshot.getString("type")){
+                                    case "thought":
+                                        addThoughtPost(documentSnapshot);
+                                        break;
+                                    case "youTubeVideo":
+                                        addYouTubePost(documentSnapshot);
+                                        break;
+                                    case "link":
+                                        addLinkPost(documentSnapshot);
+                                        break;
+                                    case "GIF":
+                                        addGIFPost(documentSnapshot);
+                                        break;
+                                    case "picture":
+                                        addPicturePost(documentSnapshot);
+                                        break;
+                                    case "multiPicture":
+                                        addMultiPicturePost(documentSnapshot);
+                                        break;
+                                    case "translation":
+                                        addTranslationPost(documentSnapshot);
+                                        break;
+                                    case "repost":
+                                        addRepostPost(documentSnapshot);
+                                        break;
+                                    default:
+                                        addDefaulPost(documentSnapshot);
+                                        break;
+                                }
+
+                                    callback.onCallback(postList);
+
+
+                            }else if(task.isCanceled()){
+
+                            }
+                        }
+                    });
+                }
+
+
+
+            }
+        });
+    }
+
+    public void getMorePostsForCommunityFeed(final FirebaseCallback callback){
+        if(lastSnap == null){
+            return;
+        }
+        Query postsRef = db.collection("Posts");
+        Task<QuerySnapshot> task1 = postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots != null){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    System.out.println(queryDocumentSnapshots.size());
+                    for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
+                        System.out.println("aa");
+                        switch((String)docSnap.get("type")){
+                            case "thought":
+                                addThoughtPost(docSnap);
+                                break;
+                            case "youTubeVideo":
+                                addYouTubePost(docSnap);
+                                break;
+                            case "link":
+                                addLinkPost(docSnap);
+                                break;
+                            case "GIF":
+                                addGIFPost(docSnap);
+                                break;
+                            case "picture":
+                                addPicturePost(docSnap);
+                                break;
+                            case "multiPicture":
+                                addMultiPicturePost(docSnap);
+                                break;
+                            case "translation":
+                                addTranslationPost(docSnap);
+                                break;
+                            case "repost":
+                                addRepostPost(docSnap);
+                                break;
+                            default:
+                                addDefaulPost(docSnap);
+                                break;
+                        }
+                    }
+                    callback.onCallback(postList);
+                    System.out.println("FERTIG");
+                }
+            }
+        });
+    }
+
     public void addThoughtPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String thought_docID = docSnap.getId();
@@ -249,6 +382,7 @@ public class Post_Helper {
         String picture_description = (String) docSnap.get("description");
         String picture_report = (String) docSnap.get("report");
         String picture_originalPoster = (String) docSnap.get("originalPoster");
+        System.out.println(picture_docID);
         long picture_thanksCount = (long) docSnap.getLong("thanksCount");
         long picture_wowCount = (long) docSnap.getLong("wowCount");
         long picture_haCount = (long) docSnap.getLong("haCount");
