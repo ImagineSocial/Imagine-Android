@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,15 +32,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.imagine.myapplication.Post_Fragment_Classes.LinkPostFragment;
+import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
+import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
+import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -74,21 +76,37 @@ public class New_Post_Fragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RadioGroup radioGroup = view.findViewById(R.id.postType_radioGroup);
+        final FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.post_preview, new ThoughtPostFragment())
+                .commit();
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch(checkedId){
                     case R.id.thought_radioButton:
                         setThought();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.post_preview, new ThoughtPostFragment())
+                                .commit();
                         break;
                     case R.id.picture_radioButton:
                         showPicture();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.post_preview, new PicturePostFragment())
+                                .commit();
                         break;
                     case R.id.link_radioButton:
                         showLink();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.post_preview, new LinkPostFragment())
+                                .commit();
                         break;
                     case R.id.youTubeVideo_radioButton:
                         showYouTube();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.post_preview, new YouTubePostFragment())
+                                .commit();
                         break;
                     default:
                         setThought();
@@ -128,7 +146,7 @@ public class New_Post_Fragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView preview_image = getView().findViewById(R.id.preview_imageView);
+        ImageView preview_image = getView().findViewById(R.id.picture_imageView);//TODO
 
         if(requestCode == GALLERY){
             if(data != null){
@@ -235,14 +253,12 @@ public class New_Post_Fragment extends Fragment {
     }
 
     public void choosePhotoFromGallery(){
-        // TODO
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,GALLERY);
     }
 
     public void takePhotoFromCamera(){
-        // TODO
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"Kamera Test");
         values.put(MediaStore.Images.Media.DESCRIPTION,

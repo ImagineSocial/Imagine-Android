@@ -27,6 +27,30 @@
         <activity android:name=".Community.Community_Activity">
 
         </activity>
+        <activity android:name=".PostActivitys.GifPostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.LinkPostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.MultiPicturePostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.PicturePostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.RepostPostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.ThoughtPostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.TranslationPostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.YouTubePostActivity">
+
+        </activity>
     </application>
 
 </manifest>

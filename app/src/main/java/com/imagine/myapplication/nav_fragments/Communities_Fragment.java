@@ -50,9 +50,23 @@ public class Communities_Fragment extends Fragment {
     private void initRecyclerView (final View view){
         RecyclerView recyclerView = view.findViewById(R.id.communites_recyclerview);
         Context context = view.getContext();
-        Community_Adapter adapter = new Community_Adapter(commList,context);
+        final Community_Adapter adapter = new Community_Adapter(commList,context);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
+        GridLayoutManager mLayoutManager = new GridLayoutManager(context,2);
+        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch(adapter.getItemViewType(position)){
+                    case R.layout.communities_header:
+                        return 2;
+                    case R.layout.community:
+                        return 1;
+                    default:
+                        return 1;
+                }
+            }
+        });
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             boolean loading = true;
             int previousTotal =0;

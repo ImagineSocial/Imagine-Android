@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.imagine.myapplication.PostActivitys.GifPostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
 import com.imagine.myapplication.UserCallback;
@@ -93,11 +95,8 @@ public class GIFViewHolder extends CustomViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text  = "PicturePost clicked";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(mContext, text, duration);
-                toast.show();
+                Intent intent = new Intent(itemView.getContext(), GifPostActivity.class);
+                itemView.getContext().startActivity(intent);
             }
         });
     }

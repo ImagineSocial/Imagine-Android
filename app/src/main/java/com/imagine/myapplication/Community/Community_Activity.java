@@ -22,15 +22,17 @@ import com.imagine.myapplication.post_classes.Post;
 import java.util.ArrayList;
 
 public class Community_Activity extends AppCompatActivity {
-
+    boolean recyclerSet = false;
     ArrayList<Post> postList = new ArrayList<>();
     Post_Helper helper = new Post_Helper();
+    RecyclerView recyclerView;
     Community community;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community_activity);
+        recyclerView = findViewById(R.id.comm_activity_recyclerView);
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String imageURL = intent.getStringExtra("imageURL");
@@ -46,7 +48,13 @@ public class Community_Activity extends AppCompatActivity {
             @Override
             public void onCallback(ArrayList<Post> values) {
                 postList = values;
-                initRecyclerView();
+                if(!recyclerSet){
+                    initRecyclerView();
+                }else{
+                    FeedAdapter adapter =(FeedAdapter) recyclerView.getAdapter();
+                    adapter.addMorePosts(values);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -54,12 +62,12 @@ public class Community_Activity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.comm_activity_recyclerView);
+        this.recyclerSet = true;
         FeedAdapter adapter = new CommunityFeedAdapter(postList,this.community,this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        this.recyclerView.setAdapter(adapter);
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // TODO
+        this.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             boolean loading = true;
             int previousTotal =0;
             @Override
