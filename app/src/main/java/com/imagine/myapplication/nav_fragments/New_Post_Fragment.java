@@ -1,7 +1,9 @@
 package com.imagine.myapplication.nav_fragments;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -53,7 +56,8 @@ public class New_Post_Fragment extends Fragment {
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public String type = "thought";
     public int duration = Toast.LENGTH_SHORT;
-
+    private static final int
+            PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 123;
     public Bitmap image_inBitmap = null;
     public float imageHeight = 0f;
     public float imageWidth = 0f;
@@ -70,6 +74,8 @@ public class New_Post_Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_new_post,container,false);
     }
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -141,6 +147,36 @@ public class New_Post_Fragment extends Fragment {
                 shareTapped();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
+
+        if(getView().getContext().checkSelfPermission(Manifest.
+                permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String []{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+                    cameraButton.setAlpha(alphaValue);
+                    cameraButton.setEnabled(false);
+        }else{
+
+            cameraButton.setAlpha(fullAlpha);
+            cameraButton.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
+        if((requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) &&
+                (grantResults.length > 0 && grantResults[0] ==
+                        PackageManager.PERMISSION_GRANTED)){
+            cameraButton.setEnabled(true);
+            cameraButton.setAlpha(fullAlpha);
+        }
     }
 
     @Override
