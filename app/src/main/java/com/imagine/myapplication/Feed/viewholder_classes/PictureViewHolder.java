@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.PicturePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
@@ -56,7 +57,10 @@ public class PictureViewHolder extends CustomViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
                 Intent intent = new Intent(itemView.getContext(), PicturePostActivity.class);
+                intent.putExtra("post",jsonObj);
                 itemView.getContext().startActivity(intent);
             }
         });

@@ -42,13 +42,13 @@
         <activity android:name=".PostActivitys.RepostPostActivity">
 
         </activity>
-        <activity android:name=".PostActivitys.ThoughtPostActivity">
-
-        </activity>
         <activity android:name=".PostActivitys.TranslationPostActivity">
 
         </activity>
         <activity android:name=".PostActivitys.YouTubePostActivity">
+
+        </activity>
+        <activity android:name=".PostActivitys.ThoughtPostActivity">
 
         </activity>
     </application>

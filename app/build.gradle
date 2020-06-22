@@ -55,4 +55,6 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
     // Material Design Components
     implementation 'com.google.android.material:material:<1.2.0-beta01>'
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
