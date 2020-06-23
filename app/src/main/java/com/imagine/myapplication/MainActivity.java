@@ -28,10 +28,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new Feed_Fragment()).commit();
 
+        //In R.values.styles.xml habe ich eingestellt: parent="Theme.AppCompat.Light.NoActionBar">
+        //Toolbar aus der XML Datei
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Imagine");
 
+        //Setze die Toolbar anstatt der Actionbar, weil die nicht zu individualisieren ist
         setSupportActionBar(toolbar);
+
         toolbar.setNavigationIcon(R.drawable.default_user);
         toolbar.setNavigationOnClickListener(
                 new View.OnClickListener() {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
 ////        actionBar.setDisplayHomeAsUpEnabled(true);
