@@ -1,14 +1,16 @@
 package com.imagine.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
@@ -26,9 +28,26 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new Feed_Fragment()).commit();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Imagine");
+
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.default_user);
+        toolbar.setNavigationOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(MainActivity.this, "Toolbar", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle("Imagine");
+////        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+//        actionBar.setDisplayUseLogoEnabled(true);
+//        actionBar.setIcon(R.drawable.default_user);
+//        actionBar.setTitle("Imagine");
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
