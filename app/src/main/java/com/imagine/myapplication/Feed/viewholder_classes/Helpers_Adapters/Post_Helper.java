@@ -15,7 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.imagine.myapplication.Comment;
+import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.FirebaseCallback;
+import com.imagine.myapplication.User;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
 import com.imagine.myapplication.post_classes.LinkPost;
@@ -27,8 +30,11 @@ import com.imagine.myapplication.post_classes.ThoughtPost;
 import com.imagine.myapplication.post_classes.TranslationPost;
 import com.imagine.myapplication.post_classes.YouTubePost;
 
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.DeflaterInputStream;
 
@@ -282,7 +288,49 @@ public class Post_Helper {
             }
         });
     }
+    public void getComments(String postID, final CommentsCallback callback){
+        final ArrayList<Comment> commArray = new ArrayList<>();
+        CollectionReference commRef = db.collection("Comments").document(postID)
+                .collection("threads");
+        commRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+                    List<DocumentSnapshot> docsList = querySnapshot.getDocuments();
+                    for(DocumentSnapshot docSnap: docsList){
+                        final Comment comm = new Comment();
+                        comm.body = docSnap.getString("body");
+                        //comm.id = docSnap.getLong("is");
+                        comm.sentAt = docSnap.getTimestamp("sentAt");
+                        comm.userID = docSnap.getString("userID");
+                        commArray.add(comm);
+                        DocumentReference userRef = db.collection("User").document(comm.userID);
+                        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    DocumentSnapshot userSnap = task.getResult();
+                                    String name = userSnap.getString("name");
+                                    String userID = userSnap.getId();
+                                    String surname = userSnap.getString("surname");
+                                    User user = new User(name,surname,userID);
+                                    user.imageURL = userSnap.getString("imageURL");
+                                    comm.setUser(user);
+                            }else if(task.isCanceled()){
+                                    System.out.println("User Fetchfailed!");
+                                }
+                        }
+                        });
+                    }
+                    callback.onCallback(commArray);
+                }else if(task.isCanceled()){
+                    System.out.println("Task Failed!");
+                }
+            }
+        });
 
+    }
     public void addThoughtPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String thought_docID = docSnap.getId();

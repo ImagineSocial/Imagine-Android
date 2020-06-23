@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -194,12 +195,14 @@ public class New_Post_Fragment extends Fragment {
                         image_inBitmap = bitmap;
                         imageWidth = (float) bitmap.getWidth();
                         imageHeight = (float) bitmap.getHeight();
-                        preview_image.setImageBitmap(bitmap);
+                        //preview_image.setImageBitmap(bitmap);
+                        Glide.with(getView()).load(contentURI).into(preview_image);
                     }else{
                         ImageDecoder.Source source = ImageDecoder.createSource(getContext()
                                 .getContentResolver(),contentURI);
                         Bitmap bitmap = ImageDecoder.decodeBitmap(source);
-                        preview_image.setImageBitmap(bitmap);
+                        Glide.with(getView()).load(contentURI).into(preview_image);
+                        //preview_image.setImageBitmap(bitmap);
                         image_inBitmap = bitmap;
                         imageWidth = (float) bitmap.getWidth();
                         imageHeight = (float) bitmap.getHeight();
@@ -211,18 +214,19 @@ public class New_Post_Fragment extends Fragment {
         }else if (requestCode == IMAGE_CAPTURE) {
             if (resultCode == getActivity().RESULT_OK) {
                 try {
-                    Bitmap b1 = MediaStore.Images.Media
-                            .getBitmap(
-                                    getContext().getContentResolver(), imageUri);
-                    // Größe des aufgenommenen Bildes
-                    float w1 = b1.getWidth();
-                    float h1 = b1.getHeight();
-                    // auf eine Höhe von maximal 300 Pixel skalieren
-                    int h2 = (int) h1 > 300 ? 300 : (int) h1;
-                    int w2 = (int) (w1 / h1 * (float) h2);
-                    Bitmap b2 = Bitmap.createScaledBitmap(b1,
-                            w2, h2, false);
-                    preview_image.setImageBitmap(b2);
+                    if(Build.VERSION.SDK_INT < 28){
+                        Bitmap b1 = MediaStore.Images.Media
+                                .getBitmap(
+                                        getContext().getContentResolver(), imageUri);
+
+                        Glide.with(getView()).load(b1).into(preview_image);
+                    }else{
+                        ImageDecoder.Source source = ImageDecoder.createSource(getContext()
+                                .getContentResolver(),imageUri);
+                        Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+                        Glide.with(getView()).load(imageUri).into(preview_image);
+                    }
+
                 } catch (IOException e) {
                     System.out.println("FEHLER!");
                 }

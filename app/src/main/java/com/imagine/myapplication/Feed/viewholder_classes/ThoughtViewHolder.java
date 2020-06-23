@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
@@ -54,7 +54,10 @@ public class ThoughtViewHolder extends CustomViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(itemView.getContext(), ThoughtPostActivity.class);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), ThoughtPostActivity.class );
+                intent.putExtra("post",jsonObj);
                 itemView.getContext().startActivity(intent);
             }
         });
