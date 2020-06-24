@@ -82,6 +82,9 @@ public class ThoughtPostActivity extends AppCompatActivity {
             if(post.user.imageURL != null || !post.user.imageURL.equals("")){
                 Glide.with(this).load(post.user.imageURL).into(
                         profilePicture_imageView);
+            } else  {
+                Glide.with(this).load(R.drawable.default_user).into(
+                        profilePicture_imageView);
             }
         }
     }

@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
 import com.imagine.myapplication.PostActivitys.TranslationPostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
@@ -31,6 +33,11 @@ public class TranslationViewHolder extends CustomViewHolder{
         TextView name_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
+
+        String date = dateToString(post.createTime);
+        title_textView.setText(post.title);
+        createTime_textView.setText(date);
+
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.default_user).into(
@@ -47,7 +54,10 @@ public class TranslationViewHolder extends CustomViewHolder{
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(itemView.getContext(), TranslationPostActivity.class);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), TranslationPostActivity.class );
+                intent.putExtra("post",jsonObj);
                 itemView.getContext().startActivity(intent);
             }
         });

@@ -290,8 +290,9 @@ public class Post_Helper {
     }
     public void getComments(String postID, final CommentsCallback callback){
         final ArrayList<Comment> commArray = new ArrayList<>();
-        CollectionReference commRef = db.collection("Comments").document(postID)
-                .collection("threads");
+        Query commRef = db.collection("Comments").document(postID)
+                .collection("threads").orderBy("sentAt", Query.Direction.ASCENDING);
+
         commRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
