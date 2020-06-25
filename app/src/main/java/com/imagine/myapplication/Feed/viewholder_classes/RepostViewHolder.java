@@ -10,7 +10,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.RepostPostActivity;
+import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
 import com.imagine.myapplication.UserCallback;
@@ -52,7 +54,10 @@ public class RepostViewHolder extends CustomViewHolder{
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(itemView.getContext(), RepostPostActivity.class);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), RepostPostActivity.class );
+                intent.putExtra("post",jsonObj);
                 itemView.getContext().startActivity(intent);
             }
         });
@@ -62,7 +67,7 @@ public class RepostViewHolder extends CustomViewHolder{
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-        username_textView.setText(post.user.name+ "  YouTubePost");
+        username_textView.setText(post.user.name+ "  RepostPost");
         if(post.user.imageURL == null || post.user.imageURL == ""){
             Glide.with(itemView).load(R.drawable.default_user).into(
                     profilePicture_imageView
