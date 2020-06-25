@@ -86,7 +86,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-        username_textView.setText(post.user.name+ "  YouTubePost");
+        username_textView.setText(post.user.name);
         if(post.user.imageURL == null || post.user.imageURL == ""){
             Glide.with(itemView).load(R.drawable.default_user).into(
                     profilePicture_imageView

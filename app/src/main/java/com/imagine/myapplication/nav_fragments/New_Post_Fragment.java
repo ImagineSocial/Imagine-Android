@@ -50,7 +50,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 
-public class New_Post_Fragment extends Fragment {
+public class New_Post_Fragment extends Fragment implements View.OnClickListener {
 
     public StorageReference storeRef = FirebaseStorage.getInstance().getReference();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -80,47 +80,58 @@ public class New_Post_Fragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
+        newThoughtButton.setOnClickListener(this);
+        Button newPictureButton = (Button) view.findViewById(R.id.new_picture_button);
+        newPictureButton.setOnClickListener(this);
+        Button newLinkButton = (Button) view.findViewById(R.id.new_link_button);
+        newLinkButton.setOnClickListener(this);
+        Button newGIFButton = (Button) view.findViewById(R.id.new_gif_button);
+        newGIFButton.setOnClickListener(this);
+
         super.onViewCreated(view, savedInstanceState);
 
-        RadioGroup radioGroup = view.findViewById(R.id.postType_radioGroup);
+
+
+//        RadioGroup radioGroup = view.findViewById(R.id.postType_radioGroup);
         final FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.post_preview, new ThoughtPostFragment())
                 .commit();
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.thought_radioButton:
-                        setThought();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.post_preview, new ThoughtPostFragment())
-                                .commit();
-                        break;
-                    case R.id.picture_radioButton:
-                        showPicture();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.post_preview, new PicturePostFragment())
-                                .commit();
-                        break;
-                    case R.id.link_radioButton:
-                        showLink();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.post_preview, new LinkPostFragment())
-                                .commit();
-                        break;
-                    case R.id.youTubeVideo_radioButton:
-                        showYouTube();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.post_preview, new YouTubePostFragment())
-                                .commit();
-                        break;
-                    default:
-                        setThought();
-                        break;
-                }
-            }
-        });
+//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                switch(checkedId){
+//                    case R.id.thought_radioButton:
+//                        setThought();
+//                        fragmentManager.beginTransaction()
+//                                .replace(R.id.post_preview, new ThoughtPostFragment())
+//                                .commit();
+//                        break;
+//                    case R.id.picture_radioButton:
+//                        showPicture();
+//                        fragmentManager.beginTransaction()
+//                                .replace(R.id.post_preview, new PicturePostFragment())
+//                                .commit();
+//                        break;
+//                    case R.id.link_radioButton:
+//                        showLink();
+//                        fragmentManager.beginTransaction()
+//                                .replace(R.id.post_preview, new LinkPostFragment())
+//                                .commit();
+//                        break;
+//                    case R.id.youTubeVideo_radioButton:
+//                        showYouTube();
+//                        fragmentManager.beginTransaction()
+//                                .replace(R.id.post_preview, new YouTubePostFragment())
+//                                .commit();
+//                        break;
+//                    default:
+//                        setThought();
+//                        break;
+//                }
+//            }
+//        });
 
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
         ImageButton pictureFolder_button = getView().findViewById(R.id.pictureFolder_Button);
@@ -148,6 +159,23 @@ public class New_Post_Fragment extends Fragment {
                 shareTapped();
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.new_thought_button:
+                Toast.makeText(getContext(), "NewThoughtTapped", Toast.LENGTH_LONG).show();
+            case R.id.new_picture_button:
+                Toast.makeText(getContext(), "NewPictzreTapped", Toast.LENGTH_LONG).show();
+            case R.id.new_link_button:
+                Toast.makeText(getContext(), "NewLinkTapped", Toast.LENGTH_LONG).show();
+            case R.id.new_gif_button:
+                Toast.makeText(getContext(), "NewGIFTapped", Toast.LENGTH_LONG).show();
+            default:
+                break;
+        }
     }
 
     @Override
@@ -548,4 +576,5 @@ public class New_Post_Fragment extends Fragment {
         link_editText.setEnabled(true);
         link_label.setAlpha(fullAlpha);
     }
+
 }

@@ -39,7 +39,7 @@ public class GIFViewHolder extends CustomViewHolder {
         final VideoView videoView = itemView.findViewById(R.id.gif_videoView);
 
         String date = dateToString(post.createTime);
-        title_textView.setText(post.title+"  GIFPOST");
+        title_textView.setText(post.title);
         createTime_textView.setText(date);
         videoView.setVideoPath(post.link);
         videoView.start();
@@ -109,7 +109,7 @@ public class GIFViewHolder extends CustomViewHolder {
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-        username_textView.setText(post.user.name+ "  GIFPost");
+        username_textView.setText(post.user.name);
         if(post.user.imageURL == null || post.user.imageURL == ""){
             Glide.with(itemView).load(R.drawable.default_user).into(
                     profilePicture_imageView
