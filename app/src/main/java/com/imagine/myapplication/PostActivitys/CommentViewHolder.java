@@ -42,7 +42,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
         if(comm.userID.equals("anonym")){
             name.setText("Anonym");
-            Glide.with(itemView).load(R.drawable.default_user).into(profile);
+            Glide.with(itemView).load(R.drawable.anonym_user).into(profile);
         }else{
 
             if(comm.user == null){

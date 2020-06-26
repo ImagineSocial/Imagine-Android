@@ -5,7 +5,9 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ImageDecoder;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,11 +66,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public float imageWidth = 0f;
     public Uri imageUri;
 
-    public float alphaValue = 0.5f;
+    public float halfAlpha = 0.5f;
     public float fullAlpha = 1f;
 
     public final int GALLERY = 1;
     public final int IMAGE_CAPTURE = 2;
+
+    public View view;
 
     @Nullable
     @Override
@@ -88,92 +92,92 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         newLinkButton.setOnClickListener(this);
         Button newGIFButton = (Button) view.findViewById(R.id.new_gif_button);
         newGIFButton.setOnClickListener(this);
+        ImageButton pictureFolder_button = getView().findViewById(R.id.pictureFolder_Button);
+        pictureFolder_button.setOnClickListener(this);
+        ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
+        pictureCamera_button.setOnClickListener(this);
+        Button share_button = getView().findViewById(R.id.share_button);
+        share_button.setOnClickListener(this);
+
+
+        this.view = view;
 
         super.onViewCreated(view, savedInstanceState);
 
 
-
-//        RadioGroup radioGroup = view.findViewById(R.id.postType_radioGroup);
         final FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.post_preview, new ThoughtPostFragment())
                 .commit();
-//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                switch(checkedId){
-//                    case R.id.thought_radioButton:
-//                        setThought();
-//                        fragmentManager.beginTransaction()
-//                                .replace(R.id.post_preview, new ThoughtPostFragment())
-//                                .commit();
-//                        break;
-//                    case R.id.picture_radioButton:
-//                        showPicture();
-//                        fragmentManager.beginTransaction()
-//                                .replace(R.id.post_preview, new PicturePostFragment())
-//                                .commit();
-//                        break;
-//                    case R.id.link_radioButton:
-//                        showLink();
-//                        fragmentManager.beginTransaction()
-//                                .replace(R.id.post_preview, new LinkPostFragment())
-//                                .commit();
-//                        break;
-//                    case R.id.youTubeVideo_radioButton:
-//                        showYouTube();
-//                        fragmentManager.beginTransaction()
-//                                .replace(R.id.post_preview, new YouTubePostFragment())
-//                                .commit();
-//                        break;
-//                    default:
-//                        setThought();
-//                        break;
-//                }
-//            }
-//        });
 
-        ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
-        ImageButton pictureFolder_button = getView().findViewById(R.id.pictureFolder_Button);
-        Button share_button = getView().findViewById(R.id.share_button);
+        newThoughtButton.setAlpha(halfAlpha);
 
         pictureFolder_button.setEnabled(false);
-        pictureFolder_button.setAlpha(alphaValue);
+        pictureFolder_button.setAlpha(halfAlpha);
         pictureCamera_button.setEnabled(false);
-        pictureCamera_button.setAlpha(alphaValue);
-        pictureCamera_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhotoFromCamera();
-            }
-        });
-        pictureFolder_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                choosePhotoFromGallery();
-            }
-        });
-        share_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                shareTapped();
-            }
-        });
+        pictureCamera_button.setAlpha(halfAlpha);
+
+        setThought();
     }
 
     @Override
     public void onClick(View v) {
 
+        final FragmentManager fragmentManager = getFragmentManager();
+        Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
+        Button newPictureButton = (Button) view.findViewById(R.id.new_picture_button);
+        Button newLinkButton = (Button) view.findViewById(R.id.new_link_button);
+        Button newGIFButton = (Button) view.findViewById(R.id.new_gif_button);
+
+        newThoughtButton.setAlpha(fullAlpha);
+        newPictureButton.setAlpha(fullAlpha);
+        newLinkButton.setAlpha(fullAlpha);
+        newGIFButton.setAlpha(fullAlpha);
+
         switch (v.getId()) {
             case R.id.new_thought_button:
-                Toast.makeText(getContext(), "NewThoughtTapped", Toast.LENGTH_LONG).show();
+                newThoughtButton.setAlpha(halfAlpha);
+
+                setThought();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.post_preview, new ThoughtPostFragment())
+                        .commit();
+                break;
             case R.id.new_picture_button:
-                Toast.makeText(getContext(), "NewPictzreTapped", Toast.LENGTH_LONG).show();
+                newPictureButton.setAlpha(halfAlpha);
+
+                showPicture();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.post_preview, new PicturePostFragment())
+                        .commit();
+                break;
             case R.id.new_link_button:
-                Toast.makeText(getContext(), "NewLinkTapped", Toast.LENGTH_LONG).show();
+                newLinkButton.setAlpha(halfAlpha);
+
+                showLink();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.post_preview, new LinkPostFragment())
+                        .commit();
+                break;
             case R.id.new_gif_button:
-                Toast.makeText(getContext(), "NewGIFTapped", Toast.LENGTH_LONG).show();
+                newGIFButton.setAlpha(halfAlpha);
+
+                showYouTube();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.post_preview, new YouTubePostFragment())
+                        .commit();
+                break;
+            case R.id.pictureFolder_Button:
+                choosePhotoFromGallery();
+                break;
+            case R.id.pictureCamera_button:
+                takePhotoFromCamera();
+                break;
+            case R.id.share_button:
+                shareTapped();
+                break;
             default:
+                setThought();
                 break;
         }
     }
@@ -181,6 +185,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
+        //Sollte noch woanders hin, Herr Schultz
         ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
 
         if(getView().getContext().checkSelfPermission(Manifest.
@@ -188,12 +193,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             requestPermissions(new String []{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-                    cameraButton.setAlpha(alphaValue);
+                    cameraButton.setAlpha(halfAlpha);
                     cameraButton.setEnabled(false);
         }else{
 
-            cameraButton.setAlpha(fullAlpha);
-            cameraButton.setEnabled(true);
+            //Wenn es woanders ist, macht das vielleicht Sinn:
+//            cameraButton.setAlpha(fullAlpha);
+//            cameraButton.setEnabled(true);
         }
     }
 
@@ -523,9 +529,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         ImageButton pictureFolder_Button = getView().findViewById(R.id.pictureFolder_Button);
         TextView picture_label = getView().findViewById(R.id.picture_label);
 
-        pictureCamera_button.setAlpha(alphaValue);
-        pictureFolder_Button.setAlpha(alphaValue);
-        picture_label.setAlpha(alphaValue);
+        pictureCamera_button.setAlpha(halfAlpha);
+        pictureFolder_Button.setAlpha(halfAlpha);
+        picture_label.setAlpha(halfAlpha);
 
         pictureCamera_button.setEnabled(false);
         pictureFolder_Button.setEnabled(false);
@@ -535,7 +541,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         TextView link_label = getView().findViewById(R.id.link_label);
         EditText link_editText = getView().findViewById(R.id.link_editText);
 
-        link_label.setAlpha(alphaValue);
+        link_label.setAlpha(halfAlpha);
         link_editText.setEnabled(false);
     }
 

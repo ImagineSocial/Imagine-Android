@@ -40,7 +40,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
 
         if(post.originalPoster == "anonym"){
             username_textView.setText("Anonym");
-            Glide.with(itemView).load(R.drawable.default_user).into(
+            Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);
         }else{
             this.getUser(post.originalPoster, new UserCallback() {

@@ -66,7 +66,7 @@ public class LinkViewHolder extends CustomViewHolder {
         richPreview.getPreview(post.link);
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
-            Glide.with(itemView).load(R.drawable.default_user).into(
+            Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);
         }else{
             getUser(post.originalPoster, new UserCallback() {

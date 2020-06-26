@@ -13,12 +13,14 @@
 
         <ImageButton
             android:id="@+id/pictureCamera_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginTop="25dp"
+            android:background="#FFF"
+            android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="@+id/pictureFolder_Button"
             app:layout_constraintTop_toBottomOf="@+id/pictureFolder_Button"
-            app:srcCompat="@drawable/compact_camera1" />
+            app:srcCompat="@drawable/camera" />
 
         <TextView
             android:id="@+id/picture_label"
@@ -26,12 +28,10 @@
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_regular"
+            android:fontFamily="@font/ibm_medium"
             android:text="Bild:"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/link_editText" />
 
@@ -42,6 +42,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:ems="10"
+            android:fontFamily="@font/ibm_regular"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="@+id/title_label"
@@ -56,9 +57,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_regular"
+            android:fontFamily="@font/ibm_medium"
             android:text="Link:"
-            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,6 +73,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:ems="10"
+            android:fontFamily="@font/ibm_regular"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="@+id/title_label"
@@ -84,9 +87,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_regular"
+            android:fontFamily="@font/ibm_medium"
             android:text="Beschreibung:"
-            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +99,10 @@
         <TableLayout
             android:id="@+id/tableLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="7dp"
             android:background="@drawable/corner_radius"
             android:stretchColumns="*"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,31 +111,39 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@color/md_white_1000">
 
                 <Button
                     android:id="@+id/new_thought_button"
                     android:backgroundTint="@color/md_white_1000"
+                    android:fontFamily="@font/ibm_medium"
                     android:text="Text"
+                    android:textAllCaps="false"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/new_picture_button"
                     android:backgroundTint="@color/md_white_1000"
+                    android:fontFamily="@font/ibm_medium"
                     android:text="Bild"
+                    android:textAllCaps="false"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/new_link_button"
                     android:backgroundTint="@color/md_white_1000"
+                    android:fontFamily="@font/ibm_medium"
                     android:text="Link"
+                    android:textAllCaps="false"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/new_gif_button"
                     android:backgroundTint="@color/md_white_1000"
+                    android:fontFamily="@font/ibm_medium"
                     android:text="GIF"
+                    android:textAllCaps="false"
                     android:textSize="12sp" />
             </TableRow>
         </TableLayout>
@@ -140,9 +155,10 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_regular"
+            android:fontFamily="@font/ibm_medium"
             android:text="Titel:"
-            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
@@ -154,6 +170,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:ems="10"
+            android:fontFamily="@font/ibm_regular"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="@+id/title_label"
@@ -162,43 +179,60 @@
 
         <ImageButton
             android:id="@+id/pictureFolder_Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="25dp"
-            app:layout_constraintStart_toStartOf="@+id/picture_label"
+            android:layout_marginTop="10dp"
+            android:background="#FFF"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@+id/picture_label"
             app:layout_constraintTop_toBottomOf="@+id/picture_label"
-            app:srcCompat="@drawable/albums1" />
+            app:srcCompat="@drawable/folder" />
 
         <ImageView
             android:id="@+id/preview_imageView"
-            android:layout_width="0dp"
+            android:layout_width="200dp"
             android:layout_height="0dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/pictureCamera_button"
-            app:layout_constraintEnd_toEndOf="@+id/picture_label"
-            app:layout_constraintStart_toEndOf="@+id/pictureFolder_Button"
-            app:layout_constraintTop_toBottomOf="@+id/picture_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/pictureFolder_Button"
             tools:srcCompat="@tools:sample/backgrounds/scenic[5]" />
 
         <Button
             android:id="@+id/share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="85dp"
+            android:layout_height="35dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/button_border"
             android:text="Teilen"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pictureCamera_button" />
+
+        <TextView
+            android:id="@+id/preview_label"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Vorschau:"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/share_button" />
 
         <FrameLayout
             android:id="@+id/post_preview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/share_button" />
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/preview_label"/>
 
         <TextView
             android:id="@+id/textView2"
