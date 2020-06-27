@@ -288,6 +288,103 @@ public class Post_Helper {
             }
         });
     }
+
+    public  void getPostsForUserFeed( final FirebaseCallback callback,String userID){
+        Query postsRef = db.collection("Posts").whereEqualTo("originalPoster", userID);
+        postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots != null){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
+                        System.out.println("aa");
+                        switch((String)docSnap.get("type")){
+                            case "thought":
+                                addThoughtPost(docSnap);
+                                break;
+                            case "youTubeVideo":
+                                addYouTubePost(docSnap);
+                                break;
+                            case "link":
+                                addLinkPost(docSnap);
+                                break;
+                            case "GIF":
+                                addGIFPost(docSnap);
+                                break;
+                            case "picture":
+                                addPicturePost(docSnap);
+                                break;
+                            case "multiPicture":
+                                addMultiPicturePost(docSnap);
+                                break;
+                            case "translation":
+                                addTranslationPost(docSnap);
+                                break;
+                            case "repost":
+                                addRepostPost(docSnap);
+                                break;
+                            default:
+                                addDefaulPost(docSnap);
+                                break;
+                        }
+                    }
+                    Log.d(TAG,"From Post_Helper"+postList.toString());
+                    callback.onCallback(postList);
+                }
+            }
+        });
+    }
+
+    public void getMorePostsForUserFeed(final FirebaseCallback callback, String userID){
+        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING)
+                .whereEqualTo("originalPoster",userID)
+                .startAfter(lastSnap)
+                .limit(20);
+        postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots != null){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    System.out.println(queryDocumentSnapshots.size());
+                    for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
+                        System.out.println("aa");
+                        switch((String)docSnap.get("type")){
+                            case "thought":
+                                addThoughtPost(docSnap);
+                                break;
+                            case "youTubeVideo":
+                                addYouTubePost(docSnap);
+                                break;
+                            case "link":
+                                addLinkPost(docSnap);
+                                break;
+                            case "GIF":
+                                addGIFPost(docSnap);
+                                break;
+                            case "picture":
+                                addPicturePost(docSnap);
+                                break;
+                            case "multiPicture":
+                                addMultiPicturePost(docSnap);
+                                break;
+                            case "translation":
+                                addTranslationPost(docSnap);
+                                break;
+                            case "repost":
+                                addRepostPost(docSnap);
+                                break;
+                            default:
+                                addDefaulPost(docSnap);
+                                break;
+                        }
+                    }
+                    callback.onCallback(postList);
+                    System.out.println("FERTIG");
+                }
+            }
+        });
+    }
+
     public void getComments(String postID, final CommentsCallback callback){
         final ArrayList<Comment> commArray = new ArrayList<>();
         Query commRef = db.collection("Comments").document(postID)
@@ -332,6 +429,9 @@ public class Post_Helper {
         });
 
     }
+
+
+
     public void addThoughtPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String thought_docID = docSnap.getId();
