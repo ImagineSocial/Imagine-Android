@@ -30,8 +30,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.imagine.myapplication.R.drawable.default_user;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
     public Context mContext;
+    public Button loginButton;
+    public CircleImageView imageCircle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Get the image from toolbar XML
         View hView =  toolbar.getRootView();
-        CircleImageView imageCircle = hView.findViewById(R.id.toolbarProfilePicture);
-        Button loginButton = hView.findViewById(R.id.toolbarLoginButton);
+        this.imageCircle = hView.findViewById(R.id.toolbarProfilePicture);
+        this.loginButton = hView.findViewById(R.id.toolbarLoginButton);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
@@ -82,6 +84,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        if(firebaseAuth.getCurrentUser() != null){
+            loginButton.setVisibility(View.INVISIBLE);
+            // If user.getPhotoUrl() =! null ...
+            Glide.with(this).load(default_user).into(imageCircle);
+            imageCircle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext,UserActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
+        } else{
+            imageCircle.setVisibility(View.INVISIBLE);
+            loginButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,4 +138,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
 }
