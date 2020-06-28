@@ -14,8 +14,8 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.LinkPostActivity;
 import com.imagine.myapplication.PostActivitys.YouTubePostActivity;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.User;
-import com.imagine.myapplication.UserActivity;
+import com.imagine.myapplication.user_classes.User;
+import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.YouTubePost;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 public class YouTubeViewHolder extends CustomViewHolder {
     public Context mContext;
+    public User userObj;
 
     public YouTubeViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -67,6 +68,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
                 @Override
                 public void onCallback(User user) {
                     post.user = user;
+                    userObj = user;
                     setName(post);
                 }
             });
@@ -83,7 +85,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
         });
     }
 
-    public void setName(YouTubePost post){
+    public void setName(final YouTubePost post){
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
@@ -100,7 +102,10 @@ public class YouTubeViewHolder extends CustomViewHolder {
             profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Gson gson = new Gson();
+                    String userString = gson.toJson(userObj);
                     Intent intent = new Intent(mContext, UserActivity.class);
+                    intent.putExtra("user",userString);
                     mContext.startActivity(intent);
                 }
             });

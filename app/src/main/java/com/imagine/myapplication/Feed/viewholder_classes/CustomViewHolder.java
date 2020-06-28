@@ -121,7 +121,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                                 : (String) "";
                         String userUserUID = userID;
                         String userStatusQuote = (docData.get("statusText") != null)
-                                ? (String) docData.get("statustext")
+                                ? (String) docData.get("statusText")
                                 : (String) "";
                         List<String> userBlocked = (docData.get("blocked") != null)
                                 ? (List<String>) docData.get("blocked")

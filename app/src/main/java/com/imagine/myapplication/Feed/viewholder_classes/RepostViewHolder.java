@@ -14,13 +14,14 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.RepostPostActivity;
 import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.User;
-import com.imagine.myapplication.UserActivity;
+import com.imagine.myapplication.user_classes.User;
+import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.RepostPost;
 
 public class RepostViewHolder extends CustomViewHolder{
     public Context mContext;
+    public User userObj;
 
     public RepostViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -46,6 +47,7 @@ public class RepostViewHolder extends CustomViewHolder{
             getUser(post.originalPoster, new UserCallback() {
                 @Override
                 public void onCallback(User user) {
+                    userObj = user;
                     post.user = user;
                     setName(post);
                 }
@@ -63,7 +65,7 @@ public class RepostViewHolder extends CustomViewHolder{
         });
     }
 
-    public void setName(RepostPost post){
+    public void setName(final RepostPost post){
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
@@ -80,7 +82,10 @@ public class RepostViewHolder extends CustomViewHolder{
             profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Gson gson = new Gson();
+                    String userString = gson.toJson(userObj);
                     Intent intent = new Intent(mContext, UserActivity.class);
+                    intent.putExtra("user",userString);
                     mContext.startActivity(intent);
                 }
             });

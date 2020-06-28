@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
 
     <TextView
-        android:id="@+id/name_TextView"
+        android:id="@+id/name_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -50,10 +50,10 @@
         android:layout_marginStart="10dp"
         android:fontFamily="@font/ibm_light"
         android:textSize="9sp"
-        app:layout_constraintBottom_toBottomOf="@+id/name_TextView"
+        app:layout_constraintBottom_toBottomOf="@+id/name_textView"
         app:layout_constraintEnd_toEndOf="@+id/background_view"
-        app:layout_constraintStart_toEndOf="@+id/name_TextView"
-        app:layout_constraintTop_toTopOf="@+id/name_TextView" />
+        app:layout_constraintStart_toEndOf="@+id/name_textView"
+        app:layout_constraintTop_toTopOf="@+id/name_textView" />
 
     <TextView
         android:id="@+id/comment_body"
@@ -68,7 +68,7 @@
         app:layout_constraintBottom_toBottomOf="@id/background_view"
         app:layout_constraintEnd_toEndOf="@+id/background_view"
         app:layout_constraintStart_toStartOf="@+id/background_view"
-        app:layout_constraintTop_toBottomOf="@+id/name_TextView"
+        app:layout_constraintTop_toBottomOf="@+id/name_textView"
         tools:ignore="UnknownId" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

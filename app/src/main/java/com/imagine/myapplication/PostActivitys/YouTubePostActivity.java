@@ -66,7 +66,7 @@ public class YouTubePostActivity extends AppCompatActivity {
     public void bind(){
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView name_textView = findViewById(R.id.name_TextView);
+        TextView name_textView = findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player);

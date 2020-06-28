@@ -290,7 +290,7 @@ public class Post_Helper {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(queryDocumentSnapshots != null){
-                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    //lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
                         System.out.println("aa");
                         switch((String)docSnap.get("type")){

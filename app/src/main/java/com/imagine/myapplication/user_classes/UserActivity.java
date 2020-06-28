@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
@@ -25,15 +26,16 @@ import java.util.ArrayList;
 public class UserActivity extends AppCompatActivity {
     public ArrayList<Post> posts;
     public Context mContext;
+    public User user;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         this.mContext = this;
-
+        Gson gson = new Gson();
         Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
-
+        String userString = intent.getStringExtra("user");
+        user = gson.fromJson(userString,User.class);
         Post_Helper helper = new Post_Helper();
         helper.getPostsForUserFeed(new FirebaseCallback() {
             @Override
@@ -41,17 +43,17 @@ public class UserActivity extends AppCompatActivity {
                 posts = values;
                 initRecyclerView();
             }
-        },"CZOcL3VIwMemWwEfutKXGAfdlLy1");
+        },user.userID);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.user_toolbar);
         setSupportActionBar(toolbar);
 
         Button logout_button = findViewById(R.id.toolbar_logout_button);
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
+        FirebaseUser currentUser = auth.getCurrentUser();
 
         if (user != null) {
-            if (user.getUid() == userID) {
+            if (currentUser.getUid().equals(user.userID)) {
                 logout_button.setVisibility(View.VISIBLE);
 
                 logout_button.setOnClickListener(new View.OnClickListener() {
@@ -64,12 +66,16 @@ public class UserActivity extends AppCompatActivity {
                     }
                 });
             }
+        } else {
+            String test1 = user.userID;
+            String test2 = currentUser.getUid();
+            System.out.println("!!!");
         }
     }
 
     public void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.user_recyclerView);
-        FeedAdapter adapter = new FeedAdapter(posts,mContext);
+        UserFeedAdapter adapter = new UserFeedAdapter(posts,mContext,user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     }
