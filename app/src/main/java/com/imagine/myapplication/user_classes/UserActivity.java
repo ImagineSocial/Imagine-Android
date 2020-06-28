@@ -53,6 +53,16 @@ public class UserActivity extends AppCompatActivity {
         if (user != null) {
             if (user.getUid() == userID) {
                 logout_button.setVisibility(View.VISIBLE);
+
+                logout_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.signOut();
+                        
+                        UserActivity.super.finish();
+                    }
+                });
             }
         }
     }
