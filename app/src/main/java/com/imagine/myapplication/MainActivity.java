@@ -2,6 +2,7 @@ package com.imagine.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
+
+import java.net.URI;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,8 +65,13 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
 
         if (user != null) {
             loginButton.setVisibility(View.INVISIBLE);
-            // If user.getPhotoUrl() =! null ...
-            Glide.with(this).load(default_user).into(imageCircle);
+            Uri userURI = user.getPhotoUrl();
+
+            if (userURI != null) {
+                Glide.with(this).load(userURI).into(imageCircle);
+            } else {
+                Glide.with(this).load(default_user).into(imageCircle);
+            }
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
