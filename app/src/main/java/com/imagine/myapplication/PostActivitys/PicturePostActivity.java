@@ -68,9 +68,8 @@ public class PicturePostActivity extends AppCompatActivity {
                 R.id.profile_picture_imageView);
         ImageView image_imageView = findViewById(R.id.picture_imageView);
 
-        String date = dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(date);
+        createTime_textView.setText(post.createTime);
         description_textView.setText(post.description);
         Glide.with(this).load(post.imageURL).into(image_imageView);
 

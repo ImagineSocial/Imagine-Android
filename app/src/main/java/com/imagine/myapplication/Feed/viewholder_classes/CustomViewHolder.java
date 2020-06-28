@@ -144,8 +144,8 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     public String getType(){
         return "custom";
     }
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
-    }
+//    public String dateToString(Timestamp timestamp){
+//        Date date = timestamp.toDate();
+//        return date.toString();
+//    }
 }

@@ -35,9 +35,8 @@ public class PictureViewHolder extends CustomViewHolder {
         ImageView picture_imageView = itemView.findViewById(R.id.picture_imageView);
 
 
-        String dateString =dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(dateString);
+        createTime_textView.setText(post.createTime);
         Glide.with(itemView).load(post.imageURL).into(picture_imageView);
 
         picture_imageView.setClipToOutline(true);

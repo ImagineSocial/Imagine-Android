@@ -78,9 +78,8 @@ public class LinkPostActivity extends AppCompatActivity {
         final ImageView preViewImage = findViewById(R.id.preView_image);
         final TextView preViewLink = findViewById(R.id.preView_link);
 
-        String dateString =dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(dateString);
+        createTime_textView.setText(post.createTime);
         /*
         RichPreview richPreview = new RichPreview(new ResponseListener() {
             @Override

@@ -86,9 +86,9 @@ public class YouTubePostActivity extends AppCompatActivity {
                 }
             }
         });
-        String dateString =dateToString(post.createTime);
+
         title_textView.setText(post.title);
-        createTime_textView.setText(dateString);
+        createTime_textView.setText(post.createTime);
 
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
