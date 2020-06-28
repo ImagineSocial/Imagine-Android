@@ -39,23 +39,34 @@ public class LoginActivity extends AppCompatActivity {
     public boolean login = true;
     public int duration = Toast.LENGTH_SHORT;
 
-    public EditText surname_ed = findViewById(R.id.surname_editText);
-    public TextView surname_label = findViewById(R.id.surname_label);
-    public TextView repeatPasswort_label = findViewById(R.id.repeatPassword_label);
-    public EditText repeatPassword_ed = findViewById(R.id.repeatPassword_editText);
-    public TextView name_label = findViewById(R.id.name_label);
-    public EditText name_ed = findViewById(R.id.name_editText);
-    public EditText email_ed = findViewById(R.id.email_editText);
-    public EditText password_ed = findViewById(R.id.password_editText);
-    public Button login_button = findViewById(R.id.login_button);
-    public Button login_checked = findViewById(R.id.login_checked);
-    public Button signup_checked = findViewById(R.id.signup_checked);
+    public EditText surname_ed;
+    public TextView surname_label;
+    public TextView repeatPasswort_label;
+    public EditText repeatPassword_ed;
+    public TextView name_label;
+    public EditText name_ed;
+    public EditText email_ed;
+    public EditText password_ed;
+    public Button login_button;
+    public Button login_checked;
+    public Button signup_checked;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        surname_ed = findViewById(R.id.surname_editText);
+        surname_label = findViewById(R.id.surname_label);
+        repeatPasswort_label = findViewById(R.id.repeatPassword_label);
+        repeatPassword_ed = findViewById(R.id.repeatPassword_editText);
+        name_label = findViewById(R.id.name_label);
+        name_ed = findViewById(R.id.name_editText);
+        email_ed = findViewById(R.id.email_editText);
+        password_ed = findViewById(R.id.password_editText);
+        login_button = findViewById(R.id.login_button);
+        login_checked = findViewById(R.id.login_checked);
+        signup_checked = findViewById(R.id.signup_checked);
         setLogin();
         login_button.setText("Login");
         login_checked.setOnClickListener(new View.OnClickListener() {
