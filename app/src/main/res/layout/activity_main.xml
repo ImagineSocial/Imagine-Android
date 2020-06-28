@@ -12,6 +12,7 @@
         android:layout_height="50dp"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/black">
@@ -35,9 +36,23 @@
             android:layout_height="45dp"
             android:layout_gravity="start"
             android:padding="5dp"
-            app:srcCompat="@drawable/default_user"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="20dp" />
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/default_user" />
+
+        <Button
+            android:id="@+id/toolbarLoginButton"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Login"
+            android:textAllCaps="false"
+            android:textSize="12sp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
+
     </androidx.appcompat.widget.Toolbar>
 
     <FrameLayout
