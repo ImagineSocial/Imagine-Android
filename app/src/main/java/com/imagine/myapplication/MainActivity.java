@@ -92,10 +92,16 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() != null){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user != null){
             loginButton.setVisibility(View.INVISIBLE);
-            // If user.getPhotoUrl() =! null ...
-            Glide.with(this).load(default_user).into(imageCircle);
+            Uri userURI = user.getPhotoUrl();
+
+            if (userURI != null) {
+                Glide.with(this).load(userURI).into(imageCircle);
+            } else {
+                Glide.with(this).load(default_user).into(imageCircle);
+            }
             imageCircle.setVisibility(View.VISIBLE);
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override

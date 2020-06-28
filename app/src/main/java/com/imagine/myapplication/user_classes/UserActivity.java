@@ -59,7 +59,7 @@ public class UserActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         auth.signOut();
-                        
+
                         UserActivity.super.finish();
                     }
                 });
