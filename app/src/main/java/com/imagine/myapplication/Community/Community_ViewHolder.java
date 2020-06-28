@@ -33,9 +33,11 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
 
         title_tv.setText(name);
         description_tv.setText(description);
-        if( imageURL != null)
+        if(imageURL != null) {
             Glide.with(itemView).load(imageURL).into(imageView);
-        else System.out.println("NO IMAGEURL: " +commID);
+        } else {
+            Glide.with(itemView).load(R.drawable.fact_stamp);
+        }
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
