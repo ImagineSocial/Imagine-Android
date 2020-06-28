@@ -24,7 +24,7 @@
             android:background="@color/md_white_1000">
 
             <Button
-                android:id="@+id/new_thought_button"
+                android:id="@+id/login_checked"
                 android:backgroundTint="@color/md_white_1000"
                 android:fontFamily="@font/ibm_medium"
                 android:text="Login"
@@ -32,7 +32,7 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/new_picture_button"
+                android:id="@+id/signup_checked"
                 android:backgroundTint="@color/md_white_1000"
                 android:fontFamily="@font/ibm_medium"
                 android:text="SignUp"

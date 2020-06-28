@@ -54,6 +54,9 @@
         <activity android:name=".UserActivity">
 
         </activity>
+        <activity android:name=".LoginActivity">
+
+        </activity>
     </application>
 
 </manifest>
