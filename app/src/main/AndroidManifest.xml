@@ -51,6 +51,9 @@
         <activity android:name=".PostActivitys.ThoughtPostActivity">
 
         </activity>
+        <activity android:name=".UserActivity">
+
+        </activity>
     </application>
 
 </manifest>

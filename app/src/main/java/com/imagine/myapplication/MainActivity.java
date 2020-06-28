@@ -1,5 +1,7 @@
 package com.imagine.myapplication;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,11 +31,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.imagine.myapplication.R.drawable.default_user;
 
 public class MainActivity extends AppCompatActivity {
-
+    public Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.mContext = this;
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -62,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("## Picture Tapped");
+                    Intent intent = new Intent(mContext,UserActivity.class);
+                    mContext.startActivity(intent);
                 }
             });
         } else {
