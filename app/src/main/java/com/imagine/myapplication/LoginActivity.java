@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
@@ -73,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setLogin();
+                login_button.setText("Login");
             }
         });
 
@@ -134,17 +137,17 @@ public class LoginActivity extends AppCompatActivity {
         String email = email_ed.getText().toString();
         String password = password_ed.getText().toString();
 
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    AuthResult result = task.getResult();
-                    user = result.getUser();
-                    System.out.println("!");
-                } else{
-                    Toast.makeText(mContext,"Login failed!",duration).show();
-                }
+            public void onSuccess(AuthResult authResult) {
+                user = authResult.getUser();
+                System.out.println("!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                String error = e.getMessage();
+                Toast.makeText(mContext,"Login failed! "+error,duration).show();
             }
         });
     }
@@ -191,6 +194,16 @@ public class LoginActivity extends AppCompatActivity {
 
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
         UserProfileChangeRequest request = builder.setDisplayName(name+" "+surname).build();
+        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("EMAIL GESENDET!");
+                } else{
+                    System.out.println("EMAIL NICHT GESENDET!");
+                }
+            }
+        });
 
         user.updateProfile(request).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
