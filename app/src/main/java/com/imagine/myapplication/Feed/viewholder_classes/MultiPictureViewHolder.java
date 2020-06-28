@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import com.imagine.myapplication.PostActivitys.GifPostActivity;
 import com.imagine.myapplication.PostActivitys.MultiPicturePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
+import com.imagine.myapplication.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.MultiPicturePost;
 import com.synnapps.carouselview.CarouselView;
@@ -46,6 +48,16 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
                 Glide.with(itemView).load(imageArray[position]).into(imageView);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Gson gson = new Gson();
+                        String objString = gson.toJson(post);
+                        Intent intent = new Intent(itemView.getContext(), MultiPicturePostActivity.class);
+                        intent.putExtra("post",objString);
+                        itemView.getContext().startActivity(intent);
+                    }
+                });
             }
         });
 
@@ -63,6 +75,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 }
             });
         }
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +86,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 itemView.getContext().startActivity(intent);
             }
         });
+
     }
 
     public void setName(MultiPicturePost post){
@@ -89,6 +103,13 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
             Glide.with(itemView).load(post.user.imageURL).into(
                     profilePicture_imageView
             );
+            profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 

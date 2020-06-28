@@ -15,6 +15,7 @@ import com.imagine.myapplication.PostActivitys.LinkPostActivity;
 import com.imagine.myapplication.PostActivitys.YouTubePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.User;
+import com.imagine.myapplication.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.YouTubePost;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -96,6 +97,13 @@ public class YouTubeViewHolder extends CustomViewHolder {
             Glide.with(itemView).load(post.user.imageURL).into(
                     profilePicture_imageView
             );
+            profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserActivity.class);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 
