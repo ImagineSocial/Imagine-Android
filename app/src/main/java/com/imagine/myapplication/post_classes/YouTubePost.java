@@ -9,7 +9,7 @@ public class YouTubePost extends Post {
     //Atributte von YouTubePost
     public String link = "";
     // Constructor
-    public YouTubePost(String title,String documentID, String description, String report, Timestamp createTime,
+    public YouTubePost(String title,String documentID, String description, String report, String createTime,
                 String originalPoster, long thanksCount, long wowCount, long haCount,
                 long niceCount, String type,String link) {
         super(title,documentID,description,report,createTime,originalPoster,

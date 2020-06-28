@@ -11,7 +11,7 @@ public class MultiPicturePost extends Post {
     public String imageURL = "";
     public String[] imageURLs = null;
     // Constructor
-    public MultiPicturePost(String title,String documentID, String description, String report, Timestamp createTime,
+    public MultiPicturePost(String title,String documentID, String description, String report, String createTime,
                             String originalPoster, long thanksCount, long wowCount, long haCount,
                             long niceCount, String type,long imageHeight,long imageWidth,
                             String imageURL, String [] imageURLs) {

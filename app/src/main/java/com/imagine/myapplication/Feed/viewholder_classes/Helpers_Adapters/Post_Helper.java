@@ -33,6 +33,7 @@ import com.imagine.myapplication.post_classes.YouTubePost;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -445,9 +446,12 @@ public class Post_Helper {
         long thought_niceCount = (long) docSnap.getLong("niceCount");
         String thought_type = (String)docSnap.get("type");
         Timestamp thought_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(thought_createTime.toDate(),timeNow);
         //ThoughtPost erstellen
+        System.out.println(dateString);
         ThoughtPost thoughtPost = new ThoughtPost(thought_title,thought_docID,thought_description,
-                thought_report,thought_createTime,thought_originalPoster,thought_thanksCount,
+                thought_report,dateString,thought_originalPoster,thought_thanksCount,
                 thought_wowCount,thought_haCount,thought_niceCount,thought_type);
         //Optinale Attribute setzen
         ArrayList<String> thought_tagsArray = (ArrayList<String>) docSnap.get("tags");
@@ -474,11 +478,13 @@ public class Post_Helper {
         long youtube_niceCount = (long) docSnap.getLong("niceCount");
         String youtube_type = (String)docSnap.get("type");
         Timestamp youtube_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(youtube_createTime.toDate(),timeNow);
         //YouTubePost Attribute
         String youtube_link = (String) docSnap.get("link");
         //YouTubePost erstellen
         YouTubePost youTubePost = new YouTubePost(youtube_title,youtube_docID,youtube_description,
-                youtube_report, youtube_createTime,youtube_originalPoster,youtube_thanksCount,
+                youtube_report, dateString,youtube_originalPoster,youtube_thanksCount,
                 youtube_wowCount,youtube_haCount, youtube_niceCount,youtube_type,youtube_link);
         //Optionale Attribute setzen
         ArrayList<String> youtube_tagsArray = (ArrayList<String>) docSnap.get("tags");
@@ -504,11 +510,13 @@ public class Post_Helper {
         long link_niceCount = (long) docSnap.getLong("niceCount");
         String link_type = (String)docSnap.get("type");
         Timestamp link_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(link_createTime.toDate(),timeNow);
         //LinkPost Attribute
         String link_link = (String) docSnap.get("link");
         //LinkPost erstellen
         LinkPost linkPost = new LinkPost(link_title,link_docID,link_description,
-                link_report,link_createTime,link_originalPoster,link_thanksCount,
+                link_report,dateString,link_originalPoster,link_thanksCount,
                 link_wowCount,link_haCount,link_niceCount,link_type,link_link);
         //Optinale Attribute setzen
         ArrayList<String> link_tagsArray = (ArrayList<String>) docSnap.get("tags");
@@ -534,11 +542,13 @@ public class Post_Helper {
         long gif_niceCount = (long) docSnap.getLong("niceCount");
         String gif_type = (String)docSnap.get("type");
         Timestamp gif_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(gif_createTime.toDate(),timeNow);
         //GIFPost Attribute
         String gif_link = (String) docSnap.get("link");
         //GIFPost erstellen
         GIFPost GIFPost = new GIFPost(gif_title,gif_docID,gif_description,
-                gif_report,gif_createTime,gif_originalPoster,gif_thanksCount,
+                gif_report,dateString,gif_originalPoster,gif_thanksCount,
                 gif_wowCount,gif_haCount,gif_niceCount,gif_type,gif_link);
         //Optionale Attribute setzen
         ArrayList<String> gif_tagsArray = (ArrayList<String>) docSnap.get("tags");
@@ -568,13 +578,15 @@ public class Post_Helper {
         String picture_type = (String)docSnap.get("type");
         String picture_link = (String) docSnap.get("link");
         Timestamp picture_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(picture_createTime.toDate(),timeNow);
         // PicturePost Attribute
         long picture_imageHeight = (long) docSnap.getLong("imageHeight");
         long picture_imageWidth = (long) docSnap.getLong("imageWidth");
         String picture_imageURL = (String) docSnap.get("imageURL");
         //PicturePost erstellen
         PicturePost picturePost = new PicturePost(picture_title,picture_docID,picture_description,
-                picture_report,picture_createTime,picture_originalPoster,picture_thanksCount,
+                picture_report,dateString,picture_originalPoster,picture_thanksCount,
                 picture_wowCount,picture_haCount,picture_niceCount,picture_type,picture_imageHeight,
                 picture_imageWidth,picture_imageURL);
         //Optinale Attribute setzen
@@ -602,6 +614,8 @@ public class Post_Helper {
         String mpicture_type = (String)docSnap.get("type");
         String mpicture_link = (String) docSnap.get("link");
         Timestamp mpicture_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(mpicture_createTime.toDate(),timeNow);
         // MultiPicturePost Attribute
         long mpicture_imageHeight = (long) docSnap.getLong("imageHeight");
         long mpicture_imageWidth = (long) docSnap.getLong("imageWidth");
@@ -611,7 +625,7 @@ public class Post_Helper {
         mpicture_imageURLS = mpicture_imageURLS_array.toArray(mpicture_imageURLS);
         // MultiPicturePost erstellen
         MultiPicturePost mPicturePost = new MultiPicturePost(mpicture_title,mpicture_docID,mpicture_description,
-                mpicture_report,mpicture_createTime,mpicture_originalPoster,mpicture_thanksCount,
+                mpicture_report,dateString,mpicture_originalPoster,mpicture_thanksCount,
                 mpicture_wowCount,mpicture_haCount,mpicture_niceCount,mpicture_type,
                 mpicture_imageHeight,mpicture_imageWidth,mpicture_imageURL,mpicture_imageURLS);
         //Optionale Attribute setzen
@@ -639,11 +653,13 @@ public class Post_Helper {
         long translation_niceCount = (long) docSnap.getLong("niceCount");
         String translation_type = (String)docSnap.get("type");
         Timestamp translation_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(translation_createTime.toDate(),timeNow);
         //TranslationPost Attribute
         String translation_OGpostDocumentID = (String) docSnap.get("OGpostDocumentID");
         //TranslationPost erstellen
         TranslationPost translationPost = new TranslationPost(translation_title,translation_docID,translation_description,
-                translation_report,translation_createTime,translation_originalPoster,translation_thanksCount,
+                translation_report,dateString,translation_originalPoster,translation_thanksCount,
                 translation_wowCount,translation_haCount,translation_niceCount,translation_type,
                 translation_OGpostDocumentID);
         postList.add(translationPost);
@@ -669,11 +685,13 @@ public class Post_Helper {
         long repost_niceCount = (long) docSnap.getLong("niceCount");
         String repost_type = (String)docSnap.get("type");
         Timestamp repost_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(repost_createTime.toDate(),timeNow);
         //RepostPost Attribute
         String repost_OGpostDocumentID = (String) docSnap.get("OGpostDocumentID");
         //RepostPost erstellen
         RepostPost repostPost = new RepostPost(repost_title,repost_docID,repost_description,
-                repost_report,repost_createTime,repost_originalPoster,repost_thanksCount,
+                repost_report,dateString,repost_originalPoster,repost_thanksCount,
                 repost_wowCount,repost_haCount,repost_niceCount,repost_type,
                 repost_OGpostDocumentID);
         postList.add(repostPost);
@@ -699,9 +717,11 @@ public class Post_Helper {
         long default_niceCount = (long) docSnap.getLong("niceCount");
         String default_type = (String)docSnap.get("type");
         Timestamp default_createTime = (Timestamp) docSnap.getTimestamp("createTime");
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(default_createTime.toDate(),timeNow);
         //ThoughtPost erstellen
         DefaultPost defaultPost = new DefaultPost(default_title,default_docID,default_description,
-                default_report,default_createTime,default_originalPoster,default_thanksCount,
+                default_report,dateString,default_originalPoster,default_thanksCount,
                 default_wowCount,default_haCount,default_niceCount,default_type);
         //Optinale Attribute setzen
         ArrayList<String> default_tagsArray = (ArrayList<String>) docSnap.get("tags");
@@ -713,5 +733,77 @@ public class Post_Helper {
         defaultPost.setLinkedFactId((String) docSnap.get("linkedFactID"));
         // Zur Liste hinzufügen
         postList.add(defaultPost);
+    }
+
+    public static String convertLongDateToAgoString (Date createdDate, Long timeNow){
+        Long createdDateLong = createdDate.getTime();
+        Long timeElapsed = timeNow - createdDateLong;
+
+        // For logging in Android for testing purposes
+        /*
+        Date dateCreatedFriendly = new Date(createdDate);
+        Log.d("MicroR", "dateCreatedFriendly: " + dateCreatedFriendly.toString());
+        Log.d("MicroR", "timeNow: " + timeNow.toString());
+        Log.d("MicroR", "timeElapsed: " + timeElapsed.toString());*/
+
+        // Lengths of respective time durations in Long format.
+        Long oneMin = 60000L;
+        Long oneHour = 3600000L;
+        Long oneDay = 86400000L;
+        Long oneWeek = 604800000L;
+
+        String finalString = "0sec";
+        String unit;
+
+        if (timeElapsed < oneMin){
+            // Convert milliseconds to seconds.
+            double seconds = (double) ((timeElapsed / 1000));
+            // Round up
+            seconds = Math.round(seconds);
+            // Generate the friendly unit of the ago time
+            if (seconds == 1) {
+                unit = " Sekunde";
+            } else {
+                unit = " Sekunden";
+            }
+            finalString = String.format("Vor %.0f ", seconds) + unit;
+        } else if (timeElapsed < oneHour) {
+            double minutes = (double) ((timeElapsed / 1000) / 60);
+            minutes = Math.round(minutes);
+            if (minutes == 1) {
+                unit = " Minute";
+            } else {
+                unit = " Minuten";
+            }
+            finalString = String.format("Vor %.0f ", minutes) + unit;
+        } else if (timeElapsed < oneDay) {
+            double hours   = (double) ((timeElapsed / 1000) / 60 / 60);
+            hours = Math.round(hours);
+            if (hours == 1) {
+                unit = " Stunde";
+            } else {
+                unit = " Stunden";
+            }
+            finalString = String.format("Vor %.0f ", hours) + unit;
+        } else if (timeElapsed < oneWeek) {
+            double days   = (double) ((timeElapsed / 1000) / 60 / 60 / 24);
+            days = Math.round(days);
+            if (days == 1) {
+                finalString = "Gestern";
+            } else {
+                finalString = String.format("Vor %.0f ", days) + "Tagen";
+            }
+
+        } else if (timeElapsed > oneWeek) {
+            double weeks = (double) ((timeElapsed / 1000) / 60 / 60 / 24 / 7);
+            weeks = Math.round(weeks);
+            if (weeks == 1) {
+                unit = "Woche";
+            } else {
+                unit = "Wochen";
+            }
+            finalString = String.format("Vor %.0f ", weeks) + unit;
+        }
+        return finalString;
     }
 }

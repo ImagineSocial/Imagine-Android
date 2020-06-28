@@ -34,9 +34,8 @@ public class ThoughtViewHolder extends CustomViewHolder {
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
 
-        String date = dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(date);
+        createTime_textView.setText(post.createTime);
 
         if(post.originalPoster == "anonym"){
             username_textView.setText("Anonym");

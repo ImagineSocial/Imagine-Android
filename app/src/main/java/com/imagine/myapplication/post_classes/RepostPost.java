@@ -6,7 +6,7 @@ public class RepostPost extends Post {
     public String OGPostDocumentID;
 
     public RepostPost(String title, String documentID, String description,
-                      String report, Timestamp createTime, String originalPoster,
+                      String report, String createTime, String originalPoster,
                       long thanksCount, long wowCount, long haCount, long niceCount,
                       String type,String OGPostDocumentID) {
         super(title, documentID, description, report, createTime, originalPoster,

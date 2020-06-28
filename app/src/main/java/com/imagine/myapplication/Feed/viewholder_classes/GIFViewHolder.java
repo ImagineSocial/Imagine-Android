@@ -38,9 +38,8 @@ public class GIFViewHolder extends CustomViewHolder {
                 R.id.profile_picture_imageView);
         final VideoView videoView = itemView.findViewById(R.id.gif_videoView);
 
-        String date = dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(date);
+        createTime_textView.setText(post.createTime);
         videoView.setVideoPath(post.link);
         videoView.start();
         //MediaController mediaController = new MediaController(itemView.getContext());

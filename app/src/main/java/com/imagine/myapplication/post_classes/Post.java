@@ -1,16 +1,9 @@
 package com.imagine.myapplication.post_classes;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.imagine.myapplication.User;
-import com.imagine.myapplication.UserCallback;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public abstract class Post {
 
@@ -20,7 +13,7 @@ public abstract class Post {
     public String documentID;
     public String description;
     public String report;
-    public Timestamp createTime;
+    public String createTime;
     public String originalPoster;   //Kann aber Anonym sein!
     public long thanksCount;
     public long wowCount;
@@ -33,7 +26,7 @@ public abstract class Post {
     public String linkedFactId = "";
     public String[] tags = null;
     // Constructor
-    public Post(String title,String documentID, String description, String report, Timestamp createTime,
+    public Post(String title, String documentID, String description, String report, String createTime,
                 String originalPoster, long thanksCount, long wowCount, long haCount,
                 long niceCount, String type) {
         this.title = title;
@@ -61,10 +54,6 @@ public abstract class Post {
 
     public void setReport(String report) {
         this.report = report;
-    }
-
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
     }
 
     public void setOriginalPoster(String originalPoster) {
@@ -111,11 +100,6 @@ public abstract class Post {
 
     public String getReport() {
         return report;
-    }
-
-    public String getCreateTime() {
-        Date date = this.createTime.toDate();
-        return date.toString();
     }
 
     public String getOriginalPoster() {

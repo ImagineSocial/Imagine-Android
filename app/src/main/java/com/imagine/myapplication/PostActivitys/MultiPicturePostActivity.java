@@ -74,9 +74,8 @@ public class MultiPicturePostActivity extends AppCompatActivity {
         CarouselView carouselView = findViewById(R.id.carouselView);
 
         final String [] imageArray = post.imageURLs;
-        String dateString =dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(dateString);
+        createTime_textView.setText(post.createTime);
         carouselView.setPageCount(imageArray.length);
         carouselView.setImageListener(new ImageListener() {
             @Override

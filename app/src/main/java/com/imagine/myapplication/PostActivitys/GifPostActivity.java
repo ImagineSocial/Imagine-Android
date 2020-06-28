@@ -73,9 +73,8 @@ public class GifPostActivity extends AppCompatActivity {
                 R.id.profile_picture_imageView);
         final VideoView videoView = findViewById(R.id.gif_videoView);
 
-        String date = dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(date);
+        createTime_textView.setText(post.createTime);
         description_textView.setText(post.description);
         videoView.setVideoPath(post.link);
         videoView.start();

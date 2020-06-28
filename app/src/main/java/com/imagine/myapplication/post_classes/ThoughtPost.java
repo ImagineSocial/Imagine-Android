@@ -7,7 +7,7 @@ import java.util.Date;
 public class ThoughtPost extends Post {
 
     // Constructor
-    public ThoughtPost(String title, String documentID, String description, String report, Timestamp createTime,
+    public ThoughtPost(String title, String documentID, String description, String report, String createTime,
                        String originalPoster, long thanksCount, long wowCount, long haCount,
                        long niceCount, String type) {
         super(title, documentID, description, report, createTime, originalPoster,

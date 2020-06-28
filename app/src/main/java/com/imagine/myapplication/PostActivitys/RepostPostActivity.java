@@ -72,9 +72,8 @@ public class RepostPostActivity extends AppCompatActivity {
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
 
-        String date = dateToString(post.createTime);
         title_textView.setText(post.title);
-        createTime_textView.setText(date);
+        createTime_textView.setText(post.createTime);
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
             Glide.with(this).load(R.drawable.default_user).into(

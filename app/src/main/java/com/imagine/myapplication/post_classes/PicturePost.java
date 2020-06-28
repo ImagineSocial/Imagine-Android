@@ -18,7 +18,7 @@ public class PicturePost extends Post {
     public long imageWidth;
     public String imageURL = "";
     //Constructor
-    public PicturePost(String title,String documentID, String description, String report, Timestamp createTime,
+    public PicturePost(String title,String documentID, String description, String report, String createTime,
                             String originalPoster, long thanksCount, long wowCount, long haCount,
                             long niceCount, String type,long imageHeight,long imageWidth,
                             String imageURL) {
