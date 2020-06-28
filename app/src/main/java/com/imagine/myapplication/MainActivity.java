@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
@@ -47,13 +50,31 @@ public class MainActivity extends AppCompatActivity {
         //Get the image from toolbar XML
         View hView =  toolbar.getRootView();
         CircleImageView imageCircle = hView.findViewById(R.id.toolbarProfilePicture);
-        Glide.with(this).load(default_user).into(imageCircle);
-        imageCircle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("## Fucking Bullshit");
-            }
-        });
+        Button loginButton = hView.findViewById(R.id.toolbarLoginButton);
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user != null) {
+            loginButton.setVisibility(View.INVISIBLE);
+            // If user.getPhotoUrl() =! null ...
+            Glide.with(this).load(default_user).into(imageCircle);
+            imageCircle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("## Picture Tapped");
+                }
+            });
+        } else {
+            imageCircle.setVisibility(View.INVISIBLE);
+            loginButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    System.out.println("## Login");
+                }
+            });
+        }
     }
 
 
