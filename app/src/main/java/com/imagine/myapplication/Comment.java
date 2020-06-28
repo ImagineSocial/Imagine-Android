@@ -1,6 +1,7 @@
 package com.imagine.myapplication;
 
 import com.google.firebase.Timestamp;
+import com.imagine.myapplication.user_classes.User;
 
 public class Comment {
 

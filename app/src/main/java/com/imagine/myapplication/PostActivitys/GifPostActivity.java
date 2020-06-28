@@ -1,6 +1,5 @@
 package com.imagine.myapplication.PostActivitys;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -67,7 +66,7 @@ public class GifPostActivity extends AppCompatActivity {
     public void bind(){
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView username_textView = findViewById(R.id.name_textView);
+        TextView username_textView = findViewById(R.id.name_TextView);
         TextView description_textView = findViewById(R.id.description_tv);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);

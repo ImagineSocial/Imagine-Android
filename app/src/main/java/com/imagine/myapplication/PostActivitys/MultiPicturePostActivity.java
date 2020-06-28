@@ -1,6 +1,5 @@
 package com.imagine.myapplication.PostActivitys;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,10 +19,8 @@ import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.Post_Fragment_Classes.MultiPictureFragment;
-import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.MultiPicturePost;
-import com.imagine.myapplication.post_classes.PicturePost;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -68,7 +65,7 @@ public class MultiPicturePostActivity extends AppCompatActivity {
     public void bind(){
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView name_textView = findViewById(R.id.name_textView);
+        TextView name_textView = findViewById(R.id.name_TextView);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         CarouselView carouselView = findViewById(R.id.carouselView);

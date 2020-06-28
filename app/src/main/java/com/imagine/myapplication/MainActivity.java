@@ -8,9 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -26,8 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
-
-import java.net.URI;
+import com.imagine.myapplication.user_classes.UserActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,7 +71,7 @@ public class MainActivity extends AppCompatActivity{
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext,UserActivity.class);
+                    Intent intent = new Intent(mContext, UserActivity.class);
                     mContext.startActivity(intent);
                 }
             });
@@ -96,10 +92,16 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() != null){
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user != null){
             loginButton.setVisibility(View.INVISIBLE);
-            // If user.getPhotoUrl() =! null ...
-            Glide.with(this).load(default_user).into(imageCircle);
+            Uri userURI = user.getPhotoUrl();
+
+            if (userURI != null) {
+                Glide.with(this).load(userURI).into(imageCircle);
+            } else {
+                Glide.with(this).load(default_user).into(imageCircle);
+            }
             imageCircle.setVisibility(View.VISIBLE);
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override

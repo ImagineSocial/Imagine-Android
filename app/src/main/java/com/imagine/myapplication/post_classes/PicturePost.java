@@ -1,16 +1,6 @@
 package com.imagine.myapplication.post_classes;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.imagine.myapplication.User;
-import com.imagine.myapplication.UserCallback;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import com.imagine.myapplication.user_classes.User;
 
 public class PicturePost extends Post {
     // Attribute von PicturePosts
