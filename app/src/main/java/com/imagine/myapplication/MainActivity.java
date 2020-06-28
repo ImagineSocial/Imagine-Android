@@ -29,7 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.imagine.myapplication.R.drawable.default_user;
 
-public class MainActivity extends AppCompatActivity implements FirebaseAuth.AuthStateListener {
+public class MainActivity extends AppCompatActivity{
     public Context mContext;
     public Button loginButton;
     public CircleImageView imageCircle;
@@ -89,11 +89,14 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
     }
 
     @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+    protected void onResume() {
+        super.onResume();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){
             loginButton.setVisibility(View.INVISIBLE);
             // If user.getPhotoUrl() =! null ...
             Glide.with(this).load(default_user).into(imageCircle);
+            imageCircle.setVisibility(View.VISIBLE);
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -103,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             });
         } else{
             imageCircle.setVisibility(View.INVISIBLE);
+            loginButton.setVisibility(View.VISIBLE);
             loginButton.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -112,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
                 }
             });
         }
-
     }
 
     @Override

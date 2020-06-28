@@ -142,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onSuccess(AuthResult authResult) {
                 user = authResult.getUser();
                 System.out.println("!");
+                LoginActivity.super.finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
