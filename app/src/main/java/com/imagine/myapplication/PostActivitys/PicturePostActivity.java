@@ -1,6 +1,5 @@
 package com.imagine.myapplication.PostActivitys;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -19,7 +18,6 @@ import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
-import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.PicturePost;
 
@@ -62,7 +60,7 @@ public class PicturePostActivity extends AppCompatActivity {
     public void bind(){
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView username_textView = findViewById(R.id.name_textView);
+        TextView username_textView = findViewById(R.id.name_TextView);
         TextView description_textView = findViewById(R.id.description_tv);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);

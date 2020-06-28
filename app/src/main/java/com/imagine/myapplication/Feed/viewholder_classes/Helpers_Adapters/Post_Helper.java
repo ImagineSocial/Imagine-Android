@@ -8,7 +8,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -18,7 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.FirebaseCallback;
-import com.imagine.myapplication.User;
+import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
 import com.imagine.myapplication.post_classes.LinkPost;
@@ -30,14 +29,9 @@ import com.imagine.myapplication.post_classes.ThoughtPost;
 import com.imagine.myapplication.post_classes.TranslationPost;
 import com.imagine.myapplication.post_classes.YouTubePost;
 
-import org.w3c.dom.Document;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.zip.DeflaterInputStream;
 
 public class Post_Helper {
 

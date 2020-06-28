@@ -1,6 +1,5 @@
 package com.imagine.myapplication.PostActivitys;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,16 +18,13 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
-import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.post_classes.ThoughtPost;
 import com.imagine.myapplication.post_classes.YouTubePost;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
@@ -70,7 +66,7 @@ public class YouTubePostActivity extends AppCompatActivity {
     public void bind(){
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView name_textView = findViewById(R.id.name_textView);
+        TextView name_textView = findViewById(R.id.name_TextView);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player);

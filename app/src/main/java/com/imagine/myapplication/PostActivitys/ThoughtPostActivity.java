@@ -2,13 +2,11 @@ package com.imagine.myapplication.PostActivitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +61,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
     public void bind(){
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView username_textView = findViewById(R.id.name_textView);
+        TextView username_textView = findViewById(R.id.name_TextView);
         TextView description_textView = findViewById(R.id.description_tv);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);

@@ -1,9 +1,6 @@
 package com.imagine.myapplication.post_classes;
 
-import com.google.firebase.Timestamp;
-import com.imagine.myapplication.User;
-
-import java.util.Date;
+import com.imagine.myapplication.user_classes.User;
 
 public abstract class Post {
 

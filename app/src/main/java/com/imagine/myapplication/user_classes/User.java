@@ -1,4 +1,4 @@
-package com.imagine.myapplication;
+package com.imagine.myapplication.user_classes;
 
 import java.util.List;
 

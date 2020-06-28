@@ -8,9 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
@@ -26,8 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
-
-import java.net.URI;
+import com.imagine.myapplication.user_classes.UserActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -75,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements FirebaseAuth.Auth
             imageCircle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(mContext,UserActivity.class);
+                    Intent intent = new Intent(mContext, UserActivity.class);
                     mContext.startActivity(intent);
                 }
             });

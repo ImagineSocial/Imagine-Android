@@ -2,24 +2,21 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.User;
+import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.Post;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

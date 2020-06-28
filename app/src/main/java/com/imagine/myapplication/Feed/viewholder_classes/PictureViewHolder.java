@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.PicturePostActivity;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.User;
+import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.PicturePost;
 
@@ -29,7 +28,7 @@ public class PictureViewHolder extends CustomViewHolder {
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
-        TextView name_textView = itemView.findViewById(R.id.name_textView);
+        TextView name_textView = itemView.findViewById(R.id.name_TextView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         ImageView picture_imageView = itemView.findViewById(R.id.picture_imageView);
@@ -66,7 +65,7 @@ public class PictureViewHolder extends CustomViewHolder {
     }
 
     public void setName(PicturePost post){
-        TextView username_textView = itemView.findViewById(R.id.name_textView);
+        TextView username_textView = itemView.findViewById(R.id.name_TextView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         username_textView.setText(post.user.name);
