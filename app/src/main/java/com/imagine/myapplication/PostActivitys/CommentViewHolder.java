@@ -32,7 +32,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     public void bind(Comment comm){
         this.comment = comm;
         ImageView profile = itemView.findViewById(R.id.profile_picture_imageView);
-        TextView name = itemView.findViewById(R.id.name_TextView);
+        TextView name = itemView.findViewById(R.id.name_textView);
         TextView date = itemView.findViewById(R.id.createDate_textView);
         TextView body = itemView.findViewById(R.id.comment_body);
 
@@ -85,7 +85,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public void setUserAgain (){
 
-        TextView name = itemView.findViewById(R.id.name_TextView);
+        TextView name = itemView.findViewById(R.id.name_textView);
         ImageView profile = itemView.findViewById(R.id.profile_picture_imageView);
         System.out.println(this.comment);
         if(comment.userID.equals("anonym")){

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
+import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.ThoughtPost;
 
@@ -20,6 +21,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
 
     private static final String TAG = "ThoughtViewHolder";
     public Context mContext;
+    public User userObj;
 
     public ThoughtViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -30,7 +32,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
-        TextView username_textView = itemView.findViewById(R.id.name_TextView);
+        TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
 
@@ -46,6 +48,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
                 @Override
                 public void onCallback(User user) {
                     post.user = user;
+                    userObj = user;
                     setName(post);
                 }
             });
@@ -62,8 +65,8 @@ public class ThoughtViewHolder extends CustomViewHolder {
         });
     }
 
-    public void setName(ThoughtPost post){
-        TextView username_textView = itemView.findViewById(R.id.name_TextView);
+    public void setName(final ThoughtPost post){
+        TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         username_textView.setText(post.user.name);
@@ -76,6 +79,16 @@ public class ThoughtViewHolder extends CustomViewHolder {
             Glide.with(itemView).load(post.user.imageURL).into(
                     profilePicture_imageView
             );
+            profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Gson gson = new Gson();
+                    String userString = gson.toJson(userObj);
+                    Intent intent = new Intent(mContext, UserActivity.class);
+                    intent.putExtra("user",userString);
+                    mContext.startActivity(intent);
+                }
+            });
         }
     }
 

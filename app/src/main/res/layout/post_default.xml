@@ -21,7 +21,7 @@
         tools:srcCompat="@drawable/default_user" />
 
     <TextView
-        android:id="@+id/name_TextView"
+        android:id="@+id/name_textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -40,9 +40,9 @@
         android:fontFamily="@font/ibm_light"
         android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_picture_imageView"
-        app:layout_constraintEnd_toEndOf="@+id/name_TextView"
-        app:layout_constraintStart_toStartOf="@+id/name_TextView"
-        app:layout_constraintTop_toBottomOf="@+id/name_TextView" />
+        app:layout_constraintEnd_toEndOf="@+id/name_textView"
+        app:layout_constraintStart_toStartOf="@+id/name_textView"
+        app:layout_constraintTop_toBottomOf="@+id/name_textView" />
 
     <ImageView
         android:id="@+id/topicImageView"

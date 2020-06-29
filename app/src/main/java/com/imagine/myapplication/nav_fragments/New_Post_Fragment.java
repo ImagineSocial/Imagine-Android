@@ -145,8 +145,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.new_picture_button:
                 newPictureButton.setAlpha(halfAlpha);
+                if(getView().getContext().checkSelfPermission(Manifest.
+                        permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String []{
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
-                showPicture();
+                }else{
+                    showPicture();
+                }
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new PicturePostFragment())
                         .commit();
@@ -188,19 +196,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         //Sollte noch woanders hin, Herr Schultz
         ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
 
-        if(getView().getContext().checkSelfPermission(Manifest.
-                permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String []{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-                    cameraButton.setAlpha(halfAlpha);
-                    cameraButton.setEnabled(false);
-        }else{
 
-            //Wenn es woanders ist, macht das vielleicht Sinn:
-//            cameraButton.setAlpha(fullAlpha);
-//            cameraButton.setEnabled(true);
-        }
     }
 
     @Override
