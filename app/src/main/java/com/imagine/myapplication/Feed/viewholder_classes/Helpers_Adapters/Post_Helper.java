@@ -756,27 +756,27 @@ public class Post_Helper {
             seconds = Math.round(seconds);
             // Generate the friendly unit of the ago time
             if (seconds == 1) {
-                unit = " Sekunde";
+                unit = "Sekunde";
             } else {
-                unit = " Sekunden";
+                unit = "Sekunden";
             }
             finalString = String.format("Vor %.0f ", seconds) + unit;
         } else if (timeElapsed < oneHour) {
             double minutes = (double) ((timeElapsed / 1000) / 60);
             minutes = Math.round(minutes);
             if (minutes == 1) {
-                unit = " Minute";
+                unit = "Minute";
             } else {
-                unit = " Minuten";
+                unit = "Minuten";
             }
             finalString = String.format("Vor %.0f ", minutes) + unit;
         } else if (timeElapsed < oneDay) {
             double hours   = (double) ((timeElapsed / 1000) / 60 / 60);
             hours = Math.round(hours);
             if (hours == 1) {
-                unit = " Stunde";
+                unit = "Stunde";
             } else {
-                unit = " Stunden";
+                unit = "Stunden";
             }
             finalString = String.format("Vor %.0f ", hours) + unit;
         } else if (timeElapsed < oneWeek) {
