@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +26,9 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         TextView title_tv = itemView.findViewById(R.id.comm_title);
         TextView description_tv = itemView.findViewById(R.id.comm_description);
         ImageView imageView = itemView.findViewById(R.id.comm_picture);
+
+        ConstraintLayout contentView = itemView.findViewById(R.id.community_content_view);
+        contentView.setClipToOutline(true);
 
         final String name = comm.name;
         final String description = comm.description;

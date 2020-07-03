@@ -11,6 +11,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -20,6 +21,9 @@ import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.GIFPost;
+
+import java.net.CacheRequest;
+import java.util.LinkedHashMap;
 
 public class GIFViewHolder extends CustomViewHolder {
     public Context mContext;
@@ -62,6 +66,13 @@ public class GIFViewHolder extends CustomViewHolder {
                 }
             });
         }
+
+        if (post.linkedFactId != "") {
+            setLinkedFact(post.linkedFactId);
+        }
+
+        ConstraintLayout videoFrame = itemView.findViewById(R.id.video_frame);
+        videoFrame.setClipToOutline(true);
 
         //Adjust the videoView to show the right ratio
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

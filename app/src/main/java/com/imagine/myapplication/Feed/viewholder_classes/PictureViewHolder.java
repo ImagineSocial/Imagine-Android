@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.imagine.myapplication.Community.Community;
+import com.imagine.myapplication.Community.Community_Activity;
+import com.imagine.myapplication.Community.FeedCommunityCallback;
 import com.imagine.myapplication.PostActivitys.PicturePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
@@ -56,6 +59,11 @@ public class PictureViewHolder extends CustomViewHolder {
                     }
                 });
         }
+
+        if (post.linkedFactId != "") {
+            setLinkedFact(post.linkedFactId);
+        }
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +102,29 @@ public class PictureViewHolder extends CustomViewHolder {
             });
         }
     }
+
+//    public void setLinkedCommunity(final Community community) {
+//        ImageView communityImageView = itemView.findViewById(R.id.topicImageView);
+//        if (community.imageURL != "") {
+//            Glide.with(itemView).load(community.imageURL).into(communityImageView);
+//        } else {
+//            Glide.with(itemView).load(R.drawable.fact_stamp).into(communityImageView);
+//        }
+//
+//        communityImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Gson gson = new Gson();
+//                String userString = gson.toJson(linkedCommunity);
+//                Intent intent = new Intent(mContext, Community_Activity.class);
+//                intent.putExtra("name", community.name);
+//                intent.putExtra("description",community.description);
+//                intent.putExtra("imageURL", community.imageURL);
+//                intent.putExtra("commID", community.topicID);
+//                mContext.startActivity(intent);
+//            }
+//        });
+//    }
 
     @Override
     public String getType() {

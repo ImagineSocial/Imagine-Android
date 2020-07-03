@@ -45,6 +45,8 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         carouselView.setPageCount(imageArray.length);
+        carouselView.setSlideInterval(6000);
+        carouselView.setPageTransformInterval(800);
         carouselView.setImageListener(new ImageListener() {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
@@ -61,7 +63,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 });
             }
         });
-
+        carouselView.setClipToOutline(true);
 
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
@@ -76,6 +78,10 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                     setName(post);
                 }
             });
+        }
+
+        if (post.linkedFactId != "") {
+            setLinkedFact(post.linkedFactId);
         }
 
         itemView.setOnClickListener(new View.OnClickListener() {

@@ -25,6 +25,7 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
         TextView title_tv = itemView.findViewById(R.id.comm_activity_title);
         TextView description_tv = itemView.findViewById(R.id.comm_activity_description);
         ImageView image_iv = itemView.findViewById(R.id.comm_activity_picture);
+        image_iv.setClipToOutline(true);
 
         title_tv.setText(community.name);
         description_tv.setText(community.description);

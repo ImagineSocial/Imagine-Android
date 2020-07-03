@@ -53,6 +53,11 @@ public class ThoughtViewHolder extends CustomViewHolder {
                 }
             });
         }
+
+        if (post.linkedFactId != "") {
+            setLinkedFact(post.linkedFactId);
+        }
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

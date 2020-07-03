@@ -74,12 +74,11 @@ public class MainActivity extends AppCompatActivity{
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         if(user != null){
-            if(userObj == null) this.getUser(user.getUid());
-            else{
+            if (userObj == null) {
+                this.getUser(user.getUid());
+            } else{
                 setUpUserViews(userObj);
             }
-
-
         } else{
             imageCircle.setVisibility(View.INVISIBLE);
             loginButton.setVisibility(View.VISIBLE);

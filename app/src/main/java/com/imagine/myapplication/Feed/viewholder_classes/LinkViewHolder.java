@@ -48,6 +48,7 @@ public class LinkViewHolder extends CustomViewHolder {
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+
         final View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +58,7 @@ public class LinkViewHolder extends CustomViewHolder {
                 mContext.startActivity(intent);
             }
         };
+
         RichPreview richPreview = new RichPreview(new ResponseListener() {
             @Override
             public void onData(MetaData metaData) {
@@ -76,7 +78,9 @@ public class LinkViewHolder extends CustomViewHolder {
                 System.out.println("");
             }
         });
+        preViewImage.setClipToOutline(true);
         richPreview.getPreview(post.link);
+
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
@@ -91,6 +95,11 @@ public class LinkViewHolder extends CustomViewHolder {
                 }
             });
         }
+
+        if (post.linkedFactId != "") {
+            setLinkedFact(post.linkedFactId);
+        }
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

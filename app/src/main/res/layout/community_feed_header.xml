@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EFEFEF">
+    android:background="#f2f2f7ff">
 
     <View
+        android:id="@+id/white_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#FFFFFF"
@@ -15,16 +16,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:background="#3c3c4349"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/white_view" />
+
     <ImageView
         android:id="@+id/comm_activity_picture"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
         android:adjustViewBounds="true"
+        android:background="@drawable/corner_radius_three"
         android:scaleType="centerCrop"
-        android:background="@drawable/community_cell_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="37.5dp"
         android:layout_marginStart="10dp"
-        android:fontFamily="@font/ibm_semi_bold"
+        android:fontFamily="@font/ibm_medium"
         android:textColor="@android:color/black"
         android:textSize="23sp"
         app:autoSizeMaxTextSize="23sp"
@@ -50,7 +59,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:textColor="@android:color/secondary_text_dark"
+        android:textColor="#707176"
         android:textSize="14sp"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="7sp"

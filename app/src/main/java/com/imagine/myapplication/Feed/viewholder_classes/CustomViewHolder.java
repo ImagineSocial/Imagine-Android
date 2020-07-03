@@ -1,16 +1,25 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.imagine.myapplication.Community.Community;
+import com.imagine.myapplication.Community.Community_Activity;
+import com.imagine.myapplication.Community.FeedCommunityCallback;
+import com.imagine.myapplication.CommunityCallback;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.UserCallback;
@@ -25,10 +34,12 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
 
     private static final String TAG = "CustomViewHolder";
     public View mItemView;
+    public Context mContext;
 
     public CustomViewHolder(@NonNull View itemView) {
         super(itemView);
         this.mItemView = itemView;
+        mContext = itemView.getContext();
     }
 
     public void init(final Post post){
@@ -138,6 +149,62 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
             });
         }
     }
+
+    public void setLinkedFact(final String linkedTopicID){
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        if (linkedTopicID != "" && linkedTopicID !=null) {
+            DocumentReference userRef = db.collection("Facts").document(linkedTopicID);
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    try {
+                        ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
+
+                        Map<String, Object> docData = documentSnapshot.getData();
+                        final String communityName = (docData.get("name") != null)      // Condition
+                                ? (String) docData.get("name")              // IF-True
+                                : (String) "";                              // ELSE
+
+                        final String communityImageURL = (docData.get("imageURL") != null)
+                                ? (String) docData.get("imageURL")
+                                : (String) "";
+                        final String communityID = linkedTopicID;
+                        final String description = (docData.get("description") != null)
+                                ? (String) docData.get("description")
+                                : (String) "";
+
+
+                        if (communityImageURL != "") {
+                            Glide.with(itemView).load(communityImageURL).into(linkedTopicImageView);
+                        } else {
+                            Glide.with(itemView).load(R.drawable.fact_stamp).into(linkedTopicImageView);
+                        }
+                        linkedTopicImageView.setClipToOutline(true);
+
+                        linkedTopicImageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(mContext, Community_Activity.class);
+                                intent.putExtra("name", communityName);
+                                intent.putExtra("description",description);
+                                intent.putExtra("imageURL", communityImageURL);
+                                intent.putExtra("commID", communityID);
+                                mContext.startActivity(intent);
+                            }
+                        });
+
+
+                    }catch(NullPointerException e){
+                        System.out.println(documentSnapshot.getId()+"HEHEHEHEHEHEHEHEH!!!!");
+                    }
+                }
+            });
+        }
+    }
+
+
     public String getType(){
         return "custom";
     }
