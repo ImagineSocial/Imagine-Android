@@ -5,15 +5,11 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.imagine.myapplication.Community.Community;
-import com.imagine.myapplication.Community.Community_Activity;
-import com.imagine.myapplication.Community.FeedCommunityCallback;
 import com.imagine.myapplication.PostActivitys.PicturePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;

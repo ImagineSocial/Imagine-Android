@@ -22,6 +22,7 @@ public abstract class Post {
     // vergeben wurden!
     public String linkedFactId = "";
     public String[] tags = null;
+    public Boolean isTopicPost = false;
     // Constructor
     public Post(String title, String documentID, String description, String report, String createTime,
                 String originalPoster, long thanksCount, long wowCount, long haCount,

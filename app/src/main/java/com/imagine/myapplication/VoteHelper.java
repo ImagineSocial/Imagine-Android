@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.imagine.myapplication.post_classes.Post;
 
@@ -13,10 +14,16 @@ public class VoteHelper {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public void updateVotes(String type, Post post){
-        DocumentReference ref = db.collection("Posts").document(post.documentID);
+        DocumentReference ref;
+        if (post.isTopicPost) {
+            ref = db.collection("TopicPosts").document(post.documentID);
+        } else {
+            ref = db.collection("Posts").document(post.documentID);
+        }
+
         switch(type){
             case "thanks":
-                ref.update("thanksCount", post.thanksCount+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                ref.update("thanksCount", FieldValue.increment(1)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("ThanksVote successfully updated!");
@@ -30,7 +37,7 @@ public class VoteHelper {
                 post.thanksCount++;
                 break;
             case "wow":
-                ref.update("wowCount", post.wowCount+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                ref.update("wowCount", FieldValue.increment(1)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("WowVote successfully updated!");
@@ -44,7 +51,7 @@ public class VoteHelper {
                 post.wowCount++;
                 break;
             case "ha":
-                ref.update("haCount", post.haCount+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                ref.update("haCount", FieldValue.increment(1)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("HaVote successfully updated!");
@@ -58,7 +65,7 @@ public class VoteHelper {
                 post.haCount++;
                 break;
             case "nice":
-                ref.update("niceCount", post.niceCount+1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                ref.update("niceCount", FieldValue.increment(1)).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         System.out.println("NiceVote successfully updated!");

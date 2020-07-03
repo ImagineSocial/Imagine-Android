@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +16,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.gson.Gson;
-import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_Activity;
-import com.imagine.myapplication.Community.FeedCommunityCallback;
-import com.imagine.myapplication.CommunityCallback;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.UserCallback;
@@ -84,23 +81,31 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = mItemView.findViewById(R.id.thanks_button);
-                thanksBUtton.setBackground(null);
-//                thanksBUtton.setText(post.thanksCount+"");
+                TextView thanksCounttv = mItemView.findViewById(R.id.thanks_count_textView);
+                thanksBUtton.setEnabled(false);
+                thanksBUtton.setVisibility(View.INVISIBLE);
+                thanksCounttv.setText(String.valueOf(post.thanksCount++));
                 break;
             case "wow":
                 ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
-                wowButton.setBackground(null);
-//                wowButton.setText(post.wowCount+"");
+                TextView wowCounttv = mItemView.findViewById(R.id.wow_count_textView);
+                wowButton.setEnabled(false);
+                wowButton.setVisibility(View.INVISIBLE);
+                wowCounttv.setText(String.valueOf(post.wowCount++));
                 break;
             case "ha":
                 ImageButton haButton = mItemView.findViewById(R.id.ha_button);
-                haButton.setBackground(null);
-//                haButton.setText(post.haCount+"");
+                TextView haCounttv = mItemView.findViewById(R.id.ha_count_textView);
+                haButton.setEnabled(false);
+                haButton.setVisibility(View.INVISIBLE);
+                haCounttv.setText(String.valueOf(post.haCount++));
                 break;
             case "nice":
                 ImageButton niceButton = mItemView.findViewById(R.id.nice_button);
-                niceButton.setBackground(null);
-//                niceButton.setText(post.niceCount+"");
+                TextView niceCounttv = mItemView.findViewById(R.id.nice_count_textView);
+                niceButton.setEnabled(false);
+                niceButton.setVisibility(View.INVISIBLE);
+                niceCounttv.setText(String.valueOf(post.niceCount++));
                 break;
             default:
                 Log.d(TAG,"Invalid type String!");
