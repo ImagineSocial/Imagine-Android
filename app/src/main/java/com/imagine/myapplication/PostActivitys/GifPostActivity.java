@@ -13,6 +13,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -78,6 +79,9 @@ public class GifPostActivity extends AppCompatActivity {
                 R.id.profile_picture_imageView);
         final VideoView videoView = findViewById(R.id.gif_videoView);
 
+        ConstraintLayout videoFrame = findViewById(R.id.video_frame);
+        videoFrame.setClipToOutline(true);
+
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         description_textView.setText(post.description);
@@ -87,6 +91,8 @@ public class GifPostActivity extends AppCompatActivity {
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+
                 //Get your video's width and height
                 int videoWidth = mp.getVideoWidth();
                 int videoHeight = mp.getVideoHeight();

@@ -78,6 +78,8 @@ public class GIFViewHolder extends CustomViewHolder {
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+
                 //Get your video's width and height
                 int videoWidth = mp.getVideoWidth();
                 int videoHeight = mp.getVideoHeight();
