@@ -71,6 +71,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     public final int GALLERY = 1;
     public final int IMAGE_CAPTURE = 2;
+    public final int MULTIPLE_IMAGES = 3;
 
     public View view;
 
@@ -170,13 +171,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             case R.id.new_gif_button:
                 newGIFButton.setAlpha(halfAlpha);
 
-                showYouTube();
+                showGIF();
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new YouTubePostFragment())
                         .commit();
                 break;
             case R.id.pictureFolder_Button:
-                choosePhotoFromGallery();
+                if(this.type.equals("multiPicture"))chooseMultiplePhotosFromGallery();
+                else choosePhotoFromGallery();
                 break;
             case R.id.pictureCamera_button:
                 takePhotoFromCamera();
@@ -215,6 +217,65 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         ImageView preview_image = getView().findViewById(R.id.picture_imageView);//TODO
 
+        switch(requestCode){
+            case GALLERY:
+                if(data != null){
+                    Uri contentURI = data.getData();
+                    try{
+                        if(Build.VERSION.SDK_INT <28){
+                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext()
+                                    .getContentResolver(),contentURI);
+                            image_inBitmap = bitmap;
+                            imageWidth = (float) bitmap.getWidth();
+                            imageHeight = (float) bitmap.getHeight();
+                            //preview_image.setImageBitmap(bitmap);
+                            Glide.with(getView()).load(contentURI).into(preview_image);
+                        }else{
+                            ImageDecoder.Source source = ImageDecoder.createSource(getContext()
+                                    .getContentResolver(),contentURI);
+                            Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+                            Glide.with(getView()).load(contentURI).into(preview_image);
+                            //preview_image.setImageBitmap(bitmap);
+                            image_inBitmap = bitmap;
+                            imageWidth = (float) bitmap.getWidth();
+                            imageHeight = (float) bitmap.getHeight();
+                        }
+                    }catch(Exception e){
+                        System.out.println(e.getStackTrace().toString());
+                    }
+                }
+                break;
+            case IMAGE_CAPTURE:
+                if (resultCode == getActivity().RESULT_OK) {
+                    try {
+                        if(Build.VERSION.SDK_INT < 28){
+                            Bitmap b1 = MediaStore.Images.Media
+                                    .getBitmap(
+                                            getContext().getContentResolver(), imageUri);
+
+                            Glide.with(getView()).load(b1).into(preview_image);
+                        }else{
+                            ImageDecoder.Source source = ImageDecoder.createSource(getContext()
+                                    .getContentResolver(),imageUri);
+                            Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+                            Glide.with(getView()).load(imageUri).into(preview_image);
+                        }
+
+                    } catch (IOException e) {
+                        System.out.println("FEHLER!");
+                    }
+                } else {
+                    int rowsDeleted =
+                            getContext().getContentResolver().delete(imageUri,
+                                    null, null);
+                    System.out.println("REIHEN GELÖSCHT!");
+                }
+                break;
+            case MULTIPLE_IMAGES:
+                break;
+
+        }
+        /*
         if(requestCode == GALLERY){
             if(data != null){
                 Uri contentURI = data.getData();
@@ -266,14 +327,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                 null, null);
                 System.out.println("REIHEN GELÖSCHT!");
             }
-        }
+        }*/
     }
 
     public void shareTapped(){
         // TODO
         EditText title_editText = getView().findViewById(R.id.title_editText);
         EditText link_editText = getView().findViewById(R.id.link_editText);
-        ImageView preView_image = getView().findViewById(R.id.preview_imageView);
+        ImageView preView_image = getView().findViewById(R.id.picture_imageView);
 
         FirebaseUser currentUser = auth.getCurrentUser();
 
@@ -304,11 +365,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             postLink(docRef);
                         }
                         break;
-                    case "youTube":
+                    case "gif":
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
                             Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration);
                         } else {
-                            postYouTube(docRef);
+                            if(isYouTubeURL(link_editText.getText().toString())){
+                                postYouTube(docRef);
+                            } else{
+                                postGIF(docRef);
+                            }
+
                         }
                         break;
                     default:
@@ -328,6 +394,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         startActivityForResult(intent,GALLERY);
     }
 
+    public void chooseMultiplePhotosFromGallery(){
+        Intent i = new Intent();
+        i.setType("image/*");
+        //i.setType("video/*");
+        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(
+                Intent.createChooser(i, "android.intent.action.SEND_MULTIPLE"), 1);
+    }
+
     public void takePhotoFromCamera(){
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"Kamera Test");
@@ -341,11 +417,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         startActivityForResult(intent,IMAGE_CAPTURE);
     }
 
-    public void setThought(){
-        this.type = "thought";
-        hidePicture();
-        hideLink();
-    }
 
     public void loadPictureToFirebase(final DocumentReference docRef){
         //TODO
@@ -434,6 +505,36 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             System.out.println("Kein User in PostLink-Methode!");
     }
 
+    public void postGIF(DocumentReference docRef){
+        //TODO
+        EditText title_edit = getView().findViewById(R.id.title_editText);
+        EditText description_edit = getView().findViewById(R.id.description_editText);
+        EditText link_edit = getView().findViewById(R.id.link_editText);
+
+        FirebaseUser user = auth.getCurrentUser();
+        String link = link_edit.getText().toString();
+
+        if( !user.equals(null) && link.contains(".mp4")){
+            String title = title_edit.getText().toString();
+            String description = description_edit.getText().toString();
+            HashMap<String,Object> data = new HashMap<>();
+            data.put("title",title);
+            data.put("description",description);
+            data.put("originalPoster", user.getUid());
+            data.put("createTime", new Timestamp(new Date())); // TODO
+            data.put("thanksCount",new Integer(0));
+            data.put("wowCount", new Integer(0));
+            data.put("haCount", new Integer(0));
+            data.put("niceCount", new Integer(0));
+            data.put("type", "GIF"); // TODO
+            data.put("repost", "normal");
+            data.put("link",link);
+
+            uploadData(docRef,data);
+        }else
+            System.out.println("Kein User in PostYouTUbe-Methode!");
+    }
+
     public void postYouTube(DocumentReference docRef){
         //TODO
         EditText title_edit = getView().findViewById(R.id.title_editText);
@@ -519,6 +620,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         preview_imageView.setImageResource(0);
 
     }
+    public void setThought(){
+        this.type = "thought";
+        hidePicture();
+        hideLink();
+    }
 
     public void hidePicture(){
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
@@ -541,8 +647,19 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         link_editText.setEnabled(false);
     }
 
+    public void showGIF(){
+        this.type = "gif";
+        hidePicture();
+
+        TextView link_label = getView().findViewById(R.id.link_label);
+        EditText link_editText = getView().findViewById(R.id.link_editText);
+
+        link_editText.setEnabled(true);
+        link_label.setAlpha(fullAlpha);
+    }
+
     public void showPicture(){
-        this.type = "picture";
+        this.type = "multiPicture";
         hideLink();
 
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
@@ -567,16 +684,35 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         link_label.setAlpha(fullAlpha);
     }
 
-    public void showYouTube(){
-        this.type = "youTube";
+    public void showMultiPicture(){
+        this.type = "multiPicture";
+        hideLink();
 
-        hidePicture();
+        ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
+        ImageButton pictureFolder_Button = getView().findViewById(R.id.pictureFolder_Button);
+        TextView picture_label = getView().findViewById(R.id.picture_label);
 
-        TextView link_label = getView().findViewById(R.id.link_label);
-        EditText link_editText = getView().findViewById(R.id.link_editText);
+        pictureCamera_button.setAlpha(fullAlpha);
+        pictureCamera_button.setEnabled(true);
+        pictureFolder_Button.setAlpha(fullAlpha);
+        pictureFolder_Button.setEnabled(true);
+        picture_label.setAlpha(fullAlpha);
 
-        link_editText.setEnabled(true);
-        link_label.setAlpha(fullAlpha);
+    }
+
+
+    public boolean isYouTubeURL(String youTubeURL){
+        boolean success;
+        String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
+        if (!youTubeURL.isEmpty() && youTubeURL.matches(pattern))
+        {
+            success = true;
+        }
+        else
+        {
+            success = false;
+        }
+        return success;
     }
 
 }

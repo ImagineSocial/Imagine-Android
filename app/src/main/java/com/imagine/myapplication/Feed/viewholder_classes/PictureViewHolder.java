@@ -41,7 +41,7 @@ public class PictureViewHolder extends CustomViewHolder {
         Glide.with(itemView).load(post.imageURL).into(picture_imageView);
 
         picture_imageView.setClipToOutline(true);
-        if(post.originalPoster == "anonym"){
+        if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);

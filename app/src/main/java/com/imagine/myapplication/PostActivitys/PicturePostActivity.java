@@ -76,9 +76,9 @@ public class PicturePostActivity extends AppCompatActivity {
         description_textView.setText(post.description);
         Glide.with(this).load(post.imageURL).into(image_imageView);
 
-        if(post.originalPoster == "anonym"){
+        if(post.originalPoster.equals("anonym")){
             username_textView.setText("Anonym");
-            Glide.with(this).load(R.drawable.default_user).into(
+            Glide.with(this).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);
         }else{
             username_textView.setText(post.user.name);
