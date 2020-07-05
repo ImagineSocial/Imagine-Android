@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
+import com.imagine.myapplication.nav_fragments.Information_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
@@ -54,8 +55,6 @@ public class MainActivity extends AppCompatActivity{
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new Feed_Fragment()).commit();
 
-        //In R.values.styles.xml habe ich eingestellt: parent="Theme.AppCompat.Light.NoActionBar">
-        //Toolbar aus der XML Datei
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -113,6 +112,9 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.nav_communities:
                             selectedFragment = new Communities_Fragment();
+                            break;
+                        case R.id.nav_info:
+                            selectedFragment = new Information_Fragment();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

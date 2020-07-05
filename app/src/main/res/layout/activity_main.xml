@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/ibm_medium"
-            android:text="Imagine"
+            android:text="imagine"
             android:textColor="#5377A6"
             android:textSize="22sp"
             tools:layout_editor_absoluteX="149dp"

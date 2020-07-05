@@ -15,4 +15,9 @@
         android:icon="@drawable/community_icon"
         android:title="Communities"
         />
+    <item
+        android:id="@+id/nav_info"
+        android:icon="@drawable/info_hippy_icon"
+        android:title="Imagine"
+        />
 </menu>

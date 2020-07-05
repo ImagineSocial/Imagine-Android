@@ -197,7 +197,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
-        if((requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) &&
+        if ((requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) &&
                 (grantResults.length > 0 && grantResults[0] ==
                         PackageManager.PERMISSION_GRANTED)){
             cameraButton.setEnabled(true);
