@@ -34,6 +34,8 @@ public class GIFViewHolder extends CustomViewHolder {
         this.mContext = itemView.getContext();
     }
 
+
+
     public void bind(final GIFPost post){
         init(post);
         //GIF Widgets
@@ -47,7 +49,6 @@ public class GIFViewHolder extends CustomViewHolder {
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         videoView.setVideoPath(post.link);
-        videoView.start();
         //MediaController mediaController = new MediaController(itemView.getContext());
         //videoView.setMediaController(mediaController);
         //mediaController.setAnchorView(videoView);
@@ -105,6 +106,7 @@ public class GIFViewHolder extends CustomViewHolder {
                 layoutParams.width = (int)scaledWidth;
                 layoutParams.height = (int)scaledHeight;
                 videoView.setLayoutParams(layoutParams);
+                videoView.start();
             }
         });
 

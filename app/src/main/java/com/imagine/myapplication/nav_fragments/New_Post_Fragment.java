@@ -46,6 +46,9 @@ import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -177,8 +180,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         .commit();
                 break;
             case R.id.pictureFolder_Button:
-                if(this.type.equals("multiPicture"))chooseMultiplePhotosFromGallery();
-                else choosePhotoFromGallery();
+                choosePhotoFromGallery();
                 break;
             case R.id.pictureCamera_button:
                 takePhotoFromCamera();
@@ -190,15 +192,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 setThought();
                 break;
         }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //Sollte noch woanders hin, Herr Schultz
-        ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
-
-
     }
 
     @Override
@@ -392,16 +385,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,GALLERY);
-    }
-
-    public void chooseMultiplePhotosFromGallery(){
-        Intent i = new Intent();
-        i.setType("image/*");
-        //i.setType("video/*");
-        i.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(
-                Intent.createChooser(i, "android.intent.action.SEND_MULTIPLE"), 1);
     }
 
     public void takePhotoFromCamera(){

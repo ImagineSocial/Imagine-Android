@@ -46,6 +46,8 @@ dependencies {
     implementation 'io.github.ponnamkarthik:richlinkpreview:1.0.9'
     //jsoup
     implementation 'org.jsoup:jsoup:1.11.1'
+    //Matisse
+    implementation 'com.zhihu.android:matisse:0.5.2'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     // GLIDE
