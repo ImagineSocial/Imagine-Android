@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Imagine</string>
     <string name="contact">Malte Schoppe\nSpitalhofstraße 56\n94032 Passau\n\nImagine@passau.enactus.de</string>
+    <string name="info_string">Unsere Pläne sind groß, der Weg jedoch noch weit. \nIn unserem Android-Prototypen findest du die Grundfunktionen von Imagine. \nMatz (goat) und Malte (auch goat) arbeiten fleißig an neuen Funktionen der App. Als Neulinge in der Android-Entwickler bitten wir um ein wenig Geduld.\n\nAuf unserer Website findest du weitere Informationen zu Imagine, unseren Zielen, unser Open Source Repository und vieles mehr:</string>
 </resources>
