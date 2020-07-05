@@ -1,6 +1,7 @@
 package com.imagine.myapplication.nav_fragments;
 
 import android.Manifest;
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -41,19 +42,25 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Post_Fragment_Classes.LinkPostFragment;
+import com.imagine.myapplication.Post_Fragment_Classes.MultiPictureFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class New_Post_Fragment extends Fragment implements View.OnClickListener {
 
@@ -75,6 +82,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public final int GALLERY = 1;
     public final int IMAGE_CAPTURE = 2;
     public final int MULTIPLE_IMAGES = 3;
+    public final int COMMUNITY_PICK = 4;
 
     public View view;
 
@@ -102,6 +110,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         pictureCamera_button.setOnClickListener(this);
         Button share_button = getView().findViewById(R.id.share_button);
         share_button.setOnClickListener(this);
+        Button commLinker = getView().findViewById(R.id.linkCommunity_button);
+        commLinker.setOnClickListener(this);
 
 
         this.view = view;
@@ -120,7 +130,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         pictureFolder_button.setAlpha(halfAlpha);
         pictureCamera_button.setEnabled(false);
         pictureCamera_button.setAlpha(halfAlpha);
-
         setThought();
     }
 
@@ -160,7 +169,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     showPicture();
                 }
                 fragmentManager.beginTransaction()
-                        .replace(R.id.post_preview, new PicturePostFragment())
+                        .replace(R.id.post_preview, new MultiPictureFragment())
                         .commit();
                 break;
             case R.id.new_link_button:
@@ -188,6 +197,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             case R.id.share_button:
                 shareTapped();
                 break;
+            case R.id.linkCommunity_button:
+                Intent intent = new Intent(getContext(), CommunityPickActivity.class);
+                startActivityForResult(intent,COMMUNITY_PICK);
             default:
                 setThought();
                 break;
@@ -265,62 +277,36 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 }
                 break;
             case MULTIPLE_IMAGES:
+                if(resultCode == getActivity().RESULT_OK){
+                    CarouselView carouselView = getView().findViewById(R.id.carouselView);
+                    ClipData clipData = data.getClipData();
+                    final Uri[] uris = new Uri[clipData.getItemCount()];
+                    if(clipData != null){
+                        for(int i=0; i < clipData.getItemCount(); i++){
+                            uris[i] = clipData.getItemAt(i).getUri();
+                        }
+                    }
+                    carouselView.setImageListener(new ImageListener() {
+                        @Override
+                        public void setImageForPosition(int position, ImageView imageView) {
+                            Glide.with(getView()).load(uris[position]).into(imageView);
+                        }
+                    });
+                    carouselView.setPageCount(uris.length);
+                    carouselView.setSlideInterval(6000);
+                    carouselView.setPageTransformInterval(800);
+
+                }
+                break;
+            case COMMUNITY_PICK:
+                String name = data.getStringExtra("name");
+                String imageURL = data.getStringExtra("imageURL");
+                String commID = data.getStringExtra("commID");
+                String toastString = "Communityname:  "+name+"  CommunityID: "+commID;
+                Toast.makeText(getView().getContext(),toastString,Toast.LENGTH_SHORT).show();
                 break;
 
         }
-        /*
-        if(requestCode == GALLERY){
-            if(data != null){
-                Uri contentURI = data.getData();
-                try{
-                    if(Build.VERSION.SDK_INT <28){
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext()
-                                .getContentResolver(),contentURI);
-                        image_inBitmap = bitmap;
-                        imageWidth = (float) bitmap.getWidth();
-                        imageHeight = (float) bitmap.getHeight();
-                        //preview_image.setImageBitmap(bitmap);
-                        Glide.with(getView()).load(contentURI).into(preview_image);
-                    }else{
-                        ImageDecoder.Source source = ImageDecoder.createSource(getContext()
-                                .getContentResolver(),contentURI);
-                        Bitmap bitmap = ImageDecoder.decodeBitmap(source);
-                        Glide.with(getView()).load(contentURI).into(preview_image);
-                        //preview_image.setImageBitmap(bitmap);
-                        image_inBitmap = bitmap;
-                        imageWidth = (float) bitmap.getWidth();
-                        imageHeight = (float) bitmap.getHeight();
-                    }
-                }catch(Exception e){
-                    System.out.println(e.getStackTrace().toString());
-                }
-            }
-        }else if (requestCode == IMAGE_CAPTURE) {
-            if (resultCode == getActivity().RESULT_OK) {
-                try {
-                    if(Build.VERSION.SDK_INT < 28){
-                        Bitmap b1 = MediaStore.Images.Media
-                                .getBitmap(
-                                        getContext().getContentResolver(), imageUri);
-
-                        Glide.with(getView()).load(b1).into(preview_image);
-                    }else{
-                        ImageDecoder.Source source = ImageDecoder.createSource(getContext()
-                                .getContentResolver(),imageUri);
-                        Bitmap bitmap = ImageDecoder.decodeBitmap(source);
-                        Glide.with(getView()).load(imageUri).into(preview_image);
-                    }
-
-                } catch (IOException e) {
-                    System.out.println("FEHLER!");
-                }
-            } else {
-                int rowsDeleted =
-                        getContext().getContentResolver().delete(imageUri,
-                                null, null);
-                System.out.println("REIHEN GELÖSCHT!");
-            }
-        }*/
     }
 
     public void shareTapped(){
@@ -385,6 +371,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,GALLERY);
+    }
+
+    public void chooseMultiplePhotosFromGallery(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        intent.setType("image/*");
+        startActivityForResult(intent,this.MULTIPLE_IMAGES);
     }
 
     public void takePhotoFromCamera(){
