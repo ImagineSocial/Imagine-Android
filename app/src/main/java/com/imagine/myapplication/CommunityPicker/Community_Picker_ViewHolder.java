@@ -53,7 +53,7 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("name",comm.name);
-                resultIntent.putExtra("imageURl", comm.imageURL);
+                resultIntent.putExtra("imageURL", comm.imageURL);
                 resultIntent.putExtra("commID", comm.topicID);
                 picker.setResult(picker.RESULT_OK,resultIntent);
                 picker.finish();

@@ -3,6 +3,7 @@ package com.imagine.myapplication.nav_fragments;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -51,9 +53,6 @@ import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -75,6 +74,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public float imageHeight = 0f;
     public float imageWidth = 0f;
     public Uri imageUri;
+    public String linkedFactID;
 
     public float halfAlpha = 0.5f;
     public float fullAlpha = 1f;
@@ -189,7 +189,21 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         .commit();
                 break;
             case R.id.pictureFolder_Button:
-                choosePhotoFromGallery();
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Wie viele Bilder willst du posten?")
+                        .setMessage("Wähle aus, ob du ein einziges Bild, oder eine Reihe von bis zu 3 Bildern hochladen möchtest.")
+                        .setPositiveButton("Nur ein Bild", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                choosePhotoFromGallery();
+                            }
+                        })
+                        .setNegativeButton("Mehrere Bilder", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                chooseMultiplePhotosFromGallery();
+                            }
+                        })
+                        .setNeutralButton(android.R.string.no, null)
+                        .show();
                 break;
             case R.id.pictureCamera_button:
                 takePhotoFromCamera();
@@ -220,7 +234,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView preview_image = getView().findViewById(R.id.picture_imageView);//TODO
+        ImageView preview_image = getView().findViewById(R.id.preview_imageView);
+        ImageView communityPreview = getView().findViewById(R.id.linkedCommunity_imageView);
+        preview_image.setClipToOutline(true);
+        communityPreview.setClipToOutline(true);
 
         switch(requestCode){
             case GALLERY:
@@ -233,14 +250,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             image_inBitmap = bitmap;
                             imageWidth = (float) bitmap.getWidth();
                             imageHeight = (float) bitmap.getHeight();
-                            //preview_image.setImageBitmap(bitmap);
+
                             Glide.with(getView()).load(contentURI).into(preview_image);
                         }else{
                             ImageDecoder.Source source = ImageDecoder.createSource(getContext()
                                     .getContentResolver(),contentURI);
                             Bitmap bitmap = ImageDecoder.decodeBitmap(source);
                             Glide.with(getView()).load(contentURI).into(preview_image);
-                            //preview_image.setImageBitmap(bitmap);
+
                             image_inBitmap = bitmap;
                             imageWidth = (float) bitmap.getWidth();
                             imageHeight = (float) bitmap.getHeight();
@@ -302,8 +319,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 String name = data.getStringExtra("name");
                 String imageURL = data.getStringExtra("imageURL");
                 String commID = data.getStringExtra("commID");
-                String toastString = "Communityname:  "+name+"  CommunityID: "+commID;
-                Toast.makeText(getView().getContext(),toastString,Toast.LENGTH_SHORT).show();
+                this.linkedFactID = commID;
+                Glide.with(getView()).load(imageURL).into(communityPreview);
                 break;
 
         }
@@ -341,19 +358,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
                             Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration);
                         } else {
-                            postLink(docRef);
+                            if(isYouTubeURL(link_editText.getText().toString())){
+                                postYouTube(docRef);
+                            } else {
+                                postLink(docRef);
+                            }
                         }
                         break;
                     case "gif":
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
                             Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration);
                         } else {
-                            if(isYouTubeURL(link_editText.getText().toString())){
-                                postYouTube(docRef);
-                            } else{
-                                postGIF(docRef);
-                            }
-
+                            postGIF(docRef);
                         }
                         break;
                     default:
@@ -570,16 +586,63 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             System.out.println("Kein User in postPicture-Methode!");
     }
 
-    public void uploadData(DocumentReference docRef, HashMap<String,Object> data){
+    public void uploadData(final DocumentReference docRef, HashMap<String,Object> data){
         docRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    if (linkedFactID != null) {
+                        uploadCommunityData(docRef, linkedFactID);
+                    }
+
+                    uploadUserData(docRef);
+
                     System.out.println("Post erfolgreich erstellt!");
                     postedSuccessful();
                 } else if(task.isCanceled())
                     System.out.println("Post Erstellung fehlgeschlagen!");
 
+            }
+        });
+    }
+
+    public void uploadCommunityData(DocumentReference docRef, String linkedFactID) {
+        String documentID = docRef.getId();
+        DocumentReference communityRef = db.collection("Facts").document(linkedFactID).collection("posts").document(documentID);
+        Timestamp timestamp = new Timestamp(new Date());
+
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("createTime",timestamp);
+        //If topicPost...
+        communityRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("Community erfolgreich gelinked!");
+                } else if(task.isCanceled()) {
+                    System.out.println("Community linken fehlgeschlagen!");
+                }
+            }
+        });
+    }
+
+    public void uploadUserData(DocumentReference docRef) {
+        String documentID = docRef.getId();
+        FirebaseUser user = auth.getCurrentUser();
+        DocumentReference userRef = db.collection("Users").document(user.getUid()).collection("posts").document(documentID);
+        Timestamp timestamp = new Timestamp(new Date());
+
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("createTime",timestamp);
+        //If topicPost...
+        userRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("Community erfolgreich gelinked!");
+                } else if(task.isCanceled()) {
+                    System.out.println("Community linken fehlgeschlagen!");
+                }
             }
         });
     }
