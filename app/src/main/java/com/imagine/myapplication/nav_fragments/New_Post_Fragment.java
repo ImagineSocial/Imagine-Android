@@ -297,21 +297,35 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 if(resultCode == getActivity().RESULT_OK){
                     CarouselView carouselView = getView().findViewById(R.id.carouselView);
                     ClipData clipData = data.getClipData();
-                    final Uri[] uris = new Uri[clipData.getItemCount()];
+
                     if(clipData != null){
+                        final Uri[] uris = new Uri[clipData.getItemCount()];
                         for(int i=0; i < clipData.getItemCount(); i++){
                             uris[i] = clipData.getItemAt(i).getUri();
                         }
+                        carouselView.setImageListener(new ImageListener() {
+                            @Override
+                            public void setImageForPosition(int position, ImageView imageView) {
+                                Glide.with(getView()).load(uris[position]).into(imageView);
+                            }
+                        });
+                        carouselView.setPageCount(uris.length);
+                        carouselView.setSlideInterval(6000);
+                        carouselView.setPageTransformInterval(800);
+                    } else {
+                        final Uri uri = data.getData();
+                        System.out.println("!");
+                        carouselView.setImageListener(new ImageListener() {
+                            @Override
+                            public void setImageForPosition(int position, ImageView imageView) {
+                                Glide.with(getView()).load(uri).into(imageView);
+                            }
+                        });
+                        carouselView.setPageCount(1);
+                        carouselView.setSlideInterval(6000);
+                        carouselView.setPageTransformInterval(800);
                     }
-                    carouselView.setImageListener(new ImageListener() {
-                        @Override
-                        public void setImageForPosition(int position, ImageView imageView) {
-                            Glide.with(getView()).load(uris[position]).into(imageView);
-                        }
-                    });
-                    carouselView.setPageCount(uris.length);
-                    carouselView.setSlideInterval(6000);
-                    carouselView.setPageTransformInterval(800);
+
 
                 }
                 break;

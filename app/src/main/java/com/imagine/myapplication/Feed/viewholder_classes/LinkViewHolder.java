@@ -34,6 +34,7 @@ public class LinkViewHolder extends CustomViewHolder {
         this.mContext = itemView.getContext();
     }
 
+
     public void bind(final LinkPost post){
         init(post);
         resetPreview();
