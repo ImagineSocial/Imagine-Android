@@ -61,6 +61,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class New_Post_Fragment extends Fragment implements View.OnClickListener {
 
     public StorageReference storeRef = FirebaseStorage.getInstance().getReference();
@@ -83,6 +85,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public final int IMAGE_CAPTURE = 2;
     public final int MULTIPLE_IMAGES = 3;
     public final int COMMUNITY_PICK = 4;
+
+    public Button shareButton;
 
     public View view;
 
@@ -108,8 +112,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         pictureFolder_button.setOnClickListener(this);
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
         pictureCamera_button.setOnClickListener(this);
-        Button share_button = getView().findViewById(R.id.share_button);
-        share_button.setOnClickListener(this);
+        shareButton = getView().findViewById(R.id.share_button);
+        shareButton.setOnClickListener(this);
         Button commLinker = getView().findViewById(R.id.linkCommunity_button);
         commLinker.setOnClickListener(this);
 
@@ -123,7 +127,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         fragmentManager.beginTransaction()
                 .replace(R.id.post_preview, new ThoughtPostFragment())
                 .commit();
-
+        showUserInPreview();
         newThoughtButton.setAlpha(halfAlpha);
 
         pictureFolder_button.setEnabled(false);
@@ -155,6 +159,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new ThoughtPostFragment())
                         .commit();
+                showUserInPreview();
                 break;
             case R.id.new_picture_button:
                 newPictureButton.setAlpha(halfAlpha);
@@ -171,6 +176,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new MultiPictureFragment())
                         .commit();
+                showUserInPreview();
                 break;
             case R.id.new_link_button:
                 newLinkButton.setAlpha(halfAlpha);
@@ -179,6 +185,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new LinkPostFragment())
                         .commit();
+                showUserInPreview();
                 break;
             case R.id.new_gif_button:
                 newGIFButton.setAlpha(halfAlpha);
@@ -187,22 +194,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new YouTubePostFragment())
                         .commit();
+                showUserInPreview();
                 break;
             case R.id.pictureFolder_Button:
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Wie viele Bilder willst du posten?")
-                        .setMessage("Wähle aus, ob du ein einziges Bild, oder eine Reihe von bis zu 3 Bildern hochladen möchtest.")
-                        .setPositiveButton("Nur ein Bild", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                choosePhotoFromGallery();
-                            }
-                        })
-                        .setNegativeButton("Mehrere Bilder", new DialogInterface.OnClickListener() {
+                        .setTitle("Poste ein oder mehrere Bilder")
+                        .setMessage("Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf 'Öffnen'")
+                        .setPositiveButton("Weiter", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 chooseMultiplePhotosFromGallery();
                             }
                         })
-                        .setNeutralButton(android.R.string.no, null)
+                        .setNegativeButton(android.R.string.no, null)
                         .show();
                 break;
             case R.id.pictureCamera_button:
@@ -298,8 +301,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     CarouselView carouselView = getView().findViewById(R.id.carouselView);
                     ClipData clipData = data.getClipData();
 
-                    if(clipData != null){
+                    if(clipData != null){   //multiPicture
+                        this.type = "multiPicture";
                         final Uri[] uris = new Uri[clipData.getItemCount()];
+                        Glide.with(getView()).load(uris[0]).into(preview_image);
                         for(int i=0; i < clipData.getItemCount(); i++){
                             uris[i] = clipData.getItemAt(i).getUri();
                         }
@@ -312,7 +317,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         carouselView.setPageCount(uris.length);
                         carouselView.setSlideInterval(6000);
                         carouselView.setPageTransformInterval(800);
-                    } else {
+                    } else {    //picture
+                        this.type = "picture";
                         final Uri uri = data.getData();
                         System.out.println("!");
                         carouselView.setImageListener(new ImageListener() {
@@ -321,9 +327,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                 Glide.with(getView()).load(uri).into(imageView);
                             }
                         });
+
                         carouselView.setPageCount(1);
-                        carouselView.setSlideInterval(6000);
-                        carouselView.setPageTransformInterval(800);
+                        Glide.with(getView()).load(uri).into(preview_image);
                     }
 
 
@@ -340,8 +346,20 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         }
     }
 
+    public void showUserInPreview() {
+        FirebaseUser user = auth.getCurrentUser();
+        CircleImageView imageView = getView().findViewById(R.id.profile_picture_imageView);
+        TextView nameTextView = getView().findViewById(R.id.name_textView);
+
+        if (user != null) {
+            Glide.with(getView()).load(user.getPhotoUrl()).into(imageView);
+            nameTextView.setText(user.getDisplayName());
+        }
+    }
+
     public void shareTapped(){
         // TODO
+        shareButton.setEnabled(false);
         EditText title_editText = getView().findViewById(R.id.title_editText);
         EditText link_editText = getView().findViewById(R.id.link_editText);
         ImageView preView_image = getView().findViewById(R.id.picture_imageView);
@@ -350,7 +368,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
         if(currentUser != null){
             if(title_editText.getText().equals("") || title_editText.getText().equals(null)){
-                Toast.makeText(getContext(),"Gib einen Titel ein!",duration);
+                Toast.makeText(getContext(),"Gib bitte einen Titel ein!",duration).show();
+                this.shareButton.setEnabled(true);
             }else{
                 DocumentReference docRef = db.collection("Posts").document();
                 System.out.println("Das ist die Post ID:" + docRef.getId());
@@ -361,6 +380,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                 || imageWidth == 0f){
                             Toast.makeText(getContext(),"Bitte wähle ein Bild aus", duration)
                             .show();
+                            this.shareButton.setEnabled(true);
                         }else{
                             loadPictureToFirebase(docRef);
                         }
@@ -370,7 +390,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         break;
                     case "link":
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
-                            Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration);
+                            Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration).show();
+                            this.shareButton.setEnabled(true);
                         } else {
                             if(isYouTubeURL(link_editText.getText().toString())){
                                 postYouTube(docRef);
@@ -381,19 +402,21 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         break;
                     case "gif":
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
-                            Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration);
+                            Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration).show();
+                            this.shareButton.setEnabled(true);
                         } else {
                             postGIF(docRef);
                         }
                         break;
                     default:
-                        Toast.makeText(getContext(),"Type Fehler!", duration);
+                        Toast.makeText(getContext(),"Type Fehler!", duration).show();
                         break;
 
                 }
             }
         }else{
-            Toast.makeText(getContext(),"Log dich ein um zu Posten!",duration).show();
+            Toast.makeText(getContext(),"Log dich ein um zu Posten.",duration).show();
+            this.shareButton.setEnabled(true);
         }
     }
 
@@ -520,25 +543,31 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         FirebaseUser user = auth.getCurrentUser();
         String link = link_edit.getText().toString();
 
-        if( !user.equals(null) && link.contains(".mp4")){
-            String title = title_edit.getText().toString();
-            String description = description_edit.getText().toString();
-            HashMap<String,Object> data = new HashMap<>();
-            data.put("title",title);
-            data.put("description",description);
-            data.put("originalPoster", user.getUid());
-            data.put("createTime", new Timestamp(new Date())); // TODO
-            data.put("thanksCount",new Integer(0));
-            data.put("wowCount", new Integer(0));
-            data.put("haCount", new Integer(0));
-            data.put("niceCount", new Integer(0));
-            data.put("type", "GIF"); // TODO
-            data.put("repost", "normal");
-            data.put("link",link);
+        if (user != null) {
+         if (link.contains(".mp4")){
+                String title = title_edit.getText().toString();
+                String description = description_edit.getText().toString();
+                HashMap<String, Object> data = new HashMap<>();
+                data.put("title", title);
+                data.put("description", description);
+                data.put("originalPoster", user.getUid());
+                data.put("createTime", new Timestamp(new Date())); // TODO
+                data.put("thanksCount", new Integer(0));
+                data.put("wowCount", new Integer(0));
+                data.put("haCount", new Integer(0));
+                data.put("niceCount", new Integer(0));
+                data.put("type", "GIF"); // TODO
+                data.put("repost", "normal");
+                data.put("link", link);
 
-            uploadData(docRef,data);
-        }else
+                uploadData(docRef, data);
+            } else {
+             Toast.makeText(getContext(), "Im Moment unterstützen wir leider nur Links im .mp4 Format.", Toast.LENGTH_SHORT).show();
+             this.shareButton.setEnabled(true);
+             }
+        } else {
             System.out.println("Kein User in PostYouTUbe-Methode!");
+        }
     }
 
     public void postYouTube(DocumentReference docRef){
@@ -615,7 +644,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     postedSuccessful();
                 } else if(task.isCanceled())
                     System.out.println("Post Erstellung fehlgeschlagen!");
-
             }
         });
     }
@@ -672,6 +700,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         link_edit.getText().clear();
         preview_imageView.setImageResource(0);
 
+        this.shareButton.setEnabled(true);
     }
     public void setThought(){
         this.type = "thought";
@@ -712,7 +741,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void showPicture(){
-        this.type = "multiPicture";
+        this.type = "picture";
         hideLink();
 
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);

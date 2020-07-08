@@ -1,9 +1,13 @@
 package com.imagine.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +30,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
 import java.util.HashMap;
+
+import javax.xml.datatype.Duration;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,6 +58,9 @@ public class LoginActivity extends AppCompatActivity {
     public Button login_button;
     public Button login_checked;
     public Button signup_checked;
+    public CheckBox gdpr_checkbox;
+    public Button gdpr_button;
+    public TextView surname_infoLabel;
 
 
     @Override
@@ -66,9 +75,13 @@ public class LoginActivity extends AppCompatActivity {
         name_ed = findViewById(R.id.name_editText);
         email_ed = findViewById(R.id.email_editText);
         password_ed = findViewById(R.id.password_editText);
-        login_button = findViewById(R.id.login_button);
+        login_button = findViewById(R.id.toolbarLoginButton);
         login_checked = findViewById(R.id.login_checked);
         signup_checked = findViewById(R.id.signup_checked);
+        gdpr_checkbox = findViewById(R.id.GDPR_checkbox);
+        gdpr_button = findViewById(R.id.gdpr_button);
+        surname_infoLabel = findViewById(R.id.surname_info_label);
+
         setLogin();
         login_button.setText("Login");
         login_checked.setOnClickListener(new View.OnClickListener() {
@@ -97,11 +110,21 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        gdpr_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                String gdprURL = "https://donmalte.github.io";
+                intent.setData(Uri.parse(gdprURL));
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public void setLogin(){
-        login_checked.setAlpha(fullAlpha);
-        signup_checked.setAlpha(halfAlpha);
+        login_checked.setAlpha(halfAlpha);
+        signup_checked.setAlpha(fullAlpha);
         login = true;
         name_ed.setVisibility(View.INVISIBLE);
         name_label.setVisibility(View.INVISIBLE);
@@ -109,11 +132,14 @@ public class LoginActivity extends AppCompatActivity {
         surname_label.setVisibility(View.INVISIBLE);
         repeatPassword_ed.setVisibility(View.INVISIBLE);
         repeatPasswort_label.setVisibility(View.INVISIBLE);
+        gdpr_button.setVisibility(View.INVISIBLE);
+        gdpr_checkbox.setVisibility(View.INVISIBLE);
+        surname_infoLabel.setVisibility(View.INVISIBLE);
     }
 
     public void setSignUp(){
-        signup_checked.setAlpha(fullAlpha);
-        login_checked.setAlpha(halfAlpha);
+        signup_checked.setAlpha(halfAlpha);
+        login_checked.setAlpha(fullAlpha);
 
         login = false;
 
@@ -123,10 +149,14 @@ public class LoginActivity extends AppCompatActivity {
         surname_label.setVisibility(View.VISIBLE);
         repeatPasswort_label.setVisibility(View.VISIBLE);
         repeatPassword_ed.setVisibility(View.VISIBLE);
+        gdpr_button.setVisibility(View.VISIBLE);
+        gdpr_checkbox.setVisibility(View.VISIBLE);
+        surname_infoLabel.setVisibility(View.VISIBLE);
     }
 
     public void tryToLogin(){
-        if(repeatPassword_ed.getText().equals("") || email_ed.getText().equals("")){
+        Editable password = password_ed.getText();
+        if((password.toString() == "") || email_ed.getText().toString().equals("")){
             Toast.makeText(this,"Bitte Email und Passwort eingeben",duration).show();
         } else {
             startLogin();
@@ -154,21 +184,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void tryToSignUp(){
-        if(name_ed.getText().toString().equals("") || surname_ed.getText().toString().equals("")
-            || password_ed.getText().toString().equals("") || repeatPassword_ed.getText().toString().equals("")
-            || email_ed.getText().toString().equals("")){
-            Toast.makeText(mContext, "Bitte alle Felder ausfüllen!", duration).show();
+        if (gdpr_checkbox.isChecked()) {
+            if (name_ed.getText().toString().equals("") || surname_ed.getText().toString().equals("")
+                    || password_ed.getText().toString().equals("") || repeatPassword_ed.getText().toString().equals("")
+                    || email_ed.getText().toString().equals("")) {
+                Toast.makeText(mContext, "Bitte fülle alle Felder aus.", duration).show();
 
-        } else  {
-            if(password_ed.getText().toString() != repeatPassword_ed.getText().toString()){
-                Toast.makeText(mContext, "Passwörter stimmen nicht überein!", duration).show();
             } else {
-                startSignUp();
+                if (password_ed.getText().toString() != repeatPassword_ed.getText().toString()) {
+                    Toast.makeText(mContext, "Die Passwörter stimmen nicht überein.", duration).show();
+                } else {
+                    startSignUp();
+                }
             }
+        } else {
+            Toast.makeText(mContext, "Bitte akzeptiere unsere Datenschutzrichtlinien, bevor du fortfährst.", duration).show();
         }
     }
 
     public void startSignUp(){
+        login_button.setEnabled(false);
+
         String email = email_ed.getText().toString();
         String password = password_ed.getText().toString();
         auth.createUserWithEmailAndPassword(email, password)
@@ -184,6 +220,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 }else{
                     Toast.makeText(mContext,"Sign up failed!",duration).show();
+                    login_button.setEnabled(true);
                 }
             }
         });
@@ -278,7 +315,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void dismissAfterSuccess(){
-        Toast.makeText(getBaseContext(),"Willkommen bei Imagine",duration).show();
+        Toast.makeText(getBaseContext(),"Willkommen bei Imagine", Toast.LENGTH_LONG).show();
         super.onBackPressed();
     }
 }

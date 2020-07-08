@@ -107,7 +107,7 @@ public class Information_Fragment extends Fragment implements View.OnClickListen
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     System.out.println("OLLOLO!!");
-                    Toast.makeText(getContext(),"Dein Account wird innerhalb von 48h gelöscht. Logge dich aus, wir übernehmen den Rest.",Toast.LENGTH_LONG);
+                    Toast.makeText(getContext(),"Dein Account wird innerhalb von 48h gelöscht. Logge dich aus, wir übernehmen den Rest.",Toast.LENGTH_LONG).show();
                 } else{
                     System.out.println("HOIHOIHO!!");
                     deleteAccountButton.setAlpha(1);

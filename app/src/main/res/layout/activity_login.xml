@@ -17,6 +17,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/black">
 
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            app:srcCompat="@drawable/imagine_icon" />
+
         <Button
             android:id="@+id/toolbarLoginButton"
             android:layout_width="60dp"
@@ -42,9 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_toolbar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -217,12 +222,14 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="40dp"
                 android:fontFamily="@font/ibm_regular"
                 android:text="Ich akzeptiere die Datenschutzverordnung"
                 android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/gdpr_button"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/surname_editText" />
+                app:layout_constraintTop_toBottomOf="@+id/surname_info_label" />
 
             <Button
                 android:id="@+id/gdpr_button"
@@ -235,18 +242,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/GDPR_checkbox" />
 
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/button_border"
-                android:text="Log In"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/gdpr_button" />
+            <TextView
+                android:id="@+id/surname_info_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/ibm_regular"
+                android:text="Dein Nachname wird nur für deine Freunde sichtbar sein."
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/surname_editText"
+                app:layout_constraintStart_toStartOf="@+id/surname_editText"
+                app:layout_constraintTop_toBottomOf="@+id/surname_editText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
