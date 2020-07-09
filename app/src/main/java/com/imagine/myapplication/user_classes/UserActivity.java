@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,9 +24,12 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class UserActivity extends AppCompatActivity {
-    public ArrayList<Post> posts;
+    public ArrayList<Post> posts = new ArrayList<>();
+    public Post_Helper helper = new Post_Helper();
     public Context mContext;
     public User user;
     @Override
@@ -37,11 +41,11 @@ public class UserActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String userString = intent.getStringExtra("user");
         user = gson.fromJson(userString,User.class);
-        Post_Helper helper = new Post_Helper();
         helper.getPostsForUserFeed(new FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<Post> values) {
-                posts = values;
+                ArrayList<Post> sortedPosts = sortPostList(values);
+                posts = sortedPosts;
                 initRecyclerView();
             }
         },user.userID);
@@ -81,5 +85,54 @@ public class UserActivity extends AppCompatActivity {
         UserFeedAdapter adapter = new UserFeedAdapter(posts,mContext,user);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            boolean loading = true;
+            int previousTotal =0;
+            @Override
+            public void onScrolled(@NonNull final RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                LinearLayoutManager lm = (LinearLayoutManager) recyclerView.getLayoutManager();
+                int visibleItemCount = lm.getChildCount();
+                int totalItemCount = lm.getItemCount();
+                int pastVisibleItems = lm.findFirstVisibleItemPosition();
+
+                if(loading && totalItemCount > previousTotal){
+                    loading = false;
+                    previousTotal = totalItemCount;
+                }
+                if((totalItemCount-(pastVisibleItems+visibleItemCount))<=2&&!loading){
+                    loading = true;
+                    helper.getMorePostsForUserFeed(new FirebaseCallback() {
+                        @Override
+                        public void onCallback(ArrayList<Post> values) {
+                            ArrayList<Post> sortedValues = sortPostList(values);
+                            posts = sortedValues;
+                            UserFeedAdapter adapter = (UserFeedAdapter) recyclerView.getAdapter();
+                            adapter.addMorePosts(sortedValues);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public ArrayList<Post> sortPostList(ArrayList<Post> posts){
+        Collections.sort(posts, new Comparator<Post>() {
+            @Override
+            public int compare(Post o1, Post o2) {
+                if(o1.createTimestamp.getSeconds()>=
+                        o2.createTimestamp.getSeconds()){
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        for(Post post : posts){
+            System.out.println(post.createTimestamp.getNanoseconds());
+        }
+        return posts;
+
     }
 }

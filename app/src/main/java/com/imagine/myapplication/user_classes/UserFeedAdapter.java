@@ -34,15 +34,20 @@ import java.util.ArrayList;
 
 public class UserFeedAdapter extends FeedAdapter {
 
-    public ArrayList<Post> posts;
+    public ArrayList<Post> postList;
     public Context mContext;
     public User user;
 
     public UserFeedAdapter(ArrayList<Post> postList, Context mContext, User user) {
         super(postList, mContext);
-        this.posts = postList;
+        this.postList = postList;
         this.mContext = mContext;
         this.user= user;
+    }
+
+    @Override
+    public void addMorePosts(ArrayList<Post> posts) {
+        this.postList = posts;
     }
 
     @Override
@@ -116,7 +121,7 @@ public class UserFeedAdapter extends FeedAdapter {
 
     @Override
     public int getItemCount() {
-        return posts.size()+1;
+        return postList.size()+1;
     }
 
     @NonNull

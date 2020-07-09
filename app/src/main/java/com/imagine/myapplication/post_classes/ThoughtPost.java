@@ -8,10 +8,14 @@ public class ThoughtPost extends Post {
 
     // Constructor
     public ThoughtPost(String title, String documentID, String description, String report, String createTime,
-                       String originalPoster, long thanksCount, long wowCount, long haCount,
+                       Timestamp createTimestamp, String originalPoster, long thanksCount, long wowCount, long haCount,
                        long niceCount, String type) {
-        super(title, documentID, description, report, createTime, originalPoster,
+        super(title, documentID, description, report, createTime, createTimestamp, originalPoster,
                 thanksCount, wowCount, haCount, niceCount, type);
+    }
+
+    public ThoughtPost(){
+
     }
 
     //------------Setter-Functionen------------

@@ -1,5 +1,6 @@
 package com.imagine.myapplication.post_classes;
 
+import com.google.firebase.Timestamp;
 import com.imagine.myapplication.user_classes.User;
 
 public class PicturePost extends Post {
@@ -8,15 +9,19 @@ public class PicturePost extends Post {
     public long imageWidth;
     public String imageURL = "";
     //Constructor
-    public PicturePost(String title,String documentID, String description, String report, String createTime,
-                            String originalPoster, long thanksCount, long wowCount, long haCount,
-                            long niceCount, String type,long imageHeight,long imageWidth,
-                            String imageURL) {
-        super(title,documentID,description,report,createTime,originalPoster,
+    public PicturePost(String title, String documentID, String description, String report, String createTime,
+                       Timestamp createTimestamp, String originalPoster, long thanksCount, long wowCount, long haCount,
+                       long niceCount, String type, long imageHeight, long imageWidth,
+                       String imageURL) {
+        super(title,documentID,description,report,createTime,createTimestamp,originalPoster,
                 thanksCount,wowCount,haCount,niceCount,type);
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
         this.imageURL = imageURL;
+    }
+
+    public PicturePost(){
+
     }
 
     //------------Setter-Functionen------------

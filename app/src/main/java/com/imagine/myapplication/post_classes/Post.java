@@ -1,5 +1,6 @@
 package com.imagine.myapplication.post_classes;
 
+import com.google.firebase.Timestamp;
 import com.imagine.myapplication.user_classes.User;
 
 public abstract class Post {
@@ -11,6 +12,7 @@ public abstract class Post {
     public String description;
     public String report;
     public String createTime;
+    public Timestamp createTimestamp;
     public String originalPoster;   //Kann aber Anonym sein!
     public long thanksCount;
     public long wowCount;
@@ -25,19 +27,24 @@ public abstract class Post {
     public Boolean isTopicPost = false;
     // Constructor
     public Post(String title, String documentID, String description, String report, String createTime,
-                String originalPoster, long thanksCount, long wowCount, long haCount,
+                Timestamp createTimestamp,String originalPoster, long thanksCount, long wowCount, long haCount,
                 long niceCount, String type) {
         this.title = title;
         this.documentID=documentID;
         this.description = description;
         this.report = report;
         this.createTime = createTime;
+        this.createTimestamp = createTimestamp;
         this.originalPoster =   originalPoster;
         this.thanksCount = thanksCount;
         this.wowCount = wowCount;
         this.haCount = haCount;
         this.niceCount = niceCount;
         this.type = type;
+    }
+
+    public Post(){
+
     }
 
     //------------Setter-Functionen------------

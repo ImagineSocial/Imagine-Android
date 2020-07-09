@@ -9,13 +9,16 @@ public class GIFPost extends Post {
     public String link = "";
     // Constructor
     public GIFPost(String title,String documentID, String description, String report, String createTime,
-                       String originalPoster, long thanksCount, long wowCount, long haCount,
+                       Timestamp creatTimestamp, String originalPoster, long thanksCount, long wowCount, long haCount,
                        long niceCount, String type,String link) {
-        super(title,documentID,description,report,createTime,originalPoster,
+        super(title,documentID,description,report,createTime,creatTimestamp,originalPoster,
                 thanksCount,wowCount,haCount,niceCount,type);
         this.link = link;
     }
 
+    public GIFPost(){
+
+    }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
     public void setLink(String link) {

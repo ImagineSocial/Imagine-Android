@@ -12,10 +12,10 @@ public class MultiPicturePost extends Post {
     public String[] imageURLs = null;
     // Constructor
     public MultiPicturePost(String title,String documentID, String description, String report, String createTime,
-                            String originalPoster, long thanksCount, long wowCount, long haCount,
+                            Timestamp creatTimestamp, String originalPoster, long thanksCount, long wowCount, long haCount,
                             long niceCount, String type,long imageHeight,long imageWidth,
                             String imageURL, String [] imageURLs) {
-        super(title,documentID,description,report,createTime,originalPoster,
+        super(title,documentID,description,report,createTime,creatTimestamp,originalPoster,
                 thanksCount,wowCount,haCount,niceCount,type);
         this.imageHeight = imageHeight;
         this.imageWidth = imageWidth;
@@ -23,6 +23,9 @@ public class MultiPicturePost extends Post {
         this.imageURLs = imageURLs;
     }
 
+    public MultiPicturePost(){
+
+    }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
 

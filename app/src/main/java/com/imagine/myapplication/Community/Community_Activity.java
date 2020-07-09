@@ -20,9 +20,10 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Community_Activity extends AppCompatActivity {
-    boolean recyclerSet = false;
     ArrayList<Post> postList = new ArrayList<>();
     Post_Helper helper = new Post_Helper();
     RecyclerView recyclerView;
@@ -47,22 +48,36 @@ public class Community_Activity extends AppCompatActivity {
         helper.getPostsForCommunityFeed(commID,new FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<Post> values) {
-                postList = values;
-                if(!recyclerSet){
-                    initRecyclerView();
-                }else{
-                    FeedAdapter adapter =(FeedAdapter) recyclerView.getAdapter();
-                    adapter.addMorePosts(values);
-                    adapter.notifyDataSetChanged();
-                }
+                ArrayList<Post> sortedPosts = sortPostList(values);
+                postList.addAll(sortedPosts);
+                initRecyclerView();
             }
         });
 
 
     }
 
+    public ArrayList<Post> sortPostList(ArrayList<Post> posts){
+            Collections.sort(posts, new Comparator<Post>() {
+                @Override
+                public int compare(Post o1, Post o2) {
+                    if(o1.createTimestamp.getSeconds()>=
+                            o2.createTimestamp.getSeconds()){
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+        for(Post post : posts){
+            System.out.println(post.createTimestamp.getNanoseconds());
+        }
+            return posts;
+
+    }
+
+
     public void initRecyclerView(){
-        this.recyclerSet = true;
         FeedAdapter adapter = new CommunityFeedAdapter(postList,this.community,this);
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -88,7 +103,7 @@ public class Community_Activity extends AppCompatActivity {
                         @Override
                         public void onCallback(ArrayList<Post> values) {
 
-                            postList = values;
+                            postList.addAll(sortPostList(values));
                             FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
                             adapter.addMorePosts(values);
                             adapter.notifyDataSetChanged();

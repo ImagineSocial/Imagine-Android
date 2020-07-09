@@ -7,11 +7,15 @@ public class TranslationPost extends Post{
     public String OGpostDocumentID;
     //Constructor
     public TranslationPost(String title, String documentID, String description, String report,
-                           String createTime, String originalPoster, long thanksCount, long wowCount,
+                           String createTime,Timestamp createTimestamp, String originalPoster, long thanksCount, long wowCount,
                            long haCount, long niceCount, String type, String OGpostDocumentID) {
-        super(title, documentID, description, report, createTime, originalPoster, thanksCount,
+        super(title, documentID, description, report, createTime, createTimestamp, originalPoster, thanksCount,
                 wowCount, haCount, niceCount, type);
         this.OGpostDocumentID = OGpostDocumentID;
+    }
+
+    public TranslationPost(){
+
     }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
