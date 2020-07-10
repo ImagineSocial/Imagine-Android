@@ -74,6 +74,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     private static final int
             PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 123;
     public Bitmap image_inBitmap = null;
+    public Bitmap[] multi_bitmaps = new Bitmap[3];
     public float imageHeight = 0f;
     public float imageWidth = 0f;
     public Uri imageUri;
@@ -200,7 +201,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 new AlertDialog.Builder(getContext())
                         .setTitle("Poste ein oder mehrere Bilder")
                         .setMessage("Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf 'Öffnen'")
-                        .setPositiveButton("Weiter", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("Mehrere", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 chooseMultiplePhotosFromGallery();
                             }
@@ -302,12 +303,43 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     ClipData clipData = data.getClipData();
 
                     if(clipData != null){   //multiPicture
+
+                        if(clipData.getItemCount()>3){
+                            Toast.makeText(getContext(),"Bitte wähle nicht mehr als drei BIlder aus!",
+                                    duration).show();
+                            return;
+                        }
                         this.type = "multiPicture";
                         final Uri[] uris = new Uri[clipData.getItemCount()];
-                        Glide.with(getView()).load(uris[0]).into(preview_image);
                         for(int i=0; i < clipData.getItemCount(); i++){
                             uris[i] = clipData.getItemAt(i).getUri();
                         }
+                        for(int i =0; i<uris.length;i++){
+                            Uri uri = uris[i];
+                            try{
+                                if(Build.VERSION.SDK_INT <28){
+                                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext()
+                                            .getContentResolver(),uri);
+                                    multi_bitmaps[i] = bitmap;
+                                    if(i == 0){
+                                        imageWidth = (float) bitmap.getWidth();
+                                        imageHeight = (float) bitmap.getHeight();
+                                    }
+                                }else{
+                                    ImageDecoder.Source source = ImageDecoder.createSource(getContext()
+                                            .getContentResolver(),uri);
+                                    Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+                                    multi_bitmaps[i] = bitmap;
+                                    if(i == 0){
+                                        imageWidth = (float) bitmap.getWidth();
+                                        imageHeight = (float) bitmap.getHeight();
+                                    }
+                                }
+                            }catch(Exception e){
+                                System.out.println("!!");
+                            }
+                        }
+                        Glide.with(getView()).load(uris[0]).into(preview_image);
                         carouselView.setImageListener(new ImageListener() {
                             @Override
                             public void setImageForPosition(int position, ImageView imageView) {
@@ -347,6 +379,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void showUserInPreview() {
+        /*
         FirebaseUser user = auth.getCurrentUser();
         CircleImageView imageView = getView().findViewById(R.id.profile_picture_imageView);
         TextView nameTextView = getView().findViewById(R.id.name_textView);
@@ -354,9 +387,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
         String name = user.getDisplayName();
         if (user != null) {
-            Glide.with(getView()).load(url).into(imageView);
+            Glide.with(getView()).load(R.drawable.anonym_user).into(imageView);
             nameTextView.setText(name);
-        }
+        }*/
     }
 
     public void shareTapped(){
@@ -408,6 +441,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             this.shareButton.setEnabled(true);
                         } else {
                             postGIF(docRef);
+                        }
+                        break;
+                    case "multiPicture":
+                        if(preView_image.getDrawable() == null || imageHeight == 0f
+                                || imageWidth == 0f){
+                            Toast.makeText(getContext(),"Bitte wähle ein Bild aus", duration)
+                                    .show();
+                            this.shareButton.setEnabled(true);
+                        }else{
+                            loadPicturesToFirebase(docRef);
                         }
                         break;
                     default:
@@ -479,6 +522,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         });
 
     }
+
+    public void loadPicturesToFirebase(DocumentReference docRef){
+        //TODO
+    }
+
     public void postThought(DocumentReference docRef){
 
         EditText title_edit = getView().findViewById(R.id.title_editText);

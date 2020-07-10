@@ -89,6 +89,7 @@ public class Post_Helper {
             }
         });
     }
+
     public void getMorePostsForFeed(final FirebaseCallback callback){
         Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(20);
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -554,6 +555,7 @@ public class Post_Helper {
         postList.add(thoughtPost);
 
     }
+
     public void addYouTubePost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String youtube_docID = docSnap.getId();
@@ -586,6 +588,7 @@ public class Post_Helper {
         // Zur Liste hinzufügen
         postList.add(youTubePost);
     }
+
     public void addLinkPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String link_docID = docSnap.getId();
@@ -618,6 +621,7 @@ public class Post_Helper {
         //Zur Liste hinzufügen
         postList.add(linkPost);
     }
+
     public void addGIFPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String gif_docID = docSnap.getId();
@@ -650,6 +654,7 @@ public class Post_Helper {
         //Zur Liste hinzufügen
         postList.add(GIFPost);
     }
+
     public void addPicturePost(DocumentSnapshot docSnap){
         //Map<String,Object> dataMap = docSnap.getData();
         //String type = (String) dataMap.get("type");
@@ -761,6 +766,7 @@ public class Post_Helper {
         }
         translationPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
     }
+
     public void addRepostPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String repost_docID = docSnap.getId();
@@ -793,6 +799,7 @@ public class Post_Helper {
         }
         repostPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
     }
+
     public void addDefaulPost(DocumentSnapshot docSnap){
         // Attribute die alle haben
         String default_docID = docSnap.getId();
