@@ -156,17 +156,16 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLinkedFact(final String linkedTopicID){
+        final ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (linkedTopicID != "" && linkedTopicID != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        if (linkedTopicID != "" && linkedTopicID !=null) {
             DocumentReference userRef = db.collection("Facts").document(linkedTopicID);
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     try {
-                        ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
-
                         Map<String, Object> docData = documentSnapshot.getData();
                         final String communityName = (docData.get("name") != null)      // Condition
                                 ? (String) docData.get("name")              // IF-True
@@ -206,6 +205,8 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                     }
                 }
             });
+        } else {
+            linkedTopicImageView.setImageBitmap(null);
         }
     }
 

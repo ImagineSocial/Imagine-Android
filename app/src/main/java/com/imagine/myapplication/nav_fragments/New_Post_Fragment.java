@@ -56,6 +56,7 @@ import com.synnapps.carouselview.ImageListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -127,7 +128,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         fragmentManager.beginTransaction()
                 .replace(R.id.post_preview, new ThoughtPostFragment())
                 .commit();
-        showUserInPreview();
         newThoughtButton.setAlpha(halfAlpha);
 
         pictureFolder_button.setEnabled(false);
@@ -350,10 +350,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         FirebaseUser user = auth.getCurrentUser();
         CircleImageView imageView = getView().findViewById(R.id.profile_picture_imageView);
         TextView nameTextView = getView().findViewById(R.id.name_textView);
+        Uri url = user.getPhotoUrl();
 
+        String name = user.getDisplayName();
         if (user != null) {
-            Glide.with(getView()).load(user.getPhotoUrl()).into(imageView);
-            nameTextView.setText(user.getDisplayName());
+            Glide.with(getView()).load(url).into(imageView);
+            nameTextView.setText(name);
         }
     }
 

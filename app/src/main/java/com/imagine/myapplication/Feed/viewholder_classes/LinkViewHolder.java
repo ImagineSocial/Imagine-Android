@@ -97,9 +97,7 @@ public class LinkViewHolder extends CustomViewHolder {
             });
         }
 
-        if (post.linkedFactId != "") {
-            setLinkedFact(post.linkedFactId);
-        }
+        setLinkedFact(post.linkedFactId);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

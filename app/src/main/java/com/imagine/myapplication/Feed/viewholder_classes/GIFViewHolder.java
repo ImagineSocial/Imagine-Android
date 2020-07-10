@@ -49,6 +49,7 @@ public class GIFViewHolder extends CustomViewHolder {
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         videoView.setVideoPath(post.link);
+
         //MediaController mediaController = new MediaController(itemView.getContext());
         //videoView.setMediaController(mediaController);
         //mediaController.setAnchorView(videoView);
@@ -68,9 +69,9 @@ public class GIFViewHolder extends CustomViewHolder {
             });
         }
 
-        if (post.linkedFactId != "") {
-            setLinkedFact(post.linkedFactId);
-        }
+
+        setLinkedFact(post.linkedFactId);
+
 
         ConstraintLayout videoFrame = itemView.findViewById(R.id.video_frame);
         videoFrame.setClipToOutline(true);
