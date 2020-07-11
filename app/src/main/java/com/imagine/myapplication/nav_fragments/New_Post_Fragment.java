@@ -75,6 +75,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 123;
     public Bitmap image_inBitmap = null;
     public Bitmap[] multi_bitmaps = new Bitmap[3];
+    public ArrayList<String> imageURLS;
     public float imageHeight = 0f;
     public float imageWidth = 0f;
     public Uri imageUri;
@@ -160,7 +161,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new ThoughtPostFragment())
                         .commit();
-                showUserInPreview();
                 break;
             case R.id.new_picture_button:
                 newPictureButton.setAlpha(halfAlpha);
@@ -177,7 +177,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new MultiPictureFragment())
                         .commit();
-                showUserInPreview();
                 break;
             case R.id.new_link_button:
                 newLinkButton.setAlpha(halfAlpha);
@@ -186,7 +185,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new LinkPostFragment())
                         .commit();
-                showUserInPreview();
                 break;
             case R.id.new_gif_button:
                 newGIFButton.setAlpha(halfAlpha);
@@ -195,7 +193,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 fragmentManager.beginTransaction()
                         .replace(R.id.post_preview, new YouTubePostFragment())
                         .commit();
-                showUserInPreview();
                 break;
             case R.id.pictureFolder_Button:
                 new AlertDialog.Builder(getContext())
@@ -206,7 +203,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                 chooseMultiplePhotosFromGallery();
                             }
                         })
-                        .setNegativeButton(android.R.string.no, null)
+                        .setNegativeButton("Einzeln", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                choosePhotoFromGallery();
+                            }
+                        })
                         .show();
                 break;
             case R.id.pictureCamera_button:
@@ -238,15 +240,15 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageView preview_image = getView().findViewById(R.id.preview_imageView);
         ImageView communityPreview = getView().findViewById(R.id.linkedCommunity_imageView);
-        preview_image.setClipToOutline(true);
+        CarouselView carouselView = getView().findViewById(R.id.carouselView);
+        Button new_picture_button = getView().findViewById(R.id.new_picture_button);
         communityPreview.setClipToOutline(true);
 
         switch(requestCode){
             case GALLERY:
                 if(data != null){
-                    Uri contentURI = data.getData();
+                    final Uri contentURI = data.getData();
                     try{
                         if(Build.VERSION.SDK_INT <28){
                             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext()
@@ -255,16 +257,31 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             imageWidth = (float) bitmap.getWidth();
                             imageHeight = (float) bitmap.getHeight();
 
-                            Glide.with(getView()).load(contentURI).into(preview_image);
+                            carouselView.setImageListener(new ImageListener() {
+                                @Override
+                                public void setImageForPosition(int position, ImageView imageView) {
+                                    Glide.with(getView()).load(contentURI).into(imageView);
+                                }
+                            });
+
+                            carouselView.setPageCount(1);
+                            new_picture_button.setAlpha(halfAlpha);
                         }else{
                             ImageDecoder.Source source = ImageDecoder.createSource(getContext()
                                     .getContentResolver(),contentURI);
                             Bitmap bitmap = ImageDecoder.decodeBitmap(source);
-                            Glide.with(getView()).load(contentURI).into(preview_image);
-
                             image_inBitmap = bitmap;
                             imageWidth = (float) bitmap.getWidth();
                             imageHeight = (float) bitmap.getHeight();
+                            carouselView.setImageListener(new ImageListener() {
+                                @Override
+                                public void setImageForPosition(int position, ImageView imageView) {
+                                    Glide.with(getView()).load(contentURI).into(imageView);
+                                }
+                            });
+
+                            carouselView.setPageCount(1);
+                            new_picture_button.setAlpha(halfAlpha);
                         }
                     }catch(Exception e){
                         System.out.println(e.getStackTrace().toString());
@@ -279,12 +296,28 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                     .getBitmap(
                                             getContext().getContentResolver(), imageUri);
 
-                            Glide.with(getView()).load(b1).into(preview_image);
+                            carouselView.setImageListener(new ImageListener() {
+                                @Override
+                                public void setImageForPosition(int position, ImageView imageView) {
+                                    Glide.with(getView()).load(imageUri).into(imageView);
+                                }
+                            });
+
+                            carouselView.setPageCount(1);
+                            new_picture_button.setAlpha(halfAlpha);
                         }else{
                             ImageDecoder.Source source = ImageDecoder.createSource(getContext()
                                     .getContentResolver(),imageUri);
                             Bitmap bitmap = ImageDecoder.decodeBitmap(source);
-                            Glide.with(getView()).load(imageUri).into(preview_image);
+                            carouselView.setImageListener(new ImageListener() {
+                                @Override
+                                public void setImageForPosition(int position, ImageView imageView) {
+                                    Glide.with(getView()).load(imageUri).into(imageView);
+                                }
+                            });
+
+                            carouselView.setPageCount(1);
+                            new_picture_button.setAlpha(halfAlpha);
                         }
 
                     } catch (IOException e) {
@@ -299,7 +332,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 break;
             case MULTIPLE_IMAGES:
                 if(resultCode == getActivity().RESULT_OK){
-                    CarouselView carouselView = getView().findViewById(R.id.carouselView);
                     ClipData clipData = data.getClipData();
 
                     if(clipData != null){   //multiPicture
@@ -339,7 +371,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                 System.out.println("!!");
                             }
                         }
-                        Glide.with(getView()).load(uris[0]).into(preview_image);
                         carouselView.setImageListener(new ImageListener() {
                             @Override
                             public void setImageForPosition(int position, ImageView imageView) {
@@ -349,19 +380,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         carouselView.setPageCount(uris.length);
                         carouselView.setSlideInterval(6000);
                         carouselView.setPageTransformInterval(800);
+                        new_picture_button.setAlpha(halfAlpha);
                     } else {    //picture
-                        this.type = "picture";
-                        final Uri uri = data.getData();
-                        System.out.println("!");
-                        carouselView.setImageListener(new ImageListener() {
-                            @Override
-                            public void setImageForPosition(int position, ImageView imageView) {
-                                Glide.with(getView()).load(uri).into(imageView);
-                            }
-                        });
-
-                        carouselView.setPageCount(1);
-                        Glide.with(getView()).load(uri).into(preview_image);
+                        Toast.makeText(getContext(),"Um ein Bild auszuwählen klicken Sie bitte auf 'Einzeln'!",duration)
+                        .show();
+                        new_picture_button.setAlpha(halfAlpha);
                     }
 
 
@@ -378,26 +401,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    public void showUserInPreview() {
-        /*
-        FirebaseUser user = auth.getCurrentUser();
-        CircleImageView imageView = getView().findViewById(R.id.profile_picture_imageView);
-        TextView nameTextView = getView().findViewById(R.id.name_textView);
-        Uri url = user.getPhotoUrl();
-
-        String name = user.getDisplayName();
-        if (user != null) {
-            Glide.with(getView()).load(R.drawable.anonym_user).into(imageView);
-            nameTextView.setText(name);
-        }*/
-    }
-
     public void shareTapped(){
         // TODO
         shareButton.setEnabled(false);
         EditText title_editText = getView().findViewById(R.id.title_editText);
         EditText link_editText = getView().findViewById(R.id.link_editText);
-        ImageView preView_image = getView().findViewById(R.id.picture_imageView);
+        CarouselView carousel = getView().findViewById(R.id.carouselView);
 
         FirebaseUser currentUser = auth.getCurrentUser();
 
@@ -411,7 +420,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
                 switch(type){
                     case "picture":
-                        if(preView_image.getDrawable() == null || imageHeight == 0f
+                        if(carousel.getPageCount() == 0 || imageHeight == 0f
                                 || imageWidth == 0f){
                             Toast.makeText(getContext(),"Bitte wähle ein Bild aus", duration)
                             .show();
@@ -444,13 +453,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         }
                         break;
                     case "multiPicture":
-                        if(preView_image.getDrawable() == null || imageHeight == 0f
-                                || imageWidth == 0f){
-                            Toast.makeText(getContext(),"Bitte wähle ein Bild aus", duration)
-                                    .show();
+                        if(!title_editText.getText().equals("") || title_editText.getText() != null ||
+                            this.multi_bitmaps.length >=2 && carousel.getPageCount() >= 2){
                             this.shareButton.setEnabled(true);
-                        }else{
                             loadPicturesToFirebase(docRef);
+                        } else {
+                            Toast.makeText(getContext(),"Bitte geben Sie einen Title an!",duration).show();
                         }
                         break;
                     default:
@@ -523,16 +531,54 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     }
 
-    public void loadPicturesToFirebase(DocumentReference docRef){
+    public void loadPicturesToFirebase(final DocumentReference docRef){
         //TODO
+        if(this.multi_bitmaps.length >= 2 && this.multi_bitmaps.length <= 3){
+            final int count = multi_bitmaps.length;
+            imageURLS = new ArrayList<>();
+            int index = 0;
+
+            for(Bitmap bitmap: multi_bitmaps){
+                final StorageReference storageRef = storeRef.child("postPictures").child(docRef.getId()+"-"+index+".png");
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                multi_bitmaps[index].compress(Bitmap.CompressFormat.JPEG,10,baos);
+                index++;
+                byte[] data = baos.toByteArray();
+                UploadTask uploadTask = storageRef.putBytes(data);
+                uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                        if(task.isSuccessful()){
+                            storageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if(task.isSuccessful()){
+                                        Uri uri = task.getResult();
+                                        String uriString = uri.toString();
+                                        imageURLS.add(uriString);
+                                        if(imageURLS.size() == count){
+                                            postMultiPicture(docRef);
+                                        }
+                                    } else {
+                                        System.out.println("getURL canceled!");
+                                    }
+                                }
+                            });
+                        } else if(task.isCanceled()){
+                            System.out.println("Upload canceled!");
+                        }
+                    }
+                });
+            }
+        } else {
+            Toast.makeText(getContext(),"Bitte wähle mehrere Bilder aus!",duration).show();
+        }
     }
 
     public void postThought(DocumentReference docRef){
 
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
-        EditText link_edit = getView().findViewById(R.id.link_editText);
-
         FirebaseUser user = auth.getCurrentUser();
 
         if( !user.equals(null)){
@@ -548,7 +594,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("haCount", new Integer(0));
             data.put("niceCount", new Integer(0));
             data.put("type", "thought");
-            data.put("repost", "normal");
+            data.put("report", "normal");
 
             uploadData(docRef,data);
         }else
@@ -576,7 +622,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("haCount", new Integer(0));
             data.put("niceCount", new Integer(0));
             data.put("type", "link");
-            data.put("repost", "normal");
+            data.put("report", "normal");
             data.put("link",link);
 
             uploadData(docRef,data);
@@ -607,7 +653,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 data.put("haCount", new Integer(0));
                 data.put("niceCount", new Integer(0));
                 data.put("type", "GIF"); // TODO
-                data.put("repost", "normal");
+                data.put("report", "normal");
                 data.put("link", link);
 
                 uploadData(docRef, data);
@@ -642,7 +688,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("haCount", new Integer(0));
             data.put("niceCount", new Integer(0));
             data.put("type", "youTubeVideo"); // TODO
-            data.put("repost", "normal");
+            data.put("report", "normal");
             data.put("link",link);
 
             uploadData(docRef,data);
@@ -670,11 +716,37 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("haCount", new Integer(0));
             data.put("niceCount", new Integer(0));
             data.put("type", "picture");
-            data.put("repost", "normal");
+            data.put("report", "normal");
             data.put("imageURL", url);
             data.put("imageHeight", new Float(imageHeight));
             data.put("imageWidth", new Float(imageWidth));
             uploadData(docRef,data);
+        }else
+            System.out.println("Kein User in postPicture-Methode!");
+    }
+
+    public void postMultiPicture(DocumentReference documentReference){
+        EditText title_edit = getView().findViewById(R.id.title_editText);
+        EditText description_edit = getView().findViewById(R.id.description_editText);
+        FirebaseUser user = auth.getCurrentUser();
+        if(!user.equals(null)){
+            String title = title_edit.getText().toString();
+            String description = description_edit.getText().toString();
+            HashMap<String,Object> data = new HashMap<>();
+            data.put("title",title);
+            data.put("description",description);
+            data.put("originalPoster", user.getUid());
+            data.put("createTime", new Timestamp(new Date())); // TODO
+            data.put("thanksCount",new Integer(0));
+            data.put("wowCount", new Integer(0));
+            data.put("haCount", new Integer(0));
+            data.put("niceCount", new Integer(0));
+            data.put("type", "multiPicture");
+            data.put("report", "normal");
+            data.put("imageURLs", this.imageURLS);
+            data.put("imageHeight", new Float(imageHeight));
+            data.put("imageWidth", new Float(imageWidth));
+            uploadData(documentReference,data);
         }else
             System.out.println("Kein User in postPicture-Methode!");
     }
@@ -815,23 +887,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         link_editText.setEnabled(true);
         link_label.setAlpha(fullAlpha);
     }
-
-    public void showMultiPicture(){
-        this.type = "multiPicture";
-        hideLink();
-
-        ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
-        ImageButton pictureFolder_Button = getView().findViewById(R.id.pictureFolder_Button);
-        TextView picture_label = getView().findViewById(R.id.picture_label);
-
-        pictureCamera_button.setAlpha(fullAlpha);
-        pictureCamera_button.setEnabled(true);
-        pictureFolder_Button.setAlpha(fullAlpha);
-        pictureFolder_Button.setEnabled(true);
-        picture_label.setAlpha(fullAlpha);
-
-    }
-
 
     public boolean isYouTubeURL(String youTubeURL){
         boolean success;
