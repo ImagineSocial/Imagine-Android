@@ -22,18 +22,6 @@ public class MultiPictureFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.post_multi_picture,container,false);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-        CircleImageView imageView = view.findViewById(R.id.profile_picture_imageView);
-        TextView nameTextView = view.findViewById(R.id.name_textView);
-        Uri url = user.getPhotoUrl();
-
-        String name = user.getDisplayName();
-        if (user != null) {
-            Glide.with(view).load(url).into(imageView);
-            nameTextView.setText(name);
-        }
-        return view;
+        return inflater.inflate(R.layout.post_multi_picture,container,false);
     }
 }

@@ -59,7 +59,7 @@ public class UserActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
-        if (user != null) {
+        if (currentUser != null) {
             if (currentUser.getUid().equals(user.userID)) {
                 logout_button.setVisibility(View.VISIBLE);
 
@@ -74,9 +74,7 @@ public class UserActivity extends AppCompatActivity {
                 });
             }
         } else {
-            String test1 = user.userID;
-            String test2 = currentUser.getUid();
-            System.out.println("!!!");
+
         }
     }
 
