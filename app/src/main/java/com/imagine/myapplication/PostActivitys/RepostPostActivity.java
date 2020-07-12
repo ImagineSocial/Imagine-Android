@@ -25,6 +25,7 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.post_classes.RepostPost;
+import com.imagine.myapplication.user_classes.UserActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +75,18 @@ public class RepostPostActivity extends AppCompatActivity {
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+
+        profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String userString = gson.toJson(post.user);
+                Intent intent = new Intent(mContext, UserActivity.class);
+                intent.putExtra("user",userString);
+                mContext.startActivity(intent);
+            }
+        });
+
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
             Glide.with(this).load(R.drawable.default_user).into(

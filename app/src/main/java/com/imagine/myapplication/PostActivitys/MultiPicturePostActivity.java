@@ -25,6 +25,7 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.MultiPicturePost;
 import com.imagine.myapplication.post_classes.Post;
+import com.imagine.myapplication.user_classes.UserActivity;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -78,6 +79,16 @@ public class MultiPicturePostActivity extends AppCompatActivity {
         final String [] imageArray = post.imageURLs;
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String userString = gson.toJson(post.user);
+                Intent intent = new Intent(mContext, UserActivity.class);
+                intent.putExtra("user",userString);
+                mContext.startActivity(intent);
+            }
+        });
         carouselView.setPageCount(imageArray.length);
         carouselView.setImageListener(new ImageListener() {
             @Override
