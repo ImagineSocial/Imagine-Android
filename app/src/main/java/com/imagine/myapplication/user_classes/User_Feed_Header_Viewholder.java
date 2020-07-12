@@ -27,14 +27,16 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
         CircleImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
         TextView nameLabel = itemView.findViewById(R.id.userHeaderNameTextView);
         TextView statusTextLabel = itemView.findViewById(R.id.userHeaderStatusTextView);
-        CircleImageView changeProfilePicture = itemView.findViewById(R.id.userHeaderChangeProfilePicture);
+        CircleImageView changeProfilePicture = itemView.findViewById(R.id.changeProfilePicture);
+        CircleImageView changeProfilePictureBackground = itemView.findViewById(R.id.changeProfilePictureBackground);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
         if (currentUser != null) {
-            if (currentUser.getUid() == user.userID) {
+            if (currentUser.getUid().equals(user.userID)) {
                 changeProfilePicture.setVisibility(View.VISIBLE);
+                changeProfilePictureBackground.setVisibility(View.VISIBLE);
                 changeProfilePicture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

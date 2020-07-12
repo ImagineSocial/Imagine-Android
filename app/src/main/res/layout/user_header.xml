@@ -14,8 +14,10 @@
         android:background="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/userHeaderProfileImageView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userHeaderProfileImageView"
@@ -60,15 +62,23 @@
         app:layout_constraintTop_toBottomOf="@+id/userHeaderProfileImageView" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userHeaderChangeProfilePicture"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="80dp"
-        android:background="#EFEFEF"
+        android:id="@+id/changeProfilePictureBackground"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/light_gray_background"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/userHeaderProfileImageView"
-        app:layout_constraintEnd_toEndOf="@+id/userHeaderProfileImageView"
-        app:srcCompat="@drawable/camera" />
+        app:layout_constraintStart_toStartOf="@+id/userHeaderProfileImageView"
+        app:layout_constraintTop_toTopOf="@+id/userHeaderProfileImageView" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/changeProfilePicture"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/camera"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/userHeaderProfileImageView"
+        app:layout_constraintTop_toTopOf="@+id/userHeaderProfileImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
