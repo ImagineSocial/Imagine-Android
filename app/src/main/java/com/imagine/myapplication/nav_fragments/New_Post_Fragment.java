@@ -125,11 +125,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
         super.onViewCreated(view, savedInstanceState);
 
-
-        final FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.post_preview, new ThoughtPostFragment())
-                .commit();
         newThoughtButton.setAlpha(halfAlpha);
 
         pictureFolder_button.setEnabled(false);
@@ -141,8 +136,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-
-        final FragmentManager fragmentManager = getFragmentManager();
         Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
         Button newPictureButton = (Button) view.findViewById(R.id.new_picture_button);
         Button newLinkButton = (Button) view.findViewById(R.id.new_link_button);
@@ -158,9 +151,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 newThoughtButton.setAlpha(halfAlpha);
 
                 setThought();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.post_preview, new ThoughtPostFragment())
-                        .commit();
                 break;
             case R.id.new_picture_button:
                 newPictureButton.setAlpha(halfAlpha);
@@ -174,25 +164,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 }else{
                     showPicture();
                 }
-                fragmentManager.beginTransaction()
-                        .replace(R.id.post_preview, new MultiPictureFragment())
-                        .commit();
                 break;
             case R.id.new_link_button:
                 newLinkButton.setAlpha(halfAlpha);
 
                 showLink();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.post_preview, new LinkPostFragment())
-                        .commit();
                 break;
             case R.id.new_gif_button:
                 newGIFButton.setAlpha(halfAlpha);
 
                 showGIF();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.post_preview, new YouTubePostFragment())
-                        .commit();
                 break;
             case R.id.pictureFolder_Button:
                 new AlertDialog.Builder(getContext())
@@ -241,7 +222,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ImageView communityPreview = getView().findViewById(R.id.linkedCommunity_imageView);
-        CarouselView carouselView = getView().findViewById(R.id.carouselView);
+        CarouselView carouselView = getView().findViewById(R.id.preview_imageView);
         Button new_picture_button = getView().findViewById(R.id.new_picture_button);
         communityPreview.setClipToOutline(true);
 
@@ -378,7 +359,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             }
                         });
                         carouselView.setPageCount(uris.length);
-                        carouselView.setSlideInterval(6000);
+                        carouselView.setSlideInterval(2000);
                         carouselView.setPageTransformInterval(800);
                         new_picture_button.setAlpha(halfAlpha);
                     } else {    //picture
