@@ -73,9 +73,8 @@ public class LinkPostActivity extends AppCompatActivity {
         TextView name_textView = findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
-        // PreView Widgets
-        final ImageView preViewImage = findViewById(R.id.preView_image);
-        final TextView preViewLink = findViewById(R.id.preView_link);
+        ImageView linkImageView = findViewById(R.id.preView_image);
+        linkImageView.setClipToOutline(true);
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);

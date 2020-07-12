@@ -9,6 +9,7 @@ public class Comment {
     public String userID;
     public long id;
     public Timestamp sentAt;
+    public String sentAtString;
     public User user;
 
     public void setUser(User user){

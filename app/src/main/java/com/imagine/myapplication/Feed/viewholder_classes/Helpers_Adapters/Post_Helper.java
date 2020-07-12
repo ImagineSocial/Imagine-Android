@@ -491,8 +491,13 @@ public class Post_Helper {
                         final Comment comm = new Comment();
                         comm.body = docSnap.getString("body");
                         //comm.id = docSnap.getLong("is");
-                        comm.sentAt = docSnap.getTimestamp("sentAt");
+                        Timestamp sentAt = docSnap.getTimestamp("sentAt");
+                        comm.sentAt = sentAt;
+
                         comm.userID = docSnap.getString("userID");
+                        Long timeNow = new Date().getTime();
+                        String dateString = convertLongDateToAgoString(sentAt.toDate(),timeNow);
+                        comm.sentAtString = dateString;
                         commArray.add(comm);
                         DocumentReference userRef = db.collection("User").document(comm.userID);
                         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

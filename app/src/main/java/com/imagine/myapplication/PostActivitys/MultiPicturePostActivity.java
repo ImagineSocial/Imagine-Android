@@ -75,6 +75,7 @@ public class MultiPicturePostActivity extends AppCompatActivity {
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         CarouselView carouselView = findViewById(R.id.carouselView);
+        carouselView.setClipToOutline(true);
 
         final String [] imageArray = post.imageURLs;
         title_textView.setText(post.title);
