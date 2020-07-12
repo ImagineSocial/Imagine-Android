@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.nav_info:
                             selectedFragment = new Information_Fragment();
-                            break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();

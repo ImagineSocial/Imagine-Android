@@ -39,14 +39,13 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         TextView date = itemView.findViewById(R.id.createDate_textView);
         TextView body = itemView.findViewById(R.id.comment_body);
 
-        date.setText(dateToString(comm.sentAt));
+        date.setText(comm.sentAtString);
         body.setText(comm.body);
 
         if(comm.userID.equals("anonym")){
             name.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(profile);
         }else{
-
             if(comm.user == null){
                 Glide.with(itemView).load(R.drawable.default_user).into(profile);
                 name.setText("Anonym");
@@ -60,11 +59,6 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
-    }
-
     public void getUser(final String userID){
        DocumentReference userRef = db.collection("Users").document(userID);
        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -75,7 +69,9 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
                    String imageURL = docSnap.getString("profilePictureURL");
                    String name = docSnap.getString("name");
                    String surname = docSnap.getString("surname");
+                   String quote = docSnap.getString("statusTest");
                    User user = new User(name,surname,userID);
+                   user.statusQuote = quote;
                    comment.user = user;
                    user.imageURL = (imageURL != null) ? imageURL : "";
                    setUserAgain();

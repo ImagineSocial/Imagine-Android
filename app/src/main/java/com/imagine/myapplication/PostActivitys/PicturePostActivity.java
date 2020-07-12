@@ -73,6 +73,7 @@ public class PicturePostActivity extends AppCompatActivity {
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         ImageView image_imageView = findViewById(R.id.picture_imageView);
+        image_imageView.setClipToOutline(true);
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);

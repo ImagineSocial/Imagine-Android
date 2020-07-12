@@ -83,6 +83,7 @@ public class GifPostActivity extends AppCompatActivity {
                 R.id.profile_picture_imageView);
         final VideoView videoView = findViewById(R.id.gif_videoView);
         ConstraintLayout videoFrame = findViewById(R.id.video_frame);
+        videoFrame.setClipToOutline(true);
         profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
