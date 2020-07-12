@@ -1,5 +1,6 @@
 package com.imagine.myapplication.PostActivitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.PicturePost;
 import com.imagine.myapplication.post_classes.Post;
+import com.imagine.myapplication.user_classes.UserActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +33,7 @@ import java.util.Date;
 public class PicturePostActivity extends AppCompatActivity {
     ArrayList<Comment> comments;
     public PicturePost post;
+    public Context mContext = this;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +78,16 @@ public class PicturePostActivity extends AppCompatActivity {
         createTime_textView.setText(post.createTime);
         description_textView.setText(post.description);
         Glide.with(this).load(post.imageURL).into(image_imageView);
+        profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String userString = gson.toJson(post.user);
+                Intent intent = new Intent(mContext, UserActivity.class);
+                intent.putExtra("user",userString);
+                mContext.startActivity(intent);
+            }
+        });
 
         if(post.originalPoster.equals("anonym")){
             username_textView.setText("Anonym");

@@ -1,5 +1,6 @@
 package com.imagine.myapplication.PostActivitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.GIFPost;
 import com.imagine.myapplication.post_classes.Post;
+import com.imagine.myapplication.user_classes.UserActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,11 +39,13 @@ public class GifPostActivity extends AppCompatActivity {
 
     public ArrayList<Comment> comments;
     public GIFPost post;
+    public Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gif_post);
+        mContext = this;
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -50,7 +54,7 @@ public class GifPostActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
-        post = gson.fromJson(objString, GIFPost.class);
+        this.post = gson.fromJson(objString, GIFPost.class);
         System.out.println("!");
     }
 
@@ -78,8 +82,17 @@ public class GifPostActivity extends AppCompatActivity {
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         final VideoView videoView = findViewById(R.id.gif_videoView);
-
         ConstraintLayout videoFrame = findViewById(R.id.video_frame);
+        profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String userString = gson.toJson(post.user);
+                Intent intent = new Intent(mContext, UserActivity.class);
+                intent.putExtra("user",userString);
+                mContext.startActivity(intent);
+            }
+        });
         videoFrame.setClipToOutline(true);
 
         title_textView.setText(post.title);

@@ -1,5 +1,6 @@
 package com.imagine.myapplication.PostActivitys;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,9 +15,11 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
+import com.imagine.myapplication.user_classes.UserActivity;
 
 import java.util.Date;
 
@@ -87,6 +90,16 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
         TextView name = itemView.findViewById(R.id.name_textView);
         ImageView profile = itemView.findViewById(R.id.profile_picture_imageView);
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                String userString = gson.toJson(comment.user);
+                Intent intent = new Intent(itemView.getContext(), UserActivity.class);
+                intent.putExtra("user",userString);
+                itemView.getContext().startActivity(intent);
+            }
+        });
         System.out.println(this.comment);
         if(comment.userID.equals("anonym")){
             name.setText("Anonym");
