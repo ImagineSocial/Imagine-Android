@@ -24,40 +24,64 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Community.Community_Activity">
+        <activity android:name=".Community.Community_Activity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.GifPostActivity">
+        <activity android:name=".PostActivitys.GifPostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.LinkPostActivity">
+        <activity android:name=".PostActivitys.LinkPostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.MultiPicturePostActivity">
+        <activity android:name=".PostActivitys.MultiPicturePostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.PicturePostActivity">
+        <activity android:name=".PostActivitys.PicturePostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.RepostPostActivity">
+        <activity android:name=".PostActivitys.RepostPostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.TranslationPostActivity">
+        <activity android:name=".PostActivitys.TranslationPostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.YouTubePostActivity">
+        <activity android:name=".PostActivitys.YouTubePostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".PostActivitys.ThoughtPostActivity">
+        <activity android:name=".PostActivitys.ThoughtPostActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".user_classes.UserActivity">
+        <activity android:name=".user_classes.UserActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".CommunityPicker.CommunityPickActivity">
+        <activity android:name=".CommunityPicker.CommunityPickActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>
