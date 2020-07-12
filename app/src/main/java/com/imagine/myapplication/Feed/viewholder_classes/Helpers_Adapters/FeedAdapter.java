@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
 import com.imagine.myapplication.post_classes.LinkPost;
 import com.imagine.myapplication.post_classes.MultiPicturePost;
@@ -134,6 +135,8 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                                 }else{
                                     if(holder instanceof RepostViewHolder){
                                         ((RepostViewHolder)holder).bind((RepostPost) post);
+                                    }else {
+                                        ((DefaultViewHolder)holder).bind((DefaultPost)post);
                                     }
                                 }
                             }

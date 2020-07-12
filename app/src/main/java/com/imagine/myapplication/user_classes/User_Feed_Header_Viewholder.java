@@ -1,10 +1,13 @@
 package com.imagine.myapplication.user_classes;
 
 import android.content.Context;
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,11 +19,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class User_Feed_Header_Viewholder extends CustomViewHolder {
 
-    Context mContext;
+    public Context mContext;
+    public UserActivity activity;
+    public final int GALLERY = 1;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public User_Feed_Header_Viewholder(@NonNull View itemView) {
+    public User_Feed_Header_Viewholder(@NonNull View itemView, UserActivity activity) {
         super(itemView);
         this.mContext = itemView.getContext();
+        this.activity = activity;
     }
 
     public void bind(User user) {
@@ -30,8 +37,8 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
         CircleImageView changeProfilePicture = itemView.findViewById(R.id.changeProfilePicture);
         CircleImageView changeProfilePictureBackground = itemView.findViewById(R.id.changeProfilePictureBackground);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
+        activity.setHeader(this);
 
         if (currentUser != null) {
             if (currentUser.getUid().equals(user.userID)) {
@@ -41,6 +48,9 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
                     @Override
                     public void onClick(View v) {
                         //TODO Change Profile Picture
+                        Intent intent = new Intent(Intent.ACTION_PICK,
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        activity.startActivityForResult(intent,GALLERY);
                     }
                 });
             }
@@ -55,5 +65,14 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
             statusTextLabel.setText(user.statusQuote);
         } //else { setDefaultQuote and edit it the way you want if you are THE user
 
+    }
+
+    public void reloadPicture(){
+        FirebaseUser user = auth.getCurrentUser();
+        String imageURL = user.getPhotoUrl().toString();
+        CircleImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
+        if (imageURL != "") {
+            Glide.with(itemView).load(imageURL).into(profileImageView);
+        }
     }
 }

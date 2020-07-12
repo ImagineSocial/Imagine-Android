@@ -36,12 +36,14 @@ public class UserFeedAdapter extends FeedAdapter {
 
     public ArrayList<Post> postList;
     public Context mContext;
+    public UserActivity activity;
     public User user;
 
-    public UserFeedAdapter(ArrayList<Post> postList, Context mContext, User user) {
+    public UserFeedAdapter(ArrayList<Post> postList, Context mContext, User user,UserActivity activity) {
         super(postList, mContext);
         this.postList = postList;
         this.mContext = mContext;
+        this.activity = activity;
         this.user= user;
     }
 
@@ -133,7 +135,7 @@ public class UserFeedAdapter extends FeedAdapter {
         switch(viewType){
             case R.layout.user_header:
                 view = inflater.inflate(R.layout.user_header,parent,false);
-                return new User_Feed_Header_Viewholder(view);
+                return new User_Feed_Header_Viewholder(view,this.activity);
             case R.layout.post_picture:
                 view = inflater.inflate(R.layout.post_picture,parent,false);
                 return new PictureViewHolder(view);

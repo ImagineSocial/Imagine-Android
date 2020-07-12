@@ -52,6 +52,7 @@ import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
 import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.CarouselViewPager;
 import com.synnapps.carouselview.ImageListener;
 
 import java.io.ByteArrayOutputStream;
@@ -119,7 +120,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         shareButton.setOnClickListener(this);
         Button commLinker = getView().findViewById(R.id.linkCommunity_button);
         commLinker.setOnClickListener(this);
-
+        CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
+        preview_imageView.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Glide.with(getView()).load(R.drawable.default_image).into(imageView);
+            }
+        });
+        preview_imageView.setPageCount(1);
 
         this.view = view;
 
@@ -352,6 +360,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                 System.out.println("!!");
                             }
                         }
+
+
                         carouselView.setImageListener(new ImageListener() {
                             @Override
                             public void setImageForPosition(int position, ImageView imageView) {
@@ -387,8 +397,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         shareButton.setEnabled(false);
         EditText title_editText = getView().findViewById(R.id.title_editText);
         EditText link_editText = getView().findViewById(R.id.link_editText);
-        CarouselView carousel = getView().findViewById(R.id.carouselView);
-
+        CarouselView carousel = getView().findViewById(R.id.preview_imageView);
         FirebaseUser currentUser = auth.getCurrentUser();
 
         if(currentUser != null){
@@ -796,13 +805,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         EditText link_edit = getView().findViewById(R.id.link_editText);
-        ImageView preview_imageView = getView().findViewById(R.id.preview_imageView);
+        final CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
 
         title_edit.getText().clear();
         description_edit.getText().clear();
         link_edit.getText().clear();
-        preview_imageView.setImageResource(0);
-
+        preview_imageView.setImageListener(new ImageListener() {
+            @Override
+            public void setImageForPosition(int position, ImageView imageView) {
+                Glide.with(getView()).load(R.drawable.default_image).into(imageView);
+            }
+        });
+        preview_imageView.setPageCount(1);
         this.shareButton.setEnabled(true);
     }
     public void setThought(){

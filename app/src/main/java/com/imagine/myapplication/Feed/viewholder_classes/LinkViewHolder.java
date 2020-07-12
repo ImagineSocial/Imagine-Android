@@ -59,7 +59,6 @@ public class LinkViewHolder extends CustomViewHolder {
                 mContext.startActivity(intent);
             }
         };
-
         RichPreview richPreview = new RichPreview(new ResponseListener() {
             @Override
             public void onData(MetaData metaData) {
@@ -73,7 +72,6 @@ public class LinkViewHolder extends CustomViewHolder {
                     preViewLink.setText(link);
                 }
             }
-
             @Override
             public void onError(Exception e) {
                 System.out.println("");
@@ -81,7 +79,6 @@ public class LinkViewHolder extends CustomViewHolder {
         });
         preViewImage.setClipToOutline(true);
         richPreview.getPreview(post.link);
-
         if(post.originalPoster == "anonym"){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(

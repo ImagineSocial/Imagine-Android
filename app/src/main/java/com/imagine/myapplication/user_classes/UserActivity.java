@@ -2,7 +2,12 @@ package com.imagine.myapplication.user_classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,8 +19,18 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
@@ -23,15 +38,24 @@ import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class UserActivity extends AppCompatActivity {
+
+    public StorageReference storeRef = FirebaseStorage.getInstance().getReference();
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
+
     public ArrayList<Post> posts = new ArrayList<>();
     public Post_Helper helper = new Post_Helper();
+    public User_Feed_Header_Viewholder header;
     public Context mContext;
     public User user;
+    public final int GALLERY = 1;
+    public Bitmap bitmap;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +104,7 @@ public class UserActivity extends AppCompatActivity {
 
     public void initRecyclerView(){
         RecyclerView recyclerView = findViewById(R.id.user_recyclerView);
-        UserFeedAdapter adapter = new UserFeedAdapter(posts,mContext,user);
+        UserFeedAdapter adapter = new UserFeedAdapter(posts,mContext,user,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -132,5 +156,125 @@ public class UserActivity extends AppCompatActivity {
         }
         return posts;
 
+    }
+
+    public void setHeader(User_Feed_Header_Viewholder header){
+        this.header = header;
+    }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null){
+            if(user.getPhotoUrl() != null){
+                deletePhoto(user);
+            }
+        }
+
+        if(requestCode == GALLERY){
+            if(data != null){
+                final Uri contentURI = data.getData();
+                try{
+                    if(Build.VERSION.SDK_INT <28){
+                        bitmap = MediaStore.Images.Media.getBitmap(mContext
+                            .getContentResolver(),contentURI);
+                        setPhoto();
+                    } else{
+                        ImageDecoder.Source source = ImageDecoder.createSource(mContext
+                            .getContentResolver(),contentURI);
+                        bitmap = ImageDecoder.decodeBitmap(source);
+                        setPhoto();
+                    }
+                }catch (Exception e){
+                    System.out.println(e.getStackTrace().toString());
+                }
+            }
+        }
+    }
+
+    public void deletePhoto(FirebaseUser user){
+        String imageName = user.getUid()+".profilePicture";
+        StorageReference imageRef = storeRef.child("profilePictures").child(imageName+".png");
+        imageRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("File Deleted!");
+                } else if(task.isCanceled()){
+                    System.out.println("Error deleting File!");
+                }
+            }
+        });
+    }
+
+    public void setPhoto(){
+        final FirebaseUser user = auth.getCurrentUser();
+        if( user != null){
+            String imageName = user.getUid()+".profilePicture.png";
+            final StorageReference imageRef = storeRef.child("profilePictures").child(imageName);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG,20,baos);
+            byte[] data = baos.toByteArray();
+            StorageTask uploadTask = imageRef.putBytes(data).addOnCompleteListener(
+                    new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("Picture upload successfull");
+                                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        String url = uri.toString();
+                                        changeDatabase(url);
+                                        changeUsersAuthData(user,uri);
+                                    }
+                                });
+                            } else if( task.isCanceled()){
+                                System.out.println("Picture upload failed");
+                            }
+                        }
+                    }
+            );
+        }
+    }
+
+    public void changeDatabase(String url){
+        FirebaseUser user = auth.getCurrentUser();
+        if(user != null){
+            DocumentReference userRef = db.collection("Users")
+                    .document(user.getUid());
+            userRef.update("profilePictureURL",url)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("Userdocument updated!");
+                            } else if(task.isCanceled()){
+                                System.out.println("Userdocument update failed!");
+                            }
+                        }
+                    });
+        }
+    }
+
+    public void changeUsersAuthData(FirebaseUser user, Uri uri){
+        UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
+        UserProfileChangeRequest profileUpdates = builder.setPhotoUri(uri).build();
+
+        user.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("User Auth update finished!");
+                    header.reloadPicture();
+                } else if(task.isCanceled()){
+                    System.out.println("User Auth update failed!");
+                }
+            }
+        });
     }
 }
