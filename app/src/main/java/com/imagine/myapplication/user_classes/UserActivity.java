@@ -1,5 +1,6 @@
 package com.imagine.myapplication.user_classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -169,31 +170,34 @@ public class UserActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         FirebaseUser user = auth.getCurrentUser();
-        if(user != null){
-            if(user.getPhotoUrl() != null){
-                deletePhoto(user);
+        if(resultCode == Activity.RESULT_OK){
+            if(user != null){
+                if(user.getPhotoUrl() != null){
+                    deletePhoto(user);
+                }
             }
-        }
 
-        if(requestCode == GALLERY){
-            if(data != null){
-                final Uri contentURI = data.getData();
-                try{
-                    if(Build.VERSION.SDK_INT <28){
-                        bitmap = MediaStore.Images.Media.getBitmap(mContext
-                            .getContentResolver(),contentURI);
-                        setPhoto();
-                    } else{
-                        ImageDecoder.Source source = ImageDecoder.createSource(mContext
-                            .getContentResolver(),contentURI);
-                        bitmap = ImageDecoder.decodeBitmap(source);
-                        setPhoto();
+            if(requestCode == GALLERY){
+                if(data != null){
+                    final Uri contentURI = data.getData();
+                    try{
+                        if(Build.VERSION.SDK_INT <28){
+                            bitmap = MediaStore.Images.Media.getBitmap(mContext
+                                    .getContentResolver(),contentURI);
+                            setPhoto();
+                        } else{
+                            ImageDecoder.Source source = ImageDecoder.createSource(mContext
+                                    .getContentResolver(),contentURI);
+                            bitmap = ImageDecoder.decodeBitmap(source);
+                            setPhoto();
+                        }
+                    }catch (Exception e){
+                        System.out.println(e.getStackTrace().toString());
                     }
-                }catch (Exception e){
-                    System.out.println(e.getStackTrace().toString());
                 }
             }
         }
+
     }
 
     public void deletePhoto(FirebaseUser user){
