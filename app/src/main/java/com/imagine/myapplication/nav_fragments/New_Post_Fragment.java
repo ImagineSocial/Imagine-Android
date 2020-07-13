@@ -281,7 +281,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 if (resultCode == getActivity().RESULT_OK) {
                     try {
                         if(Build.VERSION.SDK_INT < 28){
-                            Bitmap b1 = MediaStore.Images.Media
+                            Bitmap bitmap = MediaStore.Images.Media
                                     .getBitmap(
                                             getContext().getContentResolver(), imageUri);
 
@@ -291,7 +291,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                     Glide.with(getView()).load(imageUri).into(imageView);
                                 }
                             });
-
+                            imageWidth = (float) bitmap.getWidth();
+                            imageHeight = (float) bitmap.getHeight();
                             carouselView.setPageCount(1);
                             new_picture_button.setAlpha(halfAlpha);
                         }else{
@@ -304,7 +305,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                     Glide.with(getView()).load(imageUri).into(imageView);
                                 }
                             });
-
+                            imageWidth = (float) bitmap.getWidth();
+                            imageHeight = (float) bitmap.getHeight();
                             carouselView.setPageCount(1);
                             new_picture_button.setAlpha(halfAlpha);
                         }
