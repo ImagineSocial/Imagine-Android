@@ -79,7 +79,7 @@ public class PicturePostActivity extends AppCompatActivity {
         createTime_textView.setText(post.createTime);
         description_textView.setText(post.description);
         Glide.with(this).load(post.imageURL).into(image_imageView);
-        
+
         if(post.originalPoster.equals("anonym")){
             username_textView.setText("Anonym");
             Glide.with(this).load(R.drawable.anonym_user).into(

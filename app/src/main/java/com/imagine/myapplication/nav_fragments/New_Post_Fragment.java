@@ -70,7 +70,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public StorageReference storeRef = FirebaseStorage.getInstance().getReference();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
-    public String type = "thought";
+    public String type;
     public int duration = Toast.LENGTH_SHORT;
     private static final int
             PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 123;
@@ -209,8 +209,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             case R.id.linkCommunity_button:
                 Intent intent = new Intent(getContext(), CommunityPickActivity.class);
                 startActivityForResult(intent,COMMUNITY_PICK);
+                break;
             default:
-                setThought();
                 break;
         }
     }
@@ -383,11 +383,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 }
                 break;
             case COMMUNITY_PICK:
-                String name = data.getStringExtra("name");
-                String imageURL = data.getStringExtra("imageURL");
-                String commID = data.getStringExtra("commID");
-                this.linkedFactID = commID;
-                Glide.with(getView()).load(imageURL).into(communityPreview);
+                if(resultCode == getActivity().RESULT_OK){
+                    String name = data.getStringExtra("name");
+                    String imageURL = data.getStringExtra("imageURL");
+                    String commID = data.getStringExtra("commID");
+                    this.linkedFactID = commID;
+                    Glide.with(getView()).load(imageURL).into(communityPreview);
+                }
                 break;
 
         }
