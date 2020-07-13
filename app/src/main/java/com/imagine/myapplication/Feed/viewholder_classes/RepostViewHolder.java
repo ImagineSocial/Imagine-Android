@@ -39,7 +39,7 @@ public class RepostViewHolder extends CustomViewHolder{
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
 
-        if(post.originalPoster == "anonym"){
+        if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);

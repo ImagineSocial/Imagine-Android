@@ -280,7 +280,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 if (resultCode == getActivity().RESULT_OK) {
                     try {
                         if(Build.VERSION.SDK_INT < 28){
-                            Bitmap bitmap = MediaStore.Images.Media
+                            image_inBitmap = MediaStore.Images.Media
                                     .getBitmap(
                                             getContext().getContentResolver(), imageUri);
 
@@ -290,22 +290,22 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                     Glide.with(getView()).load(imageUri).into(imageView);
                                 }
                             });
-                            imageWidth = (float) bitmap.getWidth();
-                            imageHeight = (float) bitmap.getHeight();
+                            imageWidth = (float) image_inBitmap.getWidth();
+                            imageHeight = (float) image_inBitmap.getHeight();
                             carouselView.setPageCount(1);
                             new_picture_button.setAlpha(halfAlpha);
                         }else{
                             ImageDecoder.Source source = ImageDecoder.createSource(getContext()
                                     .getContentResolver(),imageUri);
-                            Bitmap bitmap = ImageDecoder.decodeBitmap(source);
+                            image_inBitmap = ImageDecoder.decodeBitmap(source);
                             carouselView.setImageListener(new ImageListener() {
                                 @Override
                                 public void setImageForPosition(int position, ImageView imageView) {
                                     Glide.with(getView()).load(imageUri).into(imageView);
                                 }
                             });
-                            imageWidth = (float) bitmap.getWidth();
-                            imageHeight = (float) bitmap.getHeight();
+                            imageWidth = (float) image_inBitmap.getWidth();
+                            imageHeight = (float) image_inBitmap.getHeight();
                             carouselView.setPageCount(1);
                             new_picture_button.setAlpha(halfAlpha);
                         }
