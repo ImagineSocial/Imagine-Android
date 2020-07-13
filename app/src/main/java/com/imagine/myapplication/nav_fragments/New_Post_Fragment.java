@@ -104,6 +104,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
         newThoughtButton.setOnClickListener(this);
         Button newPictureButton = (Button) view.findViewById(R.id.new_picture_button);
@@ -131,8 +132,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         preview_imageView.setClipToOutline(true);
 
         this.view = view;
-
-        super.onViewCreated(view, savedInstanceState);
 
         newThoughtButton.setAlpha(halfAlpha);
 

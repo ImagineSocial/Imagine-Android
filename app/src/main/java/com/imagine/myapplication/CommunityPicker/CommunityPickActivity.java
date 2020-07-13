@@ -85,12 +85,4 @@ public class CommunityPickActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void resultMethod(Community community){
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("name",community.name);
-        resultIntent.putExtra("imageURl", community.imageURL);
-        resultIntent.putExtra("commID", community.topicID);
-        setResult(RESULT_OK,resultIntent);
-    }
 }
