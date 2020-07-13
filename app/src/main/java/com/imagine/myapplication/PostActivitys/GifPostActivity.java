@@ -84,16 +84,6 @@ public class GifPostActivity extends AppCompatActivity {
         final VideoView videoView = findViewById(R.id.gif_videoView);
         ConstraintLayout videoFrame = findViewById(R.id.video_frame);
         videoFrame.setClipToOutline(true);
-        profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gson gson = new Gson();
-                String userString = gson.toJson(post.user);
-                Intent intent = new Intent(mContext, UserActivity.class);
-                intent.putExtra("user",userString);
-                mContext.startActivity(intent);
-            }
-        });
         videoFrame.setClipToOutline(true);
 
         title_textView.setText(post.title);
@@ -135,12 +125,22 @@ public class GifPostActivity extends AppCompatActivity {
             }
         });
 
-        if(post.originalPoster == "anonym"){
+        if(post.originalPoster.equals("anonym")){
             username_textView.setText("Anonym");
             Glide.with(this).load(R.drawable.default_user).into(
                     profilePicture_imageView);
         }else{
             username_textView.setText(post.user.name);
+            profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Gson gson = new Gson();
+                    String userString = gson.toJson(post.user);
+                    Intent intent = new Intent(mContext, UserActivity.class);
+                    intent.putExtra("user",userString);
+                    mContext.startActivity(intent);
+                }
+            });
             if(post.user.imageURL != null || !post.user.imageURL.equals("")){
                 Glide.with(this).load(post.user.imageURL).into(
                         profilePicture_imageView);

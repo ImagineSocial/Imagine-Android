@@ -80,16 +80,6 @@ public class MultiPicturePostActivity extends AppCompatActivity {
         final String [] imageArray = post.imageURLs;
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-        profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Gson gson = new Gson();
-                String userString = gson.toJson(post.user);
-                Intent intent = new Intent(mContext, UserActivity.class);
-                intent.putExtra("user",userString);
-                mContext.startActivity(intent);
-            }
-        });
         carouselView.setPageCount(imageArray.length);
         carouselView.setImageListener(new ImageListener() {
             @Override
@@ -98,12 +88,22 @@ public class MultiPicturePostActivity extends AppCompatActivity {
             }
         });
 
-        if(post.originalPoster == "anonym"){
+        if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(this).load(R.drawable.default_user).into(
                     profilePicture_imageView);
         }else{
             name_textView.setText(post.user.name);
+            profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Gson gson = new Gson();
+                    String userString = gson.toJson(post.user);
+                    Intent intent = new Intent(mContext, UserActivity.class);
+                    intent.putExtra("user",userString);
+                    mContext.startActivity(intent);
+                }
+            });
             if(post.user.imageURL != null || !post.user.imageURL.equals("")){
                 Glide.with(this).load(post.user.imageURL).into(
                         profilePicture_imageView);
