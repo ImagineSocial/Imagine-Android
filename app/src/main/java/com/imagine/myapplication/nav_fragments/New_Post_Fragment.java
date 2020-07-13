@@ -128,6 +128,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             }
         });
         preview_imageView.setPageCount(1);
+        preview_imageView.setClipToOutline(true);
 
         this.view = view;
 
@@ -221,8 +222,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         if ((requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) &&
                 (grantResults.length > 0 && grantResults[0] ==
                         PackageManager.PERMISSION_GRANTED)){
-            cameraButton.setEnabled(true);
-            cameraButton.setAlpha(fullAlpha);
+                showPicture();
         }
     }
 
@@ -742,6 +742,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void uploadData(final DocumentReference docRef, HashMap<String,Object> data){
+
+        if(linkedFactID != null){
+            data.put("linkedFactID",linkedFactID);
+        }
         docRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
