@@ -41,6 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.imagine.myapplication.R.drawable.default_user;
 
 public class MainActivity extends AppCompatActivity{
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
     public Context mContext;
     public Button loginButton;
     public CircleImageView imageCircle;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity{
         if(user != null){
             if (userObj == null) {
                 this.getUser(user.getUid());
-            } else{
+            } else {
                 setUpUserViews(userObj);
             }
         } else{
@@ -168,9 +169,9 @@ public class MainActivity extends AppCompatActivity{
         userObj = user;
         imageCircle.setVisibility(View.VISIBLE);
         loginButton.setVisibility(View.INVISIBLE);
-
+        FirebaseUser firebaseUser = auth.getCurrentUser();
         if (user.imageURL != null) {
-            Glide.with(this).load(Uri.parse(user.imageURL)).into(imageCircle);
+            Glide.with(this).load(Uri.parse(firebaseUser.getPhotoUrl().toString())).into(imageCircle);
         } else {
             Glide.with(this).load(default_user).into(imageCircle);
         }
