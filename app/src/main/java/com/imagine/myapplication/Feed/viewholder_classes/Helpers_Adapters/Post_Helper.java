@@ -50,7 +50,9 @@ public class Post_Helper {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(queryDocumentSnapshots != null){
-                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    if(queryDocumentSnapshots.getDocuments().size() >=1){
+                        lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    }
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
                         System.out.println("aa");
                         switch((String)docSnap.get("type")){
@@ -96,7 +98,9 @@ public class Post_Helper {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(queryDocumentSnapshots != null){
-                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    if(queryDocumentSnapshots.getDocuments().size() >=1){
+                        lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                    }
                     System.out.println(queryDocumentSnapshots.size());
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
                         System.out.println("aa");
@@ -147,7 +151,12 @@ public class Post_Helper {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 count = 0;
                 size = queryDocumentSnapshots.size();
-                lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                if(queryDocumentSnapshots.getDocuments().size() >=1){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                }
+                if(count == 0 && size == 0){
+                    callback.onCallback(postList);
+                }
                 for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                     String postID = queryDocumentSnapshot.getId();
                     String typeOne = queryDocumentSnapshot.getString("type") == null ?
@@ -232,7 +241,9 @@ public class Post_Helper {
                 if(size ==0) {
                     return;
                 }
-                lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                if(queryDocumentSnapshots.getDocuments().size() >=1){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                }
                 for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                     String postID = queryDocumentSnapshot.getId();
                     String typeOne = queryDocumentSnapshot.getString("type") == null ?
@@ -316,7 +327,9 @@ public class Post_Helper {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 count = 0;
                 size = queryDocumentSnapshots.size();
-                lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                if(queryDocumentSnapshots.getDocuments().size() >=1){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                }
                 for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                     String postID = queryDocumentSnapshot.getId();
                     String typeOne = queryDocumentSnapshot.getBoolean("isTopicPost") == null ?
@@ -402,7 +415,9 @@ public class Post_Helper {
                 if(size ==0) {
                     return;
                 }
-                lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                if(queryDocumentSnapshots.getDocuments().size() >=1){
+                    lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                }
                 for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
                     String postID = queryDocumentSnapshot.getId();
                     String typeOne = queryDocumentSnapshot.getBoolean("isTopicPost") == null ?

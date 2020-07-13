@@ -30,7 +30,7 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
         title_tv.setText(community.name);
         description_tv.setText(community.description);
         if(community.imageURL == null || community.imageURL.equals("")){
-            Glide.with(itemView).load(R.drawable.default_user).into(image_iv);
+            Glide.with(itemView).load(R.drawable.placeholder_picture).into(image_iv);
         }else{
             Glide.with(itemView).load(community.imageURL).into(image_iv);
         }

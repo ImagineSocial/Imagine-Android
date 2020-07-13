@@ -78,7 +78,7 @@ public class Community_Activity extends AppCompatActivity {
 
 
     public void initRecyclerView(){
-        FeedAdapter adapter = new CommunityFeedAdapter(postList,this.community,this);
+        CommunityFeedAdapter adapter = new CommunityFeedAdapter(postList,this.community,this);
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // TODO
@@ -104,7 +104,7 @@ public class Community_Activity extends AppCompatActivity {
                         public void onCallback(ArrayList<Post> values) {
 
                             postList.addAll(sortPostList(values));
-                            FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
+                            CommunityFeedAdapter adapter = (CommunityFeedAdapter) recyclerView.getAdapter();
                             adapter.addMorePosts(values);
                             adapter.notifyDataSetChanged();
                         }
