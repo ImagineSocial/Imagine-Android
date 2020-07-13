@@ -64,7 +64,7 @@ public class Information_Fragment extends Fragment implements View.OnClickListen
 
         switch (v.getId()) {
             case R.id.toGDPRButton:
-                String gdprURL = "https://donmalte.github.io";
+                String gdprURL = "https://www.imagine.social/datenschutzerklärung-app";
                 intent.setData(Uri.parse(gdprURL));
                 context.startActivity(intent);
                 break;
