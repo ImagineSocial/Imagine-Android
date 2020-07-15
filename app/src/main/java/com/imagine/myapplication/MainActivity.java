@@ -42,10 +42,12 @@ import static com.imagine.myapplication.R.drawable.default_user;
 
 public class MainActivity extends AppCompatActivity{
     public FirebaseAuth auth = FirebaseAuth.getInstance();
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public Context mContext;
     public Button loginButton;
     public CircleImageView imageCircle;
     public User userObj;
+    private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,24 +57,21 @@ public class MainActivity extends AppCompatActivity{
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new Feed_Fragment()).commit();
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
 
-        //Get the image from toolbar XML
+        //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
-
     }
 
     @Override
     protected void onResume() {
+        // Reloads the UserViews when resumed to main activity
         super.onResume();
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        final FirebaseUser user = auth.getCurrentUser();
         if(user != null){
             if (userObj == null) {
                 this.getUser(user.getUid());
@@ -124,12 +123,9 @@ public class MainActivity extends AppCompatActivity{
             };
 
     public void getUser(final String userID){
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+        //Fetches user information and calls setUpUserViews()
         if(userID != "" && userID !=null){
             DocumentReference userRef = db.collection("Users").document(userID);
-            System.out.println(userID+" ###############################################SWAG");
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -158,7 +154,7 @@ public class MainActivity extends AppCompatActivity{
                         user.setBlocked(userBlocked);
                         setUpUserViews(user);
                     }catch(NullPointerException e){
-                        System.out.println(documentSnapshot.getId()+"HEHEHEHEHEHEHEHEH!!!!");
+                        System.out.println("Error in UserFetch! "+TAG+" "+ e.getStackTrace());
                     }
                 }
             });
@@ -166,14 +162,14 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void setUpUserViews(User user){
-        userObj = user;
-        imageCircle.setVisibility(View.VISIBLE);
-        loginButton.setVisibility(View.INVISIBLE);
-        FirebaseUser firebaseUser = auth.getCurrentUser();
-        if (user.imageURL != null) {
-            Glide.with(this).load(Uri.parse(firebaseUser.getPhotoUrl().toString())).into(imageCircle);
-        } else {
+        // Sets up the User Views (UserImage & LoginButton)
+        this.userObj = user;
+        this.imageCircle.setVisibility(View.VISIBLE);
+        this.loginButton.setVisibility(View.INVISIBLE);
+        if (user.imageURL.equals("")) {
             Glide.with(this).load(default_user).into(imageCircle);
+        } else {
+            Glide.with(this).load(user.imageURL).into(imageCircle);
         }
         imageCircle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,6 +182,4 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
-
-
 }
