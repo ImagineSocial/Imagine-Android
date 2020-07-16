@@ -43,7 +43,6 @@ public class Community_Activity extends AppCompatActivity {
         if(imageURL == null){
             imageURL = "";
         }
-
         this.community = new Community(name,imageURL,commID,description);
         helper.getPostsForCommunityFeed(commID,new FirebaseCallback() {
             @Override
@@ -53,8 +52,6 @@ public class Community_Activity extends AppCompatActivity {
                 initRecyclerView();
             }
         });
-
-
     }
 
     public ArrayList<Post> sortPostList(ArrayList<Post> posts){

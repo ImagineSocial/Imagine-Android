@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YouTubePostActivity extends AppCompatActivity {
+    private static final String TAG = "YouTubePostActivity";
     public ArrayList<Comment> comments;
     public YouTubePost post;
     public Context mContext = this;
@@ -46,16 +47,16 @@ public class YouTubePostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_youtube_post);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new YouTubePostFragment()).commit();
-
+        // gets the post Object from the intent
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
         post = gson.fromJson(objString, YouTubePost.class);
-        System.out.println("!");
     }
 
     @Override
     protected void onStart() {
+        //starts bind method and fetches the comments
         super.onStart();
         bind();
         Post_Helper helper = new Post_Helper();
@@ -69,6 +70,7 @@ public class YouTubePostActivity extends AppCompatActivity {
     }
 
     public void bind(){
+        // sets up the postspecific Views
         init();
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
@@ -119,6 +121,8 @@ public class YouTubePostActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
+        // initializes the recyclerView containing the comments
+        // TODO: setting onScrollListener
         RecyclerView recyclerView = findViewById(R.id.post_activity_recyclerView);
         Comments_Adapter adapter = new Comments_Adapter(comments,this);
         recyclerView.setAdapter(adapter);
@@ -126,8 +130,8 @@ public class YouTubePostActivity extends AppCompatActivity {
     }
 
     public void init(){
+        // adds the onClickListeners for the Buttons
         final VoteHelper vote = new VoteHelper();
-
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
@@ -164,35 +168,27 @@ public class YouTubePostActivity extends AppCompatActivity {
     }
 
     public void upDateButtonUI(String type, Post post){
+        // changes ButtonUI when the buttons are clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = findViewById(R.id.thanks_button);
                 thanksBUtton.setBackground(null);
-//                thanksBUtton.setText(post.thanksCount+"");
                 break;
             case "wow":
                 ImageButton wowButton = findViewById(R.id.wow_button);
                 wowButton.setBackground(null);
-//                wowButton.setText(post.wowCount+"");
                 break;
             case "ha":
                 ImageButton haButton = findViewById(R.id.ha_button);
                 haButton.setBackground(null);
-//                haButton.setText(post.haCount+"");
                 break;
             case "nice":
                 ImageButton niceButton = findViewById(R.id.nice_button);
                 niceButton.setBackground(null);
-//                niceButton.setText(post.niceCount+"");
                 break;
             default:
-                System.out.println("DEFAULT!");
+                System.out.println("default case "+TAG);
                 break;
         }
-    }
-
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
     }
 }

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class GifPostActivity extends AppCompatActivity {
-
+    private static final String TAG = "GifPostActivity";
     public ArrayList<Comment> comments;
     public GIFPost post;
     public Context mContext;
@@ -50,16 +51,16 @@ public class GifPostActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.post_frame,new GifPostFragment()).commit();
-
+        // gets the post object from the intent
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
         this.post = gson.fromJson(objString, GIFPost.class);
-        System.out.println("!");
     }
 
     @Override
     protected void onStart() {
+        // stars the bind method and fetches the comments
         super.onStart();
         bind();
         Post_Helper helper = new Post_Helper();
@@ -74,6 +75,7 @@ public class GifPostActivity extends AppCompatActivity {
     }
 
     public void bind(){
+        // sets up the post specific views
         init();
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
@@ -152,6 +154,8 @@ public class GifPostActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
+        // initializes the recyclerView
+        // TODO: set up the onScrollistener!
         RecyclerView recyclerView = findViewById(R.id.post_activity_recyclerView);
         Comments_Adapter adapter = new Comments_Adapter(comments,this);
         recyclerView.setAdapter(adapter);
@@ -159,13 +163,12 @@ public class GifPostActivity extends AppCompatActivity {
     }
 
     public void init(){
+        // sets up the onClickListeners for the buttons
         final VoteHelper vote = new VoteHelper();
-
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
         ImageButton niceButton = findViewById(R.id.nice_button);
-
         thanksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,35 +200,27 @@ public class GifPostActivity extends AppCompatActivity {
     }
 
     public void upDateButtonUI(String type, Post post){
+        // changes the ButtonUI when a button is clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = findViewById(R.id.thanks_button);
                 thanksBUtton.setBackground(null);
-//                thanksBUtton.setText(post.thanksCount+"");
                 break;
             case "wow":
                 ImageButton wowButton = findViewById(R.id.wow_button);
                 wowButton.setBackground(null);
-//                wowButton.setText(post.wowCount+"");
                 break;
             case "ha":
                 ImageButton haButton = findViewById(R.id.ha_button);
                 haButton.setBackground(null);
-//                haButton.setText(post.haCount+"");
                 break;
             case "nice":
                 ImageButton niceButton = findViewById(R.id.nice_button);
                 niceButton.setBackground(null);
-//                niceButton.setText(post.niceCount+"");
                 break;
             default:
-                System.out.println("DEFAULT!");
+                System.out.println("default case! "+TAG);
                 break;
         }
-    }
-
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
     }
 }

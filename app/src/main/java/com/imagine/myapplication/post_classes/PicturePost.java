@@ -19,11 +19,6 @@ public class PicturePost extends Post {
         this.imageWidth = imageWidth;
         this.imageURL = imageURL;
     }
-
-    public PicturePost(){
-
-    }
-
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
     public void setImageHeight(long imageHeight) { this.imageHeight = imageHeight; }

@@ -15,10 +15,6 @@ public class GIFPost extends Post {
                 thanksCount,wowCount,haCount,niceCount,type);
         this.link = link;
     }
-
-    public GIFPost(){
-
-    }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
     public void setLink(String link) {

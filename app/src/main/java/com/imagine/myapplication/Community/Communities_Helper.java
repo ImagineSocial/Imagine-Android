@@ -18,12 +18,14 @@ import java.util.List;
 import java.util.Map;
 
 public class Communities_Helper {
-
+    private static final String TAG = "Communities_Helper";
     ArrayList<Community> commList = new ArrayList<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentSnapshot lastSnap = null;
 
     public void getCommunities(final CommunityCallback callback){
+        // fetches the initial communites from the "Facts" collection
+        // ordered by popularity
         Query commQuery = db.collection("Facts").orderBy("popularity", Query.Direction.DESCENDING).limit(20);
         commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -39,14 +41,15 @@ public class Communities_Helper {
                     }
                     callback.onCallback(commList);
                 }else{
-                    System.out.println("Community Fetch FAILED!");
-
+                    System.out.println("community fetch failed! "+TAG);
                 }
             }
         });
     }
 
     public void getMoreCommunities(final CommunityCallback callback){
+        // fetches more communities from the "Facts" collection when the
+        // onScrollListener is triggered
         if(lastSnap == null){
             return;
         }
@@ -68,7 +71,7 @@ public class Communities_Helper {
                     }
                     callback.onCallback(commList);
                 } else if(task.isCanceled()){
-                    System.out.println("More Communitys Fetch FAILED!");
+                    System.out.println("getmore communitys fetch failed! "+TAG);
                 }
             }
         });
@@ -76,11 +79,11 @@ public class Communities_Helper {
     }
 
     public void addCommunity(DocumentSnapshot docSnap){
+        // creates a Community from the docSNap and adds it to the commList
         String name = docSnap.getString("name");
         String topicID = docSnap.getId();
         String imageURL = docSnap.getString("imageURL");
         String description = docSnap.getString("description");
-
         Community comm = new Community(name,imageURL,topicID,description);
         commList.add(comm);
     }

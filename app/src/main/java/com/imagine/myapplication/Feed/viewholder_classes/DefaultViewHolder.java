@@ -18,11 +18,12 @@ public class DefaultViewHolder extends CustomViewHolder {
     }
 
     public void bind(DefaultPost post){
+        // bind method of the default post
+        // sets up the defaultpost views to default values
         TextView name_tv = itemView.findViewById(R.id.name_textView);
         CircleImageView profile_imageView = itemView.findViewById(R.id.profile_picture_imageView);
         TextView title_tv = itemView.findViewById(R.id.title_textView);
         TextView date_tv = itemView.findViewById(R.id.createDate_textView);
-
         date_tv.setText("Unbekanntes Datum");
         name_tv.setText("Fehlerhafter Post");
         title_tv.setText(post.documentID);

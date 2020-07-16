@@ -15,7 +15,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Comments_Adapter extends RecyclerView.Adapter<CommentViewHolder> {
-
+    private static final String TAG = "Comments_Adapter";
     public ArrayList<Comment> comments;
     public Context mContext;
 

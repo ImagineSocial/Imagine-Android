@@ -17,9 +17,14 @@ import com.imagine.myapplication.R;
 import java.util.ArrayList;
 
 public class CommunityPickerAdapter extends RecyclerView.Adapter<Community_Picker_ViewHolder> {
+    private static final String TAG = "CommunityPickerAdapter";
     public ArrayList<Community> commList = new ArrayList<>();
     public CommunityPickActivity parent;
     public Context mContext;
+
+    // works like all the other adapters
+    // used for the recyclerview inside the CommunityPicker
+    // for the linkedFact id in the newPostFragement
 
     public CommunityPickerAdapter(ArrayList<Community> commList, Context mContext, CommunityPickActivity picker) {
         this.commList = commList;
@@ -42,7 +47,6 @@ public class CommunityPickerAdapter extends RecyclerView.Adapter<Community_Picke
         }
         View view = inflater.inflate(R.layout.community, parent, false);
         Community_Picker_ViewHolder commVH = new Community_Picker_ViewHolder(view);
-
         int spacing = 30;
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) ((parent.getWidth() / 2) - spacing);

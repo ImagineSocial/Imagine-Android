@@ -29,16 +29,15 @@ public class ThoughtViewHolder extends CustomViewHolder {
     }
 
     public void bind(final ThoughtPost post){
+        // calls the init method ad sets up the post specific views
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-
         if(post.originalPoster.equals("anonym")){
             username_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
@@ -55,8 +54,6 @@ public class ThoughtViewHolder extends CustomViewHolder {
         }
 
         setLinkedFact(post.linkedFactId);
-
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +67,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
     }
 
     public void setName(final ThoughtPost post){
+        // sets up the users views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);

@@ -40,13 +40,12 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void init(final Post post){
+        // sets up the onClickListeners for the buttons
         final VoteHelper vote = new VoteHelper();
-
         ImageButton thanksButton = mItemView.findViewById(R.id.thanks_button);
         ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
         ImageButton haButton = mItemView.findViewById(R.id.ha_button);
         ImageButton niceButton = mItemView.findViewById(R.id.nice_button);
-
         thanksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +77,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void upDateButtonUI(String type, Post post){
+        // changes the buttonUI when a button is clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = mItemView.findViewById(R.id.thanks_button);
@@ -114,12 +114,11 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void getUser(final String userID,final UserCallback callback){
-
+        // fetches the user again if it hasnt been set yet
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        if(userID != "" && userID !=null){
+        if(!userID .equals("") && userID !=null){
             DocumentReference userRef = db.collection("Users").document(userID);
-            System.out.println(userID+" ###############################################SWAG");
+            System.out.println(userID+" "+TAG);
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -128,7 +127,6 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                         String userName = (docData.get("name") != null)      // Condition
                                 ? (String) docData.get("name")              // IF-True
                                 : (String) "";                              // ELSE
-
                         String userSurname = (docData.get("surname") != null)
                                 ? (String) docData.get("surname")
                                 : (String) "";
@@ -148,7 +146,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                         user.setBlocked(userBlocked);
                         callback.onCallback(user);
                     }catch(NullPointerException e){
-                        System.out.println(documentSnapshot.getId()+"HEHEHEHEHEHEHEHEH!!!!");
+                        System.out.println(documentSnapshot.getId()+" "+TAG);
                     }
                 }
             });
@@ -156,11 +154,10 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLinkedFact(final String linkedTopicID){
+        // sets the linkedfactID and fetches communitydata to display
         final ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
-
         if (linkedTopicID != "" && linkedTopicID != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-
             DocumentReference userRef = db.collection("Facts").document(linkedTopicID);
             userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -170,7 +167,6 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                         final String communityName = (docData.get("name") != null)      // Condition
                                 ? (String) docData.get("name")              // IF-True
                                 : (String) "";                              // ELSE
-
                         final String communityImageURL = (docData.get("imageURL") != null)
                                 ? (String) docData.get("imageURL")
                                 : (String) "";
@@ -178,8 +174,6 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                         final String description = (docData.get("description") != null)
                                 ? (String) docData.get("description")
                                 : (String) "";
-
-
                         if (communityImageURL != "") {
                             Glide.with(itemView).load(communityImageURL).into(linkedTopicImageView);
                         } else {
@@ -198,10 +192,8 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                                 mContext.startActivity(intent);
                             }
                         });
-
-
                     }catch(NullPointerException e){
-                        System.out.println(documentSnapshot.getId()+"HEHEHEHEHEHEHEHEH!!!!");
+                        System.out.println(documentSnapshot.getId()+" "+TAG);
                     }
                 }
             });
@@ -209,13 +201,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
             linkedTopicImageView.setImageBitmap(null);
         }
     }
-
-
     public String getType(){
         return "custom";
     }
-//    public String dateToString(Timestamp timestamp){
-//        Date date = timestamp.toDate();
-//        return date.toString();
-//    }
 }

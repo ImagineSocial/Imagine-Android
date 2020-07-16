@@ -20,6 +20,7 @@ import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.TranslationPost;
 
 public class TranslationViewHolder extends CustomViewHolder{
+    private static final String TAG = "TranslationViewHolder";
     public Context mContext;
     public User userObj;
 
@@ -29,6 +30,7 @@ public class TranslationViewHolder extends CustomViewHolder{
     }
 
     public void bind(final TranslationPost post){
+        // calls init method and sets up the post specific views
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
@@ -53,9 +55,7 @@ public class TranslationViewHolder extends CustomViewHolder{
                 }
             });
         }
-
         setLinkedFact(post.linkedFactId);
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +69,7 @@ public class TranslationViewHolder extends CustomViewHolder{
     }
 
     public void setName(final TranslationPost post){
+        // sets up the user views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);

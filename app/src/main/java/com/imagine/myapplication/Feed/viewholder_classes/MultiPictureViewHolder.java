@@ -23,6 +23,7 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 public class MultiPictureViewHolder extends  CustomViewHolder {
+    private static final String TAG = "MultiPictureViewHolder";
     public Context mContext;
     public User userObj;
 
@@ -32,6 +33,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
     }
 
     public void bind(final MultiPicturePost post){
+        // calls the init method and sets up the post specific views
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
@@ -39,9 +41,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         CarouselView carouselView = itemView.findViewById(R.id.carouselView);
-
         final String [] imageArray = post.imageURLs;
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         carouselView.setPageCount(imageArray.length);
@@ -64,7 +64,6 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
             }
         });
         carouselView.setClipToOutline(true);
-
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
@@ -79,9 +78,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 }
             });
         }
-
         setLinkedFact(post.linkedFactId);
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,10 +89,10 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 itemView.getContext().startActivity(intent);
             }
         });
-
     }
 
     public void setName(final MultiPicturePost post){
+        // sets up the users views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);

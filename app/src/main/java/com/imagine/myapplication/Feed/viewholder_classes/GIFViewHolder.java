@@ -26,6 +26,7 @@ import java.net.CacheRequest;
 import java.util.LinkedHashMap;
 
 public class GIFViewHolder extends CustomViewHolder {
+    private static final String TAG = "GIFViewHolder";
     public Context mContext;
     public User userObj;
 
@@ -33,10 +34,9 @@ public class GIFViewHolder extends CustomViewHolder {
         super(itemView);
         this.mContext = itemView.getContext();
     }
-
-
-
+    
     public void bind(final GIFPost post){
+        // calls the init method and sets up the post specific views
         init(post);
         //GIF Widgets
         TextView title_textView = itemView.findViewById(R.id.title_textView);
@@ -45,15 +45,9 @@ public class GIFViewHolder extends CustomViewHolder {
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         final VideoView videoView = itemView.findViewById(R.id.gif_videoView);
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         videoView.setVideoPath(post.link);
-
-        //MediaController mediaController = new MediaController(itemView.getContext());
-        //videoView.setMediaController(mediaController);
-        //mediaController.setAnchorView(videoView);
-
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
@@ -68,40 +62,29 @@ public class GIFViewHolder extends CustomViewHolder {
                 }
             });
         }
-
-
         setLinkedFact(post.linkedFactId);
-
-
         ConstraintLayout videoFrame = itemView.findViewById(R.id.video_frame);
         videoFrame.setClipToOutline(true);
-
         //Adjust the videoView to show the right ratio
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
-
                 //Get your video's width and height
                 int videoWidth = mp.getVideoWidth();
                 int videoHeight = mp.getVideoHeight();
-
                 //Get VideoView's current width and height
                 int videoViewWidth = videoView.getWidth();
                 int videoViewHeight = videoView.getHeight();
-
                 float xScale = (float) videoViewWidth / videoWidth;
                 float yScale = (float) videoViewHeight / videoHeight;
-
                 //For Center Crop use the Math.max to calculate the scale
                 //float scale = Math.max(xScale, yScale);
                 //For Center Inside use the Math.min scale.
                 //I prefer Center Inside so I am using Math.min
                 float scale = Math.max(xScale, yScale);
-
                 float scaledWidth = scale * videoWidth;
                 float scaledHeight = scale * videoHeight;
-
                 //Set the new size for the VideoView based on the dimensions of the video
                 ViewGroup.LayoutParams layoutParams = videoView.getLayoutParams();
                 layoutParams.width = (int)scaledWidth;
@@ -110,7 +93,6 @@ public class GIFViewHolder extends CustomViewHolder {
                 videoView.start();
             }
         });
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +106,7 @@ public class GIFViewHolder extends CustomViewHolder {
     }
 
     public void setName(final GIFPost post){
+        // sets up the users views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);

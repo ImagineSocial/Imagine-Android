@@ -13,11 +13,6 @@ public class ThoughtPost extends Post {
         super(title, documentID, description, report, createTime, createTimestamp, originalPoster,
                 thanksCount, wowCount, haCount, niceCount, type);
     }
-
-    public ThoughtPost(){
-
-    }
-
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
     //ThoughtPost hat keine eigenen Setter und

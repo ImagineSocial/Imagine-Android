@@ -66,7 +66,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class New_Post_Fragment extends Fragment implements View.OnClickListener {
-
+    private static final String TAG = "New_Post_Fragment";
     public StorageReference storeRef = FirebaseStorage.getInstance().getReference();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -81,17 +81,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public float imageWidth = 0f;
     public Uri imageUri;
     public String linkedFactID;
-
     public float halfAlpha = 0.5f;
     public float fullAlpha = 1f;
-
     public final int GALLERY = 1;
     public final int IMAGE_CAPTURE = 2;
     public final int MULTIPLE_IMAGES = 3;
     public final int COMMUNITY_PICK = 4;
-
     public Button shareButton;
-
     public View view;
 
     @Nullable
@@ -100,10 +96,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         return inflater.inflate(R.layout.fragment_new_post,container,false);
     }
 
-
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        // sets up the fragments views and calls setthought()
+        // default viewsetup when fragment is created
         super.onViewCreated(view, savedInstanceState);
         Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
         newThoughtButton.setOnClickListener(this);
@@ -130,11 +126,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         });
         preview_imageView.setPageCount(1);
         preview_imageView.setClipToOutline(true);
-
         this.view = view;
-
         newThoughtButton.setAlpha(halfAlpha);
-
         pictureFolder_button.setEnabled(false);
         pictureFolder_button.setAlpha(halfAlpha);
         pictureCamera_button.setEnabled(false);
@@ -144,16 +137,15 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        // sets up the onClickEvents for the different buttons
         Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
         Button newPictureButton = (Button) view.findViewById(R.id.new_picture_button);
         Button newLinkButton = (Button) view.findViewById(R.id.new_link_button);
         Button newGIFButton = (Button) view.findViewById(R.id.new_gif_button);
-
         newThoughtButton.setAlpha(fullAlpha);
         newPictureButton.setAlpha(fullAlpha);
         newLinkButton.setAlpha(fullAlpha);
         newGIFButton.setAlpha(fullAlpha);
-
         switch (v.getId()) {
             case R.id.new_thought_button:
                 newThoughtButton.setAlpha(halfAlpha);
@@ -175,12 +167,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.new_link_button:
                 newLinkButton.setAlpha(halfAlpha);
-
                 showLink();
                 break;
             case R.id.new_gif_button:
                 newGIFButton.setAlpha(halfAlpha);
-
                 showGIF();
                 break;
             case R.id.pictureFolder_Button:
@@ -217,7 +207,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        ImageButton cameraButton = getView().findViewById(R.id.pictureCamera_button);
+        // called when the permission request has been answered
         if ((requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) &&
                 (grantResults.length > 0 && grantResults[0] ==
                         PackageManager.PERMISSION_GRANTED)){
@@ -227,12 +217,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // is called when the gallery, camera or communitypicker intent return with a result
         super.onActivityResult(requestCode, resultCode, data);
         ImageView communityPreview = getView().findViewById(R.id.linkedCommunity_imageView);
         CarouselView carouselView = getView().findViewById(R.id.preview_imageView);
         Button new_picture_button = getView().findViewById(R.id.new_picture_button);
         communityPreview.setClipToOutline(true);
-
         switch(requestCode){
             case GALLERY:
                 if(data != null){
@@ -244,14 +234,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             image_inBitmap = bitmap;
                             imageWidth = (float) bitmap.getWidth();
                             imageHeight = (float) bitmap.getHeight();
-
                             carouselView.setImageListener(new ImageListener() {
                                 @Override
                                 public void setImageForPosition(int position, ImageView imageView) {
                                     Glide.with(getView()).load(contentURI).into(imageView);
                                 }
                             });
-
                             carouselView.setPageCount(1);
                             new_picture_button.setAlpha(halfAlpha);
                         }else{
@@ -267,12 +255,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                     Glide.with(getView()).load(contentURI).into(imageView);
                                 }
                             });
-
                             carouselView.setPageCount(1);
                             new_picture_button.setAlpha(halfAlpha);
                         }
                     }catch(Exception e){
-                        System.out.println(e.getStackTrace().toString());
+                        System.out.println(e.getStackTrace().toString()+" "+TAG);
                     }
                 }
                 break;
@@ -283,7 +270,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             image_inBitmap = MediaStore.Images.Media
                                     .getBitmap(
                                             getContext().getContentResolver(), imageUri);
-
                             carouselView.setImageListener(new ImageListener() {
                                 @Override
                                 public void setImageForPosition(int position, ImageView imageView) {
@@ -311,21 +297,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         }
 
                     } catch (IOException e) {
-                        System.out.println("FEHLER!");
+                        System.out.println("error! "+TAG);
                     }
                 } else {
-                    int rowsDeleted =
-                            getContext().getContentResolver().delete(imageUri,
-                                    null, null);
-                    System.out.println("REIHEN GELÖSCHT!");
+                    System.out.println("resultcode not OK! "+TAG);
                 }
                 break;
             case MULTIPLE_IMAGES:
                 if(resultCode == getActivity().RESULT_OK){
                     ClipData clipData = data.getClipData();
-
                     if(clipData != null){   //multiPicture
-
                         if(clipData.getItemCount()>3){
                             Toast.makeText(getContext(),"Bitte wähle nicht mehr als drei BIlder aus!",
                                     duration).show();
@@ -358,11 +339,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                                     }
                                 }
                             }catch(Exception e){
-                                System.out.println("!!");
+                                System.out.println("error! "+TAG);
                             }
                         }
-
-
                         carouselView.setImageListener(new ImageListener() {
                             @Override
                             public void setImageForPosition(int position, ImageView imageView) {
@@ -378,8 +357,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         .show();
                         new_picture_button.setAlpha(halfAlpha);
                     }
-
-
                 }
                 break;
             case COMMUNITY_PICK:
@@ -391,26 +368,25 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     Glide.with(getView()).load(imageURL).into(communityPreview);
                 }
                 break;
-
         }
     }
 
     public void shareTapped(){
-        // TODO
+        // is called when the shareButton is clicked
+        // checks if all required fields are filled
+        // looks what type is set and shares the posts
         shareButton.setEnabled(false);
         EditText title_editText = getView().findViewById(R.id.title_editText);
         EditText link_editText = getView().findViewById(R.id.link_editText);
         CarouselView carousel = getView().findViewById(R.id.preview_imageView);
         FirebaseUser currentUser = auth.getCurrentUser();
-
         if(currentUser != null){
             if(title_editText.getText().equals("") || title_editText.getText().equals(null)){
                 Toast.makeText(getContext(),"Gib bitte einen Titel ein!",duration).show();
                 this.shareButton.setEnabled(true);
             }else{
                 DocumentReference docRef = db.collection("Posts").document();
-                System.out.println("Das ist die Post ID:" + docRef.getId());
-
+                System.out.println("Das ist die Post ID:" + docRef.getId()+" "+TAG);
                 switch(type){
                     case "picture":
                         if(carousel.getPageCount() == 0 || imageHeight == 0f
@@ -457,7 +433,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     default:
                         Toast.makeText(getContext(),"Type Fehler!", duration).show();
                         break;
-
                 }
             }
         }else{
@@ -467,12 +442,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void choosePhotoFromGallery(){
+        // starts the galleryintent (one picture)
         Intent intent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent,GALLERY);
     }
 
     public void chooseMultiplePhotosFromGallery(){
+        // starts the gallery intent ( multiple pictures)
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         intent.setType("image/*");
@@ -480,6 +457,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void takePhotoFromCamera(){
+        // start the camera intent
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE,"Kamera Test");
         values.put(MediaStore.Images.Media.DESCRIPTION,
@@ -494,7 +472,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
 
     public void loadPictureToFirebase(final DocumentReference docRef){
-        //TODO
+        // upload the picture ( one) to Firebase FireStore
         String pathString = docRef.getId()+".png";
         final StorageReference pictureRef = storeRef.child("postPictures").child(pathString);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -511,13 +489,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         @Override
                         public void onSuccess(Uri uri) {
                             String uriString = uri.toString();
-                            System.out.println("Hier ist die URL:" + uriString);
+                            System.out.println("Hier ist die URL:" + uriString+" "+TAG);
                             postPicture(docRef,uriString);
                         }
                     });
 
                 }else if( task.isCanceled()){
-                    System.out.println("Konnte Bild nicht hochladen!");
+                    System.out.println("upload failed! "+TAG);
                 }
             }
         });
@@ -525,7 +503,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void loadPicturesToFirebase(final DocumentReference docRef){
-        //TODO
+        // upload multiple pictures to Firebase Firestore
         if(this.multi_bitmaps.length >= 2 && this.multi_bitmaps.length <= 3){
             final int count = multi_bitmaps.length;
             imageURLS = new ArrayList<>();
@@ -569,11 +547,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void postThought(DocumentReference docRef){
-
+        // method to post a thought
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         FirebaseUser user = auth.getCurrentUser();
-
         if( !user.equals(null)){
             String title = title_edit.getText().toString();
             String description = description_edit.getText().toString();
@@ -588,19 +565,16 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("niceCount", new Integer(0));
             data.put("type", "thought");
             data.put("report", "normal");
-
             uploadData(docRef,data);
         }else
-            System.out.println("Kein User in PostThought-Methode!");
+            System.out.println("Kein User in PostThought-Methode! "+TAG);
     }
     public void postLink(DocumentReference docRef){
-        //TODO
+        // method to post a link
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         EditText link_edit = getView().findViewById(R.id.link_editText);
-
         FirebaseUser user = auth.getCurrentUser();
-        int test = 0;
         if( !user.equals(null)){
             String title = title_edit.getText().toString();
             String description = description_edit.getText().toString();
@@ -609,7 +583,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("title",title);
             data.put("description",description);
             data.put("originalPoster", user.getUid());
-            data.put("createTime", new Timestamp(new Date())); // TODO
+            data.put("createTime", new Timestamp(new Date()));
             data.put("thanksCount",new Integer(0));
             data.put("wowCount", new Integer(0));
             data.put("haCount", new Integer(0));
@@ -617,21 +591,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("type", "link");
             data.put("report", "normal");
             data.put("link",link);
-
             uploadData(docRef,data);
         }else
-            System.out.println("Kein User in PostLink-Methode!");
+            System.out.println("Kein User in PostLink-Methode! "+TAG);
     }
 
     public void postGIF(DocumentReference docRef){
-        //TODO
+        // method to post a GIF
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         EditText link_edit = getView().findViewById(R.id.link_editText);
-
         FirebaseUser user = auth.getCurrentUser();
         String link = link_edit.getText().toString();
-
         if (user != null) {
          if (link.contains(".mp4")){
                 String title = title_edit.getText().toString();
@@ -640,33 +611,30 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 data.put("title", title);
                 data.put("description", description);
                 data.put("originalPoster", user.getUid());
-                data.put("createTime", new Timestamp(new Date())); // TODO
+                data.put("createTime", new Timestamp(new Date()));
                 data.put("thanksCount", new Integer(0));
                 data.put("wowCount", new Integer(0));
                 data.put("haCount", new Integer(0));
                 data.put("niceCount", new Integer(0));
-                data.put("type", "GIF"); // TODO
+                data.put("type", "GIF");
                 data.put("report", "normal");
                 data.put("link", link);
-
                 uploadData(docRef, data);
             } else {
              Toast.makeText(getContext(), "Im Moment unterstützen wir leider nur Links im .mp4 Format.", Toast.LENGTH_SHORT).show();
              this.shareButton.setEnabled(true);
              }
         } else {
-            System.out.println("Kein User in PostYouTUbe-Methode!");
+            System.out.println("Kein User in PostYouTUbe-Methode! "+TAG);
         }
     }
 
     public void postYouTube(DocumentReference docRef){
-        //TODO
+        // method to post a YouTubeVIdeo
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         EditText link_edit = getView().findViewById(R.id.link_editText);
-
         FirebaseUser user = auth.getCurrentUser();
-
         if( !user.equals(null)){
             String title = title_edit.getText().toString();
             String description = description_edit.getText().toString();
@@ -675,26 +643,24 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("title",title);
             data.put("description",description);
             data.put("originalPoster", user.getUid());
-            data.put("createTime", new Timestamp(new Date())); // TODO
+            data.put("createTime", new Timestamp(new Date()));
             data.put("thanksCount",new Integer(0));
             data.put("wowCount", new Integer(0));
             data.put("haCount", new Integer(0));
             data.put("niceCount", new Integer(0));
-            data.put("type", "youTubeVideo"); // TODO
+            data.put("type", "youTubeVideo");
             data.put("report", "normal");
             data.put("link",link);
-
             uploadData(docRef,data);
         }else
-            System.out.println("Kein User in PostYouTUbe-Methode!");
+            System.out.println("Kein User in PostYouTUbe-Methode! "+TAG);
     }
 
     public void postPicture(DocumentReference docRef, String url){
-        //TODO
+        // method to post a Picture
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
-
-        System.out.println("Das ist die imageURL: "+url);
+        System.out.println("Das ist die imageURL: "+url+" "+TAG);
         FirebaseUser user = auth.getCurrentUser();
         if(!user.equals(null)){
             String title = title_edit.getText().toString();
@@ -703,7 +669,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("title",title);
             data.put("description",description);
             data.put("originalPoster", user.getUid());
-            data.put("createTime", new Timestamp(new Date())); // TODO
+            data.put("createTime", new Timestamp(new Date()));
             data.put("thanksCount",new Integer(0));
             data.put("wowCount", new Integer(0));
             data.put("haCount", new Integer(0));
@@ -715,10 +681,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("imageWidth", new Float(imageWidth));
             uploadData(docRef,data);
         }else
-            System.out.println("Kein User in postPicture-Methode!");
+            System.out.println("Kein User in postPicture-Methode! "+TAG);
     }
 
     public void postMultiPicture(DocumentReference documentReference){
+        // method to post a multiPicturePost
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         FirebaseUser user = auth.getCurrentUser();
@@ -729,7 +696,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("title",title);
             data.put("description",description);
             data.put("originalPoster", user.getUid());
-            data.put("createTime", new Timestamp(new Date())); // TODO
+            data.put("createTime", new Timestamp(new Date()));
             data.put("thanksCount",new Integer(0));
             data.put("wowCount", new Integer(0));
             data.put("haCount", new Integer(0));
@@ -741,11 +708,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             data.put("imageWidth", new Float(imageWidth));
             uploadData(documentReference,data);
         }else
-            System.out.println("Kein User in postPicture-Methode!");
+            System.out.println("Kein User in postPicture-Methode! "+TAG);
     }
 
     public void uploadData(final DocumentReference docRef, HashMap<String,Object> data){
-
+        // uploads the data to the DocumentReference docRef
         if(linkedFactID != null){
             data.put("linkedFactID",linkedFactID);
         }
@@ -756,9 +723,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     if (linkedFactID != null) {
                         uploadCommunityData(docRef, linkedFactID);
                     }
-
                     uploadUserData(docRef);
-
                     System.out.println("Post erfolgreich erstellt!");
                     postedSuccessful();
                 } else if(task.isCanceled())
@@ -768,52 +733,52 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void uploadCommunityData(DocumentReference docRef, String linkedFactID) {
+        // uploads the posts data to the communityDocument if it is shared inside a
+        // community
         String documentID = docRef.getId();
         DocumentReference communityRef = db.collection("Facts").document(linkedFactID).collection("posts").document(documentID);
         Timestamp timestamp = new Timestamp(new Date());
-
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);
-        //If topicPost...
         communityRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    System.out.println("Community erfolgreich gelinked!");
+                    System.out.println("Community erfolgreich gelinked! "+TAG);
                 } else if(task.isCanceled()) {
-                    System.out.println("Community linken fehlgeschlagen!");
+                    System.out.println("Community linken fehlgeschlagen! "+TAG);
                 }
             }
         });
     }
 
     public void uploadUserData(DocumentReference docRef) {
+        // upload the post data to the user document
         String documentID = docRef.getId();
         FirebaseUser user = auth.getCurrentUser();
-        DocumentReference userRef = db.collection("Users").document(user.getUid()).collection("posts").document(documentID);
+        DocumentReference userRef = db.collection("Users").document(user.getUid())
+                .collection("posts").document(documentID);
         Timestamp timestamp = new Timestamp(new Date());
-
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);
-        //If topicPost...
         userRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    System.out.println("Community erfolgreich gelinked!");
+                    System.out.println("Community erfolgreich gelinked! "+TAG);
                 } else if(task.isCanceled()) {
-                    System.out.println("Community linken fehlgeschlagen!");
+                    System.out.println("Community linken fehlgeschlagen! "+TAG);
                 }
             }
         });
     }
 
     public void postedSuccessful(){
+        // called when the posting process is successfull
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         EditText link_edit = getView().findViewById(R.id.link_editText);
         final CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
-
         title_edit.getText().clear();
         description_edit.getText().clear();
         link_edit.getText().clear();
@@ -833,45 +798,42 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void hidePicture(){
+        // hides the picutrefolder and picturecamerabutton
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
         ImageButton pictureFolder_Button = getView().findViewById(R.id.pictureFolder_Button);
         TextView picture_label = getView().findViewById(R.id.picture_label);
-
         pictureCamera_button.setAlpha(halfAlpha);
         pictureFolder_Button.setAlpha(halfAlpha);
         picture_label.setAlpha(halfAlpha);
-
         pictureCamera_button.setEnabled(false);
         pictureFolder_Button.setEnabled(false);
     }
 
     public void hideLink(){
+        // hides the link label and edittext
         TextView link_label = getView().findViewById(R.id.link_label);
         EditText link_editText = getView().findViewById(R.id.link_editText);
-
         link_label.setAlpha(halfAlpha);
         link_editText.setEnabled(false);
     }
 
     public void showGIF(){
+        // sets up GIFViews and changes Type
         this.type = "gif";
         hidePicture();
-
         TextView link_label = getView().findViewById(R.id.link_label);
         EditText link_editText = getView().findViewById(R.id.link_editText);
-
         link_editText.setEnabled(true);
         link_label.setAlpha(fullAlpha);
     }
 
     public void showPicture(){
+        // sets up pictureViews and changes type
         this.type = "picture";
         hideLink();
-
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
         ImageButton pictureFolder_Button = getView().findViewById(R.id.pictureFolder_Button);
         TextView picture_label = getView().findViewById(R.id.picture_label);
-
         pictureCamera_button.setAlpha(fullAlpha);
         pictureCamera_button.setEnabled(true);
         pictureFolder_Button.setAlpha(fullAlpha);
@@ -880,17 +842,17 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     }
 
     public void showLink(){
+        // sets up linkViews and changes type
         this.type = "link";
         hidePicture();
-
         TextView link_label = getView().findViewById(R.id.link_label);
         EditText link_editText = getView().findViewById(R.id.link_editText);
-
         link_editText.setEnabled(true);
         link_label.setAlpha(fullAlpha);
     }
 
     public boolean isYouTubeURL(String youTubeURL){
+        // checks if url is valid youtube url
         boolean success;
         String pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+";
         if (!youTubeURL.isEmpty() && youTubeURL.matches(pattern))

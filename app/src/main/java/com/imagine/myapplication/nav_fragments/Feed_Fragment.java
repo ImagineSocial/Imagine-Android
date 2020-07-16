@@ -37,6 +37,7 @@ public class Feed_Fragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        // fetches the post for the feed
         super.onViewCreated(view, savedInstanceState);
         helper.getPostsForMainFeed( new FirebaseCallback() {
             @Override
@@ -49,6 +50,7 @@ public class Feed_Fragment extends Fragment {
     }
 
     private void initRecyclerView (final View view){
+        // initializes the recyclerView for the feed
         RecyclerView recyclerView = view.findViewById(R.id.feed_recyclerView);
         Context context = view.getContext();
         FeedAdapter adapter = new FeedAdapter(postList,context);

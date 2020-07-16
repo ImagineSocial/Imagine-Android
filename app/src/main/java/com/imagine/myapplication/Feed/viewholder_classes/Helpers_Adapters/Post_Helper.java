@@ -45,6 +45,7 @@ public class Post_Helper {
     public int size;
 
     public  void getPostsForMainFeed( final FirebaseCallback callback){
+        // fetches the initial posts for the main feed
         Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(20);
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -93,6 +94,8 @@ public class Post_Helper {
     }
 
     public void getMorePostsForFeed(final FirebaseCallback callback){
+        // called when onScrollListener triggers and fetches more post for the main feed
+        // whole postLists is returned
         Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(20);
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -142,6 +145,7 @@ public class Post_Helper {
     }
 
     public  void getPostsForCommunityFeed(String commID,final FirebaseCallback callback){
+        // fetches the initial posts for the communityfeed
         this.commID = commID;
         Query postsColl = db.collection("Facts").document(commID).collection("posts")
                 .orderBy("createTime", Query.Direction.DESCENDING)
@@ -209,8 +213,6 @@ public class Post_Helper {
                                 }
                                 count++;
                                 if(count == size)callback.onCallback(postList);
-
-
                             }else if(task.isCanceled()){
                                 count++;
                                 if(count == size)callback.onCallback(postList);
@@ -218,14 +220,13 @@ public class Post_Helper {
                         }
                     });
                 }
-
-
-
             }
         });
     }
 
     public void getMorePostsForCommunityFeed(final FirebaseCallback callback){
+        // fetches more post for the community feed when the onscrollListener is
+        // triggered returns the whole postsList
         if(lastSnap == null || this.commID == null){
             return;
         }
@@ -294,13 +295,10 @@ public class Post_Helper {
                                         addDefaulPost(documentSnapshot);
                                         break;
                                 }
-
                                 count++;
                                 if(count == size){
                                     callback.onCallback(postList);
                                 };
-
-
                             }else if(task.isCanceled()){
                                 count++;
                                 if(count == size){
@@ -310,14 +308,12 @@ public class Post_Helper {
                         }
                     });
                 }
-
-
-
             }
         });
     }
 
     public  void getPostsForUserFeed( final FirebaseCallback callback,String userID){
+        // fetches the initial posts for the userfeed
         this.userID = userID;
         Query postsColl = db.collection("Users").document(userID).collection("posts")
                 .orderBy("createTime", Query.Direction.DESCENDING)
@@ -387,8 +383,6 @@ public class Post_Helper {
                                 if(count == size){
                                     callback.onCallback(postList);
                                 };
-
-
                             }else if(task.isCanceled()){
                                 count++;
                                 if(count == size){
@@ -403,6 +397,8 @@ public class Post_Helper {
     }
 
     public void getMorePostsForUserFeed(final FirebaseCallback callback){
+        // fetches more post for the user feed when the onscrolllistener is triggered
+        // returns the whole postList
         if(lastSnap == null || this.userID == null){
             return;
         }
@@ -471,13 +467,10 @@ public class Post_Helper {
                                         addDefaulPost(documentSnapshot);
                                         break;
                                 }
-
                                 count++;
                                 if(count == size){
                                     callback.onCallback(postList);
                                 };
-
-
                             }else if(task.isCanceled()){
                                 count++;
                                 if(count == size){
@@ -487,18 +480,15 @@ public class Post_Helper {
                         }
                     });
                 }
-
-
-
             }
         });
     }
 
     public void getComments(String postID, final CommentsCallback callback){
+        // fetches the comments for the postActivitys
         final ArrayList<Comment> commArray = new ArrayList<>();
         Query commRef = db.collection("Comments").document(postID)
                 .collection("threads").orderBy("sentAt", Query.Direction.ASCENDING);
-
         commRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -511,7 +501,6 @@ public class Post_Helper {
                         //comm.id = docSnap.getLong("is");
                         Timestamp sentAt = docSnap.getTimestamp("sentAt");
                         comm.sentAt = sentAt;
-
                         comm.userID = docSnap.getString("userID");
                         Long timeNow = new Date().getTime();
                         String dateString = convertLongDateToAgoString(sentAt.toDate(),timeNow);
@@ -541,12 +530,12 @@ public class Post_Helper {
                 }
             }
         });
-
     }
 
 
 
     public void addThoughtPost(DocumentSnapshot docSnap){
+        // creates a ThoughtPost from a docSNap and adds it to the postslist
         try{
             // Attribute die alle haben
             String thought_docID = docSnap.getId();
@@ -580,10 +569,10 @@ public class Post_Helper {
         }catch(Exception e){
             addDefaulPost(docSnap);
         }
-
     }
 
     public void addYouTubePost(DocumentSnapshot docSnap){
+        // creates a youTubePost from s docSnap and adds it to the postList
         try{
             // Attribute die alle haben
             String youtube_docID = docSnap.getId();
@@ -621,6 +610,7 @@ public class Post_Helper {
     }
 
     public void addLinkPost(DocumentSnapshot docSnap){
+        // creates a LinkPost from a docSNap and adds it to the postList
         try{
             // Attribute die alle haben
             String link_docID = docSnap.getId();
@@ -658,6 +648,7 @@ public class Post_Helper {
     }
 
     public void addGIFPost(DocumentSnapshot docSnap){
+        // creates a GIFPost from a docSnap and adds it to the post list
         try{
             // Attribute die alle haben
             String gif_docID = docSnap.getId();
@@ -695,6 +686,7 @@ public class Post_Helper {
     }
 
     public void addPicturePost(DocumentSnapshot docSnap){
+        // creates a PicturePost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
             String picture_docID = docSnap.getId();
@@ -736,6 +728,7 @@ public class Post_Helper {
         }
     }
     public void addMultiPicturePost(DocumentSnapshot docSnap){
+        // creates a muliPicturePost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
             String mpicture_docID = docSnap.getId();
@@ -780,6 +773,7 @@ public class Post_Helper {
         }
     }
     public void addTranslationPost(DocumentSnapshot docSnap){
+        //creates a translationpost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
             String translation_docID = docSnap.getId();
@@ -817,6 +811,7 @@ public class Post_Helper {
     }
 
     public void addRepostPost(DocumentSnapshot docSnap){
+        // create a Repostpost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
             String repost_docID = docSnap.getId();
@@ -854,6 +849,8 @@ public class Post_Helper {
     }
 
     public void addDefaulPost(DocumentSnapshot docSnap){
+        // create a DefaultPost from a docSnap when the type of the post isnt known
+        // or some required fileds are missing within the post and adds it to the postList
         // Attribute die alle haben
         String default_docID = docSnap.getId();
         String default_title = "Default";
@@ -877,9 +874,9 @@ public class Post_Helper {
     }
 
     public static String convertLongDateToAgoString (Date createdDate, Long timeNow){
+        // converts the date to a string
         Long createdDateLong = createdDate.getTime();
         Long timeElapsed = timeNow - createdDateLong;
-
         // For logging in Android for testing purposes
         /*
         Date dateCreatedFriendly = new Date(createdDate);
@@ -892,10 +889,8 @@ public class Post_Helper {
         Long oneHour = 3600000L;
         Long oneDay = 86400000L;
         Long oneWeek = 604800000L;
-
         String finalString = "0sec";
         String unit;
-
         if (timeElapsed < oneMin){
             // Convert milliseconds to seconds.
             double seconds = (double) ((timeElapsed / 1000));

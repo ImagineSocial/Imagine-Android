@@ -25,6 +25,7 @@ public class CommunityPickActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        // fetches the communities from the database
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_communities);
         helper.getCommunities(new CommunityCallback() {
@@ -37,6 +38,8 @@ public class CommunityPickActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
+        // initializes the recyclerview with the fetched data
+        // set the recyclerViews onScrollListener
         RecyclerView recyclerView = findViewById(R.id.communites_recyclerview);
         final CommunityPickerAdapter adapter = new CommunityPickerAdapter(commList,this,this);
         recyclerView.setAdapter(adapter);

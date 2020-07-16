@@ -16,8 +16,6 @@ public class YouTubePost extends Post {
                 thanksCount,wowCount,haCount,niceCount,type);
         this.link = link;
     }
-
-    public YouTubePost(){}
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
 

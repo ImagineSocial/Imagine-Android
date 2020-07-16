@@ -46,10 +46,10 @@ import java.util.Comparator;
 
 public class UserActivity extends AppCompatActivity {
 
+    private static final String TAG = "UserActivity";
     public StorageReference storeRef = FirebaseStorage.getInstance().getReference();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
-
     public ArrayList<Post> posts = new ArrayList<>();
     public Post_Helper helper = new Post_Helper();
     public User_Feed_Header_Viewholder header;
@@ -57,6 +57,7 @@ public class UserActivity extends AppCompatActivity {
     public User user;
     public final int GALLERY = 1;
     public Bitmap bitmap;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,12 +99,12 @@ public class UserActivity extends AppCompatActivity {
                     }
                 });
             }
-        } else {
-
         }
     }
 
     public void initRecyclerView(){
+        //initializes RecyclerView and adds
+        //onScrollListener
         RecyclerView recyclerView = findViewById(R.id.user_recyclerView);
         UserFeedAdapter adapter = new UserFeedAdapter(posts,mContext,user,this);
         recyclerView.setAdapter(adapter);
@@ -141,6 +142,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public ArrayList<Post> sortPostList(ArrayList<Post> posts){
+        //orders the posts by createTime attribute
         Collections.sort(posts, new Comparator<Post>() {
             @Override
             public int compare(Post o1, Post o2) {
@@ -160,6 +162,8 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void setHeader(User_Feed_Header_Viewholder header){
+        //Links the header vierholder to the userActivity
+        //neccessary for the on ActivityResult method
         this.header = header;
     }
 
@@ -201,21 +205,23 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void deletePhoto(FirebaseUser user){
+        //deletes the existing profile picture from the database
         String imageName = user.getUid()+".profilePicture";
         StorageReference imageRef = storeRef.child("profilePictures").child(imageName+".png");
         imageRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    System.out.println("File Deleted!");
+                    System.out.println("File Deleted! " +TAG);
                 } else if(task.isCanceled()){
-                    System.out.println("Error deleting File!");
+                    System.out.println("Error deleting File! " +TAG);
                 }
             }
         });
     }
 
     public void setPhoto(){
+        // uploads the new selected profilePicture to the Database
         final FirebaseUser user = auth.getCurrentUser();
         if( user != null){
             String imageName = user.getUid()+".profilePicture.png";
@@ -228,7 +234,7 @@ public class UserActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                             if(task.isSuccessful()){
-                                System.out.println("Picture upload successfull");
+                                System.out.println("Picture upload successfull! "+TAG);
                                 imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
@@ -238,7 +244,7 @@ public class UserActivity extends AppCompatActivity {
                                     }
                                 });
                             } else if( task.isCanceled()){
-                                System.out.println("Picture upload failed");
+                                System.out.println("Picture upload failed! "+TAG);
                             }
                         }
                     }
@@ -247,6 +253,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void changeDatabase(String url){
+        // changes the users profilePicture field
         FirebaseUser user = auth.getCurrentUser();
         if(user != null){
             DocumentReference userRef = db.collection("Users")
@@ -256,9 +263,9 @@ public class UserActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                System.out.println("Userdocument updated!");
+                                System.out.println("Userdocument updated! "+TAG);
                             } else if(task.isCanceled()){
-                                System.out.println("Userdocument update failed!");
+                                System.out.println("Userdocument update failed! "+TAG);
                             }
                         }
                     });
@@ -266,6 +273,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     public void changeUsersAuthData(FirebaseUser user, Uri uri){
+        // changes the users auth data
         UserProfileChangeRequest.Builder builder = new UserProfileChangeRequest.Builder();
         UserProfileChangeRequest profileUpdates = builder.setPhotoUri(uri).build();
 
@@ -273,10 +281,10 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    System.out.println("User Auth update finished!");
+                    System.out.println("User Auth update finished! "+TAG);
                     header.reloadPicture();
                 } else if(task.isCanceled()){
-                    System.out.println("User Auth update failed!");
+                    System.out.println("User Auth update failed! "+TAG);
                 }
             }
         });

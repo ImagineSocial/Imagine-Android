@@ -13,8 +13,11 @@ import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
 import com.imagine.myapplication.R;
 
 public class Community_Feed_Header_Viewholder extends CustomViewHolder {
-
+    private static final String TAG = "Community_Feed_Header_V";
     Context mContext;
+
+    // works as an header for the community feed
+    // shows the communityPicture and description
 
     public Community_Feed_Header_Viewholder(@NonNull View itemView) {
         super(itemView);
@@ -26,7 +29,6 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
         TextView description_tv = itemView.findViewById(R.id.comm_activity_description);
         ImageView image_iv = itemView.findViewById(R.id.comm_activity_picture);
         image_iv.setClipToOutline(true);
-
         title_tv.setText(community.name);
         description_tv.setText(community.description);
         if(community.imageURL == null || community.imageURL.equals("")){

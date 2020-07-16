@@ -13,9 +13,6 @@ public class RepostPost extends Post {
                 thanksCount, wowCount, haCount, niceCount, type);
         this.OGPostDocumentID = OGPostDocumentID;
     }
-    public RepostPost(){
-
-    }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
     public void setOGPostDocumentID(String OGPostDocumentID) {

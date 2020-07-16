@@ -34,8 +34,8 @@ public class LinkViewHolder extends CustomViewHolder {
         this.mContext = itemView.getContext();
     }
 
-
     public void bind(final LinkPost post){
+        // calls the init method and sets up the post specific views
         init(post);
         resetPreview();
         TextView title_textView = itemView.findViewById(R.id.title_textView);
@@ -46,10 +46,8 @@ public class LinkViewHolder extends CustomViewHolder {
         // PreView Widgets
         final ImageView preViewImage = itemView.findViewById(R.id.preView_image);
         final TextView preViewLink = itemView.findViewById(R.id.preView_link);
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-
         final View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,9 +91,7 @@ public class LinkViewHolder extends CustomViewHolder {
                 }
             });
         }
-
         setLinkedFact(post.linkedFactId);
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +103,9 @@ public class LinkViewHolder extends CustomViewHolder {
             }
         });
     }
+
     public void setName(final LinkPost post){
+        // sets up the users views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
@@ -139,6 +137,7 @@ public class LinkViewHolder extends CustomViewHolder {
         }
 
     public void resetPreview(){
+        // resets the link preview when the viewholder is recycled
         TextView linkPreviewText = itemView.findViewById(R.id.preView_link);
         ImageView linkPreviewImage = itemView.findViewById(R.id.preView_image);
         linkPreviewText.setText("");

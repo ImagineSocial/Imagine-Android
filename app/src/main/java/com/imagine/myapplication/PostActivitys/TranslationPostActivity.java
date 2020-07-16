@@ -32,6 +32,7 @@ import java.util.Date;
 
 public class TranslationPostActivity extends AppCompatActivity {
 
+    private static final String TAG = "TranslationPostActivity";
     public ArrayList<Comment> comments;
     public TranslationPost post;
     public Context mContext = this;
@@ -43,7 +44,7 @@ public class TranslationPostActivity extends AppCompatActivity {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new TranslationPostFragment()).commit();
-
+        // gets the post object from the intent
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
@@ -53,6 +54,7 @@ public class TranslationPostActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        //starts bind method and fetches the comments
         super.onStart();
         bind();
         Post_Helper helper = new Post_Helper();
@@ -66,6 +68,7 @@ public class TranslationPostActivity extends AppCompatActivity {
         });
     }
     public void bind(){
+        //sets up the postspecific views
         init();
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
@@ -100,10 +103,11 @@ public class TranslationPostActivity extends AppCompatActivity {
                         profilePicture_imageView);
             }
         }
-
     }
 
     public void initRecyclerView(){
+        //initializes the recyclerView
+        //TODO: setting onScrollListener
         RecyclerView recyclerView = findViewById(R.id.post_activity_recyclerView);
         Comments_Adapter adapter = new Comments_Adapter(comments,this);
         recyclerView.setAdapter(adapter);
@@ -111,8 +115,8 @@ public class TranslationPostActivity extends AppCompatActivity {
     }
 
     public void init(){
+        //sets up the onClicklisteners for the buttons
         final VoteHelper vote = new VoteHelper();
-
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
@@ -149,35 +153,27 @@ public class TranslationPostActivity extends AppCompatActivity {
     }
 
     public void upDateButtonUI(String type, Post post){
+        //changes the ButtonUI if a button is clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = findViewById(R.id.thanks_button);
                 thanksBUtton.setBackground(null);
-//                thanksBUtton.setText(post.thanksCount+"");
                 break;
             case "wow":
                 ImageButton wowButton = findViewById(R.id.wow_button);
                 wowButton.setBackground(null);
-//                wowButton.setText(post.wowCount+"");
                 break;
             case "ha":
                 ImageButton haButton = findViewById(R.id.ha_button);
                 haButton.setBackground(null);
-//                haButton.setText(post.haCount+"");
                 break;
             case "nice":
                 ImageButton niceButton = findViewById(R.id.nice_button);
                 niceButton.setBackground(null);
-//                niceButton.setText(post.niceCount+"");
                 break;
             default:
-                System.out.println("DEFAULT!");
+                System.out.println("default case! "+TAG);
                 break;
         }
-    }
-
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
     }
 }

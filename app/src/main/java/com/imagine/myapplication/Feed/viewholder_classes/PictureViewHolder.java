@@ -18,8 +18,9 @@ import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.PicturePost;
 
 public class PictureViewHolder extends CustomViewHolder {
-     public Context mContext;
-     public User userObj;
+    private static final String TAG = "PictureViewHolder";
+    public Context mContext;
+    public User userObj;
 
     public PictureViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -27,6 +28,7 @@ public class PictureViewHolder extends CustomViewHolder {
     }
 
     public void bind(final PicturePost post){
+        // calls the init method and sets up the post specific views
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
@@ -34,12 +36,9 @@ public class PictureViewHolder extends CustomViewHolder {
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         ImageView picture_imageView = itemView.findViewById(R.id.picture_imageView);
-
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         Glide.with(itemView).load(post.imageURL).into(picture_imageView);
-
         picture_imageView.setClipToOutline(true);
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
@@ -57,8 +56,6 @@ public class PictureViewHolder extends CustomViewHolder {
         }
 
         setLinkedFact(post.linkedFactId);
-
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +69,7 @@ public class PictureViewHolder extends CustomViewHolder {
     }
 
     public void setName(final PicturePost post){
+        // sets up the users views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
@@ -97,30 +95,6 @@ public class PictureViewHolder extends CustomViewHolder {
             });
         }
     }
-
-//    public void setLinkedCommunity(final Community community) {
-//        ImageView communityImageView = itemView.findViewById(R.id.topicImageView);
-//        if (community.imageURL != "") {
-//            Glide.with(itemView).load(community.imageURL).into(communityImageView);
-//        } else {
-//            Glide.with(itemView).load(R.drawable.fact_stamp).into(communityImageView);
-//        }
-//
-//        communityImageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Gson gson = new Gson();
-//                String userString = gson.toJson(linkedCommunity);
-//                Intent intent = new Intent(mContext, Community_Activity.class);
-//                intent.putExtra("name", community.name);
-//                intent.putExtra("description",community.description);
-//                intent.putExtra("imageURL", community.imageURL);
-//                intent.putExtra("commID", community.topicID);
-//                mContext.startActivity(intent);
-//            }
-//        });
-//    }
-
     @Override
     public String getType() {
         return "picture";

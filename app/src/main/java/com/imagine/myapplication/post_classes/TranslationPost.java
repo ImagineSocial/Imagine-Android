@@ -13,10 +13,6 @@ public class TranslationPost extends Post{
                 wowCount, haCount, niceCount, type);
         this.OGpostDocumentID = OGpostDocumentID;
     }
-
-    public TranslationPost(){
-
-    }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
     public void setOGpostDocumentID(String OGpostDocumentID) {

@@ -32,9 +32,10 @@ import com.imagine.myapplication.post_classes.YouTubePost;
 import java.util.ArrayList;
 
 public class CommunityFeedAdapter extends FeedAdapter {
-
+    private static final String TAG = "CommunityFeedAdapter";
     public Community community;
-
+    // works like all the other adapters
+    // works as an adapter for the feed inside the communityActivity
     public CommunityFeedAdapter(ArrayList<Post> postList,Community community, Context mContext) {
         super(postList, mContext);
         this.community = community;

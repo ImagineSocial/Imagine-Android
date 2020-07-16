@@ -33,15 +33,15 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Comment comm){
+        // sets up the comments views
+        // if the user object == null --> fetches the user
         this.comment = comm;
         ImageView profile = itemView.findViewById(R.id.profile_picture_imageView);
         TextView name = itemView.findViewById(R.id.name_textView);
         TextView date = itemView.findViewById(R.id.createDate_textView);
         TextView body = itemView.findViewById(R.id.comment_body);
-
         date.setText(comm.sentAtString);
         body.setText(comm.body);
-
         if(comm.userID.equals("anonym")){
             name.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(profile);
@@ -60,6 +60,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void getUser(final String userID){
+        // fetches the user if it is null
        DocumentReference userRef = db.collection("Users").document(userID);
        userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
            @Override
@@ -75,15 +76,13 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
                    comment.user = user;
                    user.imageURL = (imageURL != null) ? imageURL : "";
                    setUserAgain();
-               }else if(task.isCanceled()){
-
                }
            }
        });
     }
 
     public void setUserAgain (){
-
+        // gets up the User views again when the user is fetched
         TextView name = itemView.findViewById(R.id.name_textView);
         ImageView profile = itemView.findViewById(R.id.profile_picture_imageView);
         profile.setOnClickListener(new View.OnClickListener() {

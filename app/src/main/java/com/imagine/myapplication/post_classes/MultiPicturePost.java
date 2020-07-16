@@ -22,10 +22,6 @@ public class MultiPicturePost extends Post {
         this.imageURL = imageURL;
         this.imageURLs = imageURLs;
     }
-
-    public MultiPicturePost(){
-
-    }
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
 

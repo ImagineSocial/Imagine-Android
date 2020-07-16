@@ -19,6 +19,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class User_Feed_Header_Viewholder extends CustomViewHolder {
 
+    private static final String TAG = "User_Feed_Header_Viewholder";
     public Context mContext;
     public UserActivity activity;
     public final int GALLERY = 1;
@@ -47,7 +48,6 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
                 changeProfilePicture.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO Change Profile Picture
                         Intent intent = new Intent(Intent.ACTION_PICK,
                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         activity.startActivityForResult(intent,GALLERY);
@@ -71,10 +71,12 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
     }
 
     public void reloadPicture(){
+        //reloads the users profilePicture in the header
+        // when the picture is changed
         FirebaseUser user = auth.getCurrentUser();
         String imageURL = user.getPhotoUrl().toString();
         CircleImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
-        if (imageURL != "") {
+        if (!imageURL.equals("")) {
             Glide.with(itemView).load(imageURL).into(profileImageView);
         }
     }

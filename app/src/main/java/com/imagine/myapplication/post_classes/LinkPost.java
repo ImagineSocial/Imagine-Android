@@ -17,11 +17,6 @@ public class LinkPost extends Post {
         this.link = link;
 
     }
-
-    public LinkPost(){
-
-    }
-
     //------------Setter-Functionen------------
     //------------Setter-Functionen------------
 

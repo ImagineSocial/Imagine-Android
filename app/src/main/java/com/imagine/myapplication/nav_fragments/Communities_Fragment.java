@@ -25,7 +25,7 @@ import com.imagine.myapplication.post_classes.Post;
 import java.util.ArrayList;
 
 public class Communities_Fragment extends Fragment {
-
+    private static final String TAG = "Communities_Fragment";
     Communities_Helper helper = new Communities_Helper();
     ArrayList<Community> commList = new ArrayList<>();
 
@@ -37,6 +37,7 @@ public class Communities_Fragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        // fetches the the communities
         super.onViewCreated(view, savedInstanceState);
         helper.getCommunities(new CommunityCallback() {
             @Override
@@ -48,6 +49,7 @@ public class Communities_Fragment extends Fragment {
     }
 
     private void initRecyclerView (final View view){
+        // initializes the recyclerView
         RecyclerView recyclerView = view.findViewById(R.id.communites_recyclerview);
         Context context = view.getContext();
         final Community_Adapter adapter = new Community_Adapter(commList,context);
@@ -62,6 +64,7 @@ public class Communities_Fragment extends Fragment {
                     case R.layout.community:
                         return 1;
                     default:
+                        System.out.println("default case! "+TAG);
                         return 1;
                 }
             }

@@ -32,6 +32,7 @@ import java.util.Date;
 
 public class RepostPostActivity extends AppCompatActivity {
 
+    private static final String TAG = "RepostPostActivity";
     public ArrayList<Comment> comments;
     public RepostPost post;
     public Context mContext = this;
@@ -40,19 +41,18 @@ public class RepostPostActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translation_post);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new RepostPostFragment()).commit();
-
+        // get the post obj from the intent
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
         post = gson.fromJson(objString, RepostPost.class);
-        System.out.println("!");
     }
 
     @Override
     protected void onStart() {
+        // starts the bind method and fetches the comments
         super.onStart();
         bind();
         Post_Helper helper = new Post_Helper();
@@ -66,6 +66,7 @@ public class RepostPostActivity extends AppCompatActivity {
         });
     }
     public void bind(){
+        // sets up the post specific views
         init();
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
@@ -103,8 +104,8 @@ public class RepostPostActivity extends AppCompatActivity {
     }
 
     public void init(){
+        // sets the onClickListeners for the buttons
         final VoteHelper vote = new VoteHelper();
-
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
@@ -141,42 +142,36 @@ public class RepostPostActivity extends AppCompatActivity {
     }
 
     public void upDateButtonUI(String type, Post post){
+        // updates the ButtonUI when a button is clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = findViewById(R.id.thanks_button);
                 thanksBUtton.setBackground(null);
-//                thanksBUtton.setText(post.thanksCount+"");
                 break;
             case "wow":
                 ImageButton wowButton = findViewById(R.id.wow_button);
                 wowButton.setBackground(null);
-//                wowButton.setText(post.wowCount+"");
                 break;
             case "ha":
                 ImageButton haButton = findViewById(R.id.ha_button);
                 haButton.setBackground(null);
-//                haButton.setText(post.haCount+"");
                 break;
             case "nice":
                 ImageButton niceButton = findViewById(R.id.nice_button);
                 niceButton.setBackground(null);
-//                niceButton.setText(post.niceCount+"");
                 break;
             default:
-                System.out.println("DEFAULT!");
+                System.out.println("default! "+TAG);
                 break;
         }
     }
 
     public void initRecyclerView(){
+        //initializes the recyclerView
+        // TODO: set up the onScrollListener
         RecyclerView recyclerView = findViewById(R.id.post_activity_recyclerView);
         Comments_Adapter adapter = new Comments_Adapter(comments,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
     }
 }

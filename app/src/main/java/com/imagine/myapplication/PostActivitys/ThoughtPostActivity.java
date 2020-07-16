@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ThoughtPostActivity extends AppCompatActivity {
+
+    private static final String TAG = "ThoughtPostActivity";
     public ArrayList<Comment> comments;
     public ThoughtPost post;
     public Context mContext = this;
@@ -39,10 +41,9 @@ public class ThoughtPostActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thought_post);
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new ThoughtPostFragment()).commit();
-
+        //gets post obj from the intent
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
@@ -52,6 +53,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        // starts ther bind method and fetches the comments
         super.onStart();
         bind();
         Post_Helper helper = new Post_Helper();
@@ -66,6 +68,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
     }
 
     public void bind(){
+        // sets up the post specific views
         init();
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
@@ -105,6 +108,8 @@ public class ThoughtPostActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
+        // initializes the recyclerView
+        //TODO: set up the onScrollListenenr
         RecyclerView recyclerView = findViewById(R.id.post_activity_recyclerView);
         Comments_Adapter adapter = new Comments_Adapter(comments,this);
         recyclerView.setAdapter(adapter);
@@ -112,13 +117,12 @@ public class ThoughtPostActivity extends AppCompatActivity {
     }
 
     public void init(){
+        // sets up the onClicklisteners for the buttons
         final VoteHelper vote = new VoteHelper();
-
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
         ImageButton niceButton = findViewById(R.id.nice_button);
-
         thanksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,35 +154,27 @@ public class ThoughtPostActivity extends AppCompatActivity {
     }
 
     public void upDateButtonUI(String type, Post post){
+        // changes the ButtonUI if a button is clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = findViewById(R.id.thanks_button);
                 thanksBUtton.setBackground(null);
-//                thanksBUtton.setText(post.thanksCount+"");
                 break;
             case "wow":
                 ImageButton wowButton = findViewById(R.id.wow_button);
                 wowButton.setBackground(null);
-//                wowButton.setText(post.wowCount+"");
                 break;
             case "ha":
                 ImageButton haButton = findViewById(R.id.ha_button);
                 haButton.setBackground(null);
-//                haButton.setText(post.haCount+"");
                 break;
             case "nice":
                 ImageButton niceButton = findViewById(R.id.nice_button);
                 niceButton.setBackground(null);
-//                niceButton.setText(post.niceCount+"");
                 break;
             default:
-                System.out.println("DEFAULT!");
+                System.out.println("default case! "+TAG);
                 break;
         }
-    }
-
-    public String dateToString(Timestamp timestamp){
-        Date date = timestamp.toDate();
-        return date.toString();
     }
 }

@@ -9,7 +9,4 @@ public class DefaultPost extends Post {
         super(title, documentID, description, report, createTime,createTimestamp, originalPoster, thanksCount,
                 wowCount, haCount, niceCount, type);
     }
-    public DefaultPost(){
-
-    }
 }

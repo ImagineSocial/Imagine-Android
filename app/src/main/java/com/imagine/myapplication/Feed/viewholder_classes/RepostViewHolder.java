@@ -20,6 +20,7 @@ import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.RepostPost;
 
 public class RepostViewHolder extends CustomViewHolder{
+    private static final String TAG = "RepostViewHolder";
     public Context mContext;
     public User userObj;
 
@@ -29,16 +30,15 @@ public class RepostViewHolder extends CustomViewHolder{
     }
 
     public void bind(final RepostPost post){
+        // calls init method and sets up the post specific views
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
         TextView name_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
@@ -55,9 +55,6 @@ public class RepostViewHolder extends CustomViewHolder{
         }
 
         setLinkedFact(post.linkedFactId);
-
-
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +68,7 @@ public class RepostViewHolder extends CustomViewHolder{
     }
 
     public void setName(final RepostPost post){
+        // sets up the users views
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);

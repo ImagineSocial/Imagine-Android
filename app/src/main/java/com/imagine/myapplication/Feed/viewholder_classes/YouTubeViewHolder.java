@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class YouTubeViewHolder extends CustomViewHolder {
+    private static final String TAG = "YouTubeViewHolder";
     public Context mContext;
     public User userObj;
 
@@ -35,6 +36,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
     }
 
     public void bind(final YouTubePost post){
+        // call init method and sets up the post specific views
         init(post);
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
@@ -54,11 +56,8 @@ public class YouTubeViewHolder extends CustomViewHolder {
                 }
             }
         });
-
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-
-
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(
@@ -73,10 +72,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
                 }
             });
         }
-
         setLinkedFact(post.linkedFactId);
-
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,11 +86,12 @@ public class YouTubeViewHolder extends CustomViewHolder {
     }
 
     public void setName(final YouTubePost post){
+        // sets up the users view
         TextView username_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         username_textView.setText(post.user.name);
-        if(post.user.imageURL == null || post.user.imageURL == ""){
+        if(post.user.imageURL == null || post.user.imageURL.equals("")){
             Glide.with(itemView).load(R.drawable.default_user).into(
                     profilePicture_imageView
             );

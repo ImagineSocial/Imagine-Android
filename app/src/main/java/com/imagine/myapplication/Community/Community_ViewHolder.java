@@ -23,18 +23,16 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Community comm){
+        // sets up the communityviews and the onClickListener
         TextView title_tv = itemView.findViewById(R.id.comm_title);
         TextView description_tv = itemView.findViewById(R.id.comm_description);
         ImageView imageView = itemView.findViewById(R.id.comm_picture);
-
         ConstraintLayout contentView = itemView.findViewById(R.id.community_content_view);
         contentView.setClipToOutline(true);
-
         final String name = comm.name;
         final String description = comm.description;
         final String imageURL = comm.imageURL;
         final String commID = comm.topicID;
-
         title_tv.setText(name);
         description_tv.setText(description);
         if(imageURL != null) {
@@ -42,7 +40,6 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         } else {
             Glide.with(itemView).load(R.drawable.fact_stamp);
         }
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

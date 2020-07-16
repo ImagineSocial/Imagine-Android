@@ -20,8 +20,12 @@ import com.imagine.myapplication.R;
 import javax.xml.datatype.Duration;
 
 public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
+
+    private static final String TAG = "Community_Picker_ViewHo";
     public Context mContext;
 
+    // same as the normal CommunityViewholder but has a different onClick
+    // event
     public Community_Picker_ViewHolder(@NonNull View itemView) {
         super(itemView);
         this.mContext = itemView.getContext();
@@ -31,15 +35,11 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
         TextView title_tv = itemView.findViewById(R.id.comm_title);
         TextView description_tv = itemView.findViewById(R.id.comm_description);
         ImageView imageView = itemView.findViewById(R.id.comm_picture);
-
         ConstraintLayout contentView = itemView.findViewById(R.id.community_content_view);
         contentView.setClipToOutline(true);
-
         final String name = comm.name;
         final String description = comm.description;
         final String imageURL = comm.imageURL;
-        final String commID = comm.topicID;
-
         title_tv.setText(name);
         description_tv.setText(description);
         if(imageURL != null) {
@@ -47,7 +47,6 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
         } else {
             Glide.with(itemView).load(R.drawable.fact_stamp);
         }
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

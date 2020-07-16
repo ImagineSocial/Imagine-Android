@@ -13,9 +13,11 @@ import com.imagine.myapplication.R;
 import java.util.ArrayList;
 
 public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder> {
-
+    private static final String TAG = "Community_Adapter";
     public ArrayList<Community> commList = new ArrayList<>();
     public Context mContext;
+
+    // the adapter for the communityFragment
 
     public Community_Adapter(ArrayList<Community> commList, Context context){
         this.commList = commList;
@@ -36,7 +38,6 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
         }
         View view = inflater.inflate(R.layout.community, parent, false);
         Community_ViewHolder commVH = new Community_ViewHolder(view);
-
         int spacing = 30;
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int) ((parent.getWidth() / 2) - spacing);
