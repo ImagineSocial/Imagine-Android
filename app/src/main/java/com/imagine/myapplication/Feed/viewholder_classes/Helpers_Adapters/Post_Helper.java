@@ -327,6 +327,9 @@ public class Post_Helper {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 count = 0;
                 size = queryDocumentSnapshots.size();
+                if(count == 0 && size == 0){
+                    callback.onCallback(postList);
+                }
                 if(queryDocumentSnapshots.getDocuments().size() >=1){
                     lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
                 }
@@ -412,7 +415,7 @@ public class Post_Helper {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 count = 0;
                 size = queryDocumentSnapshots.size();
-                if(size ==0) {
+                if(size == 0) {
                     return;
                 }
                 if(queryDocumentSnapshots.getDocuments().size() >=1){

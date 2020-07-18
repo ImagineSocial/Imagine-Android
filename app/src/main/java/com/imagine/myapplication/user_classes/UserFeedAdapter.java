@@ -49,11 +49,13 @@ public class UserFeedAdapter extends FeedAdapter {
 
     @Override
     public void addMorePosts(ArrayList<Post> posts) {
+        //Doesnt really add more like a setter
         this.postList = posts;
     }
 
     @Override
     public int getItemViewType(int position) {
+        //Position 0 always retruns the header layout
         if(position == 0){
             return R.layout.user_header;
         }
@@ -82,6 +84,8 @@ public class UserFeedAdapter extends FeedAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+        //Checks what kind of subclass the holder is an instance of
+        // calls the subclasses bind() method
         if(position ==0){
             ((User_Feed_Header_Viewholder) holder).bind(this.user);
             return;
@@ -131,7 +135,6 @@ public class UserFeedAdapter extends FeedAdapter {
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view;
-
         switch(viewType){
             case R.layout.user_header:
                 view = inflater.inflate(R.layout.user_header,parent,false);

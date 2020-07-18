@@ -58,13 +58,16 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
 
         nameLabel.setText(user.name);
 
-        if (user.imageURL != "") {
+        if (user.imageURL.equals("")){
+            Glide.with(itemView).load(R.drawable.default_user).into(profileImageView);
+        }else{
             Glide.with(itemView).load(user.imageURL).into(profileImageView);
         }
-        if (user.statusQuote != "") {
+        if (user.statusQuote.equals("")) {
+            statusTextLabel.setText("");
+        }else {
             statusTextLabel.setText(user.statusQuote);
-        } //else { setDefaultQuote and edit it the way you want if you are THE user
-
+        }
     }
 
     public void reloadPicture(){
