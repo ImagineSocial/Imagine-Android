@@ -55,7 +55,6 @@ public class Post_Helper {
                         lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
                     }
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
-                        System.out.println("aa");
                         switch((String)docSnap.get("type")){
                             case "thought":
                                 addThoughtPost(docSnap);
@@ -532,6 +531,46 @@ public class Post_Helper {
         });
     }
 
+    public void getCommunityPosts(final FirebaseCallback callback){
+        // Fetches all the GIF, MultiPicture and PicturePost from the
+        // CommunityPosts Collection
+        ArrayList<String> stringArray = new ArrayList<>();
+        stringArray.add("GIF");
+        stringArray.add("multiPicture");
+        stringArray.add("picture");
+        Query postsQuery = db.collection("TopicPosts").whereIn("type",stringArray)
+                .limit(50);
+        postsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot snap = task.getResult();
+                    List<DocumentSnapshot> snaps = snap.getDocuments();
+                    int size = snaps.size();
+                    for(DocumentSnapshot docSnap : snaps){
+                       String type = docSnap.getString("type");
+                       switch(type){
+                           case "picture":
+                               addPicturePost(docSnap);
+                               break;
+                           case "multiPicture":
+                               addMultiPicturePost(docSnap);
+                               break;
+                           case "GIF":
+                               addGIFPost(docSnap);
+                               break;
+                           default:
+                               addDefaulPost(docSnap);
+                               break;
+                       }
+                    }
+                    callback.onCallback(postList);
+                }else if(task.isCanceled()){
+                    System.out.println("Default Case getCommunityPosts");
+                }
+            }
+        });
+    }
 
 
     public void addThoughtPost(DocumentSnapshot docSnap){

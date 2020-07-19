@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
+import com.imagine.myapplication.nav_fragments.Community_Posts_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.Information_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
@@ -111,6 +112,13 @@ public class MainActivity extends AppCompatActivity{
                             break;
                         case R.id.nav_info:
                             selectedFragment = new Information_Fragment();
+                            break;
+                        case R.id.nav_community_posts:
+                            selectedFragment = new Community_Posts_Fragment();
+                            break;
+                        default:
+                            System.out.println("Default case! "+TAG);
+                            break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             selectedFragment).commit();
