@@ -45,14 +45,14 @@ public class YouTubePostActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_post);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+    FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new YouTubePostFragment()).commit();
-        // gets the post Object from the intent
-        Intent intent = getIntent();
-        String objString = intent.getStringExtra("post");
-        Gson gson = new Gson();
-        post = gson.fromJson(objString, YouTubePost.class);
-    }
+    // gets the post Object from the intent
+    Intent intent = getIntent();
+    String objString = intent.getStringExtra("post");
+    Gson gson = new Gson();
+    post = gson.fromJson(objString, YouTubePost.class);
+}
 
     @Override
     protected void onStart() {
