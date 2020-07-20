@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -201,6 +202,17 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
             linkedTopicImageView.setImageBitmap(null);
         }
     }
+
+    public void removePost(){
+        //TODO
+        Toast.makeText(itemView.getContext(),"Methode einfügen! TODO",Toast.LENGTH_SHORT).show();
+    }
+
+    public void linkCommunity(){
+        //TODO
+        Toast.makeText(itemView.getContext(),"Methode einfügen! TODO",Toast.LENGTH_SHORT).show();
+    }
+
     public String getType(){
         return "custom";
     }

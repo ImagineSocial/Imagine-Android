@@ -2,14 +2,18 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.RepostPostActivity;
 import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
@@ -21,6 +25,7 @@ import com.imagine.myapplication.post_classes.RepostPost;
 
 public class RepostViewHolder extends CustomViewHolder{
     private static final String TAG = "RepostViewHolder";
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     public Context mContext;
     public User userObj;
 
@@ -65,6 +70,18 @@ public class RepostViewHolder extends CustomViewHolder{
                 itemView.getContext().startActivity(intent);
             }
         });
+        ImageButton options = itemView.findViewById(R.id.feed_menu_button);
+        if(post.originalPoster.equals(auth.getCurrentUser().getUid())){
+            options.setVisibility(View.VISIBLE);
+            options.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMenu();
+                }
+            });
+        } else {
+            options.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void setName(final RepostPost post){
@@ -93,6 +110,14 @@ public class RepostViewHolder extends CustomViewHolder{
                 }
             });
         }
+    }
+
+    public void showMenu(){
+        ImageButton options = itemView.findViewById(R.id.feed_menu_button);
+        PopupMenu menu = new PopupMenu(itemView.getContext(),options);
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        menu.show();
     }
 
     public String getType(){

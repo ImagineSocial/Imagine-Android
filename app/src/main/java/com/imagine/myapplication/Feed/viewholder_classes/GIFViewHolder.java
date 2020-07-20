@@ -3,9 +3,13 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -14,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.imagine.myapplication.PostActivitys.GifPostActivity;
 import com.imagine.myapplication.R;
@@ -27,6 +32,7 @@ import java.util.LinkedHashMap;
 
 public class GIFViewHolder extends CustomViewHolder {
     private static final String TAG = "GIFViewHolder";
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
     public Context mContext;
     public User userObj;
 
@@ -93,6 +99,18 @@ public class GIFViewHolder extends CustomViewHolder {
                 videoView.start();
             }
         });
+        ImageButton options = itemView.findViewById(R.id.feed_menu_button);
+        if(post.originalPoster.equals(auth.getCurrentUser().getUid())){
+            options.setVisibility(View.VISIBLE);
+            options.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMenu();
+                }
+            });
+        } else {
+            options.setVisibility(View.INVISIBLE);
+        }
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,6 +149,31 @@ public class GIFViewHolder extends CustomViewHolder {
                 }
             });
         }
+    }
+
+
+
+    public void showMenu(){
+        ImageButton options = itemView.findViewById(R.id.feed_menu_button);
+        PopupMenu menu = new PopupMenu(itemView.getContext(),options);
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.remove_post:
+                        removePost();
+                        return true;
+                    case R.id.link_community:
+                        linkCommunity();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        menu.show();
     }
 
     public String getType(){
