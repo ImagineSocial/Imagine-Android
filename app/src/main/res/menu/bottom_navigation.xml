@@ -7,7 +7,7 @@
         />
     <item
         android:id="@+id/nav_community_posts"
-        android:icon="@drawable/community_posts_icon"
+        android:icon="@drawable/search_icon"
         android:title="Community Beiträge"
         />
     <item

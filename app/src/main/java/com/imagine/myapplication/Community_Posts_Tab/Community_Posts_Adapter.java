@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.imagine.myapplication.Community.Community_ViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.DefaultPost;
@@ -38,12 +39,30 @@ public class Community_Posts_Adapter extends RecyclerView.Adapter<CommunityCusto
         switch(viewType){
             case R.layout.community_gif:
                 view = inflater.inflate(R.layout.community_gif,parent,false);
+                int spacing = 2;
+                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+                int size = ((parent.getWidth() / 3) - spacing);
+                layoutParams.height = size;
+                layoutParams.width = size;
+                view.setLayoutParams(layoutParams);
                 return new CommunityGIFViewHolder(view);
             case R.layout.community_picture:
                 view = inflater.inflate(R.layout.community_picture, parent, false);
+                int spacing1 = 2;
+                ViewGroup.LayoutParams layoutParams1 = view.getLayoutParams();
+                int size1 = ((parent.getWidth() / 3) - spacing1);
+                layoutParams1.height = size1;
+                layoutParams1.width = size1;
+                view.setLayoutParams(layoutParams1);
                 return new CommunityPictureViewHolder(view);
             case R.layout.community_multipicture:
                 view = inflater.inflate(R.layout.community_multipicture,parent,false);
+                int spacing2 = 2;
+                ViewGroup.LayoutParams layoutParams2 = view.getLayoutParams();
+                int size2 = ((parent.getWidth() / 3) - spacing2);
+                layoutParams2.height = size2;
+                layoutParams2.width = size2;
+                view.setLayoutParams(layoutParams2);
                 return new CommunityMultiPictureViewHolder(view);
             default:
                 view = inflater.inflate(R.layout.community_default,parent, false);
