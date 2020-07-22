@@ -43,7 +43,7 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(itemView.getContext(),Community_Activity.class);
+                Intent intent = new Intent(itemView.getContext(),Community_ViewPager_Activity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("description",description);
                 intent.putExtra("imageURL", imageURL);

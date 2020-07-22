@@ -84,6 +84,9 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".Community.Community_ViewPager_Activity">
+
+        </activity>
     </application>
 
 </manifest>
