@@ -44,6 +44,11 @@ import static com.imagine.myapplication.R.drawable.default_user;
 public class MainActivity extends AppCompatActivity{
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public Feed_Fragment feed_fragment;
+    public Community_Posts_Fragment commPosts_fragment;
+    public New_Post_Fragment newPosts_fragment;
+    public Communities_Fragment comms_fragment;
+    public Information_Fragment infos_fragment;
     public Context mContext;
     public Button loginButton;
     public CircleImageView imageCircle;
@@ -56,8 +61,9 @@ public class MainActivity extends AppCompatActivity{
         this.mContext = this;
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+        feed_fragment = new Feed_Fragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new Feed_Fragment()).commit();
+                feed_fragment).commit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -102,19 +108,34 @@ public class MainActivity extends AppCompatActivity{
 
                     switch(item.getItemId()){
                         case R.id.nav_feed:
-                            selectedFragment = new Feed_Fragment();
+                            if(feed_fragment == null){
+                                feed_fragment = new Feed_Fragment();
+                            }
+                            selectedFragment = feed_fragment;
                             break;
                         case R.id.nav_new_post:
-                            selectedFragment = new New_Post_Fragment();
+                            if(newPosts_fragment == null){
+                                newPosts_fragment = new New_Post_Fragment();
+                            }
+                            selectedFragment = newPosts_fragment;
                             break;
                         case R.id.nav_communities:
-                            selectedFragment = new Communities_Fragment();
+                            if(comms_fragment == null){
+                                comms_fragment = new Communities_Fragment();
+                            }
+                            selectedFragment = comms_fragment;
                             break;
                         case R.id.nav_info:
-                            selectedFragment = new Information_Fragment();
+                            if(infos_fragment == null){
+                                infos_fragment = new Information_Fragment();
+                            }
+                            selectedFragment = infos_fragment;
                             break;
                         case R.id.nav_community_posts:
-                            selectedFragment = new Community_Posts_Fragment();
+                            if(commPosts_fragment == null){
+                                commPosts_fragment = new Community_Posts_Fragment();
+                            }
+                            selectedFragment = commPosts_fragment;
                             break;
                         default:
                             System.out.println("Default case! "+TAG);

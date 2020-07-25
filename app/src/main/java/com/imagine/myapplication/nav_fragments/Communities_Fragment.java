@@ -26,8 +26,11 @@ import java.util.ArrayList;
 
 public class Communities_Fragment extends Fragment {
     private static final String TAG = "Communities_Fragment";
-    Communities_Helper helper = new Communities_Helper();
-    ArrayList<Community> commList = new ArrayList<>();
+    public Communities_Helper helper = new Communities_Helper();
+    public RecyclerView recyclerView;
+    public int lastPosition;
+    public GridLayoutManager gridLayoutManager;
+    public ArrayList<Community> commList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -39,23 +42,30 @@ public class Communities_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the the communities
         super.onViewCreated(view, savedInstanceState);
-        helper.getCommunities(new CommunityCallback() {
-            @Override
-            public void onCallback(ArrayList<Community> communities) {
-                commList = communities;
-                initRecyclerView(view);
-            }
-        });
+
+        if(this.commList.size() == 0){
+            helper.getCommunities(new CommunityCallback() {
+                @Override
+                public void onCallback(ArrayList<Community> communities) {
+                    commList = communities;
+                    initRecyclerView(view);
+                }
+            });
+        }
+        else{
+            initRecyclerView(view);
+            loadPosition();
+        }
     }
 
     private void initRecyclerView (final View view){
         // initializes the recyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.communites_recyclerview);
+        this.recyclerView = view.findViewById(R.id.communites_recyclerview);
         Context context = view.getContext();
         final Community_Adapter adapter = new Community_Adapter(commList,context);
         recyclerView.setAdapter(adapter);
-        GridLayoutManager mLayoutManager = new GridLayoutManager(context,2);
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        this.gridLayoutManager = new GridLayoutManager(context,2);
+        this.gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 switch(adapter.getItemViewType(position)){
@@ -69,7 +79,7 @@ public class Communities_Fragment extends Fragment {
                 }
             }
         });
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(this.gridLayoutManager);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             boolean loading = true;
             int previousTotal =0;
@@ -99,5 +109,15 @@ public class Communities_Fragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void loadPosition(){
+        gridLayoutManager.scrollToPosition(this.lastPosition);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        lastPosition = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
     }
 }

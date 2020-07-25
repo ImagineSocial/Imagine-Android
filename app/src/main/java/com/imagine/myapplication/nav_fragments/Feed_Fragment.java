@@ -23,7 +23,8 @@ import java.util.ArrayList;
 public class Feed_Fragment extends Fragment {
 
     private static final String TAG = "Feed_Fragment";
-
+    public RecyclerView recyclerView;
+    public int lastPosition;
     public ArrayList<Post> postList = new ArrayList<Post>();
     public Post_Helper helper = new Post_Helper();
     public boolean isloading;
@@ -39,19 +40,24 @@ public class Feed_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the post for the feed
         super.onViewCreated(view, savedInstanceState);
-        helper.getPostsForMainFeed( new FirebaseCallback() {
-            @Override
-            public void onCallback(ArrayList<Post> values) {
-                postList = values;
-                initRecyclerView(view);
-            }
+        if(postList.size() == 0){
+            helper.getPostsForMainFeed( new FirebaseCallback() {
+                @Override
+                public void onCallback(ArrayList<Post> values) {
+                    postList = values;
+                    initRecyclerView(view);
+                }
 
-        });
+            });
+        }else {
+            initRecyclerView(view);
+            loadPosition();
+        }
     }
 
     private void initRecyclerView (final View view){
         // initializes the recyclerView for the feed
-        RecyclerView recyclerView = view.findViewById(R.id.feed_recyclerView);
+        this.recyclerView = view.findViewById(R.id.feed_recyclerView);
         Context context = view.getContext();
         FeedAdapter adapter = new FeedAdapter(postList,context);
         recyclerView.setAdapter(adapter);
@@ -87,5 +93,15 @@ public class Feed_Fragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void loadPosition(){
+        ((LinearLayoutManager) recyclerView.getLayoutManager()).scrollToPosition(lastPosition);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        lastPosition =((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
     }
 }
