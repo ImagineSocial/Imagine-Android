@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 public class Community_Posts_Fragment extends Fragment {
     private static final String TAG = "Community_Posts_Fragmen";
+    public RecyclerView recyclerView;
+    public int lastPostition;
+    public GridLayoutManager gridLayoutManager;
     public ArrayList<Post> postList = new ArrayList<>();
     @Nullable
     @Override
@@ -32,20 +35,36 @@ public class Community_Posts_Fragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Post_Helper helper = new Post_Helper();
-        helper.getCommunityPosts(new FirebaseCallback() {
-            @Override
-            public void onCallback(ArrayList<Post> values) {
-                postList = values;
-                initRecyclerView();
-            }
-        });
+        if(postList.size() == 0){
+            helper.getCommunityPosts(new FirebaseCallback() {
+                @Override
+                public void onCallback(ArrayList<Post> values) {
+                    postList = values;
+                    initRecyclerView();
+                }
+            });
+        }else{
+            initRecyclerView();
+            loadPosition();
+        }
     }
 
     public void initRecyclerView(){
-        RecyclerView recyclerView = getView().findViewById(R.id.community_posts_recyclerView);
+        this.recyclerView = getView().findViewById(R.id.community_posts_recyclerView);
         Community_Posts_Adapter adapter = new Community_Posts_Adapter(postList,getContext());
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getContext(),3);
+        this.gridLayoutManager = new GridLayoutManager(getContext(),3);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(this.gridLayoutManager);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        this.gridLayoutManager =(GridLayoutManager) recyclerView.getLayoutManager();
+        lastPostition = gridLayoutManager.findFirstVisibleItemPosition();
+    }
+
+    public void loadPosition(){
+        this.gridLayoutManager.scrollToPosition(lastPostition);
     }
 }
