@@ -1,6 +1,5 @@
 package com.imagine.myapplication.Community;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,23 +20,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map;
 
-public class CommunityFragmentTwo extends Fragment {
+public class CommunityFeedFragment extends Fragment {
     ArrayList<Post> postList = new ArrayList<>();
     Post_Helper helper = new Post_Helper();
     RecyclerView recyclerView;
     Community community;
     HashMap<String,String> args;
 
-    public CommunityFragmentTwo(HashMap<String, String> args) {
+    public CommunityFeedFragment(HashMap<String, String> args) {
         this.args = args;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.viewpager_test_two,container,false);
+        return inflater.inflate(R.layout.community_viewpager_feed,container,false);
     }
 
     @Override

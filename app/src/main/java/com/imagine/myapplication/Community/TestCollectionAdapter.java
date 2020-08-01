@@ -1,16 +1,11 @@
 package com.imagine.myapplication.Community;
 
-import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class TestCollectionAdapter extends FragmentStateAdapter {
     HashMap<String,String> args;
@@ -22,22 +17,33 @@ public class TestCollectionAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        if(position == 0){
-            CommunityFragmentOne fragmentOne = new CommunityFragmentOne(args);
-            return fragmentOne;
-        } else if (position == 1){
-            CommunityFragmentTwo fragmentTwo = new CommunityFragmentTwo(args);
-            return fragmentTwo;
-        }else if ( position == 2){
-            CommunityFragmentThree fragmentThree = new CommunityFragmentThree(args);
-            return fragmentThree;
-        }else{
-            return null;
+        if(args.get("displayOption").equals("fact")){
+            if(position == 0){
+                CommunityFactsFragment fragmentOne = new CommunityFactsFragment(args);
+                return fragmentOne;
+            } else if (position == 1){
+                CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
+                return fragmentTwo;
+            }else{
+                return null;
+            }
+        } else {
+            if(position == 0) {
+                CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
+                return fragmentTwo;
+            }else{
+                return null;
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        if(args.get("displayOption").equals("fact")){
+            return 2;
+        } else {
+            return 1;
+        }
+
     }
 }

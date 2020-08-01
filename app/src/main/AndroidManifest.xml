@@ -84,7 +84,14 @@
             android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".Community.Community_ViewPager_Activity">
+        <activity android:name=".Community.Community_ViewPager_Activity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".Community.ArgumentActivity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>

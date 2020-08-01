@@ -33,6 +33,7 @@ import java.util.LinkedHashMap;
 public class GIFViewHolder extends CustomViewHolder {
     private static final String TAG = "GIFViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
+    public GIFPost post;
     public Context mContext;
     public User userObj;
 
@@ -43,6 +44,7 @@ public class GIFViewHolder extends CustomViewHolder {
     
     public void bind(final GIFPost post){
         // calls the init method and sets up the post specific views
+        this.post = post;
         init(post);
         //GIF Widgets
         TextView title_textView = itemView.findViewById(R.id.title_textView);
@@ -100,7 +102,7 @@ public class GIFViewHolder extends CustomViewHolder {
             }
         });
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
-        if(post.originalPoster.equals(auth.getCurrentUser().getUid())){
+        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
             options.setVisibility(View.VISIBLE);
             options.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -161,10 +163,10 @@ public class GIFViewHolder extends CustomViewHolder {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.remove_post:
-                        removePost();
+                        removePost(post);
                         return true;
                     case R.id.link_community:
-                        linkCommunity();
+                        linkCommunity(post);
                         return true;
                     default:
                         return false;

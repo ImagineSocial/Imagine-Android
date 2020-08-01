@@ -33,6 +33,7 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         final String description = comm.description;
         final String imageURL = comm.imageURL;
         final String commID = comm.topicID;
+        final String displayOption = comm.displayOption;
         title_tv.setText(name);
         description_tv.setText(description);
         if(imageURL != null) {
@@ -48,6 +49,7 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
                 intent.putExtra("description",description);
                 intent.putExtra("imageURL", imageURL);
                 intent.putExtra("commID", commID);
+                intent.putExtra("displayOption",displayOption);
                 mContext.startActivity(intent);
             }
         });

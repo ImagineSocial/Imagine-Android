@@ -2,7 +2,6 @@ package com.imagine.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,22 +9,25 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
-import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Community_Posts_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
@@ -44,6 +46,7 @@ import static com.imagine.myapplication.R.drawable.default_user;
 public class MainActivity extends AppCompatActivity{
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public DrawerLayout drawer;
     public Feed_Fragment feed_fragment;
     public Community_Posts_Fragment commPosts_fragment;
     public New_Post_Fragment newPosts_fragment;
@@ -69,6 +72,13 @@ public class MainActivity extends AppCompatActivity{
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
 
+        this.drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this.navViewListener);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,toolbar,
+                R.string.toggle1,R.string.toggle2);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
         //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
@@ -96,9 +106,26 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
     }
+
+    private NavigationView.OnNavigationItemSelectedListener navViewListener =
+            new NavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    return false;
+                }
+            };
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
