@@ -1,112 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@android:color/white">
+
     <ImageView
         android:id="@+id/comm_facts_imageView"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
         android:adjustViewBounds="true"
+        android:background="@drawable/corner_radius_three"
         android:scaleType="centerCrop"
-        android:background="@drawable/corner_radius_eight"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/comm_facts_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/comm_facts_imageView"
+        android:layout_width="0dp"
+        android:layout_height="37.5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Title"
+        android:textColor="@android:color/black"
+        android:textSize="23sp"
+        app:autoSizeMaxTextSize="23sp"
+        app:autoSizeMinTextSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/comm_facts_imageView"
-        android:layout_marginStart="15dp"
-        android:fontFamily="@font/ibm_semi_bold"
-        android:textSize="20sp"
-        android:text="Title"/>
+        app:layout_constraintTop_toTopOf="@id/comm_facts_imageView" />
+
     <TextView
         android:id="@+id/comm_facts_description_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/comm_facts_title_tv"
-        app:layout_constraintStart_toStartOf="@id/comm_facts_title_tv"
-        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fontFamily="@font/ibm_regular"
-        android:textSize="14dp"
-        android:text="Description"/>
+        android:textColor="#707176"
+        app:autoSizeMaxTextSize="14sp"
+        app:autoSizeMinTextSize="8sp"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@+id/comm_facts_imageView"
+        app:layout_constraintEnd_toEndOf="@+id/comm_facts_title_tv"
+        app:layout_constraintStart_toStartOf="@id/comm_facts_title_tv"
+        app:layout_constraintTop_toBottomOf="@id/comm_facts_title_tv" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comm_facts_imageView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/comm_facts_imageView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/comm_facts_cons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:fontFamily="@font/ibm_semi_bold"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Contra"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textSize="20sp"
-                android:text="Zweifel"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/comm_facts_consCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_regular"
-                app:layout_constraintTop_toBottomOf="@+id/comm_facts_cons"
-                android:textSize="14sp"
-                android:text="(Zahl)"
-                />
+                android:text="(0)"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/comm_facts_cons" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comm_facts_cons_recyclerView"
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@+id/comm_facts_consCount"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_height="0dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comm_facts_consCount" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/comm_facts_pros"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="20dp"
                 android:fontFamily="@font/ibm_semi_bold"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="Pro"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                android:textSize="20sp"
-                android:text="Zweifel"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/comm_facts_prosCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_regular"
-                app:layout_constraintTop_toBottomOf="@+id/comm_facts_pros"
-                android:textSize="14sp"
-                android:text="(Zahl)"
-                />
+                android:text="(0)"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/comm_facts_pros" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/comm_facts_pros_recyclerView"
                 android:layout_width="match_parent"
-                app:layout_constraintTop_toBottomOf="@+id/comm_facts_prosCount"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_height="0dp"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/comm_facts_prosCount" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

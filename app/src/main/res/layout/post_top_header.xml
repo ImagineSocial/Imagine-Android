@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    android:background="@drawable/cell_background_shape">
+
+    <View
+        android:id="@+id/topTopic_smallView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/community_cell_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/owenView"
+        app:layout_constraintStart_toStartOf="@+id/shalom_view"
+        app:layout_constraintTop_toBottomOf="@id/shalom_view" />
+
+    <View
+        android:id="@+id/topTopic_bigView"
+        android:layout_width="183dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/community_cell_background"
+        app:layout_constraintBottom_toBottomOf="@+id/topTopic_smallView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/topTopic_smallView"
+        app:layout_constraintTop_toTopOf="@+id/shalom_view" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:srcCompat="@drawable/fact_stamp" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/imageView5"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:srcCompat="@drawable/fact_stamp" />
+
+    <TextView
+        android:id="@+id/shalom_view"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_semi_bold"
+        android:text="Shalom!"
+        android:textColor="@android:color/black"
+        android:textSize="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/owenView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
+        android:scaleType="centerCrop"
+        android:tint="@color/md_blue_A700"
+        app:layout_constraintBottom_toBottomOf="@+id/shalom_view"
+        app:layout_constraintStart_toEndOf="@+id/shalom_view"
+        app:layout_constraintTop_toTopOf="@id/shalom_view"
+        app:srcCompat="@drawable/owen_face" />
+
+    <TextView
+        android:id="@+id/topTopic_weeklyTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="TextView"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/topTopic_smallView"
+        app:layout_constraintEnd_toEndOf="@+id/topTopic_smallView"
+        app:layout_constraintStart_toStartOf="@+id/topTopic_smallView"
+        app:layout_constraintTop_toTopOf="@+id/topTopic_smallView" />
+
+    <TextView
+        android:id="@+id/topTopicLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Die Themen der Woche:"
+        android:textColor="@android:color/black"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/topTopic_bigView"
+        app:layout_constraintTop_toTopOf="@+id/topTopic_bigView" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@+id/topTopicLabel"
+        app:layout_constraintTop_toBottomOf="@+id/topTopicLabel"
+        app:srcCompat="@drawable/fact_stamp" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#EFEFEF"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="@+id/topTopic_bigView"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <Button
+        android:layout_width="128dp"
+        android:layout_height="25dp"
+        android:background="#EFEFEF"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintEnd_toEndOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/button3"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

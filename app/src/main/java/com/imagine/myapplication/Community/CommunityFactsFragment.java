@@ -58,8 +58,11 @@ public class CommunityFactsFragment extends Fragment {
         TextView description_tv = getView().findViewById(R.id.comm_facts_description_tv);
         title_tv.setText(args.get("name"));
         description_tv.setText(args.get("description"));
-        if(args.get("imageURL") != null){
+        imageView.setClipToOutline(true);
+        if (args.get("imageURL") != null) {
             Glide.with(getContext()).load(args.get("imageURL")).into(imageView);
+        } else {
+            Glide.with(getContext()).load(R.drawable.fact_stamp).into(imageView);
         }
 
     }

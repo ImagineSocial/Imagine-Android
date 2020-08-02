@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity{
         this.drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this.navViewListener);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,toolbar,
-                R.string.toggle1,R.string.toggle2);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,toolbar,
+//                R.string.toggle1,R.string.toggle2);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
         //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
@@ -226,11 +226,14 @@ public class MainActivity extends AppCompatActivity{
         imageCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Gson gson = new Gson();
-                String userString = gson.toJson(userObj);
-                Intent intent = new Intent(mContext,UserActivity.class);
-                intent.putExtra("user", userString);
-                mContext.startActivity(intent);
+//                Gson gson = new Gson();
+//                String userString = gson.toJson(userObj);
+//                Intent intent = new Intent(mContext,UserActivity.class);
+//                intent.putExtra("user", userString);
+//                mContext.startActivity(intent);
+
+                drawer.openDrawer(GravityCompat.START);
+
             }
         });
     }
