@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -32,6 +33,7 @@ public class LinkViewHolder extends CustomViewHolder {
     private static final String TAG = "LinkViewHolder";
     FirebaseAuth auth = FirebaseAuth.getInstance();
     public Context mContext;
+    public LinkPost post;
     public User userObj;
 
     public LinkViewHolder(@NonNull View itemView) {
@@ -41,6 +43,7 @@ public class LinkViewHolder extends CustomViewHolder {
 
     public void bind(final LinkPost post){
         // calls the init method and sets up the post specific views
+        this.post = post;
         init(post);
         resetPreview();
         TextView title_textView = itemView.findViewById(R.id.title_textView);
@@ -108,7 +111,7 @@ public class LinkViewHolder extends CustomViewHolder {
             }
         });
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
-        if(post.originalPoster.equals(auth.getCurrentUser().getUid())){
+        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
             options.setVisibility(View.VISIBLE);
             options.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -152,6 +155,21 @@ public class LinkViewHolder extends CustomViewHolder {
     public void showMenu(){
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
         PopupMenu menu = new PopupMenu(itemView.getContext(),options);
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.remove_post:
+                        removePost(post);
+                        return true;
+                    case R.id.link_community:
+                        linkCommunity(post);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
         MenuInflater inflater = menu.getMenuInflater();
         inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
         menu.show();

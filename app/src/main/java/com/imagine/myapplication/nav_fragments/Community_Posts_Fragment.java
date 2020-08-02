@@ -20,7 +20,7 @@ import com.imagine.myapplication.post_classes.Post;
 import java.util.ArrayList;
 
 public class Community_Posts_Fragment extends Fragment {
-    private static final String TAG = "Community_Posts_Fragmen";
+    private static final String TAG = "Community_Posts_Fragment";
     public RecyclerView recyclerView;
     public int lastPostition;
     public GridLayoutManager gridLayoutManager;

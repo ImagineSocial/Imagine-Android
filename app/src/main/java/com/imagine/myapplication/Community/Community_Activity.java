@@ -39,7 +39,7 @@ public class Community_Activity extends AppCompatActivity {
         String imageURL = intent.getStringExtra("imageURL");
         String commID = intent.getStringExtra("commID");
         String description = intent.getStringExtra("description");
-
+        String displayOption = intent.getStringExtra("displayOption");
         if(imageURL == null){
             imageURL = "";
         }

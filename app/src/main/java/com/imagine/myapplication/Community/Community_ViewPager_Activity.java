@@ -25,17 +25,14 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         args.put("description",intent.getStringExtra("description"));
         args.put("imageURL",intent.getStringExtra("imageURL"));
         args.put("commID",intent.getStringExtra("commID"));
+        args.put("displayOption",intent.getStringExtra("displayOption"));
         ViewPager2 viewPager2 = findViewById(R.id.containerViewPager);
         TestCollectionAdapter adapter = new TestCollectionAdapter(this,args);
         viewPager2.setAdapter(adapter);
-        viewPager2.setCurrentItem(1);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        new TabLayoutMediator(tabLayout,viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                tab.setText("" + (position + 1));
-            }
+        if(intent.getStringExtra("displayOption").equals("fact")){
+            viewPager2.setCurrentItem(1);
+        }else{
+            viewPager2.setCurrentItem(0);
         }
-        ).attach();
     }
 }

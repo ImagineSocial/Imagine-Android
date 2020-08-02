@@ -203,12 +203,12 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void removePost(){
+    public void removePost(Post post){
         //TODO
         Toast.makeText(itemView.getContext(),"Methode einfügen! TODO",Toast.LENGTH_SHORT).show();
     }
 
-    public void linkCommunity(){
+    public void linkCommunity(Post post){
         //TODO
         Toast.makeText(itemView.getContext(),"Methode einfügen! TODO",Toast.LENGTH_SHORT).show();
     }
