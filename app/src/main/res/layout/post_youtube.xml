@@ -71,7 +71,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/profile_picture_imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
-    
     <TextView
         android:id="@+id/title_textView"
         android:layout_width="0dp"
