@@ -28,25 +28,27 @@
         android:background="@drawable/community_cell_background"
         app:layout_constraintBottom_toBottomOf="@+id/topTopic_smallView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toEndOf="@+id/topTopic_smallView"
-        app:layout_constraintTop_toTopOf="@+id/shalom_view" />
+        app:layout_constraintTop_toTopOf="@+id/shalom_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/topTopic_thirdImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView6"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintStart_toStartOf="@+id/topTopic_secondImageView"
+        app:layout_constraintTop_toBottomOf="@+id/topTopic_secondImageView"
         app:srcCompat="@drawable/fact_stamp" />
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/topTopic_secondImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="@+id/imageView5"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        app:layout_constraintStart_toStartOf="@+id/topTopic_firstImageView"
+        app:layout_constraintTop_toBottomOf="@+id/topTopic_firstImageView"
         app:srcCompat="@drawable/fact_stamp" />
 
     <TextView
@@ -105,7 +107,7 @@
         app:layout_constraintTop_toTopOf="@+id/topTopic_bigView" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/topTopic_firstImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
@@ -114,7 +116,7 @@
         app:srcCompat="@drawable/fact_stamp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/topTopic_firstCommButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -125,12 +127,13 @@
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintBottom_toBottomOf="@+id/topTopic_firstImageView"
         app:layout_constraintEnd_toEndOf="@+id/topTopic_bigView"
-        app:layout_constraintStart_toEndOf="@+id/imageView5"
-        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+        app:layout_constraintStart_toEndOf="@+id/topTopic_firstImageView"
+        app:layout_constraintTop_toTopOf="@+id/topTopic_firstImageView" />
 
     <Button
+        android:id="@+id/topTopic_secondCommButton"
         android:layout_width="128dp"
         android:layout_height="25dp"
         android:background="#EFEFEF"
@@ -139,9 +142,24 @@
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-        app:layout_constraintEnd_toEndOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+        app:layout_constraintBottom_toBottomOf="@+id/topTopic_secondImageView"
+        app:layout_constraintEnd_toEndOf="@+id/topTopic_firstCommButton"
+        app:layout_constraintStart_toStartOf="@+id/topTopic_firstCommButton"
+        app:layout_constraintTop_toTopOf="@+id/topTopic_secondImageView" />
+
+    <Button
+        android:id="@+id/topTopic_thirdCommButton"
+        android:layout_width="128dp"
+        android:layout_height="25dp"
+        android:background="#EFEFEF"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="@android:color/black"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/topTopic_thirdImageView"
+        app:layout_constraintEnd_toEndOf="@+id/topTopic_secondCommButton"
+        app:layout_constraintStart_toStartOf="@+id/topTopic_secondCommButton"
+        app:layout_constraintTop_toTopOf="@+id/topTopic_thirdImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

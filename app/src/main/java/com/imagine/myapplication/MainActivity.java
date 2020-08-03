@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -56,6 +57,8 @@ public class MainActivity extends AppCompatActivity{
     public Button loginButton;
     public CircleImageView imageCircle;
     public User userObj;
+    public View header;
+
     private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity{
         this.drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this.navViewListener);
+        this.header = navigationView.getHeaderView(0);
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,toolbar,
 //                R.string.toggle1,R.string.toggle2);
 //        drawer.addDrawerListener(toggle);
@@ -205,6 +209,29 @@ public class MainActivity extends AppCompatActivity{
                         user.setStatusQuote(userStatusQuote);
                         user.setBlocked(userBlocked);
                         setUpUserViews(user);
+
+                        if (header != null) {
+                            CircleImageView profilePicture = header.findViewById(R.id.sideMenu_profilePicture);
+                            TextView nameLabel = header.findViewById(R.id.sideMenu_userName);
+
+                            if (user.imageURL.equals("")) {
+                                Glide.with(mContext).load(default_user).into(profilePicture);
+                            } else {
+                                Glide.with(mContext).load(user.imageURL).into(profilePicture);
+                            }
+                            nameLabel.setText(user.name);
+
+                            profilePicture.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                Gson gson = new Gson();
+                                String userString = gson.toJson(userObj);
+                                Intent intent = new Intent(mContext,UserActivity.class);
+                                intent.putExtra("user", userString);
+                                mContext.startActivity(intent);
+                                }
+                            });
+                        }
                     }catch(NullPointerException e){
                         System.out.println("Error in UserFetch! "+TAG+" "+ e.getStackTrace());
                     }
@@ -226,11 +253,6 @@ public class MainActivity extends AppCompatActivity{
         imageCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Gson gson = new Gson();
-//                String userString = gson.toJson(userObj);
-//                Intent intent = new Intent(mContext,UserActivity.class);
-//                intent.putExtra("user", userString);
-//                mContext.startActivity(intent);
 
                 drawer.openDrawer(GravityCompat.START);
 
