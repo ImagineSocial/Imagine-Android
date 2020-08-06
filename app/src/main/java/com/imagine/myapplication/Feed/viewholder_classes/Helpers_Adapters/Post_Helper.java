@@ -223,7 +223,7 @@ public class Post_Helper {
     }
 
     public void getMorePostsForCommunityFeed(final FirebaseCallback callback){
-        // fetches more post for the community feed when the onscrollListener is
+        // fetches more post for the community_topic feed when the onscrollListener is
         // triggered returns the whole postsList
         if(lastSnap == null || this.commID == null){
             return;

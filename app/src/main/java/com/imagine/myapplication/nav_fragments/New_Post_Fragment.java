@@ -734,7 +734,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     public void uploadCommunityData(DocumentReference docRef, String linkedFactID) {
         // uploads the posts data to the communityDocument if it is shared inside a
-        // community
+        // community_topic
         String documentID = docRef.getId();
         DocumentReference communityRef = db.collection("Facts").document(linkedFactID).collection("posts").document(documentID);
         Timestamp timestamp = new Timestamp(new Date());
