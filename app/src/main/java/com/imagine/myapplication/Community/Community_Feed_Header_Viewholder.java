@@ -16,7 +16,7 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
     private static final String TAG = "Community_Feed_Header_V";
     Context mContext;
 
-    // works as an header for the community feed
+    // works as an header for the community_topic feed
     // shows the communityPicture and description
 
     public Community_Feed_Header_Viewholder(@NonNull View itemView) {

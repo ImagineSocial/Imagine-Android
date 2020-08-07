@@ -1,6 +1,5 @@
 package com.imagine.myapplication.CommunityPicker;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
-import com.imagine.myapplication.Community.Community_Adapter;
 import com.imagine.myapplication.CommunityCallback;
 import com.imagine.myapplication.R;
 
@@ -34,7 +32,7 @@ public class CommunityPickActivity extends AppCompatActivity {
                 commList = communities;
                 initRecyclerView();
             }
-        });
+        },"test");
     }
 
     private void initRecyclerView(){
@@ -50,7 +48,7 @@ public class CommunityPickActivity extends AppCompatActivity {
                 switch(adapter.getItemViewType(position)){
                     case R.layout.communities_header:
                         return 2;
-                    case R.layout.community:
+                    case R.layout.community_topic:
                         return 1;
                     default:
                         return 1;

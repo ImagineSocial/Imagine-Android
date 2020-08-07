@@ -11,15 +11,29 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
 import java.util.HashMap;
 
 public class Community_ViewPager_Activity extends AppCompatActivity {
+
+    public String name;
+    public String description;
+    public String imageURL;
+    public String commID;
+    public String displayOption;
+    public Communities_Fragment fragment;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager_test);
         Intent intent = getIntent();
+        this.name = intent.getStringExtra("name");
+        this.description = intent.getStringExtra("description");
+        this.imageURL = intent.getStringExtra("imageURL");
+        this.commID = intent.getStringExtra("commID");
+        this.displayOption = intent.getStringExtra("displayOption");
+
         HashMap<String,String> args = new HashMap<>();
         args.put("name",intent.getStringExtra("name"));
         args.put("description",intent.getStringExtra("description"));

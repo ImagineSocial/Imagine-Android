@@ -8,10 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.imagine.myapplication.Community.Communities_Header;
 import com.imagine.myapplication.Community.Community;
-import com.imagine.myapplication.Community.Community_Adapter;
-import com.imagine.myapplication.Community.Community_ViewHolder;
 import com.imagine.myapplication.R;
 
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class CommunityPickerAdapter extends RecyclerView.Adapter<Community_Picke
             Community_Picker_Header header = new Community_Picker_Header(view);
             return header;
         }
-        View view = inflater.inflate(R.layout.community, parent, false);
+        View view = inflater.inflate(R.layout.community_topic, parent, false);
         Community_Picker_ViewHolder commVH = new Community_Picker_ViewHolder(view);
         int spacing = 30;
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
@@ -68,7 +65,7 @@ public class CommunityPickerAdapter extends RecyclerView.Adapter<Community_Picke
         if(position == 0){
             return R.layout.communities_header;
         }
-        else return R.layout.community;
+        else return R.layout.community_topic;
     }
 
     @Override

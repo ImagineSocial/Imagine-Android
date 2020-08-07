@@ -13,24 +13,28 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_Adapter;
+import com.imagine.myapplication.Community.Community_Recent_Header;
 import com.imagine.myapplication.CommunityCallback;
-import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
-import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.post_classes.Post;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Communities_Fragment extends Fragment {
+public class Communities_Fragment extends Fragment{
     private static final String TAG = "Communities_Fragment";
     public Communities_Helper helper = new Communities_Helper();
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
+    public Community_Recent_Header recent_header;
     public RecyclerView recyclerView;
     public int lastPosition;
     public GridLayoutManager gridLayoutManager;
     public ArrayList<Community> commList = new ArrayList<>();
+    public ArrayList<Community> recents = new ArrayList<>();
+    public Context mContext;
 
     @Nullable
     @Override
@@ -42,7 +46,7 @@ public class Communities_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the the communities
         super.onViewCreated(view, savedInstanceState);
-
+        this.mContext = getContext();
         if(this.commList.size() == 0){
             helper.getCommunities(new CommunityCallback() {
                 @Override
@@ -50,7 +54,7 @@ public class Communities_Fragment extends Fragment {
                     commList = communities;
                     initRecyclerView(view);
                 }
-            });
+            },auth.getCurrentUser().getUid());
         }
         else{
             initRecyclerView(view);
@@ -61,18 +65,23 @@ public class Communities_Fragment extends Fragment {
     private void initRecyclerView (final View view){
         // initializes the recyclerView
         this.recyclerView = view.findViewById(R.id.communites_recyclerview);
-        Context context = view.getContext();
-        final Community_Adapter adapter = new Community_Adapter(commList,context);
+        final Community_Adapter adapter = new Community_Adapter(commList,this.mContext,this);
         recyclerView.setAdapter(adapter);
-        this.gridLayoutManager = new GridLayoutManager(context,2);
+        this.gridLayoutManager = new GridLayoutManager(this.mContext,2);
         this.gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 switch(adapter.getItemViewType(position)){
                     case R.layout.communities_header:
                         return 2;
-                    case R.layout.community:
+                    case R.layout.community_recent_header:
+                        return 2;
+                    case R.layout.community_topic:
                         return 1;
+                    case R.layout.community_footer:
+                        return 2;
+                    case R.layout.community_own_comms:
+                        return 2;
                     default:
                         System.out.println("default case! "+TAG);
                         return 1;
@@ -118,6 +127,27 @@ public class Communities_Fragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        lastPosition = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
+        //lastPosition = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
+    }
+
+    public void addRecent(Community comm){
+        if(recents.size() == 10){
+            recents.remove(1);
+            recents.add(comm);
+        }else{
+            recents.add(comm);
+        }
+    }
+
+    public void setHeaderRef(Community_Recent_Header recent_header){
+        this.recent_header = recent_header;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(this.recent_header != null){
+            this.recent_header.getRecents(this.recents);
+        }
     }
 }
