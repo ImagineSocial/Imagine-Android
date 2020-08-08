@@ -538,6 +538,7 @@ public class Post_Helper {
         stringArray.add("multiPicture");
         stringArray.add("picture");
         Query postsQuery = db.collection("TopicPosts").whereIn("type",stringArray)
+                .orderBy("createTime", Query.Direction.DESCENDING)
                 .limit(50);
         postsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

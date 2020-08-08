@@ -20,6 +20,7 @@ public class Community_Fact_Viewholder extends Community_ViewHolder {
     @Override
     public void bind(final Community comm) {
         ImageView imageView = itemView.findViewById(R.id.community_fact_image);
+        imageView.setClipToOutline(true);
         TextView title_tv = itemView.findViewById(R.id.community_fact_title);
         TextView description_tv = itemView.findViewById(R.id.community_fact_description);
         if(comm.imageURL != null){

@@ -52,6 +52,10 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
                 view = inflater.inflate(R.layout.communities_header,parent,false);
                 Communities_Header header = new Communities_Header(view,this.fragment);
                 return header;
+            case R.layout.communities_sub_header:
+                view = inflater.inflate(R.layout.communities_sub_header, parent, false);
+                Communities_Sub_Header subheader = new Communities_Sub_Header(view, this.fragment);
+                return subheader;
             case R.layout.community_recent_header:
                 view = inflater.inflate(R.layout.community_recent_header,parent,false);
                 Community_Recent_Header recent_header = new Community_Recent_Header(view,this.fragment,mContext);
@@ -63,6 +67,12 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
             case R.layout.community_fact:
                 view = inflater.inflate(R.layout.community_fact,parent,false);
                 Community_Fact_Viewholder community_fact_viewholder = new Community_Fact_Viewholder(view,this.fragment);
+
+                int spacing = 30;
+                ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+                layoutParams.height = (int) ((parent.getWidth() / 2) - spacing);
+                view.setLayoutParams(layoutParams);
+
                 return community_fact_viewholder;
             case R.layout.community_footer:
                 view = inflater.inflate(R.layout.community_footer,parent,false);
@@ -94,11 +104,11 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
             case "recentHeader":
                 return R.layout.community_recent_header;
             case "topicsHeader":
-                return R.layout.communities_header;
+                return R.layout.communities_sub_header;
             case "factsHeader":
-                return R.layout.communities_header;
+                return R.layout.communities_sub_header;
             case "ownHeader":
-                return R.layout.communities_header;
+                return R.layout.communities_sub_header;
             case "topic":
                 return R.layout.community_topic;
             case "fact":

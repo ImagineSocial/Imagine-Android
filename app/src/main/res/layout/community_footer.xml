@@ -3,22 +3,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintTop_toTopOf="parent">
+
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:text="Hinzufügen"/>
+            android:background="@drawable/button_border"
+            android:text="Hinzufügen"
+            android:textAllCaps="false" />
+
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
             android:layout_weight="1"
-            android:text="Alle anzeigen"/>
+            android:background="@drawable/button_border"
+            android:text="Alle anzeigen"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

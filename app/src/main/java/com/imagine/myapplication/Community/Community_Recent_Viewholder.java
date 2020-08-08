@@ -16,6 +16,8 @@ public class Community_Recent_Viewholder extends RecyclerView.ViewHolder {
 
     public void bind(Community comm){
         ImageView imageView = itemView.findViewById(R.id.recent_image);
+        imageView.setClipToOutline(true);
+
         if(comm.imageURL != null){
             Glide.with(itemView).load(comm.imageURL).into(imageView);
         }else{

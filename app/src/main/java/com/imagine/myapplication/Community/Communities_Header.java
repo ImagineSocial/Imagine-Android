@@ -16,19 +16,6 @@ public class Communities_Header extends Community_ViewHolder {
     @Override
     public void bind(Community comm) {
         TextView header = itemView.findViewById(R.id.communities_header);
-        switch(comm.type){
-            case "commHeader":
-                header.setText("Communities");
-                break;
-            case "topicsHeader":
-                header.setText("Angesagt");
-                break;
-            case "factsHeader":
-                header.setText("Aktuelle Diskussionen");
-                break;
-            case "ownHeader":
-                header.setText("Deine Communities");
-                break;
-        }
+        header.setText("Communities");
     }
 }

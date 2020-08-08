@@ -74,6 +74,8 @@ public class Communities_Fragment extends Fragment{
                 switch(adapter.getItemViewType(position)){
                     case R.layout.communities_header:
                         return 2;
+                    case R.layout.communities_sub_header:
+                        return 2;
                     case R.layout.community_recent_header:
                         return 2;
                     case R.layout.community_topic:
