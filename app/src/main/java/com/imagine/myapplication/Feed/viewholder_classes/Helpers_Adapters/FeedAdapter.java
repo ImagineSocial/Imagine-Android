@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.imagine.myapplication.Feed.viewholder_classes.HeaderViewHolder;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
@@ -47,8 +48,10 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     }
     @Override
     public int getItemViewType(int position) {
-        String type = postList.get(position).type;
-
+        if(position == 0){
+            return R.layout.post_top_header;
+        }
+        String type = postList.get(position-1).type;
         switch(type){
             case "picture":
                 return R.layout.post_picture;
@@ -102,6 +105,9 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
             case R.layout.post_repost:
                 view = inflater.inflate(R.layout.post_repost,parent,false);
                 return new RepostViewHolder(view);
+            case R.layout.post_top_header:
+                view = inflater.inflate(R.layout.post_top_header,parent,false);
+                return new HeaderViewHolder(view);
             default:
                 view = inflater.inflate(R.layout.post_default,parent,false);
                 return new DefaultViewHolder(view);
@@ -110,7 +116,12 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        Post post = postList.get(position);
+        if(position == 0){
+            ((HeaderViewHolder) holder).bind();
+            return;
+        }
+
+        Post post = postList.get(position-1);
         if( holder instanceof PictureViewHolder){
             ((PictureViewHolder) holder).bind((PicturePost) post);
         }else{
@@ -149,6 +160,6 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public int getItemCount() {
-        return postList.size();
+        return postList.size()+1;
     }
 }

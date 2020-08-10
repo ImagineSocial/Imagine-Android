@@ -94,6 +94,16 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".Community.Community_All_Communities_Activity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".Community.Community_New_Community_Activity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

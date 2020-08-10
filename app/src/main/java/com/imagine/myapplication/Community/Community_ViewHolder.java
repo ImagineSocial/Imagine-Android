@@ -2,6 +2,7 @@ package com.imagine.myapplication.Community;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,19 +12,26 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 public class Community_ViewHolder extends RecyclerView.ViewHolder {
 
     public Context mContext;
-    public Communities_Fragment fragment;
     public Community comm;
 
-    public Community_ViewHolder(@NonNull View itemView, Communities_Fragment fragment) {
+    public Community_ViewHolder(@NonNull View itemView) {
         super(itemView);
         this.mContext = itemView.getContext();
-        this.fragment = fragment;
     }
 
     public void bind(final Community comm){
@@ -50,7 +58,7 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.addRecent(comm);
+                addToRecents(comm);
                 Intent intent = new Intent(itemView.getContext(),Community_ViewPager_Activity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("description",description);
@@ -60,6 +68,50 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
                 mContext.startActivity(intent);
             }
         });
+    }
+
+    public void addToRecents(Community comm){
+        String recentString = "";
+        try{
+            FileInputStream inputStreamReader = mContext.openFileInput("recents.txt");
+            if(inputStreamReader != null){
+                InputStreamReader reader = new InputStreamReader(inputStreamReader);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                String onjString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+                while((onjString = bufferedReader.readLine()) != null){
+                    stringBuilder.append("\n").append(onjString);
+                }
+                inputStreamReader.close();
+                recentString = stringBuilder.toString();
+                Gson gson = new Gson();
+                Community[] recents = gson.fromJson(recentString,Community[].class);
+                ArrayList<Community> recentsList = new ArrayList<>();
+                int counter =0;
+                for(Community community : recents){
+
+                    if(!community.topicID.equals(comm.topicID)){
+                        recentsList.add(community);
+                        counter++;
+                        if(counter == 10) break;
+                    }
+                }
+
+                recentsList.add(comm);
+                String newRecents = gson.toJson(recentsList);
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
+                        .openFileOutput("recents.txt", Context.MODE_PRIVATE));
+                outputStreamWriter.write(newRecents);
+                outputStreamWriter.close();
+            }
+        }
+        catch(FileNotFoundException e){
+            Log.e("login activity", "File not found: " + e.toString());
+
+        }
+        catch(IOException e){
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
     }
 
 }

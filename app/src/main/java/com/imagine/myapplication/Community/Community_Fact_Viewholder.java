@@ -13,8 +13,8 @@ import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
 public class Community_Fact_Viewholder extends Community_ViewHolder {
 
-    public Community_Fact_Viewholder(@NonNull View itemView, Communities_Fragment fragment) {
-        super(itemView, fragment);
+    public Community_Fact_Viewholder(@NonNull View itemView) {
+        super(itemView);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Community_Fact_Viewholder extends Community_ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragment.addRecent(comm);
+                addToRecents(comm);
                 Intent intent = new Intent(itemView.getContext(),Community_ViewPager_Activity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("description",description);

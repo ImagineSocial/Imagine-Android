@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
@@ -25,20 +26,17 @@ public class CommunityPickActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // fetches the communities from the database
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_communities);
-        helper.getCommunities(new CommunityCallback() {
-            @Override
-            public void onCallback(ArrayList<Community> communities) {
-                commList = communities;
-                initRecyclerView();
-            }
-        },"test");
-    }
+        setContentView(R.layout.community_picker_activity);
 
+        ViewPager2 viewPager2 = findViewById(R.id.community_picker_viewpager);
+        PickerCollectionAdapter adapter = new PickerCollectionAdapter(this,this);
+        viewPager2.setAdapter(adapter);
+    }
+    /*
     private void initRecyclerView(){
         // initializes the recyclerview with the fetched data
         // set the recyclerViews onScrollListener
-        RecyclerView recyclerView = findViewById(R.id.communites_recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.communities_recyclerview);
         final CommunityPickerAdapter adapter = new CommunityPickerAdapter(commList,this,this);
         recyclerView.setAdapter(adapter);
         GridLayoutManager mLayoutManager = new GridLayoutManager(this,2);
@@ -73,7 +71,7 @@ public class CommunityPickActivity extends AppCompatActivity {
                 }
                 if((totalItemCount-(pastVisibleItems+visibleItemCount))<=4&&!loading){
                     loading = true;
-                    helper.getMoreCommunities(new CommunityCallback() {
+                    helper.getMoreTopics(new CommunityCallback() {
                         @Override
                         public void onCallback(ArrayList<Community> comms) {
                             commList = comms;
@@ -85,5 +83,5 @@ public class CommunityPickActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }

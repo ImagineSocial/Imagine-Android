@@ -37,7 +37,7 @@ public class Recent_Communities_Adapter extends RecyclerView.Adapter<Community_R
 
     @Override
     public void onBindViewHolder(@NonNull Community_Recent_Viewholder holder, int position) {
-        Community comm = recents.get(position);
+        Community comm = recents.get(recents.size()-(position+1));
         holder.bind(comm);
     }
 

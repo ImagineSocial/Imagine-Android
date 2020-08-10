@@ -17,13 +17,23 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_Activity;
+import com.imagine.myapplication.Community.Community_ViewPager_Activity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.Post;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -175,6 +185,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                         final String description = (docData.get("description") != null)
                                 ? (String) docData.get("description")
                                 : (String) "";
+                        final String displayOption =(String) docData.get("displayOption");
                         if (communityImageURL != "") {
                             Glide.with(itemView).load(communityImageURL).into(linkedTopicImageView);
                         } else {
@@ -185,11 +196,47 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                         linkedTopicImageView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent(mContext, Community_Activity.class);
+                                Community community = new Community(communityName,communityImageURL,communityID,description);
+                                community.displayOption = displayOption;
+                                String recentString = "";
+                                try{
+                                    FileInputStream inputStreamReader = mContext.openFileInput("recents.txt");
+                                    if(inputStreamReader != null){
+                                        InputStreamReader reader = new InputStreamReader(inputStreamReader);
+                                        BufferedReader bufferedReader = new BufferedReader(reader);
+                                        String onjString = "";
+                                        StringBuilder stringBuilder = new StringBuilder();
+                                        while((onjString = bufferedReader.readLine()) != null){
+                                            stringBuilder.append("\n").append(onjString);
+                                        }
+                                        inputStreamReader.close();
+                                        recentString = stringBuilder.toString();
+                                        Gson gson = new Gson();
+                                        Community[] recents = gson.fromJson(recentString,Community[].class);
+                                        ArrayList<Community> recentsList = new ArrayList<>();
+                                        for(Community comm : recents){
+                                            recentsList.add(comm);
+                                        }
+                                        recentsList.add(community);
+                                        String newRecents = gson.toJson(recentsList);
+                                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
+                                                .openFileOutput("recents.txt", Context.MODE_PRIVATE));
+                                        outputStreamWriter.write(newRecents);
+                                        outputStreamWriter.close();
+                                    }
+                                }
+                                catch(FileNotFoundException e){
+                                    Log.e("login activity", "File not found: " + e.toString());
+                                }
+                                catch(IOException e){
+                                    Log.e("login activity", "Can not read file: " + e.toString());
+                                }
+                                Intent intent = new Intent(mContext, Community_ViewPager_Activity.class);
                                 intent.putExtra("name", communityName);
                                 intent.putExtra("description",description);
                                 intent.putExtra("imageURL", communityImageURL);
                                 intent.putExtra("commID", communityID);
+                                intent.putExtra("displayOption",displayOption);
                                 mContext.startActivity(intent);
                             }
                         });

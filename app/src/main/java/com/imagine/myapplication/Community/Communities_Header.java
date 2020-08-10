@@ -9,8 +9,8 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
 public class Communities_Header extends Community_ViewHolder {
-    public Communities_Header(@NonNull View itemView, Communities_Fragment fragment) {
-        super(itemView,fragment);
+    public Communities_Header(@NonNull View itemView) {
+        super(itemView);
     }
 
     @Override

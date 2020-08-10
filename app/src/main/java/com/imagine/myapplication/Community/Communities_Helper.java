@@ -22,7 +22,10 @@ import java.util.Map;
 public class Communities_Helper {
     private static final String TAG = "Communities_Helper";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentSnapshot lastSnap = null;
+    ArrayList<Community> topicsList = new ArrayList<>();
+    ArrayList<Community> factsList = new ArrayList<>();
+    DocumentSnapshot lastTopic = null;
+    DocumentSnapshot lastFact = null;
 
     public void getCommunities(final CommunityCallback callback, String userID){
         final ArrayList<Community> topics = new ArrayList<>();        // Topic-Communities Array
@@ -62,9 +65,6 @@ public class Communities_Helper {
                 if(task.isSuccessful()){
                    QuerySnapshot result = task.getResult();
                     List<DocumentSnapshot> docMap = result.getDocuments();
-                    if(docMap.size() >0){
-                        lastSnap = docMap.get(docMap.size()-1);
-                    }
                     for(DocumentSnapshot docSnap : docMap){
                         addCommunity(docSnap,topics,"topic");
                     }
@@ -154,10 +154,10 @@ public class Communities_Helper {
 
     public void addFooter(ArrayList<Community> topics,ArrayList<Community> facts,
                           ArrayList<Community> ownComms,CommunityCallback callback){
-        Community topicsFooter = new Community("footer","footer","footer","footer");
+        Community topicsFooter = new Community("footer","footer","topicsFooter","footer");
         topicsFooter.type = "footer";
         topics.add(topicsFooter);
-        Community factsFooter = new Community("footer","footer","footer","footer");
+        Community factsFooter = new Community("footer","footer","factsFooter","footer");
         factsFooter.type = "footer";
         facts.add(factsFooter);
         ArrayList<Community> finishedList = topics;
@@ -166,15 +166,16 @@ public class Communities_Helper {
         callback.onCallback(finishedList);
     }
 
-    public void getMoreCommunities(final CommunityCallback callback){
+    public void getMoreTopics(final CommunityCallback callback){
         // fetches more communities from the "Facts" collection when the
         // onScrollListener is triggered
-        if(lastSnap == null){
+        if(lastTopic == null){
             return;
         }
         Query commQuery = db.collection("Facts")
                 .orderBy("popularity", Query.Direction.DESCENDING)
-                .startAfter(lastSnap)
+                .whereEqualTo("displayOption","topic")
+                .startAfter(lastTopic)
                 .limit(20);
         commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -183,18 +184,143 @@ public class Communities_Helper {
                     QuerySnapshot result = task.getResult();
                     List<DocumentSnapshot> docMap = result.getDocuments();
                     if(docMap.size() >0){
-                        lastSnap = docMap.get(docMap.size()-1);
+                        lastTopic = docMap.get(docMap.size()-1);
                     }
                     for(DocumentSnapshot docSnap : docMap){
-                        //addCommunity(docSnap);
+                        addCommunity(docSnap,topicsList,"topic");
                     }
-                    //callback.onCallback(commList);
+                    callback.onCallback(topicsList);
                 } else if(task.isCanceled()){
                     System.out.println("getmore communitys fetch failed! "+TAG);
                 }
             }
         });
 
+    }
+
+    public void getMoreFacts(final CommunityCallback callback){
+        // fetches more communities from the "Facts" collection when the
+        // onScrollListener is triggered
+        if(lastFact == null){
+            return;
+        }
+        Query commQuery = db.collection("Facts")
+                .orderBy("popularity", Query.Direction.DESCENDING)
+                .whereEqualTo("displayOption","fact")
+                .startAfter(lastFact)
+                .limit(20);
+        commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot result = task.getResult();
+                    List<DocumentSnapshot> docMap = result.getDocuments();
+                    if(docMap.size() >0){
+                        lastFact = docMap.get(docMap.size()-1);
+                    }
+                    for(DocumentSnapshot docSnap : docMap){
+                        addCommunity(docSnap,factsList,"fact");
+                    }
+                    callback.onCallback(factsList);
+                } else if(task.isCanceled()){
+                    System.out.println("getmore communitys fetch failed! "+TAG);
+                }
+            }
+        });
+
+    }
+
+    public void getTopics(final CommunityCallback callback){
+        // fetches  communities from the "Facts" collection when the
+        // onScrollListener is triggered
+        Query topicQuery = db.collection("Facts")
+                .whereEqualTo("displayOption","topic")
+                .orderBy("popularity", Query.Direction.DESCENDING)
+                .limit(20);
+        topicQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot result = task.getResult();
+                    List<DocumentSnapshot> docMap = result.getDocuments();
+                    if(docMap.size() >0){
+                        lastTopic = docMap.get(docMap.size()-1);
+                    }
+                    for(DocumentSnapshot docSnap : docMap){
+                        addCommunity(docSnap,topicsList,"topic");
+                    }
+                    callback.onCallback(topicsList);
+                }else{
+                    System.out.println("community_topic fetch failed! "+TAG);
+                }
+            }
+        });
+    }
+
+    public void getFacts(final CommunityCallback callback){
+        // fetches  communities from the "Facts" collection when the
+        // onScrollListener is triggered
+        Query topicQuery = db.collection("Facts")
+                .whereEqualTo("displayOption","fact")
+                .orderBy("popularity", Query.Direction.DESCENDING)
+                .limit(20);
+        topicQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot result = task.getResult();
+                    List<DocumentSnapshot> docMap = result.getDocuments();
+                    if(docMap.size() >0){
+                        lastFact = docMap.get(docMap.size()-1);
+                    }
+                    for(DocumentSnapshot docSnap : docMap){
+                        addCommunity(docSnap,factsList,"topic");
+                    }
+                    callback.onCallback(factsList);
+                }else{
+                    System.out.println("community_topic fetch failed! "+TAG);
+                }
+            }
+        });
+    }
+
+    public void getOwnCommunities(final CommunityCallback callback, String userID){
+        // Fetching the Own Communites
+        final ArrayList<Community> ownComms = new ArrayList<>();
+        Query ownCommsQuery = db.collection("Users").document(userID)
+                .collection("topics");
+        ownCommsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    QuerySnapshot result = task.getResult();
+                    List<DocumentSnapshot> docMap = result.getDocuments();
+                    final int size = docMap.size();
+                    final int[] count = {0};
+                    for(DocumentSnapshot docSnap : docMap){
+                        DocumentReference docRef = db.collection("Facts").document(docSnap.getId());
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    addCommunity(documentSnapshot,ownComms,"ownComms");
+                                    count[0]++;
+                                    if(count[0] == size){
+                                        callback.onCallback(ownComms);
+                                    }
+                                }else{
+                                    count[0]++;
+                                    System.out.println("Fetch Failed"+TAG);
+                                }
+                            }
+                        });
+                    }
+                }else{
+                    System.out.println("community_topic fetch failed! "+TAG);
+                }
+            }
+        });
     }
 
     public void getProArguments(String commID,final ArgumentsCallback callback){

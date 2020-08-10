@@ -16,8 +16,8 @@ import java.util.ArrayList;
 public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder> {
     private static final String TAG = "Community_Adapter";
     public ArrayList<Community> commList = new ArrayList<>();
-    public Context mContext;
     public Communities_Fragment fragment;
+    public Context mContext;
 
     // the adapter for the communityFragment
 
@@ -50,23 +50,23 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
         switch(viewType){
             case R.layout.communities_header:
                 view = inflater.inflate(R.layout.communities_header,parent,false);
-                Communities_Header header = new Communities_Header(view,this.fragment);
+                Communities_Header header = new Communities_Header(view);
                 return header;
             case R.layout.communities_sub_header:
                 view = inflater.inflate(R.layout.communities_sub_header, parent, false);
-                Communities_Sub_Header subheader = new Communities_Sub_Header(view, this.fragment);
+                Communities_Sub_Header subheader = new Communities_Sub_Header(view);
                 return subheader;
             case R.layout.community_recent_header:
                 view = inflater.inflate(R.layout.community_recent_header,parent,false);
-                Community_Recent_Header recent_header = new Community_Recent_Header(view,this.fragment,mContext);
+                Community_Recent_Header recent_header = new Community_Recent_Header(view,mContext,this.fragment);
                 return recent_header;
             case R.layout.community_topic:
                 view = inflater.inflate(R.layout.community_topic,parent,false);
-                Community_ViewHolder community_viewHolder = new Community_ViewHolder(view,this.fragment);
+                Community_ViewHolder community_viewHolder = new Community_ViewHolder(view);
                 return community_viewHolder;
             case R.layout.community_fact:
                 view = inflater.inflate(R.layout.community_fact,parent,false);
-                Community_Fact_Viewholder community_fact_viewholder = new Community_Fact_Viewholder(view,this.fragment);
+                Community_Fact_Viewholder community_fact_viewholder = new Community_Fact_Viewholder(view);
 
                 int spacing = 30;
                 ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
@@ -76,15 +76,15 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
                 return community_fact_viewholder;
             case R.layout.community_footer:
                 view = inflater.inflate(R.layout.community_footer,parent,false);
-                Community_Footer_Viewholder community_footer_viewholder = new Community_Footer_Viewholder(view,this.fragment);
+                Community_Footer_Viewholder community_footer_viewholder = new Community_Footer_Viewholder(view);
                 return community_footer_viewholder;
             case R.layout.community_own_comms:
                 view = inflater.inflate(R.layout.community_own_comms,parent,false);
-                Community_OwnComms_ViewHolder community_ownComms_viewHolder = new Community_OwnComms_ViewHolder(view,this.fragment);
+                Community_OwnComms_ViewHolder community_ownComms_viewHolder = new Community_OwnComms_ViewHolder(view);
                 return community_ownComms_viewHolder;
             default:
                 view = inflater.inflate(R.layout.community_footer,parent,false);
-                Community_Footer_Viewholder community_footer_viewholder2 = new Community_Footer_Viewholder(view,this.fragment);
+                Community_Footer_Viewholder community_footer_viewholder2 = new Community_Footer_Viewholder(view);
                 return community_footer_viewholder2;
         }
     }

@@ -44,7 +44,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         TestCollectionAdapter adapter = new TestCollectionAdapter(this,args);
         viewPager2.setAdapter(adapter);
         if(intent.getStringExtra("displayOption").equals("fact")){
-            viewPager2.setCurrentItem(1);
+            viewPager2.setCurrentItem(0);
         }else{
             viewPager2.setCurrentItem(0);
         }
