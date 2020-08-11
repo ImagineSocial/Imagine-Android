@@ -59,11 +59,13 @@ public class Communities_Fragment extends Fragment{
         return inflater.inflate(R.layout.fragment_communities,container,false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the the communities
         super.onViewCreated(view, savedInstanceState);
         this.mContext = getContext();
+        
         if(this.commList.size() == 0){
             helper.getCommunities(new CommunityCallback() {
                 @Override
@@ -157,19 +159,6 @@ public class Communities_Fragment extends Fragment{
         }
         catch(FileNotFoundException e){
             Log.e("login activity", "File not found: " + e.toString());
-            try{
-                Gson gson = new Gson();
-                String recentsString = gson.toJson(this.recents);
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
-                        .openFileOutput("recents.txt", Context.MODE_PRIVATE));
-                outputStreamWriter.write(recentsString);
-                outputStreamWriter.close();
-            }catch(FileNotFoundException e1){
-                Log.e("login activity", "File not found: " + e.toString());
-            }catch(IOException e2){
-                Log.e("login activity", "File not found: " + e.toString());
-            }
-
         }
         catch(IOException e){
             Log.e("login activity", "Can not read file: " + e.toString());

@@ -18,6 +18,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 
@@ -76,12 +77,29 @@ public class Community_Recent_Header extends Community_ViewHolder {
             }
         }
         catch(FileNotFoundException e){
-            Log.e("login activity", "File not found: " + e.toString());
+            createFile();
         }
         catch(IOException e){
             Log.e("login activity", "Can not read file: " + e.toString());
         }
     }
+
+    public void createFile(){
+        try{
+            Gson gson = new Gson();
+            ArrayList<Community> comms = new ArrayList<>();
+            String jsonEmptyString = gson.toJson(comms);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
+                    .openFileOutput("recents.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(jsonEmptyString);
+            outputStreamWriter.close();
+        }catch(FileNotFoundException e){
+            System.out.println("Damn!");
+        }catch(IOException e){
+            System.out.println("yikes!");
+        }
+    }
+
 
 
 }
