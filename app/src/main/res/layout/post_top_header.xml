@@ -5,7 +5,15 @@
 
     android:layout_width="match_parent"
     android:layout_height="175dp"
+    android:layout_margin="10dp"
     android:background="@drawable/cell_background_shape">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/half_line_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
     <View
         android:id="@+id/topTopic_smallView"
@@ -15,29 +23,31 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/community_cell_background"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/owenView"
+        app:layout_constraintEnd_toStartOf="@+id/half_line_vertical"
         app:layout_constraintStart_toStartOf="@+id/shalom_view"
         app:layout_constraintTop_toBottomOf="@id/shalom_view" />
 
     <View
         android:id="@+id/topTopic_bigView"
-        android:layout_width="183dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/community_cell_background"
         app:layout_constraintBottom_toBottomOf="@+id/topTopic_smallView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@+id/topTopic_smallView"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toEndOf="@+id/half_line_vertical"
         app:layout_constraintTop_toTopOf="@+id/shalom_view"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/topTopic_thirdImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/corner_radius_three"
         app:layout_constraintStart_toStartOf="@+id/topTopic_secondImageView"
         app:layout_constraintTop_toBottomOf="@+id/topTopic_secondImageView"
         app:srcCompat="@drawable/fact_stamp" />
@@ -47,32 +57,35 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/corner_radius_three"
         app:layout_constraintStart_toStartOf="@+id/topTopic_firstImageView"
         app:layout_constraintTop_toBottomOf="@+id/topTopic_firstImageView"
         app:srcCompat="@drawable/fact_stamp" />
 
     <TextView
         android:id="@+id/shalom_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
         android:fontFamily="@font/ibm_semi_bold"
         android:text="Shalom!"
         android:textColor="@android:color/black"
-        android:textSize="35dp"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toStartOf="@+id/owenView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/owenView"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:scaleType="centerCrop"
         android:tint="@color/md_blue_A700"
         app:layout_constraintBottom_toBottomOf="@+id/shalom_view"
-        app:layout_constraintStart_toEndOf="@+id/shalom_view"
+        app:layout_constraintEnd_toStartOf="@+id/half_line_vertical"
         app:layout_constraintTop_toTopOf="@id/shalom_view"
         app:srcCompat="@drawable/owen_face" />
 
@@ -87,7 +100,7 @@
         android:fontFamily="@font/ibm_medium"
         android:text="TextView"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/topTopic_smallView"
         app:layout_constraintEnd_toEndOf="@+id/topTopic_smallView"
         app:layout_constraintStart_toStartOf="@+id/topTopic_smallView"
@@ -111,6 +124,8 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/corner_radius_three"
         app:layout_constraintStart_toStartOf="@+id/topTopicLabel"
         app:layout_constraintTop_toBottomOf="@+id/topTopicLabel"
         app:srcCompat="@drawable/fact_stamp" />
@@ -134,7 +149,7 @@
 
     <Button
         android:id="@+id/topTopic_secondCommButton"
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
         android:background="#EFEFEF"
         android:fontFamily="@font/ibm_regular"
@@ -149,7 +164,7 @@
 
     <Button
         android:id="@+id/topTopic_thirdCommButton"
-        android:layout_width="128dp"
+        android:layout_width="0dp"
         android:layout_height="25dp"
         android:background="#EFEFEF"
         android:fontFamily="@font/ibm_regular"
