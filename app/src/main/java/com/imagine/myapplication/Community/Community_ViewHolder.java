@@ -17,6 +17,7 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -107,7 +108,6 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
         }
         catch(FileNotFoundException e){
             Log.e("login activity", "File not found: " + e.toString());
-
         }
         catch(IOException e){
             Log.e("login activity", "Can not read file: " + e.toString());

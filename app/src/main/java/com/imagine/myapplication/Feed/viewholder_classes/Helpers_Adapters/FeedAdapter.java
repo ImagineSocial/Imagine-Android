@@ -122,9 +122,9 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         }
 
         Post post = postList.get(position-1);
-        if( holder instanceof PictureViewHolder){
-            ((PictureViewHolder) holder).bind((PicturePost) post);
-        }else{
+            if( holder instanceof PictureViewHolder){
+                ((PictureViewHolder) holder).bind((PicturePost) post);
+            }else{
             if(holder instanceof ThoughtViewHolder){
                 ((ThoughtViewHolder) holder).bind((ThoughtPost) post);
             }
