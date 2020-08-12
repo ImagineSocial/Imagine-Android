@@ -65,7 +65,7 @@ public class Communities_Fragment extends Fragment{
         // fetches the the communities
         super.onViewCreated(view, savedInstanceState);
         this.mContext = getContext();
-        
+
         if(this.commList.size() == 0){
             helper.getCommunities(new CommunityCallback() {
                 @Override
@@ -122,49 +122,7 @@ public class Communities_Fragment extends Fragment{
         //lastPosition = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
     }
 
-    public void addRecent(Community comm){
 
-        if(recents.size() == 10){
-            recents.remove(1);
-            recents.add(comm);
-        }else{
-            recents.add(comm);
-        }
-        String recentString = "";
-        try{
-            FileInputStream inputStreamReader = mContext.openFileInput("recents.txt");
-            if(inputStreamReader != null){
-                InputStreamReader reader = new InputStreamReader(inputStreamReader);
-                BufferedReader bufferedReader = new BufferedReader(reader);
-                String onjString = "";
-                StringBuilder stringBuilder = new StringBuilder();
-                while((onjString = bufferedReader.readLine()) != null){
-                    stringBuilder.append("\n").append(onjString);
-                }
-                inputStreamReader.close();
-                recentString = stringBuilder.toString();
-                Gson gson = new Gson();
-                Community[] recents = gson.fromJson(recentString,Community[].class);
-                ArrayList<Community> recentsList = new ArrayList<>();
-                for(Community community : recents){
-                    recentsList.add(community);
-                }
-                recentsList.add(comm);
-                String newRecents = gson.toJson(recentsList);
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
-                        .openFileOutput("recents.txt", Context.MODE_PRIVATE));
-                outputStreamWriter.write(newRecents);
-                outputStreamWriter.close();
-            }
-        }
-        catch(FileNotFoundException e){
-            Log.e("login activity", "File not found: " + e.toString());
-        }
-        catch(IOException e){
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
-
-    }
 
     public void setHeaderRef(Community_Recent_Header recent_header){
         this.recent_header = recent_header;
