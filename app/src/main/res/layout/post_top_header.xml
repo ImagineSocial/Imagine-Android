@@ -45,9 +45,9 @@
         android:id="@+id/topTopic_thirdImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="12dp"
         android:background="@drawable/corner_radius_three"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/topTopic_secondImageView"
         app:layout_constraintTop_toBottomOf="@+id/topTopic_secondImageView"
         app:srcCompat="@drawable/fact_stamp" />
@@ -56,9 +56,9 @@
         android:id="@+id/topTopic_secondImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="12dp"
         android:background="@drawable/corner_radius_three"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/topTopic_firstImageView"
         app:layout_constraintTop_toBottomOf="@+id/topTopic_firstImageView"
         app:srcCompat="@drawable/fact_stamp" />
@@ -111,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="15dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/ibm_medium"
         android:text="Die Themen der Woche:"
         android:textColor="@android:color/black"
@@ -123,22 +123,23 @@
         android:id="@+id/topTopic_firstImageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="12dp"
         android:background="@drawable/corner_radius_three"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="@+id/topTopicLabel"
         app:layout_constraintTop_toBottomOf="@+id/topTopicLabel"
         app:srcCompat="@drawable/fact_stamp" />
 
-    <Button
+    <TextView
         android:id="@+id/topTopic_firstCommButton"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:background="#EFEFEF"
+        android:background="#F2F2F8"
         android:fontFamily="@font/ibm_regular"
         android:text="Button"
+        android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="11sp"
@@ -147,13 +148,14 @@
         app:layout_constraintStart_toEndOf="@+id/topTopic_firstImageView"
         app:layout_constraintTop_toTopOf="@+id/topTopic_firstImageView" />
 
-    <Button
+    <TextView
         android:id="@+id/topTopic_secondCommButton"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:background="#EFEFEF"
+        android:layout_height="wrap_content"
+        android:background="#F2F2F8"
         android:fontFamily="@font/ibm_regular"
         android:text="Button"
+        android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="11sp"
@@ -162,13 +164,14 @@
         app:layout_constraintStart_toStartOf="@+id/topTopic_firstCommButton"
         app:layout_constraintTop_toTopOf="@+id/topTopic_secondImageView" />
 
-    <Button
+    <TextView
         android:id="@+id/topTopic_thirdCommButton"
         android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:background="#EFEFEF"
+        android:layout_height="wrap_content"
+        android:background="#F2F2F8"
         android:fontFamily="@font/ibm_regular"
         android:text="Button"
+        android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@android:color/black"
         android:textSize="11sp"

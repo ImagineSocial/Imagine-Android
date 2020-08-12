@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -132,6 +134,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         pictureFolder_button.setAlpha(halfAlpha);
         pictureCamera_button.setEnabled(false);
         pictureCamera_button.setAlpha(halfAlpha);
+        TableLayout tLayout = getView().findViewById(R.id.tableLayout);
+        tLayout.setClipToOutline(true);
+        TableRow tRow = getView().findViewById(R.id.tableRow);
+        tRow.setClipToOutline(true);
+
         setThought();
     }
 

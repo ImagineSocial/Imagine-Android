@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class HeaderViewHolder extends CustomViewHolder {
+public class HeaderViewHolder extends CustomViewHolder implements View.OnClickListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public View mItemView;
+    public List<Community> facts;
 
     public HeaderViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -85,6 +86,7 @@ public class HeaderViewHolder extends CustomViewHolder {
 
                         if (facts.size() == 3) {
                             setFacts(facts);
+
                         }
                     } catch (NullPointerException e) {
                         System.out.println(documentSnapshot.getId() + "Got a problem fetching a fact for the top topic Data");
@@ -98,43 +100,32 @@ public class HeaderViewHolder extends CustomViewHolder {
         final Community community1 = facts.get(0);
         final Community community2 = facts.get(1);
         final Community community3 = facts.get(2);
+        this.facts = facts;
 
         ImageView firstImageView = itemView.findViewById(R.id.topTopic_firstImageView);
         ImageView secondImageView = itemView.findViewById(R.id.topTopic_secondImageView);
         ImageView thirdImageView = itemView.findViewById(R.id.topTopic_thirdImageView);
-        Button firstButton = itemView.findViewById(R.id.topTopic_firstCommButton);
-        Button secondButton = itemView.findViewById(R.id.topTopic_secondCommButton);
-        Button thirdButton = itemView.findViewById(R.id.topTopic_thirdCommButton);
+        TextView firstTextView = itemView.findViewById(R.id.topTopic_firstCommButton);
+        TextView secondTextView = itemView.findViewById(R.id.topTopic_secondCommButton);
+        TextView thirdTextView = itemView.findViewById(R.id.topTopic_thirdCommButton);
 
         firstImageView.setClipToOutline(true);
+        firstImageView.setOnClickListener(this);
         Glide.with(itemView).load(community1.imageURL).into(firstImageView);
-        firstButton.setText(community1.name);
-        firstButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToCommunity(community1);
-            }
-        });
+        firstTextView.setText(community1.name);
+        firstTextView.setOnClickListener(this);
 
         secondImageView.setClipToOutline(true);
+        secondImageView.setOnClickListener(this);
         Glide.with(itemView).load(community2.imageURL).into(secondImageView);
-        secondButton.setText(community2.name);
-        secondButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToCommunity(community2);
-            }
-        });
+        secondTextView.setText(community2.name);
+        secondTextView.setOnClickListener(this);
 
         thirdImageView.setClipToOutline(true);
+        thirdImageView.setOnClickListener(this);
         Glide.with(itemView).load(community3.imageURL).into(thirdImageView);
-        thirdButton.setText(community3.name);
-        thirdButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToCommunity(community3);
-            }
-        });
+        thirdTextView.setText(community3.name);
+        thirdTextView.setOnClickListener(this);
     }
 
     public void goToCommunity(Community community) {
@@ -145,6 +136,34 @@ public class HeaderViewHolder extends CustomViewHolder {
         intent.putExtra("commID", community.topicID);
         intent.putExtra("displayOption",community.displayOption);
         mContext.startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        final Community community1 = facts.get(0);
+        final Community community2 = facts.get(1);
+        final Community community3 = facts.get(2);
+
+        switch (v.getId()) {
+            case R.id.topTopic_firstImageView:
+                goToCommunity(community1);
+                break;
+            case R.id.topTopic_secondImageView:
+                goToCommunity(community2);
+                break;
+            case R.id.topTopic_thirdImageView:
+                goToCommunity(community3);
+                break;
+            case R.id.topTopic_firstCommButton:
+                goToCommunity(community1);
+                break;
+            case R.id.topTopic_secondCommButton:
+                goToCommunity(community2);
+                break;
+            case R.id.topTopic_thirdCommButton:
+                goToCommunity(community3);
+                break;
+        }
     }
 }
 
