@@ -37,6 +37,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     private static final String TAG = "FeedAdapter";
     public ArrayList<Post> postList = new ArrayList<>();
     public Context mContext;
+    public HeaderViewHolder header;
 
     public FeedAdapter(ArrayList<Post> postList, Context mContext) {
         this.postList = postList;
@@ -106,8 +107,14 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                 view = inflater.inflate(R.layout.post_repost,parent,false);
                 return new RepostViewHolder(view);
             case R.layout.post_top_header:
-                view = inflater.inflate(R.layout.post_top_header,parent,false);
-                return new HeaderViewHolder(view);
+                if(this.header == null){
+                    view = inflater.inflate(R.layout.post_top_header,parent,false);
+                    this.header = new HeaderViewHolder(view);
+                    return this.header;
+                }else{
+                    this.header.isInitialized = true;
+                    return this.header;
+                }
             default:
                 view = inflater.inflate(R.layout.post_default,parent,false);
                 return new DefaultViewHolder(view);
@@ -116,10 +123,10 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        if(position == 0){
-            ((HeaderViewHolder) holder).bind();
-            return;
-        }
+            if(position == 0){
+                ((HeaderViewHolder) holder).bind();
+                return;
+            }
 
         Post post = postList.get(position-1);
             if( holder instanceof PictureViewHolder){

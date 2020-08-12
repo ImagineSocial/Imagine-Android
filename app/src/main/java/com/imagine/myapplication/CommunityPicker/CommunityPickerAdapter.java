@@ -35,13 +35,33 @@ public class CommunityPickerAdapter extends RecyclerView.Adapter<Community_Picke
 
     @NonNull
     @Override
-    public Community_Picker_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Community_Picker_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        if(viewType == R.layout.communities_header){
-            View view = inflater.inflate(R.layout.communities_header, parent,false);
-            Community_Picker_Header header = new Community_Picker_Header(view);
-            return header;
+
+        switch(viewType){
+            case R.layout.community_topic:
+                View viewTopic = inflater.inflate(R.layout.community_topic, parent, false);
+                Community_Picker_ViewHolder topicVH = new Community_Picker_ViewHolder(viewTopic);
+                int spacingTopic = 30;
+                ViewGroup.LayoutParams layoutParamsTopic = viewTopic.getLayoutParams();
+                layoutParamsTopic.height = (int) ((parent.getWidth() / 2) - spacingTopic);
+                viewTopic.setLayoutParams(layoutParamsTopic);
+                return topicVH;
+            case R.layout.community_fact:
+                View viewFact = inflater.inflate(R.layout.community_fact, parent, false);
+                Community_Picker_ViewHolder factVH = new Community_Picker_ViewHolder(viewFact);
+                int spacingFact = 30;
+                ViewGroup.LayoutParams layoutParamsFact = viewFact.getLayoutParams();
+                layoutParamsFact.height = (int) ((parent.getWidth() / 2) - spacingFact);
+                viewFact.setLayoutParams(layoutParamsFact);
+                return factVH;
+            case R.layout.community_own_comms:
+                View viewOwnComms = inflater.inflate(R.layout.community_own_comms, parent, false);
+                Community_Picker_ViewHolder ownCommsVH = new Community_Picker_ViewHolder(viewOwnComms);
+                return ownCommsVH;
         }
+
         View view = inflater.inflate(R.layout.community_topic, parent, false);
         Community_Picker_ViewHolder commVH = new Community_Picker_ViewHolder(view);
         int spacing = 30;
@@ -53,23 +73,28 @@ public class CommunityPickerAdapter extends RecyclerView.Adapter<Community_Picke
 
     @Override
     public void onBindViewHolder(@NonNull Community_Picker_ViewHolder holder, int position) {
-        if(position ==0){
-            return;
-        }
-        Community comm = commList.get(position-1);
+
+        Community comm = commList.get(position);
         holder.bind(comm,parent);
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0){
-            return R.layout.communities_header;
+        Community comm = commList.get(position);
+        switch(comm.type){
+            case "topic":
+                return R.layout.community_topic;
+            case "fact":
+                return R.layout.community_fact;
+            case "ownComms":
+                return R.layout.community_own_comms;
+            default:
+                return 0;
         }
-        else return R.layout.community_topic;
     }
 
     @Override
     public int getItemCount() {
-        return commList.size()+1;
+        return commList.size();
     }
 }

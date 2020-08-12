@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.resource.gif.GifFrameResourceDecoder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
@@ -56,8 +57,20 @@ public class OwnCommsFragment extends Fragment {
     }
 
     public void initRecyclerView(){
-        CommunityPickerAdapter adapter = new CommunityPickerAdapter(this.ownComms,getContext(),activity);
+        final CommunityPickerAdapter adapter = new CommunityPickerAdapter(this.ownComms,getContext(),activity);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                switch(adapter.getItemViewType(position)){
+                    case R.layout.community_own_comms:
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+        });
+        recyclerView.setLayoutManager(gridLayoutManager);
     }
 }

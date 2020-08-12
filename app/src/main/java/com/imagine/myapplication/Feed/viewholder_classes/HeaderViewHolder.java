@@ -26,6 +26,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public View mItemView;
     public List<Community> facts;
+    public boolean isInitialized;
 
     public HeaderViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -33,7 +34,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
     }
 
     public void bind() {
-
+        if(isInitialized) return;
         DocumentReference topTopicRef = db.collection("TopTopicData").document("TopTopicData");
 
         topTopicRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -165,5 +166,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
                 break;
         }
     }
+    
+
 }
 

@@ -5,11 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <com.google.android.material.tabs.TabLayout
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/community_picker_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    #
     <androidx.viewpager2.widget.ViewPager2
+        app:layout_constraintTop_toBottomOf="@+id/community_picker_tab_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
         android:id="@+id/community_picker_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

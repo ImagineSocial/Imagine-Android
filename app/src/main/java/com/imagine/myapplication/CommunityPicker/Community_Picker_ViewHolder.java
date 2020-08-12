@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_Activity;
 import com.imagine.myapplication.Community.Community_ViewHolder;
+import com.imagine.myapplication.Community.Community_ViewPager_Activity;
 import com.imagine.myapplication.R;
 
 import javax.xml.datatype.Duration;
@@ -32,6 +33,20 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Community comm, final CommunityPickActivity picker){
+        switch(comm.type){
+            case "topic":
+                this.bindTopic(comm,picker);
+                return;
+            case "fact":
+                this.bindFact(comm, picker);
+                return;
+            case "ownComms":
+                this.bindOwnComm(comm,picker);
+                return;
+        }
+    }
+
+    public void bindTopic(final Community comm, final CommunityPickActivity parent){
         TextView title_tv = itemView.findViewById(R.id.comm_title);
         TextView description_tv = itemView.findViewById(R.id.comm_description);
         ImageView imageView = itemView.findViewById(R.id.comm_picture);
@@ -54,8 +69,57 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
                 resultIntent.putExtra("name",comm.name);
                 resultIntent.putExtra("imageURL", comm.imageURL);
                 resultIntent.putExtra("commID", comm.topicID);
-                picker.setResult(picker.RESULT_OK,resultIntent);
-                picker.finish();
+                parent.setResult(parent.RESULT_OK,resultIntent);
+                parent.finish();
+            }
+        });
+    }
+
+    public void bindFact(final Community comm, final CommunityPickActivity parent){
+        ImageView imageView = itemView.findViewById(R.id.community_fact_image);
+        imageView.setClipToOutline(true);
+        TextView title_tv = itemView.findViewById(R.id.community_fact_title);
+        TextView description_tv = itemView.findViewById(R.id.community_fact_description);
+        if(comm.imageURL != null){
+            Glide.with(itemView).load(comm.imageURL).into(imageView);
+        }else{
+            Glide.with(itemView).load(R.drawable.fact_stamp).into(imageView);
+        }
+        title_tv.setText(comm.name);
+        description_tv.setText(comm.description);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("name",comm.name);
+                resultIntent.putExtra("imageURL", comm.imageURL);
+                resultIntent.putExtra("commID", comm.topicID);
+                parent.setResult(parent.RESULT_OK,resultIntent);
+                parent.finish();
+            }
+        });
+    }
+
+    public void bindOwnComm(final Community comm, final CommunityPickActivity parent){
+        ImageView image = itemView.findViewById(R.id.community_own_image);
+        TextView title = itemView.findViewById(R.id.community_own_title);
+
+        if(comm.imageURL != null){
+            Glide.with(itemView).load(comm.imageURL).into(image);
+        }else{
+            Glide.with(itemView).load(R.drawable.fact_stamp).into(image);
+        }
+
+        title.setText(comm.name);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("name",comm.name);
+                resultIntent.putExtra("imageURL", comm.imageURL);
+                resultIntent.putExtra("commID", comm.topicID);
+                parent.setResult(parent.RESULT_OK,resultIntent);
+                parent.finish();
             }
         });
     }

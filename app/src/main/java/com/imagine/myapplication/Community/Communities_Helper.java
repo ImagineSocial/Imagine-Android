@@ -274,7 +274,7 @@ public class Communities_Helper {
                         lastFact = docMap.get(docMap.size()-1);
                     }
                     for(DocumentSnapshot docSnap : docMap){
-                        addCommunity(docSnap,factsList,"topic");
+                        addCommunity(docSnap,factsList,"fact");
                     }
                     callback.onCallback(factsList);
                 }else{

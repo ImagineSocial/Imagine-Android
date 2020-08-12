@@ -88,6 +88,7 @@ public class Feed_Fragment extends Fragment {
                            FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
                            adapter.addMorePosts(values);
                            adapter.notifyDataSetChanged();
+
                        }
                    });
                 }
@@ -104,4 +105,6 @@ public class Feed_Fragment extends Fragment {
         super.onPause();
         lastPosition =((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
     }
+
+
 }
