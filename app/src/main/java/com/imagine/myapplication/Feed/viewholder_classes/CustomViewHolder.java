@@ -217,7 +217,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
                                         int counter = 0;
                                         for(Community comm : recents){
                                             if(!community.topicID.equals(comm.topicID)){
-                                                recentsList.add(community);
+                                                recentsList.add(comm);
                                                 counter++;
                                                 if(counter == 10) break;
                                             }
