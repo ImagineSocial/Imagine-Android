@@ -16,4 +16,8 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="CustomTapDesign" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
 </resources>

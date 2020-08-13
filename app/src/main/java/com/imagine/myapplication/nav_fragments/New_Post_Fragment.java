@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -138,6 +140,27 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         tLayout.setClipToOutline(true);
         TableRow tRow = getView().findViewById(R.id.tableRow);
         tRow.setClipToOutline(true);
+
+        EditText editText = getView().findViewById(R.id.title_editText);
+        final TextView characterLimitTextView = getView().findViewById(R.id.titleCharacterLimit_textView);
+        final int titleCharacterLimit = getContext().getResources().getInteger(R.integer.titleMaximumCharacters);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int characterLeft = (titleCharacterLimit - s.length());
+                characterLimitTextView.setText(String.valueOf(characterLeft));
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         setThought();
     }

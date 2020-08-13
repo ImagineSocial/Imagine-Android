@@ -59,6 +59,7 @@
             android:fontFamily="@font/ibm_regular"
             android:gravity="start|top"
             android:inputType="textMultiLine"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/title_label"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -86,11 +87,12 @@
             android:layout_height="50dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
             android:ems="10"
             android:fontFamily="@font/ibm_regular"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:background="@android:color/transparent"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/title_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_label" />
@@ -190,6 +192,8 @@
             android:fontFamily="@font/ibm_regular"
             android:gravity="start|top"
             android:inputType="textMultiLine"
+            android:maxLength="@integer/titleMaximumCharacters"
+            android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="@+id/title_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_label" />
@@ -329,5 +333,18 @@
             app:layout_constraintEnd_toEndOf="@+id/linkedCommunity_imageView"
             app:layout_constraintStart_toStartOf="@+id/linkCommunity_button"
             app:layout_constraintTop_toBottomOf="@+id/linkedCommunity_imageView" />
+
+        <TextView
+            android:id="@+id/titleCharacterLimit_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/ibm_regular"
+            android:text="200"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/view5"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
