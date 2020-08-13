@@ -21,7 +21,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
-
 public class Community_Recent_Header extends Community_ViewHolder {
 
     public ArrayList<Community> recents = new ArrayList<>();

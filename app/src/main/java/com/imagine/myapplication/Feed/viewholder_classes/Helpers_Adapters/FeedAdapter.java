@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     private static final String TAG = "FeedAdapter";
-    public ArrayList<Post> postList = new ArrayList<>();
+    public ArrayList<Post> postList;
     public Context mContext;
     public HeaderViewHolder header;
 

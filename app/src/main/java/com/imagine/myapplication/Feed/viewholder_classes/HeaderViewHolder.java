@@ -1,6 +1,8 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
+import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,11 +15,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_ViewPager_Activity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +34,7 @@ import java.util.Map;
 public class HeaderViewHolder extends CustomViewHolder implements View.OnClickListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public View mItemView;
-    public List<Community> facts;
+    public static List<Community> facts;
     public boolean isInitialized;
 
     public HeaderViewHolder(@NonNull View itemView) {
@@ -34,29 +43,32 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
     }
 
     public void bind() {
-        if(isInitialized) return;
-        DocumentReference topTopicRef = db.collection("TopTopicData").document("TopTopicData");
+        if(facts != null && facts.size() == 3 ){
+            setFacts(HeaderViewHolder.facts);
+        }else{
+            DocumentReference topTopicRef = db.collection("TopTopicData").document("TopTopicData");
 
-        topTopicRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                try {
-                    Map<String, Object> docData = documentSnapshot.getData();
-                    String textOfTheWeek = (docData.get("textOfTheWeek") != null)
-                            ? (String) docData.get("textOfTheWeek")
-                            : (String) "";
-                    TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
-                    weekylTextView.setText(textOfTheWeek);
+            topTopicRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    try {
+                        Map<String, Object> docData = documentSnapshot.getData();
+                        String textOfTheWeek = (docData.get("textOfTheWeek") != null)
+                                ? (String) docData.get("textOfTheWeek")
+                                : (String) "";
+                        TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
+                        weekylTextView.setText(textOfTheWeek);
 
-                    List<String> linkedFactIDs = (docData.get("linkedFactIDs") != null)
-                            ? (List<String>) docData.get("linkedFactIDs")
-                            : (List<String>) null;
-                    getFacts(linkedFactIDs);
-                } catch (NullPointerException e) {
-                    System.out.println(documentSnapshot.getId() + "Got a problem with the topTopicData");
+                        List<String> linkedFactIDs = (docData.get("linkedFactIDs") != null)
+                                ? (List<String>) docData.get("linkedFactIDs")
+                                : (List<String>) null;
+                        getFacts(linkedFactIDs);
+                    } catch (NullPointerException e) {
+                        System.out.println(documentSnapshot.getId() + "Got a problem with the topTopicData");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void getFacts(List<String> linkedFactIDs) {
@@ -147,26 +159,75 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
 
         switch (v.getId()) {
             case R.id.topTopic_firstImageView:
+                addRecent(community1);
                 goToCommunity(community1);
                 break;
             case R.id.topTopic_secondImageView:
+                addRecent(community2);
                 goToCommunity(community2);
                 break;
             case R.id.topTopic_thirdImageView:
+                addRecent(community3);
                 goToCommunity(community3);
                 break;
             case R.id.topTopic_firstCommButton:
+                addRecent(community1);
                 goToCommunity(community1);
                 break;
             case R.id.topTopic_secondCommButton:
+                addRecent(community2);
                 goToCommunity(community2);
                 break;
             case R.id.topTopic_thirdCommButton:
+                addRecent(community3);
                 goToCommunity(community3);
                 break;
         }
     }
-    
+
+    public void addRecent(Community comm){
+        String recentString = "";
+        try{
+            FileInputStream inputStreamReader = mContext.openFileInput("recents.txt");
+            if(inputStreamReader != null){
+                InputStreamReader reader = new InputStreamReader(inputStreamReader);
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                String onjString = "";
+                StringBuilder stringBuilder = new StringBuilder();
+                while((onjString = bufferedReader.readLine()) != null){
+                    stringBuilder.append("\n").append(onjString);
+                }
+                inputStreamReader.close();
+                recentString = stringBuilder.toString();
+                Gson gson = new Gson();
+                Community[] recents = gson.fromJson(recentString,Community[].class);
+                ArrayList<Community> recentsList = new ArrayList<>();
+                int counter =0;
+                for(Community community : recents){
+
+                    if(!community.topicID.equals(comm.topicID)){
+                        recentsList.add(community);
+                        counter++;
+                        if(counter == 10) break;
+                    }
+                }
+
+                recentsList.add(comm);
+                String newRecents = gson.toJson(recentsList);
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
+                        .openFileOutput("recents.txt", Context.MODE_PRIVATE));
+                outputStreamWriter.write(newRecents);
+                outputStreamWriter.close();
+            }
+        }
+        catch(FileNotFoundException e){
+            Log.e("login activity", "File not found: " + e.toString());
+        }
+        catch(IOException e){
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+    }
+
 
 }
 

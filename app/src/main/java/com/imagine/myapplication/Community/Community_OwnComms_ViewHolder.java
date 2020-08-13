@@ -37,6 +37,7 @@ public class Community_OwnComms_ViewHolder extends Community_ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addToRecents(comm);
                 Intent intent = new Intent(itemView.getContext(),Community_ViewPager_Activity.class);
                 intent.putExtra("name", name);
                 intent.putExtra("description",description);
