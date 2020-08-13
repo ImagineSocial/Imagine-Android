@@ -40,10 +40,10 @@ public class CommunityPickActivity extends AppCompatActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch(position){
                     case 0:
-                        tab.setText("Topics");
+                        tab.setText("Communities");
                         return;
                     case 1:
-                        tab.setText("Facts");
+                        tab.setText("Diskussionen");
                         return;
                     case 2:
                         tab.setText("Deine Communitys");
