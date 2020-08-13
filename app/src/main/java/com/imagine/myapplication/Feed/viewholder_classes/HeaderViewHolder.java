@@ -35,6 +35,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public View mItemView;
     public static List<Community> facts;
+    public static String textOfTheWeek;
     public boolean isInitialized;
 
     public HeaderViewHolder(@NonNull View itemView) {
@@ -44,6 +45,8 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
 
     public void bind() {
         if(facts != null && facts.size() == 3 ){
+            TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
+            weekylTextView.setText(this.textOfTheWeek);
             setFacts(HeaderViewHolder.facts);
         }else{
             DocumentReference topTopicRef = db.collection("TopTopicData").document("TopTopicData");
@@ -53,7 +56,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     try {
                         Map<String, Object> docData = documentSnapshot.getData();
-                        String textOfTheWeek = (docData.get("textOfTheWeek") != null)
+                        HeaderViewHolder.textOfTheWeek = (docData.get("textOfTheWeek") != null)
                                 ? (String) docData.get("textOfTheWeek")
                                 : (String) "";
                         TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
@@ -105,7 +108,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
                         System.out.println(documentSnapshot.getId() + "Got a problem fetching a fact for the top topic Data");
                     }
                 }
-            });
+    });
         }
     }
 

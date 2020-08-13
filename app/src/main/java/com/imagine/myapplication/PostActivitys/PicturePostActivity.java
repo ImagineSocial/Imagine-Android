@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +38,7 @@ public class PicturePostActivity extends AppCompatActivity {
     ArrayList<Comment> comments;
     public PicturePost post;
     public Context mContext = this;
+    public float aspectRatio;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,9 +78,26 @@ public class PicturePostActivity extends AppCompatActivity {
         TextView description_textView = findViewById(R.id.description_tv);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
-        ImageView image_imageView = findViewById(R.id.picture_imageView);
-        image_imageView.setClipToOutline(true);
+        final ImageView image_imageView = findViewById(R.id.picture_imageView);
 
+        this.aspectRatio = (float)post.imageHeight/ (float)post.imageWidth;
+
+        image_imageView.setClipToOutline(true);
+        ViewTreeObserver viewTreeObserver = image_imageView.getViewTreeObserver();
+        if(viewTreeObserver.isAlive()){
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    image_imageView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    int width = image_imageView.getWidth();
+                    int height = image_imageView.getHeight();
+                    int newHeight =(int) (width*aspectRatio);
+                    System.out.println("!");
+                    image_imageView.getLayoutParams().height = newHeight;
+                    image_imageView.requestLayout();
+                }
+            });
+        }
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         description_textView.setText(post.description);
