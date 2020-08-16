@@ -67,12 +67,10 @@ public class Community_Adapter extends RecyclerView.Adapter<Community_ViewHolder
             case R.layout.community_fact:
                 view = inflater.inflate(R.layout.community_fact,parent,false);
                 Community_Fact_Viewholder community_fact_viewholder = new Community_Fact_Viewholder(view);
-
                 int spacing = 30;
                 ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
                 layoutParams.height = (int) ((parent.getWidth() / 2) - spacing);
                 view.setLayoutParams(layoutParams);
-
                 return community_fact_viewholder;
             case R.layout.community_footer:
                 view = inflater.inflate(R.layout.community_footer,parent,false);

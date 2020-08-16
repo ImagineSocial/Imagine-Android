@@ -8,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -16,7 +17,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
+import com.imagine.myapplication.Community.Community;
+import com.imagine.myapplication.Community.PostRef;
 import com.imagine.myapplication.FirebaseCallback;
+import com.imagine.myapplication.ItemCallback;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
@@ -39,6 +43,7 @@ public class Post_Helper {
     public DocumentSnapshot lastSnap;
     public ArrayList<Post> postList = new ArrayList<Post>();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public ArrayList<Object> items = new ArrayList<>();
     public String commID;
     public String userID;
     public int count;
@@ -57,31 +62,31 @@ public class Post_Helper {
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
                         switch((String)docSnap.get("type")){
                             case "thought":
-                                addThoughtPost(docSnap,false);
+                                addThoughtPost(docSnap,false,false);
                                 break;
                             case "youTubeVideo":
-                                addYouTubePost(docSnap,false);
+                                addYouTubePost(docSnap,false,false);
                                 break;
                             case "link":
-                                addLinkPost(docSnap,false);
+                                addLinkPost(docSnap,false,false);
                                 break;
                             case "GIF":
-                                addGIFPost(docSnap,false);
+                                addGIFPost(docSnap,false,false);
                                 break;
                             case "picture":
-                                addPicturePost(docSnap,false);
+                                addPicturePost(docSnap,false,false);
                                 break;
                             case "multiPicture":
-                                addMultiPicturePost(docSnap,false);
+                                addMultiPicturePost(docSnap,false,false);
                                 break;
                             case "translation":
-                                addTranslationPost(docSnap,false);
+                                addTranslationPost(docSnap,false,false);
                                 break;
                             case "repost":
-                                addRepostPost(docSnap,false);
+                                addRepostPost(docSnap,false,false);
                                 break;
                             default:
-                                addDefaulPost(docSnap,false);
+                                addDefaulPost(docSnap,false,false);
                                 break;
                         }
                     }
@@ -109,31 +114,31 @@ public class Post_Helper {
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
                         switch((String)docSnap.get("type")){
                             case "thought":
-                                addThoughtPost(docSnap,false);
+                                addThoughtPost(docSnap,false,false);
                                 break;
                             case "youTubeVideo":
-                                addYouTubePost(docSnap,false);
+                                addYouTubePost(docSnap,false,false);
                                 break;
                             case "link":
-                                addLinkPost(docSnap,false);
+                                addLinkPost(docSnap,false,false);
                                 break;
                             case "GIF":
-                                addGIFPost(docSnap,false);
+                                addGIFPost(docSnap,false,false);
                                 break;
                             case "picture":
-                                addPicturePost(docSnap,false);
+                                addPicturePost(docSnap,false,false);
                                 break;
                             case "multiPicture":
-                                addMultiPicturePost(docSnap,false);
+                                addMultiPicturePost(docSnap,false,false);
                                 break;
                             case "translation":
-                                addTranslationPost(docSnap,false);
+                                addTranslationPost(docSnap,false,false);
                                 break;
                             case "repost":
-                                addRepostPost(docSnap,false);
+                                addRepostPost(docSnap,false,false);
                                 break;
                             default:
-                                addDefaulPost(docSnap,false);
+                                addDefaulPost(docSnap,false,false);
                                 break;
                         }
                     }
@@ -184,31 +189,31 @@ public class Post_Helper {
                                 System.out.println(id+"   "+type);
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
-                                        addThoughtPost(documentSnapshot,isTopicPost);
+                                        addThoughtPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "youTubeVideo":
-                                        addYouTubePost(documentSnapshot,isTopicPost);
+                                        addYouTubePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "link":
-                                        addLinkPost(documentSnapshot,isTopicPost);
+                                        addLinkPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "GIF":
-                                        addGIFPost(documentSnapshot,isTopicPost);
+                                        addGIFPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "picture":
-                                        addPicturePost(documentSnapshot,isTopicPost);
+                                        addPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "multiPicture":
-                                        addMultiPicturePost(documentSnapshot,isTopicPost);
+                                        addMultiPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "translation":
-                                        addTranslationPost(documentSnapshot,isTopicPost);
+                                        addTranslationPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "repost":
-                                        addRepostPost(documentSnapshot,isTopicPost);
+                                        addRepostPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     default:
-                                        addDefaulPost(documentSnapshot,isTopicPost);
+                                        addDefaulPost(documentSnapshot,isTopicPost,false);
                                         break;
                                 }
                                 count++;
@@ -268,31 +273,31 @@ public class Post_Helper {
                                 System.out.println(id+"   "+type);
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
-                                        addThoughtPost(documentSnapshot,isTopicPost);
+                                        addThoughtPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "youTubeVideo":
-                                        addYouTubePost(documentSnapshot,isTopicPost);
+                                        addYouTubePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "link":
-                                        addLinkPost(documentSnapshot,isTopicPost);
+                                        addLinkPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "GIF":
-                                        addGIFPost(documentSnapshot,isTopicPost);
+                                        addGIFPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "picture":
-                                        addPicturePost(documentSnapshot,isTopicPost);
+                                        addPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "multiPicture":
-                                        addMultiPicturePost(documentSnapshot,isTopicPost);
+                                        addMultiPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "translation":
-                                        addTranslationPost(documentSnapshot,isTopicPost);
+                                        addTranslationPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "repost":
-                                        addRepostPost(documentSnapshot,isTopicPost);
+                                        addRepostPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     default:
-                                        addDefaulPost(documentSnapshot,isTopicPost);
+                                        addDefaulPost(documentSnapshot,isTopicPost,false);
                                         break;
                                 }
                                 count++;
@@ -352,31 +357,31 @@ public class Post_Helper {
                                 System.out.println(id+"   "+type);
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
-                                        addThoughtPost(documentSnapshot,isTopicPost);
+                                        addThoughtPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "youTubeVideo":
-                                        addYouTubePost(documentSnapshot,isTopicPost);
+                                        addYouTubePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "link":
-                                        addLinkPost(documentSnapshot,isTopicPost);
+                                        addLinkPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "GIF":
-                                        addGIFPost(documentSnapshot,isTopicPost);
+                                        addGIFPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "picture":
-                                        addPicturePost(documentSnapshot,isTopicPost);
+                                        addPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "multiPicture":
-                                        addMultiPicturePost(documentSnapshot,isTopicPost);
+                                        addMultiPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "translation":
-                                        addTranslationPost(documentSnapshot,isTopicPost);
+                                        addTranslationPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "repost":
-                                        addRepostPost(documentSnapshot,isTopicPost);
+                                        addRepostPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     default:
-                                        addDefaulPost(documentSnapshot,isTopicPost);
+                                        addDefaulPost(documentSnapshot,isTopicPost,false);
                                         break;
                                 }
                                 count++;
@@ -440,31 +445,31 @@ public class Post_Helper {
                                 System.out.println(id+"   "+type);
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
-                                        addThoughtPost(documentSnapshot,isTopicPost);
+                                        addThoughtPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "youTubeVideo":
-                                        addYouTubePost(documentSnapshot,isTopicPost);
+                                        addYouTubePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "link":
-                                        addLinkPost(documentSnapshot,isTopicPost);
+                                        addLinkPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "GIF":
-                                        addGIFPost(documentSnapshot,isTopicPost);
+                                        addGIFPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "picture":
-                                        addPicturePost(documentSnapshot,isTopicPost);
+                                        addPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "multiPicture":
-                                        addMultiPicturePost(documentSnapshot,isTopicPost);
+                                        addMultiPicturePost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "translation":
-                                        addTranslationPost(documentSnapshot,isTopicPost);
+                                        addTranslationPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     case "repost":
-                                        addRepostPost(documentSnapshot,isTopicPost);
+                                        addRepostPost(documentSnapshot,isTopicPost,false);
                                         break;
                                     default:
-                                        addDefaulPost(documentSnapshot,isTopicPost);
+                                        addDefaulPost(documentSnapshot,isTopicPost,false);
                                         break;
                                 }
                                 count++;
@@ -553,16 +558,16 @@ public class Post_Helper {
                        String type = docSnap.getString("type");
                        switch(type){
                            case "picture":
-                               addPicturePost(docSnap,true);
+                               addPicturePost(docSnap,true,false);
                                break;
                            case "multiPicture":
-                               addMultiPicturePost(docSnap,true);
+                               addMultiPicturePost(docSnap,true,false);
                                break;
                            case "GIF":
-                               addGIFPost(docSnap,true);
+                               addGIFPost(docSnap,true,false);
                                break;
                            default:
-                               addDefaulPost(docSnap,true);
+                               addDefaulPost(docSnap,true,false);
                                break;
                        }
                     }
@@ -574,8 +579,152 @@ public class Post_Helper {
         });
     }
 
+    public void fetchAddonItems(ArrayList<PostRef> postRefs, final ItemCallback callback){
+        for(PostRef ref : postRefs){
+            final int size = postRefs.size();
+            final int[] count = {0};
+            switch(ref.type){
+                case "fact":
+                    DocumentReference communityRef = db.collection("Facts").document(ref.postID);
+                    communityRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()){
+                                DocumentSnapshot docSnap = task.getResult();
+                                addCommunityToItemList(docSnap);
+                                if(items.size() == size){
+                                    callback.onCallback(items);
+                                };
+                            } else if(task.isCanceled()){
+                                System.out.println("!");
+                            }
+                        }
+                    });
+                    break;
+                case "post":
+                    DocumentReference postsRef = db.collection("Posts").document(ref.postID);
+                    postsRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()){
+                                DocumentSnapshot docSnap = task.getResult();
+                                try{
+                                    String type = docSnap.getString("type");
+                                    switch(type){
+                                        case "thought":
+                                            addThoughtPost(docSnap,true,true);
+                                            break;
+                                        case "youTubeVideo":
+                                            addYouTubePost(docSnap,true,true);
+                                            break;
+                                        case "link":
+                                            addLinkPost(docSnap,true,true);
+                                            break;
+                                        case "GIF":
+                                            addGIFPost(docSnap,true,true);
+                                            break;
+                                        case "picture":
+                                            addPicturePost(docSnap,true,true);
+                                            break;
+                                        case "multiPicture":
+                                            addMultiPicturePost(docSnap,true,true);
+                                            break;
+                                        case "translation":
+                                            addTranslationPost(docSnap,true,true);
+                                            break;
+                                        case "repost":
+                                            addRepostPost(docSnap,true,true);
+                                            break;
+                                        default:
+                                            addDefaulPost(docSnap,true,true);
+                                            break;
+                                    }
+                                }catch(Exception e){
+                                    addDefaulPost(docSnap,true,true);
+                                }
 
-    public void addThoughtPost(DocumentSnapshot docSnap,boolean isTopicPost){
+                                if(items.size() == size){
+                                    callback.onCallback(items);
+                                }
+                            }else if(task.isCanceled()){
+                                System.out.println("Fetch failed!  618!");
+                                count[0]++;
+                                if(count[0] == size){
+                                    callback.onCallback(items);
+                                }
+                            }
+                        }
+                    });
+                    break;
+                case "topicPost":
+                    DocumentReference topicPostsRef = db.collection("TopicPosts").document(ref.postID);
+                    topicPostsRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if(task.isSuccessful()){
+                                DocumentSnapshot docSnap = task.getResult();
+                                try{
+                                    String type = docSnap.getString("type");
+                                    switch(type){
+                                        case "thought":
+                                            addThoughtPost(docSnap,true,true);
+                                            break;
+                                        case "youTubeVideo":
+                                            addYouTubePost(docSnap,true,true);
+                                            break;
+                                        case "link":
+                                            addLinkPost(docSnap,true,true);
+                                            break;
+                                        case "GIF":
+                                            addGIFPost(docSnap,true,true);
+                                            break;
+                                        case "picture":
+                                            addPicturePost(docSnap,true,true);
+                                            break;
+                                        case "multiPicture":
+                                            addMultiPicturePost(docSnap,true,true);
+                                            break;
+                                        case "translation":
+                                            addTranslationPost(docSnap,true,true);
+                                            break;
+                                        case "repost":
+                                            addRepostPost(docSnap,true,true);
+                                            break;
+                                        default:
+                                            addDefaulPost(docSnap,true,true);
+                                            break;
+                                    }
+                                }catch(Exception e){
+                                    addDefaulPost(docSnap,true,true);
+                                }
+                                if(items.size() == size){
+                                    callback.onCallback(items);
+                                }
+                            }else if(task.isCanceled()){
+                                System.out.println("Fetch failed!   640");
+                            }
+                        }
+                    });
+                    break;
+            }
+        }
+    }
+
+    public void addCommunityToItemList(DocumentSnapshot docSnap){
+        // creates a Community from the docSNap and adds it to the commList
+        String name = docSnap.getString("name");
+        String topicID = docSnap.getId();
+        String imageURL = docSnap.getString("imageURL");
+        String description = docSnap.getString("description");
+        String displayOption = docSnap.getString("displayOption");
+        Community comm = new Community(name,imageURL,topicID,description);
+        comm.displayOption = displayOption;
+        comm.popularity = (long) docSnap.getLong("popularity");
+        items.add(comm);
+    }
+
+
+    public void addThoughtPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // creates a ThoughtPost from a docSNap and adds it to the postslist
         try{
             // Attribute die alle haben
@@ -607,13 +756,21 @@ public class Post_Helper {
             thoughtPost.setLinkedFactId((String) docSnap.get("linkedFactID"));
             thoughtPost.isTopicPost = isTopicPost;
             // Zur Liste hinzufügen
-            postList.add(thoughtPost);
+            if(isAddonItem){
+                items.add(thoughtPost);
+            }else{
+                postList.add(thoughtPost);
+            }
         }catch(Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
 
-    public void addYouTubePost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addYouTubePost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // creates a youTubePost from s docSnap and adds it to the postList
         try{
             // Attribute die alle haben
@@ -646,13 +803,21 @@ public class Post_Helper {
             youTubePost.setLinkedFactId((String) docSnap.get("linkedFactID"));
             youTubePost.isTopicPost = isTopicPost;
             // Zur Liste hinzufügen
-            postList.add(youTubePost);
+            if(isAddonItem){
+                items.add(youTubePost);
+            }else{
+                postList.add(youTubePost);
+            }
         }catch(Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
 
-    public void addLinkPost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addLinkPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // creates a LinkPost from a docSNap and adds it to the postList
         try{
             // Attribute die alle haben
@@ -685,13 +850,21 @@ public class Post_Helper {
             linkPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             linkPost.isTopicPost = isTopicPost;
             //Zur Liste hinzufügen
-            postList.add(linkPost);
+            if(isAddonItem){
+                items.add(linkPost);
+            }else{
+                postList.add(linkPost);
+            }
         } catch (Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
 
-    public void addGIFPost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addGIFPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // creates a GIFPost from a docSnap and adds it to the post list
         try{
             // Attribute die alle haben
@@ -724,13 +897,21 @@ public class Post_Helper {
             GIFPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             GIFPost.isTopicPost = isTopicPost;
             //Zur Liste hinzufügen
-            postList.add(GIFPost);
+            if(isAddonItem){
+                postList.add(GIFPost);
+            }else{
+                items.add(GIFPost);
+            }
         }catch (Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
 
-    public void addPicturePost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addPicturePost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // creates a PicturePost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
@@ -768,12 +949,20 @@ public class Post_Helper {
             picturePost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             picturePost.isTopicPost = isTopicPost;
             // Zur Liste hinzufügen
-            postList.add(picturePost);
+            if(isAddonItem){
+                items.add(picturePost);
+            }else{
+                postList.add(picturePost);
+            }
         }catch (Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
-    public void addMultiPicturePost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addMultiPicturePost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // creates a muliPicturePost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
@@ -813,13 +1002,20 @@ public class Post_Helper {
             mPicturePost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             mPicturePost.isTopicPost = isTopicPost;
             //Zur Liste hinzufügen
-            postList.add(mPicturePost);
-
+            if(isAddonItem){
+                items.add(mPicturePost);
+            }else{
+                postList.add(mPicturePost);
+            }
         }catch(Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
-    public void addTranslationPost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addTranslationPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         //creates a translationpost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
@@ -843,7 +1039,6 @@ public class Post_Helper {
                     translation_report,dateString,translation_createTime,translation_originalPoster,translation_thanksCount,
                     translation_wowCount,translation_haCount,translation_niceCount,translation_type,
                     translation_OGpostDocumentID);
-            postList.add(translationPost);
             // Optionale Attribute setzen!
             ArrayList<String> translation_tagsArray = (ArrayList<String>) docSnap.get("tags");
             if(translation_tagsArray!=null){
@@ -852,13 +1047,22 @@ public class Post_Helper {
                 translationPost.setTags(mpicture_tags);
             }
             translationPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
+            if(isAddonItem){
+                items.add(translationPost);
+            }else{
+                postList.add(translationPost);
+            }
             translationPost.isTopicPost = isTopicPost;
         } catch(Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
 
-    public void addRepostPost(DocumentSnapshot docSnap,boolean isTopicPost){
+    public void addRepostPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
         // create a Repostpost from a docSnap and adds it to the postList
         try{
             // Attribute die alle haben
@@ -882,7 +1086,11 @@ public class Post_Helper {
                     repost_report,dateString,repost_createTime,repost_originalPoster,repost_thanksCount,
                     repost_wowCount,repost_haCount,repost_niceCount,repost_type,
                     repost_OGpostDocumentID);
-            postList.add(repostPost);
+            if(isAddonItem){
+                items.add(repostPost);
+            }else{
+                postList.add(repostPost);
+            }
             // Optinale Attribute setzen!
             ArrayList<String> repost_tagsArray = (ArrayList<String>) docSnap.get("tags");
             if(repost_tagsArray!=null){
@@ -893,13 +1101,17 @@ public class Post_Helper {
             repostPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             repostPost.isTopicPost = isTopicPost;
         } catch(Exception e){
-            addDefaulPost(docSnap,isTopicPost);
+            if(isAddonItem){
+                addDefaulPost(docSnap,isTopicPost,true);
+            }else{
+                addDefaulPost(docSnap,isTopicPost,false);
+            }
         }
     }
 
-    public void addDefaulPost(DocumentSnapshot docSnap,boolean isTopicPost){
-        // create a DefaultPost from a docSnap when the type of the post isnt known
-        // or some required fileds are missing within the post and adds it to the postList
+    public void addDefaulPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem){
+        // Create a DefaultPost from a docSnap when the type of the post isnt known
+        // Or some required files are missing within the post and adds it to the postList
         // Attribute die alle haben
         String default_docID = docSnap.getId();
         String default_title = "Default";
@@ -919,7 +1131,11 @@ public class Post_Helper {
                 default_report,dateString,default_createTime,default_originalPoster,default_thanksCount,
                 default_wowCount,default_haCount,default_niceCount,default_type);
         // Zur Liste hinzufügen
-        postList.add(defaultPost);
+        if(isAddonItem){
+            items.add(defaultPost);
+        }else{
+            postList.add(defaultPost);
+        }
     }
 
     public static String convertLongDateToAgoString (Date createdDate, Long timeNow){

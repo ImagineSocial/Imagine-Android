@@ -24,14 +24,22 @@ public class TestCollectionAdapter extends FragmentStateAdapter {
             } else if (position == 1){
                 CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
                 return fragmentTwo;
-            }else{
+            } else if(position == 2) {
+                CommunityAddonsFragment fragmentThree = new CommunityAddonsFragment(args);
+                return fragmentThree;
+            } else{
                 return null;
             }
         } else {
             if(position == 0) {
                 CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
                 return fragmentTwo;
-            }else{
+            }   else if ( position == 1){
+                CommunityAddonsFragment fragment = new CommunityAddonsFragment(args);
+                return fragment;
+            }
+
+            else{
                 return null;
             }
         }
@@ -40,9 +48,9 @@ public class TestCollectionAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         if(args.get("displayOption").equals("fact")){
-            return 2;
+            return 3;
         } else {
-            return 1;
+            return 2;
         }
 
     }

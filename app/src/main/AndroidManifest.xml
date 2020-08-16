@@ -104,6 +104,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".PostActivitys.TestZoomImage"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

@@ -79,6 +79,14 @@ public class PicturePostActivity extends AppCompatActivity {
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         final ImageView image_imageView = findViewById(R.id.picture_imageView);
+        image_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext,TestZoomImage.class);
+                intent.putExtra("imageURL", post.imageURL);
+                mContext.startActivity(intent);
+            }
+        });
 
         this.aspectRatio = (float)post.imageHeight/ (float)post.imageWidth;
 
@@ -92,7 +100,6 @@ public class PicturePostActivity extends AppCompatActivity {
                     int width = image_imageView.getWidth();
                     int height = image_imageView.getHeight();
                     int newHeight =(int) (width*aspectRatio);
-                    System.out.println("!");
                     image_imageView.getLayoutParams().height = newHeight;
                     image_imageView.requestLayout();
                 }
