@@ -21,6 +21,7 @@ import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.PostRef;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.ItemCallback;
+import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
@@ -36,6 +37,7 @@ import com.imagine.myapplication.post_classes.YouTubePost;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class Post_Helper {
 
@@ -707,6 +709,46 @@ public class Post_Helper {
                     });
                     break;
             }
+        }
+    }
+
+    public void getUser(final String userID,final UserCallback callback){
+        // fetches the user again if it hasnt been set yet
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if(!userID .equals("") && userID !=null){
+            DocumentReference userRef = db.collection("Users").document(userID);
+            System.out.println(userID+" "+TAG);
+            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    try {
+                        Map<String, Object> docData = documentSnapshot.getData();
+                        String userName = (docData.get("name") != null)      // Condition
+                                ? (String) docData.get("name")              // IF-True
+                                : (String) "";                              // ELSE
+                        String userSurname = (docData.get("surname") != null)
+                                ? (String) docData.get("surname")
+                                : (String) "";
+                        String userImageURL = (docData.get("profilePictureURL") != null)
+                                ? (String) docData.get("profilePictureURL")
+                                : (String) "";
+                        String userUserUID = userID;
+                        String userStatusQuote = (docData.get("statusText") != null)
+                                ? (String) docData.get("statusText")
+                                : (String) "";
+                        List<String> userBlocked = (docData.get("blocked") != null)
+                                ? (List<String>) docData.get("blocked")
+                                : (List<String>) null;
+                        User user = new User(userName, userSurname, userUserUID);
+                        user.setImageURL(userImageURL);
+                        user.setStatusQuote(userStatusQuote);
+                        user.setBlocked(userBlocked);
+                        callback.onCallback(user);
+                    }catch(NullPointerException e){
+                        System.out.println(documentSnapshot.getId()+" "+TAG);
+                    }
+                }
+            });
         }
     }
 

@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
 import com.imagine.myapplication.PostActivitys.TranslationPostActivity;
 import com.imagine.myapplication.R;
@@ -30,6 +31,7 @@ public class TranslationViewHolder extends CustomViewHolder{
     public TranslationPost post;
     public Context mContext;
     public User userObj;
+    public Post_Helper helper = new Post_Helper();
 
     public TranslationViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -54,7 +56,7 @@ public class TranslationViewHolder extends CustomViewHolder{
             Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);
         }else{
-            getUser(post.originalPoster, new UserCallback() {
+            helper.getUser(post.originalPoster, new UserCallback() {
                 @Override
                 public void onCallback(User user) {
                     userObj = user;

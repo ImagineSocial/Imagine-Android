@@ -26,14 +26,40 @@ public class Community_Addons_Adapter extends RecyclerView.Adapter<Community_Add
     @Override
     public Community_Addons_ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.community_addons_viewholder,parent,false);
-        Community_Addons_ViewHolder viewHolder = new Community_Addons_ViewHolder(view,mContext);
-        return viewHolder;
+        View view;
+        switch(viewType){
+            case R.layout.community_addons_viewholder:
+                view = inflater.inflate(R.layout.community_addons_viewholder,parent,false);
+                Community_Addons_ViewHolder viewHolder = new Community_Addons_ViewHolder(view,mContext);
+                return viewHolder;
+            case R.layout.community_addons_community_viewholder:
+                view = inflater.inflate(R.layout.community_addons_community_viewholder,parent,false);
+                Community_Addons_Community_ViewHolder commHolder = new Community_Addons_Community_ViewHolder(view,mContext);
+                return commHolder;
+            default:
+                view = inflater.inflate(R.layout.community_addons_viewholder,parent,false);
+                Community_Addons_ViewHolder viewHolderDefault = new Community_Addons_ViewHolder(view,mContext);
+                return viewHolderDefault;
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull Community_Addons_ViewHolder holder, int position) {
-        holder.bind(addons.get(position));
+        if(holder instanceof Community_Addons_Community_ViewHolder){
+            ((Community_Addons_Community_ViewHolder)holder).bind(addons.get(position));
+        }else{
+            holder.bind(addons.get(position));
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Addon addon = addons.get(position);
+        if(addon.linkedFactID.equals("")){
+            return R.layout.community_addons_viewholder;
+        }else{
+            return R.layout.community_addons_community_viewholder;
+        }
     }
 
     @Override

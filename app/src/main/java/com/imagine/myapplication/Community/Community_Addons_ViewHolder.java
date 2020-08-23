@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,8 +16,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
+import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.ItemCallback;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +31,9 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
     public Context mContext;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public ArrayList<PostRef> refs;
-    public ArrayList<Object> items;
+    public ArrayList<Object> communityPosts = new ArrayList<>();
     public Post_Helper helper = new Post_Helper();
+    public Community comm;
 
     public Community_Addons_ViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -92,9 +96,9 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void initRecyclerView(){
-        Community_Items_Adapter adapter = new Community_Items_Adapter(addon.items,itemView.getContext());
+    public void initRecyclerView() {
+        Community_Items_Adapter adapter = new Community_Items_Adapter(addon.items, itemView.getContext());
         this.recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
     }
 }

@@ -10,21 +10,31 @@
     >
     <TextView
         android:id="@+id/community_addon_title"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/community_addon_community_image"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/community_addon_description"
-        app:layout_constraintTop_toBottomOf="@+id/community_addon_title"
+        app:layout_constraintBottom_toBottomOf="@+id/community_addon_community_image"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/community_addon_community_image"
+        app:layout_constraintTop_toTopOf="parent"
+        android:adjustViewBounds="true"
+        android:background="@drawable/corner_radius_three"
+        android:scaleType="centerCrop"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/community_addon_recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/community_addon_description"
+        app:layout_constraintTop_toBottomOf="@+id/community_addon_community_image"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="10dp"
         android:layout_width="match_parent"
