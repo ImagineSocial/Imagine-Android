@@ -506,6 +506,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         String pathString = docRef.getId()+".png";
         final StorageReference pictureRef = storeRef.child("postPictures").child(pathString);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int size = image_inBitmap.getByteCount();
+        System.out.println("!");
         image_inBitmap.compress(Bitmap.CompressFormat.JPEG,10,baos);
         byte [] data = baos.toByteArray();
         UploadTask uploadTask = pictureRef.putBytes(data);
