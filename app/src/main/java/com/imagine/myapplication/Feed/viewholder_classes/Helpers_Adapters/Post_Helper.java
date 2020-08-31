@@ -940,9 +940,9 @@ public class Post_Helper {
             GIFPost.isTopicPost = isTopicPost;
             //Zur Liste hinzufügen
             if(isAddonItem){
-                postList.add(GIFPost);
-            }else{
                 items.add(GIFPost);
+            }else{
+                postList.add(GIFPost);
             }
         }catch (Exception e){
             if(isAddonItem){

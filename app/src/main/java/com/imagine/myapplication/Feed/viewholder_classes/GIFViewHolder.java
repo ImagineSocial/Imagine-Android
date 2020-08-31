@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -38,6 +39,8 @@ public class GIFViewHolder extends CustomViewHolder {
     public Context mContext;
     public User userObj;
     public Post_Helper helper = new Post_Helper();
+    public int frameWidth;
+    public int frameHeight;
 
     public GIFViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -76,23 +79,33 @@ public class GIFViewHolder extends CustomViewHolder {
         ConstraintLayout videoFrame = itemView.findViewById(R.id.video_frame);
         videoFrame.setClipToOutline(true);
         //Adjust the videoView to show the right ratio
+
+        ViewTreeObserver viewTreeObserver = videoView.getViewTreeObserver();
+        if(viewTreeObserver.isAlive()){
+            viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    videoView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    frameWidth = videoView.getWidth();
+                    frameHeight = videoView.getHeight();
+                }
+            });
+        }
+
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
+
                 //Get your video's width and height
                 int videoWidth = mp.getVideoWidth();
                 int videoHeight = mp.getVideoHeight();
                 //Get VideoView's current width and height
-                int videoViewWidth = videoView.getWidth();
-                int videoViewHeight = videoView.getHeight();
-                float xScale = (float) videoViewWidth / videoWidth;
-                float yScale = (float) videoViewHeight / videoHeight;
+                float scale = (float) frameWidth / videoWidth;
                 //For Center Crop use the Math.max to calculate the scale
                 //float scale = Math.max(xScale, yScale);
                 //For Center Inside use the Math.min scale.
                 //I prefer Center Inside so I am using Math.min
-                float scale = Math.max(xScale, yScale);
                 float scaledWidth = scale * videoWidth;
                 float scaledHeight = scale * videoHeight;
                 //Set the new size for the VideoView based on the dimensions of the video

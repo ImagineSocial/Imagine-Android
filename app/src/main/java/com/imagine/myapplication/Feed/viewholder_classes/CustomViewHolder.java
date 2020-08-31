@@ -18,9 +18,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_Activity;
 import com.imagine.myapplication.Community.Community_ViewPager_Activity;
+import com.imagine.myapplication.LinkedCommunityCallback;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.UserCallback;
@@ -43,6 +45,8 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "CustomViewHolder";
     public View mItemView;
     public Context mContext;
+    public Communities_Helper helper = new Communities_Helper();
+    public Community comm;
 
     public CustomViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -127,7 +131,13 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
 
     public void setLinkedFact(final String linkedTopicID){
         // sets the linkedfactID and fetches communitydata to display
-        final ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
+        helper.fetchLinkedCommunity(linkedTopicID, new LinkedCommunityCallback() {
+            @Override
+            public void onCallback(Community comm) {
+                setUpLinkedCommunity(comm);
+            }
+        });
+        /*
         if (linkedTopicID != "" && linkedTopicID != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference userRef = db.collection("Facts").document(linkedTopicID);
@@ -213,7 +223,67 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
             });
         } else {
             linkedTopicImageView.setImageBitmap(null);
+        }*/
+    }
+
+    public void setUpLinkedCommunity(final Community comm){
+        final ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
+        if (comm.imageURL != "") {
+            Glide.with(itemView).load(comm.imageURL).into(linkedTopicImageView);
+        } else {
+            Glide.with(itemView).load(R.drawable.fact_stamp).into(linkedTopicImageView);
         }
+        linkedTopicImageView.setClipToOutline(true);
+        linkedTopicImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String recentString = "";
+                try{
+                    FileInputStream inputStreamReader = mContext.openFileInput("recents.txt");
+                    if(inputStreamReader != null){
+                        InputStreamReader reader = new InputStreamReader(inputStreamReader);
+                        BufferedReader bufferedReader = new BufferedReader(reader);
+                        String onjString = "";
+                        StringBuilder stringBuilder = new StringBuilder();
+                        while((onjString = bufferedReader.readLine()) != null){
+                            stringBuilder.append("\n").append(onjString);
+                        }
+                        inputStreamReader.close();
+                        recentString = stringBuilder.toString();
+                        Gson gson = new Gson();
+                        Community[] recents = gson.fromJson(recentString,Community[].class);
+                        ArrayList<Community> recentsList = new ArrayList<>();
+                        int counter = 0;
+                        for(Community comm : recents){
+                            if(!comm.topicID.equals(comm.topicID)){
+                                recentsList.add(comm);
+                                counter++;
+                                if(counter == 10) break;
+                            }
+                        }
+                        recentsList.add(comm);
+                        String newRecents = gson.toJson(recentsList);
+                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
+                                .openFileOutput("recents.txt", Context.MODE_PRIVATE));
+                        outputStreamWriter.write(newRecents);
+                        outputStreamWriter.close();
+                    }
+                }
+                catch(FileNotFoundException e){
+                    Log.e("login activity", "File not found: " + e.toString());
+                }
+                catch(IOException e){
+                    Log.e("login activity", "Can not read file: " + e.toString());
+                }
+                Intent intent = new Intent(mContext, Community_ViewPager_Activity.class);
+                intent.putExtra("name", comm.name);
+                intent.putExtra("description",comm.description);
+                intent.putExtra("imageURL", comm.imageURL);
+                intent.putExtra("commID", comm.topicID);
+                intent.putExtra("displayOption",comm.displayOption);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     public void removePost(Post post){

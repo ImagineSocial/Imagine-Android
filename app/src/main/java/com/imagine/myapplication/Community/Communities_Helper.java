@@ -12,6 +12,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imagine.myapplication.ArgumentsCallback;
 import com.imagine.myapplication.CommunityCallback;
+import com.imagine.myapplication.LinkedCommunityCallback;
 
 import org.w3c.dom.Document;
 
@@ -21,11 +22,12 @@ import java.util.Map;
 
 public class Communities_Helper {
     private static final String TAG = "Communities_Helper";
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    ArrayList<Community> topicsList = new ArrayList<>();
-    ArrayList<Community> factsList = new ArrayList<>();
-    DocumentSnapshot lastTopic = null;
-    DocumentSnapshot lastFact = null;
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static ArrayList<Community> commCache = new ArrayList<>();
+    public ArrayList<Community> topicsList = new ArrayList<>();
+    public ArrayList<Community> factsList = new ArrayList<>();
+    public DocumentSnapshot lastTopic = null;
+    public DocumentSnapshot lastFact = null;
 
     public void getCommunities(final CommunityCallback callback, String userID){
         final ArrayList<Community> topics = new ArrayList<>();        // Topic-Communities Array
@@ -198,6 +200,52 @@ public class Communities_Helper {
 
     }
 
+    public void fetchLinkedCommunity(final String linkedCommID, final LinkedCommunityCallback callback){
+        if(linkedCommID != null && !linkedCommID.equals("")){
+            Community comm = getCommFromCache(linkedCommID);
+            if(comm == null){
+                DocumentReference commRef = db.collection("Facts").document(linkedCommID);
+                commRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Map<String, Object> docData = documentSnapshot.getData();
+                        final String communityName = (docData.get("name") != null)      // Condition
+                                ? (String) docData.get("name")              // IF-True
+                                : (String) "";                              // ELSE
+                        final String communityImageURL = (docData.get("imageURL") != null)
+                                ? (String) docData.get("imageURL")
+                                : (String) "";
+                        final String communityID = linkedCommID;
+                        final String description = (docData.get("description") != null)
+                                ? (String) docData.get("description")
+                                : (String) "";
+                        final String displayOption =(String) docData.get("displayOption");
+                        Community comm = new Community(communityName,communityImageURL,communityID,description);
+                        comm.displayOption = displayOption;
+                        callback.onCallback(comm);
+                        if(commCache.size() <= 20){
+                            commCache.add(comm);
+                        }else{
+                            commCache.remove(19);
+                            commCache.add(comm);
+                        }
+                    }
+                });
+            }
+        }else{
+            return;
+        }
+    }
+
+    public Community getCommFromCache(String commID){
+        for(Community comm : commCache){
+            if(comm.topicID.equals(commID)){
+                return comm;
+            }
+        }
+        return null;
+    }
+
     public void getMoreFacts(final CommunityCallback callback){
         // fetches more communities from the "Facts" collection when the
         // onScrollListener is triggered
@@ -256,6 +304,8 @@ public class Communities_Helper {
             }
         });
     }
+
+
 
     public void getFacts(final CommunityCallback callback){
         // fetches  communities from the "Facts" collection when the
