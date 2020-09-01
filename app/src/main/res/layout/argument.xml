@@ -11,7 +11,7 @@
     android:background="@drawable/button_border">
 
     <View
-        android:id="@+id/background_view"
+        android:id="@+id/comm_background_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="1dp"

@@ -131,12 +131,12 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
 
     public void setLinkedFact(final String linkedTopicID){
         // sets the linkedfactID and fetches communitydata to display
-        helper.fetchLinkedCommunity(linkedTopicID, new LinkedCommunityCallback() {
-            @Override
-            public void onCallback(Community comm) {
-                setUpLinkedCommunity(comm);
-            }
-        });
+//        helper.fetchLinkedCommunity(linkedTopicID, new LinkedCommunityCallback() {
+//            @Override
+//            public void onCallback(Community comm) {
+//                setUpLinkedCommunity(comm);
+//            }
+//        });
         /*
         if (linkedTopicID != "" && linkedTopicID != null) {
             FirebaseFirestore db = FirebaseFirestore.getInstance();

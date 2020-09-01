@@ -2,6 +2,7 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ public class GIFViewHolder extends CustomViewHolder {
     public Post_Helper helper = new Post_Helper();
     public int frameWidth;
     public int frameHeight;
+    private MediaPlayer mediaPlayer;
 
     public GIFViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -96,6 +98,7 @@ public class GIFViewHolder extends CustomViewHolder {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 mp.setLooping(true);
+                mp.setVolume(0f,0f);
 
                 //Get your video's width and height
                 int videoWidth = mp.getVideoWidth();

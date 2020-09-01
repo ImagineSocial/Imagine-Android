@@ -17,7 +17,7 @@
         tools:srcCompat="@drawable/default_user" />
 
     <View
-        android:id="@+id/background_view"
+        android:id="@+id/comm_background_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
@@ -40,8 +40,8 @@
         android:textColor="@android:color/black"
         android:textSize="11sp"
         app:layout_constraintEnd_toStartOf="@+id/createDate_textView"
-        app:layout_constraintStart_toStartOf="@+id/background_view"
-        app:layout_constraintTop_toTopOf="@+id/background_view" />
+        app:layout_constraintStart_toStartOf="@+id/comm_background_view"
+        app:layout_constraintTop_toTopOf="@+id/comm_background_view" />
 
     <TextView
         android:id="@+id/createDate_textView"
@@ -51,7 +51,7 @@
         android:fontFamily="@font/ibm_light"
         android:textSize="9sp"
         app:layout_constraintBottom_toBottomOf="@+id/name_textView"
-        app:layout_constraintEnd_toEndOf="@+id/background_view"
+        app:layout_constraintEnd_toEndOf="@+id/comm_background_view"
         app:layout_constraintStart_toEndOf="@+id/name_textView"
         app:layout_constraintTop_toTopOf="@+id/name_textView" />
 
@@ -65,9 +65,9 @@
         android:layout_marginBottom="5dp"
         android:fontFamily="@font/ibm_regular"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@id/background_view"
-        app:layout_constraintEnd_toEndOf="@+id/background_view"
-        app:layout_constraintStart_toStartOf="@+id/background_view"
+        app:layout_constraintBottom_toBottomOf="@id/comm_background_view"
+        app:layout_constraintEnd_toEndOf="@+id/comm_background_view"
+        app:layout_constraintStart_toStartOf="@+id/comm_background_view"
         app:layout_constraintTop_toBottomOf="@+id/name_textView"
         tools:ignore="UnknownId" />
 

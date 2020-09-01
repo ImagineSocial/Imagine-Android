@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-    android:layout_height="175dp"
-    android:layout_margin="10dp"
-    android:background="@drawable/cell_background_shape">
+    android:layout_height="175dp">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/half_line_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.50121653" />
 
     <View
         android:id="@+id/topTopic_smallView"
@@ -73,7 +69,7 @@
         android:fontFamily="@font/ibm_semi_bold"
         android:text="Shalom!"
         android:textColor="@android:color/black"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/owenView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -179,5 +175,14 @@
         app:layout_constraintEnd_toEndOf="@+id/topTopic_secondCommButton"
         app:layout_constraintStart_toStartOf="@+id/topTopic_secondCommButton"
         app:layout_constraintTop_toTopOf="@+id/topTopic_thirdImageView" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginBottom="3dp"
+        android:background="#ECE6E6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

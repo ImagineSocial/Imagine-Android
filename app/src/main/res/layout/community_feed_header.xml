@@ -4,61 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f2f2f7ff">
+    android:background="#FFFFFF">
 
-    <View
-        android:id="@+id/background_view"
+    <TextView
+        android:id="@+id/comm_header_post_count_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ibm_regular"
+        android:text="0"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="@+id/comm_header_follower_label"
+        app:layout_constraintTop_toTopOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Posts:"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="@+id/textView5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_40percent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <ImageView
+        android:id="@+id/comm_activity_picture"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/comm_activity_title"
+        android:layout_height="160dp"
+        android:layout_marginBottom="50dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/comm_activity_picture"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/corner_radius_three"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:id="@+id/comm_background_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:alpha="0.95"
+        android:background="@drawable/round_secondary_color_background_view"
+        app:layout_constraintBottom_toBottomOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_40percent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/comm_activity_title"
         android:layout_width="0dp"
-        android:layout_height="37.5dp"
-        android:layout_marginStart="10dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:fontFamily="@font/ibm_medium"
         android:textColor="@android:color/black"
         android:textSize="23sp"
         app:autoSizeMaxTextSize="23sp"
         app:autoSizeMinTextSize="11sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/comm_activity_picture"
-        app:layout_constraintTop_toTopOf="@+id/comm_activity_picture" />
+        app:layout_constraintEnd_toEndOf="@+id/comm_background_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline_40percent"
+        app:layout_constraintTop_toTopOf="@+id/comm_background_view" />
 
     <TextView
         android:id="@+id/comm_activity_description"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="@font/ibm_regular"
         android:textColor="#707176"
         app:autoSizeMaxTextSize="14sp"
         app:autoSizeMinTextSize="8sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@+id/comm_activity_picture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/comm_activity_picture"
+        app:layout_constraintBottom_toBottomOf="@+id/comm_background_view"
+        app:layout_constraintEnd_toEndOf="@+id/comm_background_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline_40percent"
         app:layout_constraintTop_toBottomOf="@+id/comm_activity_title" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="85dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Follow"
+        android:textAllCaps="false"
+        android:textColor="@color/md_black_1000"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Follower:"
+        android:textSize="11sp"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toTopOf="@+id/button3" />
+
+    <TextView
+        android:id="@+id/comm_header_follower_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/ibm_regular"
+        android:text="0"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView16"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="@+id/textView5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
