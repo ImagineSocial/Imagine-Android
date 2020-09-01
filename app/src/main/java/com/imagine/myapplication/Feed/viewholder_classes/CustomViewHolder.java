@@ -131,6 +131,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
 
     public void setLinkedFact(final String linkedTopicID){
         // sets the linkedfactID and fetches communitydata to display
+        return;
 //        helper.fetchLinkedCommunity(linkedTopicID, new LinkedCommunityCallback() {
 //            @Override
 //            public void onCallback(Community comm) {

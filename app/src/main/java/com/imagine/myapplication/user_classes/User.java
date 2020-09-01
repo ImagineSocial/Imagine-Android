@@ -1,6 +1,16 @@
 package com.imagine.myapplication.user_classes;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.imagine.myapplication.Community.IntegerCallback;
+
 import java.util.List;
+import java.util.Map;
 
 public class User {
     public String name;
@@ -64,5 +74,18 @@ public class User {
 
     public String getStatusQuote() {
         return statusQuote;
+    }
+
+    public void getPostCount(final IntegerCallback callback) {
+        if (userID != "") {
+            Query ref = FirebaseFirestore.getInstance().collection("Users").document(userID).collection("posts");
+            ref.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    int count = queryDocumentSnapshots.size();
+                    callback.onCallback(count);
+                }
+            });
+        }
     }
 }

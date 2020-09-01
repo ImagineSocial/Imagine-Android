@@ -11,22 +11,39 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.50121653" />
 
-    <View
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/topTopic_smallView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="6dp"
         android:background="@drawable/community_cell_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/half_line_vertical"
         app:layout_constraintStart_toStartOf="@+id/shalom_view"
-        app:layout_constraintTop_toBottomOf="@id/shalom_view" />
+        app:layout_constraintTop_toBottomOf="@id/shalom_view">
 
-    <View
+        <TextView
+            android:id="@+id/topTopic_weeklyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="7dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="TextView"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/topTopic_bigView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="5dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/community_cell_background"
@@ -35,7 +52,86 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toEndOf="@+id/half_line_vertical"
         app:layout_constraintTop_toTopOf="@+id/shalom_view"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/inner_header_constraint_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/topTopicLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/ibm_medium"
+                android:text="Die Themen der Woche:"
+                android:textColor="@android:color/black"
+                android:textSize="11sp"
+                app:layout_constraintStart_toStartOf="@+id/inner_header_constraint_layout"
+                app:layout_constraintTop_toTopOf="@+id/inner_header_constraint_layout" />
+
+    <ImageView
+        android:id="@+id/topTopic_firstImageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/corner_radius_three"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/topTopicLabel"
+        app:layout_constraintTop_toBottomOf="@+id/topTopicLabel"
+        app:srcCompat="@drawable/fact_stamp" />
+
+            <TextView
+                android:id="@+id/topTopic_firstCommButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="#FFF"
+                android:fontFamily="@font/ibm_regular"
+                android:text="Button"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/topTopic_firstImageView"
+                app:layout_constraintEnd_toEndOf="@+id/inner_header_constraint_layout"
+                app:layout_constraintStart_toEndOf="@+id/topTopic_firstImageView"
+                app:layout_constraintTop_toTopOf="@+id/topTopic_firstImageView" />
+
+            <TextView
+                android:id="@+id/topTopic_secondCommButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:fontFamily="@font/ibm_regular"
+                android:text="Button"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/topTopic_secondImageView"
+                app:layout_constraintEnd_toEndOf="@+id/topTopic_firstCommButton"
+                app:layout_constraintStart_toStartOf="@+id/topTopic_firstCommButton"
+                app:layout_constraintTop_toTopOf="@+id/topTopic_secondImageView" />
+
+            <TextView
+                android:id="@+id/topTopic_thirdCommButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="#FFF"
+                android:fontFamily="@font/ibm_regular"
+                android:text="Button"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="@+id/topTopic_thirdImageView"
+                app:layout_constraintEnd_toEndOf="@+id/topTopic_secondCommButton"
+                app:layout_constraintStart_toStartOf="@+id/topTopic_secondCommButton"
+                app:layout_constraintTop_toTopOf="@+id/topTopic_thirdImageView" />
 
     <ImageView
         android:id="@+id/topTopic_thirdImageView"
@@ -58,6 +154,9 @@
         app:layout_constraintStart_toStartOf="@+id/topTopic_firstImageView"
         app:layout_constraintTop_toBottomOf="@+id/topTopic_firstImageView"
         app:srcCompat="@drawable/fact_stamp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/shalom_view"
@@ -85,100 +184,14 @@
         app:layout_constraintTop_toTopOf="@id/shalom_view"
         app:srcCompat="@drawable/owen_face" />
 
-    <TextView
-        android:id="@+id/topTopic_weeklyTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/ibm_medium"
-        android:text="TextView"
-        android:textColor="@android:color/black"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="@+id/topTopic_smallView"
-        app:layout_constraintEnd_toEndOf="@+id/topTopic_smallView"
-        app:layout_constraintStart_toStartOf="@+id/topTopic_smallView"
-        app:layout_constraintTop_toTopOf="@+id/topTopic_smallView" />
 
-    <TextView
-        android:id="@+id/topTopicLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/ibm_medium"
-        android:text="Die Themen der Woche:"
-        android:textColor="@android:color/black"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/topTopic_bigView"
-        app:layout_constraintTop_toTopOf="@+id/topTopic_bigView" />
 
-    <ImageView
-        android:id="@+id/topTopic_firstImageView"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/corner_radius_three"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="@+id/topTopicLabel"
-        app:layout_constraintTop_toBottomOf="@+id/topTopicLabel"
-        app:srcCompat="@drawable/fact_stamp" />
 
-    <TextView
-        android:id="@+id/topTopic_firstCommButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="#F2F2F8"
-        android:fontFamily="@font/ibm_regular"
-        android:text="Button"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/topTopic_firstImageView"
-        app:layout_constraintEnd_toEndOf="@+id/topTopic_bigView"
-        app:layout_constraintStart_toEndOf="@+id/topTopic_firstImageView"
-        app:layout_constraintTop_toTopOf="@+id/topTopic_firstImageView" />
-
-    <TextView
-        android:id="@+id/topTopic_secondCommButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#F2F2F8"
-        android:fontFamily="@font/ibm_regular"
-        android:text="Button"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/topTopic_secondImageView"
-        app:layout_constraintEnd_toEndOf="@+id/topTopic_firstCommButton"
-        app:layout_constraintStart_toStartOf="@+id/topTopic_firstCommButton"
-        app:layout_constraintTop_toTopOf="@+id/topTopic_secondImageView" />
-
-    <TextView
-        android:id="@+id/topTopic_thirdCommButton"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="#F2F2F8"
-        android:fontFamily="@font/ibm_regular"
-        android:text="Button"
-        android:textAlignment="textStart"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/topTopic_thirdImageView"
-        app:layout_constraintEnd_toEndOf="@+id/topTopic_secondCommButton"
-        app:layout_constraintStart_toStartOf="@+id/topTopic_secondCommButton"
-        app:layout_constraintTop_toTopOf="@+id/topTopic_thirdImageView" />
 
     <View
+        android:id="@+id/view4"
         android:layout_width="0dp"
-        android:layout_height="1px"
+        android:layout_height="0px"
         android:layout_marginBottom="3dp"
         android:background="#ECE6E6"
         app:layout_constraintBottom_toBottomOf="parent"
