@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
@@ -30,6 +29,7 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
         ImageView image_iv = itemView.findViewById(R.id.comm_activity_picture);
         View backgroundView = itemView.findViewById(R.id.comm_background_view);
         final TextView followerCountLabel = itemView.findViewById(R.id.comm_header_follower_label);
+        final TextView postCountLabel = itemView.findViewById(R.id.comm_header_post_count_label);
         backgroundView.setClipToOutline(true);
         image_iv.setClipToOutline(true);
         title_tv.setText(community.name);
@@ -39,13 +39,17 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
         }else{
             Glide.with(itemView).load(community.imageURL).into(image_iv);
         }
-//        community.getFollowerCount(new FollowerCountCallback() {
-//                                       @Override
-//                                       public void onCallback(int count) {
-//                                        followerCountLabel.setText(count);
-//                                       }
-//                                   }
-//
-//        );
+        community.getFollowerCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                followerCountLabel.setText(count+"");
+            }
+        });
+        community.getPostCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                postCountLabel.setText(count+"");
+            }
+        });
     }
 }

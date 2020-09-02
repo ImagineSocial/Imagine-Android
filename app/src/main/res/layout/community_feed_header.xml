@@ -50,7 +50,7 @@
         android:id="@+id/comm_background_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:alpha="0.95"
         android:background="@drawable/round_secondary_color_background_view"
@@ -97,7 +97,7 @@
     <Button
         android:id="@+id/button3"
         android:layout_width="85dp"
-        android:layout_height="30dp"
+        android:layout_height="28dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_border"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.imagine.myapplication.Community.IntegerCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
 import com.imagine.myapplication.R;
 
@@ -32,11 +34,20 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
     }
 
     public void bind(User user) {
-        CircleImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
+        ImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
         TextView nameLabel = itemView.findViewById(R.id.userHeaderNameTextView);
         TextView statusTextLabel = itemView.findViewById(R.id.userHeaderStatusTextView);
         CircleImageView changeProfilePicture = itemView.findViewById(R.id.changeProfilePicture);
         CircleImageView changeProfilePictureBackground = itemView.findViewById(R.id.changeProfilePictureBackground);
+        final TextView postCountLabel = itemView.findViewById(R.id.user_header_post_count_label);
+        profileImageView.setClipToOutline(true);
+
+        user.getPostCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                postCountLabel.setText(count+"");
+            }
+        });
 
         FirebaseUser currentUser = auth.getCurrentUser();
         activity.setHeader(this);
@@ -55,6 +66,7 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
                 });
             }
         }
+
 
         nameLabel.setText(user.name);
 

@@ -4,14 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f2f2f7ff">
+    android:background="#FFF">
+
+    <TextView
+        android:id="@+id/postCOuntLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Beiträge"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_header_post_count_label"
+        app:layout_constraintStart_toEndOf="@+id/user_header_post_count_label" />
 
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="60dp"
-        android:background="#FFFFFF"
+        android:background="#f2f2f7ff"
         app:layout_constraintBottom_toBottomOf="@+id/userHeaderProfileImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -19,12 +31,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/userHeaderProfileImageView"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/corner_radius_eight"
+        android:scaleType="centerCrop"
         android:src="@drawable/default_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_toolbar"
@@ -36,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginBottom="5dp"
         android:fontFamily="@font/ibm_semi_bold"
         android:text="Name"
         android:textColor="@android:color/black"
@@ -50,9 +64,9 @@
         android:id="@+id/userHeaderStatusTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="@font/ibm_regular"
         android:text="TextView"
         android:textSize="14sp"
@@ -80,5 +94,18 @@
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/userHeaderProfileImageView"
         app:layout_constraintTop_toTopOf="@+id/userHeaderProfileImageView" />
+
+    <TextView
+        android:id="@+id/user_header_post_count_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="@font/ibm_regular"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/userHeaderProfileImageView"
+        app:layout_constraintStart_toEndOf="@+id/userHeaderProfileImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
