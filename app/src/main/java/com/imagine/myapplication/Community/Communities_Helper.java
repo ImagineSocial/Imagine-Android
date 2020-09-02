@@ -231,6 +231,8 @@ public class Communities_Helper {
                         }
                     }
                 });
+            }else {
+                callback.onCallback(comm);
             }
         }else{
             return;

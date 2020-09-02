@@ -19,6 +19,8 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Feed_Fragment extends Fragment {
 
@@ -44,7 +46,7 @@ public class Feed_Fragment extends Fragment {
             helper.getPostsForMainFeed( new FirebaseCallback() {
                 @Override
                 public void onCallback(ArrayList<Post> values) {
-                    postList = values;
+                    postList = sortPostList(values);
                     initRecyclerView(view);
                 }
 
@@ -103,8 +105,28 @@ public class Feed_Fragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        lastPosition =((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        if(recyclerView != null) {
+            lastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+        }
     }
 
+    public ArrayList<Post> sortPostList(ArrayList<Post> posts){
+        //orders the posts by createTime attribute
+        Collections.sort(posts, new Comparator<Post>() {
+            @Override
+            public int compare(Post o1, Post o2) {
+                if(o1.createTimestamp.getSeconds()>=
+                        o2.createTimestamp.getSeconds()){
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+        });
+        for(Post post : posts){
+            System.out.println(post.createTimestamp.getNanoseconds());
+        }
+        return posts;
+    }
 
 }
