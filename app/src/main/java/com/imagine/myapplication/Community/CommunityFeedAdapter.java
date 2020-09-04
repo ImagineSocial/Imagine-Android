@@ -40,6 +40,7 @@ public class CommunityFeedAdapter extends FeedAdapter {
         super(postList, mContext);
         this.community = community;
     }
+
     @Override
     public int getItemViewType(int position) {
         if(position == 0){

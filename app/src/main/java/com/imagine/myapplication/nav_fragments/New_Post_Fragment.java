@@ -508,7 +508,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int size = image_inBitmap.getByteCount();
         System.out.println("!");
-        image_inBitmap.compress(Bitmap.CompressFormat.JPEG,10,baos);
+        int byteCount = image_inBitmap.getByteCount();
+        int kByteCount = byteCount /1000;
+        if(kByteCount < 50000){
+            image_inBitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+        }else if(kByteCount <100000){
+            image_inBitmap.compress(Bitmap.CompressFormat.JPEG,40,baos);
+        }else if(kByteCount < 200000){
+            image_inBitmap.compress(Bitmap.CompressFormat.JPEG,25,baos);
+        }else{
+            image_inBitmap.compress(Bitmap.CompressFormat.JPEG,10,baos);
+        }
+
         byte [] data = baos.toByteArray();
         UploadTask uploadTask = pictureRef.putBytes(data);
         uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {

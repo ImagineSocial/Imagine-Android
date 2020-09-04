@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
 import com.imagine.myapplication.FirebaseCallback;
@@ -42,12 +43,16 @@ public class Feed_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the post for the feed
         super.onViewCreated(view, savedInstanceState);
+        final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeMainFeed);
         if(postList.size() == 0){
+            swipe.setRefreshing(true);
             helper.getPostsForMainFeed( new FirebaseCallback() {
                 @Override
                 public void onCallback(ArrayList<Post> values) {
                     postList = sortPostList(values);
+                    swipe.setRefreshing(false);
                     initRecyclerView(view);
+
                 }
 
             });
@@ -55,6 +60,25 @@ public class Feed_Fragment extends Fragment {
             initRecyclerView(view);
             loadPosition();
         }
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                helper.getPostsForMainFeed( new FirebaseCallback() {
+                    @Override
+                    public void onCallback(ArrayList<Post> values) {
+                        postList = sortPostList(values);
+                        swipe.setRefreshing(false);
+                        if(recyclerView != null){
+                            FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
+                            adapter.refreshPosts(sortPostList(values));
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                });
+            }
+        });
     }
 
     private void initRecyclerView (final View view){
@@ -86,9 +110,9 @@ public class Feed_Fragment extends Fragment {
                        @Override
                        public void onCallback(ArrayList<Post> values) {
 
-                           postList = values;
+                           postList = sortPostList(values);
                            FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
-                           adapter.addMorePosts(values);
+                           adapter.addMorePosts(postList);
                            adapter.notifyDataSetChanged();
 
                        }

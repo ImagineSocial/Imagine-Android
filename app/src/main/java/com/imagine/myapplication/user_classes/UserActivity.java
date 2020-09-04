@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,6 +54,9 @@ public class UserActivity extends AppCompatActivity {
     public ArrayList<Post> posts = new ArrayList<>();
     public Post_Helper helper = new Post_Helper();
     public User_Feed_Header_Viewholder header;
+    public RecyclerView recyclerView;
+    public UserFeedAdapter adapter;
+    public SwipeRefreshLayout swipe;
     public Context mContext;
     public User user;
     public final int GALLERY = 1;
@@ -67,11 +71,30 @@ public class UserActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String userString = intent.getStringExtra("user");
         user = gson.fromJson(userString,User.class);
+        swipe = findViewById(R.id.swipeUserFeed);
+        swipe.setRefreshing(true);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe.setRefreshing(true);
+                helper.getPostsForUserFeed(new FirebaseCallback() {
+                    @Override
+                    public void onCallback(ArrayList<Post> values) {
+                        ArrayList<Post> sortedPosts = sortPostList(values);
+                        posts = sortedPosts;
+                        adapter.refreshPosts(posts);
+                        swipe.setRefreshing(false);
+                        adapter.notifyDataSetChanged();
+                    }
+                },user.userID);
+            }
+        });
         helper.getPostsForUserFeed(new FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<Post> values) {
                 ArrayList<Post> sortedPosts = sortPostList(values);
                 posts = sortedPosts;
+                swipe.setRefreshing(false);
                 initRecyclerView();
             }
         },user.userID);
@@ -80,7 +103,6 @@ public class UserActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-
         Button logout_button = findViewById(R.id.toolbar_logout_button);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -105,8 +127,8 @@ public class UserActivity extends AppCompatActivity {
     public void initRecyclerView(){
         //initializes RecyclerView and adds
         //onScrollListener
-        RecyclerView recyclerView = findViewById(R.id.user_recyclerView);
-        UserFeedAdapter adapter = new UserFeedAdapter(posts,mContext,user,this);
+        recyclerView = findViewById(R.id.user_recyclerView);
+        adapter = new UserFeedAdapter(posts,mContext,user,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){

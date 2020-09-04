@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -18,6 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.Community.Community;
@@ -48,12 +51,16 @@ public class Post_Helper {
 
     private static final String TAG = "Post_Helper";
     public DocumentSnapshot lastSnap;
+    public Timestamp lastSnapTimeSaver;
     public Timestamp lastSnapTime;
     public ArrayList<Post> postList = new ArrayList<Post>();
     public ArrayList<Post> commPostList = new ArrayList<>();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public StorageReference storage = FirebaseStorage.getInstance().getReference();
     public ArrayList<Object> items = new ArrayList<>();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
+    public boolean firstFetch = false;
+    public boolean moreFetch = false;
     public String commID;
     public String userID;
     public int count;
@@ -61,7 +68,8 @@ public class Post_Helper {
 
     public  void getPostsForMainFeed( final FirebaseCallback callback){
         // fetches the initial posts for the main feed
-        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(20);
+        firstFetch = true;
+        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -150,8 +158,16 @@ public class Post_Helper {
 
     public void getPostsFromCommunityIDs(final FirebaseCallback callback, ArrayList<String> commIDs){
         CollectionReference topicRef = db.collection("TopicPosts");
-        Query postsQuery = topicRef.whereIn("linkedFactID",commIDs)
-                .whereGreaterThan("createTime",lastSnapTime);
+
+        Query postsQuery;
+        if(lastSnapTimeSaver == null || firstFetch){
+            postsQuery = topicRef.whereIn("linkedFactID",commIDs)
+                    .whereGreaterThan("createTime",lastSnapTime);
+        }else{
+            postsQuery = topicRef.whereIn("linkedFactID",commIDs)
+                    .whereGreaterThan("createTime",lastSnapTime)
+                    .whereLessThan("createTime",lastSnapTimeSaver);
+        }
         postsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -202,19 +218,26 @@ public class Post_Helper {
     public void mergeAndSortPostLists(FirebaseCallback callback){
         ArrayList<Post> finalList = postList;
         finalList.addAll(commPostList);
+        postList = new ArrayList<>();
+        commPostList = new ArrayList<>();
         callback.onCallback(finalList);
+        firstFetch = false;
+        moreFetch = false;
     }
 
     public void getMorePostsForFeed(final FirebaseCallback callback){
         // called when onScrollListener triggers and fetches more post for the main feed
         // whole postLists is returned
-        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(20);
+        moreFetch = true;
+        lastSnapTimeSaver = lastSnapTime;
+        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(15);
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(queryDocumentSnapshots != null){
                     if(queryDocumentSnapshots.getDocuments().size() >=1){
                         lastSnap = queryDocumentSnapshots.getDocuments().get(queryDocumentSnapshots.size()-1);
+                        lastSnapTime = lastSnap.getTimestamp("createTime");
                     }
                     System.out.println(queryDocumentSnapshots.size());
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
@@ -248,7 +271,7 @@ public class Post_Helper {
                                 break;
                         }
                     }
-                    callback.onCallback(postList);
+                    getFollowedCommunities(callback);
                     System.out.println("FERTIG");
                 }
             }
@@ -257,6 +280,11 @@ public class Post_Helper {
 
     public  void getPostsForCommunityFeed(String commID,final FirebaseCallback callback){
         // fetches the initial posts for the communityfeed
+        if(firstFetch){
+            postList = new ArrayList<>();
+        }else{
+            firstFetch = true;
+        }
         this.commID = commID;
         Query postsColl = db.collection("Facts").document(commID).collection("posts")
                 .orderBy("createTime", Query.Direction.DESCENDING)
@@ -425,6 +453,11 @@ public class Post_Helper {
 
     public  void getPostsForUserFeed( final FirebaseCallback callback,String userID){
         // fetches the initial posts for the userfeed
+        if(firstFetch){
+            postList = new ArrayList<>();
+        }else{
+            firstFetch = true;
+        }
         this.userID = userID;
         Query postsColl = db.collection("Users").document(userID).collection("posts")
                 .orderBy("createTime", Query.Direction.DESCENDING)
@@ -1318,6 +1351,66 @@ public class Post_Helper {
                 postList.add(defaultPost);
             }
         }
+    }
+
+    public void removePost(Post post){
+        DocumentReference postRef;
+        if(post.isTopicPost){
+            postRef = db.collection("TopicPosts").document(post.documentID);
+        }else{
+            postRef = db.collection("Posts").document(post.documentID);
+        }
+        if(post.linkedFactId == null || post.linkedFactId.equals("")){
+            postRef = db.collection("Posts").document(post.documentID);
+            postRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    System.out.println("Löschen erfolgreich!");
+                }
+            });
+        }else{
+            DocumentReference commRef = db.collection("Facts").document(post.linkedFactId)
+                    .collection("posts").document(post.documentID);
+            commRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    System.out.println("Löschen erfolgreich!");
+                }
+            });
+        }
+
+
+        if(post instanceof PicturePost){
+
+                String pathString = post.documentID+".png";
+                StorageReference pictureRef = storage.child("postPictures").child(pathString);
+                pictureRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        System.out.println("Löschen erfolgreich!");
+                    }
+                });
+
+            }
+        if (post instanceof MultiPicturePost){
+
+                int index = 0;
+                for(String imageURL: ((MultiPicturePost) post).imageURLs){
+                    String pathString = post.documentID+"-"+index+".png";
+                    StorageReference pictureRef = storage.child("postPictures").child(pathString);
+                    pictureRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            System.out.println("Löschen erfolgreich!");
+                        }
+                    });
+                }
+            }
+
+    }
+
+    public void setLinkedCommunity(){
+
     }
 
     public static String convertLongDateToAgoString (Date createdDate, Long timeNow){

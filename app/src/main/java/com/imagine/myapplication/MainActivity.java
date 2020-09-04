@@ -29,11 +29,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Community_Posts_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.Information_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
+import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 
@@ -259,4 +261,5 @@ public class MainActivity extends AppCompatActivity{
             }
         });
     }
+
 }

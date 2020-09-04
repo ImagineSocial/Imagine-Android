@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
@@ -41,11 +42,33 @@ public class CommunityFeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = getView().findViewById(R.id.comm_activity_recyclerView);
+        recyclerView = view.findViewById(R.id.comm_activity_recyclerView);
+        final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeCommunityFeed);
+        swipe.setRefreshing(true);
+
+
         String name = args.get("name");
         String imageURL = args.get("imageURL");
-        String commID = args.get("commID");
+        final String commID = args.get("commID");
         String description = args.get("description");
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                helper.getPostsForCommunityFeed(commID, new FirebaseCallback() {
+                    @Override
+                    public void onCallback(ArrayList<Post> values) {
+                        ArrayList<Post> sortedPosts = sortPostList(values);
+                        if(recyclerView != null){
+                            CommunityFeedAdapter  adapter = (CommunityFeedAdapter) recyclerView.getAdapter();
+                            adapter.refreshPosts(sortedPosts);
+                            adapter.notifyDataSetChanged();
+                            swipe.setRefreshing(false);
+                        }
+                    }
+                });
+            }
+        });
 
         if(imageURL == null){
             imageURL = "";
@@ -54,6 +77,7 @@ public class CommunityFeedFragment extends Fragment {
         helper.getPostsForCommunityFeed(commID,new FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<Post> values) {
+                swipe.setRefreshing(false);
                 ArrayList<Post> sortedPosts = sortPostList(values);
                 postList.addAll(sortedPosts);
                 initRecyclerView();

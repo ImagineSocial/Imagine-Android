@@ -43,9 +43,15 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         this.postList = postList;
         this.mContext = mContext;
     }
+
+
     public void addMorePosts(ArrayList<Post> posts){
-        postList = posts;
+        postList.addAll(posts);
         System.out.println("Posts geadded!");
+    }
+
+    public void refreshPosts(ArrayList<Post> posts){
+        postList = posts;
     }
     @Override
     public int getItemViewType(int position) {
