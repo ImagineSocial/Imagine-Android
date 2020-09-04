@@ -1360,6 +1360,14 @@ public class Post_Helper {
         }else{
             postRef = db.collection("Posts").document(post.documentID);
         }
+        postRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("!");
+                }
+            }
+        });
         if(post.linkedFactId == null || post.linkedFactId.equals("")){
             postRef = db.collection("Posts").document(post.documentID);
             postRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -1409,9 +1417,6 @@ public class Post_Helper {
 
     }
 
-    public void setLinkedCommunity(){
-
-    }
 
     public static String convertLongDateToAgoString (Date createdDate, Long timeNow){
         // converts the date to a string

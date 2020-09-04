@@ -1,5 +1,6 @@
 package com.imagine.myapplication.CommunityPicker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toolbar;
 
@@ -23,7 +24,8 @@ import java.util.ArrayList;
 public class CommunityPickActivity extends AppCompatActivity {
 
     public Communities_Helper helper = new Communities_Helper();
-    ArrayList<Community> commList = new ArrayList<>();
+    public ArrayList<Community> commList = new ArrayList<>();
+    public String postID;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +35,8 @@ public class CommunityPickActivity extends AppCompatActivity {
 
         ViewPager2 viewPager2 = findViewById(R.id.community_picker_viewpager);
         TabLayout tabLayout = findViewById(R.id.community_picker_tab_layout);
+        Intent intent = getIntent();
+        postID = intent.getStringExtra("postID");
         PickerCollectionAdapter adapter = new PickerCollectionAdapter(this,this);
         viewPager2.setAdapter(adapter);
         new TabLayoutMediator(tabLayout, viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {

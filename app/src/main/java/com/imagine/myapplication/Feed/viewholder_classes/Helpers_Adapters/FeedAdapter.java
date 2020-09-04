@@ -1,5 +1,6 @@
 package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     public ArrayList<Post> postList;
     public Context mContext;
     public HeaderViewHolder header;
+    public Activity mainActivity;
 
     public FeedAdapter(ArrayList<Post> postList, Context mContext) {
         this.postList = postList;
@@ -90,28 +92,44 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
         switch(viewType){
             case R.layout.post_picture:
                 view = inflater.inflate(R.layout.post_picture,parent,false);
-                return new PictureViewHolder(view);
+                PictureViewHolder pictureViewHolder = new PictureViewHolder(view);
+                pictureViewHolder.mainActivty = this.mainActivity;
+                return pictureViewHolder;
             case R.layout.post_thought:
                 view = inflater.inflate(R.layout.post_thought,parent,false);
-                return new ThoughtViewHolder(view);
+                ThoughtViewHolder thoughtViewHolder = new ThoughtViewHolder(view);
+                thoughtViewHolder.mainActivty = this.mainActivity;
+                return thoughtViewHolder;
             case R.layout.post_link:
                 view = inflater.inflate(R.layout.post_link,parent,false);
-                return new LinkViewHolder(view);
+                LinkViewHolder linkViewHolder = new LinkViewHolder(view);
+                linkViewHolder.mainActivty = this.mainActivity;
+                return linkViewHolder;
             case R.layout.post_youtube:
                 view = inflater.inflate(R.layout.post_youtube,parent,false);
-                return new YouTubeViewHolder(view);
+                YouTubeViewHolder youTubeViewHolder = new YouTubeViewHolder(view);
+                youTubeViewHolder.mainActivty = this.mainActivity;
+                return youTubeViewHolder;
             case R.layout.post_gif:
                 view = inflater.inflate(R.layout.post_gif,parent,false);
-                return new GIFViewHolder(view);
+                GIFViewHolder gifViewHolder = new GIFViewHolder(view);
+                gifViewHolder.mainActivty = this.mainActivity;
+                return gifViewHolder;
             case R.layout.post_multi_picture:
                 view = inflater.inflate(R.layout.post_multi_picture,parent,false);
-                return new MultiPictureViewHolder(view);
+                MultiPictureViewHolder multiPictureViewHolder = new MultiPictureViewHolder(view);
+                multiPictureViewHolder.mainActivty = this.mainActivity;
+                return multiPictureViewHolder;
             case R.layout.post_translation:
                 view = inflater.inflate(R.layout.post_translation,parent,false);
-                return new TranslationViewHolder(view);
+                TranslationViewHolder translationViewHolder = new TranslationViewHolder(view);
+                translationViewHolder.mainActivty = this.mainActivity;
+                return translationViewHolder;
             case R.layout.post_repost:
                 view = inflater.inflate(R.layout.post_repost,parent,false);
-                return new RepostViewHolder(view);
+                RepostViewHolder repostViewHolder = new RepostViewHolder(view);
+                repostViewHolder.mainActivty = this.mainActivity;
+                return repostViewHolder;
             case R.layout.post_top_header:
                 if(this.header == null){
                     view = inflater.inflate(R.layout.post_top_header,parent,false);

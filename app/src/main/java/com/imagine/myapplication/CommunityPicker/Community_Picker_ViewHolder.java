@@ -69,6 +69,7 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
                 resultIntent.putExtra("name",comm.name);
                 resultIntent.putExtra("imageURL", comm.imageURL);
                 resultIntent.putExtra("commID", comm.topicID);
+                resultIntent.putExtra("postID",parent.postID);
                 parent.setResult(parent.RESULT_OK,resultIntent);
                 parent.finish();
             }

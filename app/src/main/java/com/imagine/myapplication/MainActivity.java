@@ -1,5 +1,6 @@
 package com.imagine.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
@@ -20,11 +22,15 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,6 +45,8 @@ import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -55,6 +63,7 @@ public class MainActivity extends AppCompatActivity{
     public New_Post_Fragment newPosts_fragment;
     public Communities_Fragment comms_fragment;
     public Information_Fragment infos_fragment;
+    public Activity mainActivity;
     public Context mContext;
     public Button loginButton;
     public CircleImageView imageCircle;
@@ -67,9 +76,11 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.mContext = this;
+        mainActivity = this;
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         feed_fragment = new Feed_Fragment();
+        feed_fragment.mainActivity = this.mainActivity;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 feed_fragment).commit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -262,4 +273,43 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 5){
+            String name = data.getStringExtra("name");
+            String imageURL = data.getStringExtra("imageURL");
+            String commID = data.getStringExtra("commID");
+            String postID = data.getStringExtra("postID");
+
+            DocumentReference postRef = db.collection("Posts").document(postID);
+            HashMap<String,Object> updateData = new HashMap<>();
+            updateData.put("linkedFactID",commID);
+            postRef.update(updateData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            System.out.println("!");
+                        }
+                }
+            });
+
+
+            CollectionReference commRef = db.collection("Facts")
+                    .document(commID).collection("posts");
+            DocumentReference commPostRef = commRef.document(postID);
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("createTime",new Timestamp(new Date()));
+            commPostRef.set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        System.out.println("Erfolg!");
+                    } else if(task.isCanceled()){
+                        System.out.println("Fail!");
+                    }
+                }
+            });
+        }
+    }
 }

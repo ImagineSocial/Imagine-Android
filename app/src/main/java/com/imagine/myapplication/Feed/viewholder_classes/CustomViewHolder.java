@@ -1,5 +1,6 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Picture;
@@ -23,6 +24,7 @@ import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_Activity;
 import com.imagine.myapplication.Community.Community_ViewPager_Activity;
+import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.LinkedCommunityCallback;
 import com.imagine.myapplication.MainActivity;
@@ -45,7 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
+public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
 
     private static final String TAG = "CustomViewHolder";
     public View mItemView;
@@ -53,11 +55,11 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     public Communities_Helper helper = new Communities_Helper();
     public Community comm;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public Activity mainActivty;
 
     public CustomViewHolder(@NonNull View itemView) {
         super(itemView);
         this.mItemView = itemView;
-        mContext = itemView.getContext();
     }
 
     public void init(final Post post){
@@ -298,7 +300,9 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void linkCommunity(Post post){
-        
+        Intent intent = new Intent(itemView.getContext(), CommunityPickActivity.class);
+        intent.putExtra("postID",post.documentID);
+        this.mainActivty.startActivityForResult(intent,5);
     }
 
     public String getType(){

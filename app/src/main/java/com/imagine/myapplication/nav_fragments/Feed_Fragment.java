@@ -1,5 +1,6 @@
 package com.imagine.myapplication.nav_fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,6 +31,7 @@ public class Feed_Fragment extends Fragment {
     public int lastPosition;
     public ArrayList<Post> postList = new ArrayList<Post>();
     public Post_Helper helper = new Post_Helper();
+    public Activity mainActivity;
     public boolean isloading;
 
     @Nullable
@@ -86,6 +88,7 @@ public class Feed_Fragment extends Fragment {
         this.recyclerView = view.findViewById(R.id.feed_recyclerView);
         Context context = view.getContext();
         FeedAdapter adapter = new FeedAdapter(postList,context);
+        adapter.mainActivity = this.mainActivity;
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
@@ -151,6 +154,10 @@ public class Feed_Fragment extends Fragment {
             System.out.println(post.createTimestamp.getNanoseconds());
         }
         return posts;
+    }
+
+    public void setLinkedFact(){
+
     }
 
 }
