@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,9 +52,21 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
 
         FirebaseUser currentUser = auth.getCurrentUser();
         activity.setHeader(this);
+        Button logout_button = itemView.findViewById(R.id.user_header_logout_button);
 
         if (currentUser != null) {
             if (currentUser.getUid().equals(user.userID)) {
+                logout_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.signOut();
+
+
+                    }
+                });
+                logout_button.setVisibility(View.VISIBLE);
+
                 changeProfilePicture.setVisibility(View.VISIBLE);
                 changeProfilePictureBackground.setVisibility(View.VISIBLE);
                 changeProfilePicture.setOnClickListener(new View.OnClickListener() {

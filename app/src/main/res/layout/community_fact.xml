@@ -1,69 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/button_border"
-    android:layout_marginLeft="0dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="10dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp">
 
-    <ImageView
-        android:id="@+id/community_fact_image"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="5dp"
-        android:scaleType="centerCrop"
-        android:background="@drawable/corner_radius_three"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="@id/guideline_vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5
-"/>
+        <ImageView
+            android:id="@+id/community_fact_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/corner_radius_three"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="@id/guideline_horizontal"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/community_fact_title"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:fontFamily="@font/ibm_medium"
-        android:textAlignment="center"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/community_fact_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/community_fact_image"
-        app:layout_constraintTop_toTopOf="@+id/community_fact_image" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
-        android:id="@+id/community_fact_description"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/ibm_regular"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/community_fact_image"
-        app:layout_constraintTop_toBottomOf="@+id/community_fact_image" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5
+" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/community_fact_title"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/ibm_medium"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/community_fact_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/community_fact_image"
+            app:layout_constraintTop_toTopOf="@+id/community_fact_image" />
+
+        <TextView
+            android:id="@+id/community_fact_description"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/ibm_regular"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/community_fact_image"
+            app:layout_constraintTop_toBottomOf="@+id/community_fact_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

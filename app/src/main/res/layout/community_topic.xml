@@ -1,70 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/community_content_view"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="0dp"
-    android:layout_marginTop="0dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/community_cell_background"
-    android:clipChildren="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp"
+    android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/comm_title"
-        android:layout_width="0dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:background="#F2F2F8"
-        android:fontFamily="@font/ibm_semi_bold"
-        android:lines="1"
-        android:text=""
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/black"
-        app:autoSizeMaxTextSize="16sp"
-        app:autoSizeMinTextSize="8sp"
-        app:autoSizeStepGranularity="1sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/comm_description"
-        app:layout_constraintEnd_toEndOf="@+id/comm_picture"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comm_picture" />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/community_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="true">
 
-    <TextView
-        android:id="@+id/comm_description"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="2dp"
-        android:background="#EFEFEF"
-        android:fontFamily="@font/ibm_regular"
-        android:text=""
-        android:textColor="#707176"
-        app:autoSizeMaxTextSize="13sp"
-        app:autoSizeMinTextSize="7sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comm_title" />
+        <TextView
+            android:id="@+id/comm_title"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_margin="5dp"
+            android:fontFamily="@font/ibm_semi_bold"
+            android:lines="1"
+            android:text=""
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@android:color/black"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/comm_description"
+            app:layout_constraintEnd_toEndOf="@+id/comm_picture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/comm_picture" />
 
-
-    <ImageView
-        android:id="@+id/comm_picture"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/community_cell_background"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/comm_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/fact_stamp" />
+        <TextView
+            android:id="@+id/comm_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="2dp"
+            android:background="#EFEFEF"
+            android:fontFamily="@font/ibm_regular"
+            android:text=""
+            android:textColor="#707176"
+            app:autoSizeMaxTextSize="13sp"
+            app:autoSizeMinTextSize="7sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/comm_title" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/comm_picture"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/comm_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/fact_stamp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

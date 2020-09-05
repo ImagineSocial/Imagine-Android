@@ -1,42 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/cell_background_shape"
-    android:paddingBottom="10dp"
-    android:layout_marginBottom="20dp"
-    >
-    <TextView
-        android:id="@+id/community_addon_title"
-        app:layout_constraintTop_toTopOf="@id/community_addon_community_image"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
+    android:layout_margin="20dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp">
+
+    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/community_addon_description"
-        app:layout_constraintBottom_toBottomOf="@+id/community_addon_community_image"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/community_addon_community_image"
-        app:layout_constraintTop_toTopOf="parent"
-        android:adjustViewBounds="true"
-        android:background="@drawable/corner_radius_three"
-        android:scaleType="centerCrop"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/community_addon_recyclerView"
-        app:layout_constraintTop_toBottomOf="@+id/community_addon_community_image"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/community_addon_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/community_addon_community_image" />
+
+        <TextView
+            android:id="@+id/community_addon_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/community_addon_community_image"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/community_addon_community_image"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/corner_radius_three"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/community_addon_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/community_addon_community_image" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
