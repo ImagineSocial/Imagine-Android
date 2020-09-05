@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
-        android:fontFamily="@font/ibm_regular"
+        android:fontFamily="@font/ibm_light"
         android:text="Beiträge"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/user_header_post_count_label"
         app:layout_constraintStart_toEndOf="@+id/user_header_post_count_label" />
 
@@ -23,7 +23,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="60dp"
-        android:background="#f2f2f7ff"
         app:layout_constraintBottom_toBottomOf="@+id/userHeaderProfileImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -104,8 +103,24 @@
         android:fontFamily="@font/ibm_regular"
         android:text="0"
         android:textColor="@android:color/black"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/userHeaderProfileImageView"
         app:layout_constraintStart_toEndOf="@+id/userHeaderProfileImageView" />
+
+    <Button
+        android:id="@+id/user_header_logout_button"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Log-Out"
+        android:textAllCaps="false"
+        android:textSize="12sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

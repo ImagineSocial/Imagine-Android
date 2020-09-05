@@ -34,7 +34,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
-import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
@@ -98,30 +97,7 @@ public class UserActivity extends AppCompatActivity {
                 initRecyclerView();
             }
         },user.userID);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.user_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowTitleEnabled(false);
-        Button logout_button = findViewById(R.id.toolbar_logout_button);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
-
-        if (currentUser != null) {
-            if (currentUser.getUid().equals(user.userID)) {
-                logout_button.setVisibility(View.VISIBLE);
-
-                logout_button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FirebaseAuth auth = FirebaseAuth.getInstance();
-                        auth.signOut();
-
-                        UserActivity.super.finish();
-                    }
-                });
-            }
-        }
+        
     }
 
     public void initRecyclerView(){
