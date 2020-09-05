@@ -45,7 +45,7 @@ public class GifPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gif_post);
+        setContentView(R.layout.activity_post);
         mContext = this;
 
         FragmentManager fragmentManager = getSupportFragmentManager();

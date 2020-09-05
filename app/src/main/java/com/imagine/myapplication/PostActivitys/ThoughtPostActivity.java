@@ -40,7 +40,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_thought_post);
+        setContentView(R.layout.activity_post);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new ThoughtPostFragment()).commit();
         //gets post obj from the intent

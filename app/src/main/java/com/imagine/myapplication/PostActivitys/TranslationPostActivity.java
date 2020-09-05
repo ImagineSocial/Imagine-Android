@@ -40,7 +40,7 @@ public class TranslationPostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_translation_post);
+        setContentView(R.layout.activity_post);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new TranslationPostFragment()).commit();

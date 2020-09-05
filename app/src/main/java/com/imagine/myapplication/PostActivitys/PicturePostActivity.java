@@ -9,16 +9,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.firebase.Timestamp;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
@@ -31,7 +28,6 @@ import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.UserActivity;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class PicturePostActivity extends AppCompatActivity {
     private static final String TAG = "PicturePostActivity";
@@ -43,7 +39,7 @@ public class PicturePostActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_picture_post);
+        setContentView(R.layout.activity_post);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new PicturePostFragment()).commit();
