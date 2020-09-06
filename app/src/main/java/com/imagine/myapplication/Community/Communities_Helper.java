@@ -51,10 +51,11 @@ public class Communities_Helper {
         Community factsHeader = new Community("header","header","header","header");
         factsHeader.type = "factsHeader";
         facts.add(factsHeader);
-        Community ownCommsHeader = new Community("header","header","header","header");
-        ownCommsHeader.type = "ownHeader";
-        ownComms.add(ownCommsHeader);
-
+        if(!userID.equals("")){
+            Community ownCommsHeader = new Community("header","header","header","header");
+            ownCommsHeader.type = "ownHeader";
+            ownComms.add(ownCommsHeader);
+        }
 
         // Fetching the Communities
         Query topicQuery = db.collection("Facts")
@@ -75,7 +76,6 @@ public class Communities_Helper {
                     }else{
                         topicFinished[0] = true;
                     }
-                    //callback.onCallback(commList);
                 }else{
                     System.out.println("community_topic fetch failed! "+TAG);
                 }
@@ -100,57 +100,65 @@ public class Communities_Helper {
                     }else{
                         factsFinished[0] = true;
                     }
-                    //callback.onCallback(commList);
                 }else{
                     System.out.println("community_topic fetch failed! "+TAG);
                 }
             }
         });
         // Fetching the Own Communites
-        Query ownCommsQuery = db.collection("Users").document(userID)
-                .collection("topics");
-        ownCommsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot result = task.getResult();
-                    List<DocumentSnapshot> docMap = result.getDocuments();
-                    final int size = docMap.size();
-                    final int[] count = {0};
-                    for(DocumentSnapshot docSnap : docMap){
-                        DocumentReference docRef = db.collection("Facts").document(docSnap.getId());
-                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    DocumentSnapshot documentSnapshot = task.getResult();
-                                    addCommunity(documentSnapshot,ownComms,"ownComms");
-                                    count[0]++;
-                                    if(count[0] == size){
-                                        if(topicFinished[0] && factsFinished[0]){
-                                            addFooter(topics,facts,ownComms,callback);
-                                        }else{
-                                            ownCommsFinished[0] = true;
+        if(!userID.equals("")){
+            Query ownCommsQuery = db.collection("Users").document(userID)
+                    .collection("topics");
+            ownCommsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot result = task.getResult();
+                        List<DocumentSnapshot> docMap = result.getDocuments();
+                        final int size = docMap.size();
+                        final int[] count = {0};
+                        for(DocumentSnapshot docSnap : docMap){
+                            DocumentReference docRef = db.collection("Facts").document(docSnap.getId());
+                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        DocumentSnapshot documentSnapshot = task.getResult();
+                                        addCommunity(documentSnapshot,ownComms,"ownComms");
+                                        count[0]++;
+                                        if(count[0] == size){
+                                            if(topicFinished[0] && factsFinished[0]){
+                                                addFooter(topics,facts,ownComms,callback);
+                                            }else{
+                                                ownCommsFinished[0] = true;
+                                            }
+                                        }
+                                    }else{
+                                        count[0] = count[0]+1;
+                                        if(count[0] == size){
+                                            if(topicFinished[0] && factsFinished[0]){
+                                                addFooter(topics,facts,ownComms,callback);
+                                            }else{
+                                                ownCommsFinished[0] = true;
+                                            }
                                         }
                                     }
-                                }else{
-                                    count[0]++;
-                                    System.out.println("Fetch Failed"+TAG);
                                 }
-                            }
-                        });
-                    }
-                    if(topicFinished[0] && ownCommsFinished[0]){
-                        addFooter(topics,facts,ownComms,callback);
+                            });
+                        }
+                        //callback.onCallback(commList);
                     }else{
-                        factsFinished[0] = true;
+                        System.out.println("community_topic fetch failed! "+TAG);
                     }
-                    //callback.onCallback(commList);
-                }else{
-                    System.out.println("community_topic fetch failed! "+TAG);
                 }
+            });
+        }else{
+            ownCommsFinished[0] = true;
+            if(topicFinished[0] && factsFinished[0]){
+                addFooter(topics,facts,ownComms,callback);
             }
-        });
+        }
+
 
     }
 

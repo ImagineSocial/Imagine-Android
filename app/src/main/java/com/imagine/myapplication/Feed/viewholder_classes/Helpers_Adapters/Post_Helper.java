@@ -110,8 +110,11 @@ public class Post_Helper {
                         }
                     }
                     Log.d(TAG,"From Post_Helper"+postList.toString());
-                    //                    getFollowedCommunities(callback);
-                    mergeAndSortPostLists(callback);
+                    if(auth.getCurrentUser() != null){
+                        getFollowedCommunities(callback);
+                    }else{
+                        mergeAndSortPostLists(callback);
+                    }
                 }
             }
         });
@@ -159,61 +162,67 @@ public class Post_Helper {
 
     public void getPostsFromCommunityIDs(final FirebaseCallback callback, ArrayList<String> commIDs){
         CollectionReference topicRef = db.collection("TopicPosts");
-
-        Query postsQuery;
-        if(lastSnapTimeSaver == null || firstFetch){
-            postsQuery = topicRef.whereIn("linkedFactID",commIDs)
-                    .whereGreaterThan("createTime",lastSnapTime);
-        }else{
-            postsQuery = topicRef.whereIn("linkedFactID",commIDs)
-                    .whereGreaterThan("createTime",lastSnapTime)
-                    .whereLessThan("createTime",lastSnapTimeSaver);
-        }
-        postsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isComplete()){
-                    QuerySnapshot result = task.getResult();
-                    if(result != null){
-                        List<DocumentSnapshot> postList = result.getDocuments();
-                        for(DocumentSnapshot docSnap : postList){
-                            switch((String)docSnap.get("type")){
-                                case "thought":
-                                    addThoughtPost(docSnap,false,false,true);
-                                    break;
-                                case "youTubeVideo":
-                                    addYouTubePost(docSnap,false,false,true);
-                                    break;
-                                case "link":
-                                    addLinkPost(docSnap,false,false,true);
-                                    break;
-                                case "GIF":
-                                    addGIFPost(docSnap,false,false,true);
-                                    break;
-                                case "picture":
-                                    addPicturePost(docSnap,false,false,true);
-                                    break;
-                                case "multiPicture":
-                                    addMultiPicturePost(docSnap,false,false,true);
-                                    break;
-                                case "translation":
-                                    addTranslationPost(docSnap,false,false,true);
-                                    break;
-                                case "repost":
-                                    addRepostPost(docSnap,false,false,true);
-                                    break;
-                                default:
-                                    addDefaulPost(docSnap,false,false,true);
-                                    break;
+        final int size = commIDs.size();
+        final int [] count = {0};
+        for(String id: commIDs){
+            Query postsQuery;
+            if(lastSnapTimeSaver == null || firstFetch){
+                postsQuery = topicRef.whereEqualTo("linkedFactID",id)
+                        .whereGreaterThan("createTime",lastSnapTime);
+            }else{
+                postsQuery = topicRef.whereEqualTo("linkedFactID",id)
+                        .whereGreaterThan("createTime",lastSnapTime)
+                        .whereLessThan("createTime",lastSnapTimeSaver);
+            }
+            postsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isComplete()){
+                        QuerySnapshot result = task.getResult();
+                        if(result != null){
+                            List<DocumentSnapshot> postList = result.getDocuments();
+                            for(DocumentSnapshot docSnap : postList){
+                                switch((String)docSnap.get("type")){
+                                    case "thought":
+                                        addThoughtPost(docSnap,false,false,true);
+                                        break;
+                                    case "youTubeVideo":
+                                        addYouTubePost(docSnap,false,false,true);
+                                        break;
+                                    case "link":
+                                        addLinkPost(docSnap,false,false,true);
+                                        break;
+                                    case "GIF":
+                                        addGIFPost(docSnap,false,false,true);
+                                        break;
+                                    case "picture":
+                                        addPicturePost(docSnap,false,false,true);
+                                        break;
+                                    case "multiPicture":
+                                        addMultiPicturePost(docSnap,false,false,true);
+                                        break;
+                                    case "translation":
+                                        addTranslationPost(docSnap,false,false,true);
+                                        break;
+                                    case "repost":
+                                        addRepostPost(docSnap,false,false,true);
+                                        break;
+                                    default:
+                                        addDefaulPost(docSnap,false,false,true);
+                                        break;
+                                }
+                            }
+                            count[0] = count[0]+1;
+                            if(count[0] == size){
+                                mergeAndSortPostLists(callback);
                             }
                         }
-                        mergeAndSortPostLists(callback);
+                    }else{
+                        System.out.println("!");
                     }
-                }else{
-                    System.out.println("!");
                 }
-            }
-        });
+            });
+        }
     }
 
     public void mergeAndSortPostLists(FirebaseCallback callback){
