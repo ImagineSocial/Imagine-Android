@@ -90,7 +90,14 @@ public class GifPostActivity extends AppCompatActivity {
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-        description_textView.setText(post.description);
+
+        ConstraintLayout descriptionView = findViewById(R.id.description_view);
+        if (post.description.equals("")) {
+            descriptionView.setVisibility(View.INVISIBLE);
+        } else {
+            String description = post.description.replace("\\n", "\n");
+            description_textView.setText(description);
+        }
         videoView.setVideoPath(post.link);
         videoView.start();
 

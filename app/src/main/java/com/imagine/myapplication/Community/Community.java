@@ -63,7 +63,8 @@ public class Community {
                 ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {  //wrong
+                        DocumentSnapshot result = task.getResult();
+                        if (result.exists()) {
                             callback.onCallback(true);
                         } else {
                             callback.onCallback(false);

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -79,7 +80,14 @@ public class ThoughtPostActivity extends AppCompatActivity {
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-        description_textView.setText(post.description);
+
+        ConstraintLayout descriptionView = findViewById(R.id.description_view);
+        if (post.description.equals("")) {
+            descriptionView.setVisibility(View.INVISIBLE);
+        } else {
+            String description = post.description.replace("\\n", "\n");
+            description_textView.setText(description);
+        }
 
         if(post.originalPoster.equals("anonym")){
             username_textView.setText("Anonym");

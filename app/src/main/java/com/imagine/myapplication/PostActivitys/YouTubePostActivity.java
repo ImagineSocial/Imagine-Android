@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,8 @@ import com.imagine.myapplication.user_classes.UserActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,6 +78,7 @@ public class YouTubePostActivity extends AppCompatActivity {
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
         TextView name_textView = findViewById(R.id.name_textView);
+        TextView description_textView = findViewById(R.id.description_tv);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         YouTubePlayerView youTubePlayerView = findViewById(R.id.youtube_player);
@@ -93,6 +97,14 @@ public class YouTubePostActivity extends AppCompatActivity {
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+
+        ConstraintLayout descriptionView = findViewById(R.id.description_view);
+        if (post.description.equals("")) {
+            descriptionView.setVisibility(View.INVISIBLE);
+        } else {
+            String description = post.description.replace("\\n", "\n");
+            description_textView.setText(description);
+        }
 
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
