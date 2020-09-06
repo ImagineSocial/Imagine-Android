@@ -110,7 +110,8 @@ public class Post_Helper {
                         }
                     }
                     Log.d(TAG,"From Post_Helper"+postList.toString());
-                    getFollowedCommunities(callback);
+                    //                    getFollowedCommunities(callback);
+                    mergeAndSortPostLists(callback);
                 }
             }
         });

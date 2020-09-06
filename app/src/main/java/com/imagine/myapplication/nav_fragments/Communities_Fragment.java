@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
@@ -66,6 +67,12 @@ public class Communities_Fragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         this.mContext = getContext();
 
+        String userID = "";
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            userID = currentUser.getUid();
+        }
+
         if(this.commList.size() == 0){
             helper.getCommunities(new CommunityCallback() {
                 @Override
@@ -73,7 +80,7 @@ public class Communities_Fragment extends Fragment{
                     commList = communities;
                     initRecyclerView(view);
                 }
-            },auth.getCurrentUser().getUid());
+            },userID);
         }
         else{
             initRecyclerView(view);
