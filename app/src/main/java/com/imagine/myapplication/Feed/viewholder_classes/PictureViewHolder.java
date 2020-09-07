@@ -27,13 +27,12 @@ public class PictureViewHolder extends CustomViewHolder {
     private static final String TAG = "PictureViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public PicturePost post;
-    public Context mContext;
     public User userObj;
     public Post_Helper helper  = new Post_Helper();
 
     public PictureViewHolder(@NonNull View itemView) {
         super(itemView);
-        mContext = itemView.getContext();
+        this.mContext = itemView.getContext();
     }
 
     public void bind(final PicturePost post){

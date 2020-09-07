@@ -29,7 +29,6 @@ public class RepostViewHolder extends CustomViewHolder{
     private static final String TAG = "RepostViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public RepostPost post;
-    public Context mContext;
     public User userObj;
     public Post_Helper helper = new Post_Helper();
 

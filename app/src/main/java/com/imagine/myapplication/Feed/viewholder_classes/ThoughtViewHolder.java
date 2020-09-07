@@ -27,7 +27,6 @@ public class ThoughtViewHolder extends CustomViewHolder {
     private static final String TAG = "ThoughtViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public ThoughtPost post;
-    public Context mContext;
     public User userObj;
     public Post_Helper helper = new Post_Helper();
 

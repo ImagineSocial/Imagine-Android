@@ -148,7 +148,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                comment = s.toString();
+                comment  = s.toString();
                 if(comment.equals("")){
                     sendComment.setAlpha(0.5f);
                     sendComment.setOnClickListener(null);
@@ -157,12 +157,12 @@ public class ThoughtPostActivity extends AppCompatActivity {
                     sendComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String comment = commentText.getText().toString();
-                            if(comment.equals("")){
-                                Toast.makeText(mContext,"Kein Text",Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(mContext,"Hat Text",Toast.LENGTH_SHORT).show();
-                            }
+                            helper.addCommentToFirebase(new CommentsCallback() {
+                                @Override
+                                public void onCallback(ArrayList<Comment> comms) {
+
+                                }
+                            },post,anonymToggle,comment);
                         }
                     });
                 }

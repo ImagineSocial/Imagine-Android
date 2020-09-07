@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,15 +38,20 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
+import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Community_Posts_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.imagine.myapplication.nav_fragments.Information_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
+import com.imagine.myapplication.notifications.Notification;
+import com.imagine.myapplication.notifications.NotificationCallback;
+import com.imagine.myapplication.notifications.NotificationsAdapter;
 import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +65,8 @@ public class MainActivity extends AppCompatActivity{
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public DrawerLayout drawer;
+    public RecyclerView noti_recyclerView;
+    public Post_Helper helper = new Post_Helper();
     public static Feed_Fragment feed_fragment;
     public static Community_Posts_Fragment commPosts_fragment;
     public static New_Post_Fragment newPosts_fragment;
@@ -100,6 +109,12 @@ public class MainActivity extends AppCompatActivity{
         //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
+        helper.getNotifictations(new NotificationCallback() {
+            @Override
+            public void onCallback(ArrayList<Notification> notifications) {
+                setUpNotifications(notifications);
+            }
+        });
     }
 
     @Override
@@ -191,6 +206,13 @@ public class MainActivity extends AppCompatActivity{
                     return true;
                 }
             };
+
+    public void setUpNotifications(ArrayList<Notification> nots){
+        this.noti_recyclerView = findViewById(R.id.notifications_recyclerView);
+        NotificationsAdapter adapter = new NotificationsAdapter(nots,mContext);
+        noti_recyclerView.setAdapter(adapter);
+        noti_recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+    }
 
     public void getUser(final String userID){
         //Fetches user information and calls setUpUserViews()

@@ -29,7 +29,6 @@ public class TranslationViewHolder extends CustomViewHolder{
     private static final String TAG = "TranslationViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public TranslationPost post;
-    public Context mContext;
     public User userObj;
     public Post_Helper helper = new Post_Helper();
 

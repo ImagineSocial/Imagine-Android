@@ -410,8 +410,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         EditText link_editText = getView().findViewById(R.id.link_editText);
         CarouselView carousel = getView().findViewById(R.id.preview_imageView);
         FirebaseUser currentUser = auth.getCurrentUser();
+        String title = title_editText.getText().toString();
         if(currentUser != null){
-            if(title_editText.getText().equals("") || title_editText.getText().equals(null)){
+            if(title.equals("") || title_editText.getText().equals(null)){
                 Toast.makeText(getContext(),"Gib bitte einen Titel ein!",duration).show();
                 this.shareButton.setEnabled(true);
             }else{

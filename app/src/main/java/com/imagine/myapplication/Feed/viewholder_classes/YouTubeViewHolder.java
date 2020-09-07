@@ -35,7 +35,6 @@ public class YouTubeViewHolder extends CustomViewHolder {
     private static final String TAG = "YouTubeViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public YouTubePost post;
-    public Context mContext;
     public User userObj;
     public Post_Helper helper = new Post_Helper();
 

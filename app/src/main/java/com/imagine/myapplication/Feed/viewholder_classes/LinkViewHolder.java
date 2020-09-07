@@ -33,7 +33,6 @@ import io.github.ponnamkarthik.richlinkpreview.RichPreview;
 public class LinkViewHolder extends CustomViewHolder {
     private static final String TAG = "LinkViewHolder";
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    public Context mContext;
     public LinkPost post;
     public User userObj;
     public Post_Helper helper = new Post_Helper();

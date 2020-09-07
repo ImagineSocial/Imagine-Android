@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,7 +16,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -28,6 +31,8 @@ import com.imagine.myapplication.Community.PostRef;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.ItemCallback;
 import com.imagine.myapplication.UserCallback;
+import com.imagine.myapplication.notifications.Notification;
+import com.imagine.myapplication.notifications.NotificationCallback;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
@@ -57,6 +62,7 @@ public class Post_Helper {
     public Timestamp lastSnapTime;
     public ArrayList<Post> postList = new ArrayList<Post>();
     public ArrayList<Post> commPostList = new ArrayList<>();
+    public ArrayList<Notification> notList;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public StorageReference storage = FirebaseStorage.getInstance().getReference();
     public ArrayList<Object> items = new ArrayList<>();
@@ -1538,5 +1544,48 @@ public class Post_Helper {
             finalString = String.format("Vor %.0f ", weeks) + unit;
         }
         return finalString;
+    }
+
+    public void getNotifictations(final NotificationCallback callback){
+        FirebaseUser user = auth.getCurrentUser();
+        this.notList = new ArrayList<>();
+        if(user == null){
+            callback.onCallback(notList);
+        }else{
+            final CollectionReference notColl = db.collection("Users").document(user.getUid())
+                    .collection("notifications");
+            notColl.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if(queryDocumentSnapshots != null){
+                        List<DocumentSnapshot> nots = queryDocumentSnapshots.getDocuments();
+                        for(DocumentSnapshot docSnap: nots){
+                            addNotification(docSnap);
+                        }
+                        callback.onCallback(notList);
+                    }else{
+                        callback.onCallback(notList);
+                    }
+                }
+            });
+
+        }
+    }
+
+    public void addNotification(DocumentSnapshot docSnap){
+        Notification not = new Notification();
+        if(docSnap == null){
+            notList.add(not);
+        }else{
+            not.message = docSnap.getString("message");
+            not.messageID = docSnap.getString("messageID");
+            not.title = docSnap.getString("title");
+            not.type = docSnap.getString("type");
+            not.chatID = docSnap.getString("chatID");
+            not.sentAt = docSnap.getTimestamp("sentAt");
+            not.button = docSnap.getString("button");
+            not.postID = docSnap.getString("postID");
+            notList.add(not);
+        }
     }
 }
