@@ -42,8 +42,10 @@ import com.imagine.myapplication.post_classes.YouTubePost;
 
 import org.w3c.dom.Document;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -682,6 +684,46 @@ public class Post_Helper {
                 }else if(task.isCanceled()){
                     System.out.println("Task Failed!");
                 }
+            }
+        });
+    }
+
+    public void addCommentToFirebase(final CommentsCallback callback, final Post post, final boolean anonym, String body){
+        DocumentReference commRef = db.collection("Comments").document(post.documentID)
+                .collection("threads").document();
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("body",body);
+        data.put("id",0);
+        data.put("sentAt",new Timestamp(new Date()));
+        if(anonym) data.put("userID","anonym");
+        else data.put("userID",auth.getCurrentUser().getUid());
+        commRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    if(anonym){
+                        addAnonymousComment(callback,post);
+                    }else{
+                        callback.onCallback(null);
+                    }
+                }else{
+                    callback.onCallback(null);
+                }
+            }
+        });
+    }
+
+    public void addAnonymousComment(final CommentsCallback callback, Post post){
+        DocumentReference anonymRef = db.collection("AnonymousPosts").document();
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("createTime",new Timestamp(new Date()));
+        data.put("documentID",post.documentID);
+        data.put("originalPoster",auth.getCurrentUser().getUid());
+        data.put("section","post");
+        anonymRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.onCallback(null);
             }
         });
     }

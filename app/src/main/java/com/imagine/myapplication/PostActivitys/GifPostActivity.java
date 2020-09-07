@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
@@ -41,6 +46,12 @@ public class GifPostActivity extends AppCompatActivity {
     public ArrayList<Comment> comments;
     public GIFPost post;
     public Context mContext;
+    public Post_Helper helper = new Post_Helper();
+    public ImageButton anonym;
+    public ImageButton sendComment;
+    public boolean anonymToggle = false;
+    public EditText commentText;
+    public String comment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +67,9 @@ public class GifPostActivity extends AppCompatActivity {
         String objString = intent.getStringExtra("post");
         Gson gson = new Gson();
         this.post = gson.fromJson(objString, GIFPost.class);
+        this.anonym = findViewById(R.id.post_commentview_anonym_button);
+        this.sendComment = findViewById(R.id.post_commentview_send_button);
+        this.commentText = findViewById(R.id.post_comment_edit_text);
     }
 
     @Override
@@ -158,6 +172,54 @@ public class GifPostActivity extends AppCompatActivity {
                         profilePicture_imageView);
             }
         }
+        anonym.setAlpha(0.5f);
+        this.anonym.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                anonymToggle = !anonymToggle;
+                if(anonymToggle){
+                    anonym.setAlpha(1f);
+                }else{
+                    anonym.setAlpha(0.5f);
+                }
+            }
+        });
+
+        sendComment.setAlpha(0.5f);
+        commentText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                comment = s.toString();
+                if(comment.equals("")){
+                    sendComment.setAlpha(0.5f);
+                    sendComment.setOnClickListener(null);
+                }else{
+                    sendComment.setAlpha(1f);
+                    sendComment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String comment = commentText.getText().toString();
+                            if(comment.equals("")){
+                                Toast.makeText(mContext,"Kein Text",Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(mContext,"Hat Text",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
     public void initRecyclerView(){

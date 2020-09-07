@@ -58,17 +58,18 @@ public class MainActivity extends AppCompatActivity{
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public DrawerLayout drawer;
-    public Feed_Fragment feed_fragment;
-    public Community_Posts_Fragment commPosts_fragment;
-    public New_Post_Fragment newPosts_fragment;
-    public Communities_Fragment comms_fragment;
-    public Information_Fragment infos_fragment;
+    public static Feed_Fragment feed_fragment;
+    public static Community_Posts_Fragment commPosts_fragment;
+    public static New_Post_Fragment newPosts_fragment;
+    public static Communities_Fragment comms_fragment;
+    public static Information_Fragment infos_fragment;
     public Activity mainActivity;
     public Context mContext;
     public Button loginButton;
     public CircleImageView imageCircle;
     public User userObj;
     public View header;
+    public Gson gson = new Gson();
 
     private static final String TAG = "MainActivity";
     @Override
@@ -311,5 +312,13 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
         }
+    }
+
+    public static void resetFragmentsAfterLogin(){
+        feed_fragment = null;
+        commPosts_fragment = null;
+        newPosts_fragment = null;
+        comms_fragment = null;
+        infos_fragment = null;
     }
 }
