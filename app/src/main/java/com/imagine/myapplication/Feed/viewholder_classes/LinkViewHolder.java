@@ -26,6 +26,7 @@ import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.LinkPost;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.ponnamkarthik.richlinkpreview.MetaData;
 import io.github.ponnamkarthik.richlinkpreview.ResponseListener;
 import io.github.ponnamkarthik.richlinkpreview.RichPreview;
@@ -111,6 +112,12 @@ public class LinkViewHolder extends CustomViewHolder {
                 itemView.getContext().startActivity(intent);
             }
         });
+
+        CircleImageView topicPostImageView = itemView.findViewById(R.id.topicPostImageView);
+        if (post.isTopicPost) {
+            topicPostImageView.setVisibility(View.VISIBLE);
+        }
+
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
         if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
             options.setVisibility(View.VISIBLE);

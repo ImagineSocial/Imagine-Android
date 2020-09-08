@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,9 +11,7 @@
     android:layout_marginRight="10dp"
     android:layout_marginBottom="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:background="@drawable/cell_background_shape"
         android:id="@+id/content_view"
         android:layout_width="match_parent"
@@ -53,6 +52,7 @@
             app:layout_constraintStart_toStartOf="@+id/name_textView"
             app:layout_constraintTop_toBottomOf="@+id/name_textView" />
 
+
         <ImageView
             android:id="@+id/topicImageView"
             android:layout_width="30dp"
@@ -66,6 +66,19 @@
             app:layout_constraintEnd_toStartOf="@+id/feed_menu_button"
             app:layout_constraintStart_toEndOf="@+id/name_textView"
             app:layout_constraintTop_toTopOf="@+id/profile_picture_imageView" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/topicPostImageView"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/community_post_icon"
+            android:translationX="-10dp"
+            android:translationY="-10dp"
+            android:visibility="invisible"
+            app:civ_circle_background_color="@android:color/white"
+            app:layout_constraintStart_toEndOf="@+id/topicImageView"
+            app:layout_constraintTop_toBottomOf="@+id/topicImageView" />
+
 
         <ImageButton
             android:id="@+id/feed_menu_button"

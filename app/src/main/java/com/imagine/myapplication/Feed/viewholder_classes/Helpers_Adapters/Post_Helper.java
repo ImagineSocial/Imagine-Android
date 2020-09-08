@@ -192,31 +192,31 @@ public class Post_Helper {
                             for(DocumentSnapshot docSnap : postList){
                                 switch((String)docSnap.get("type")){
                                     case "thought":
-                                        addThoughtPost(docSnap,false,false,true);
+                                        addThoughtPost(docSnap,true,false,true);
                                         break;
                                     case "youTubeVideo":
-                                        addYouTubePost(docSnap,false,false,true);
+                                        addYouTubePost(docSnap,true,false,true);
                                         break;
                                     case "link":
-                                        addLinkPost(docSnap,false,false,true);
+                                        addLinkPost(docSnap,true,false,true);
                                         break;
                                     case "GIF":
-                                        addGIFPost(docSnap,false,false,true);
+                                        addGIFPost(docSnap,true,false,true);
                                         break;
                                     case "picture":
-                                        addPicturePost(docSnap,false,false,true);
+                                        addPicturePost(docSnap,true,false,true);
                                         break;
                                     case "multiPicture":
-                                        addMultiPicturePost(docSnap,false,false,true);
+                                        addMultiPicturePost(docSnap,true,false,true);
                                         break;
                                     case "translation":
-                                        addTranslationPost(docSnap,false,false,true);
+                                        addTranslationPost(docSnap,true,false,true);
                                         break;
                                     case "repost":
-                                        addRepostPost(docSnap,false,false,true);
+                                        addRepostPost(docSnap,true,false,true);
                                         break;
                                     default:
-                                        addDefaulPost(docSnap,false,false,true);
+                                        addDefaulPost(docSnap,true,false,true);
                                         break;
                                 }
                             }

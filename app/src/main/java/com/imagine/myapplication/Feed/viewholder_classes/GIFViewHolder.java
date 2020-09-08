@@ -33,6 +33,8 @@ import com.imagine.myapplication.post_classes.GIFPost;
 import java.net.CacheRequest;
 import java.util.LinkedHashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class GIFViewHolder extends CustomViewHolder {
     private static final String TAG = "GIFViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -58,6 +60,7 @@ public class GIFViewHolder extends CustomViewHolder {
         TextView name_textView = itemView.findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
+
         final VideoView videoView = itemView.findViewById(R.id.gif_videoView);
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
@@ -130,6 +133,12 @@ public class GIFViewHolder extends CustomViewHolder {
         } else {
             options.setVisibility(View.INVISIBLE);
         }
+
+        CircleImageView topicPostImageView = itemView.findViewById(R.id.topicPostImageView);
+        if (post.isTopicPost) {
+            topicPostImageView.setVisibility(View.VISIBLE);
+        }
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

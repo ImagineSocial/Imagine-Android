@@ -3,12 +3,14 @@ package com.imagine.myapplication.Community;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -44,9 +46,13 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
         this.addon = addon;
         TextView title = itemView.findViewById(R.id.community_addon_title);
         TextView description = itemView.findViewById(R.id.community_addon_description);
+        ImageView headerImageView = itemView.findViewById(R.id.addOn_title_imageView);
         this.recyclerView = itemView.findViewById(R.id.community_addon_recyclerView);
         title.setText(addon.title);
         description.setText(addon.description);
+        if (addon.imageURL != null && !addon.imageURL.equals("")) {
+            Glide.with(itemView).load(addon.imageURL).into(headerImageView);
+        }
         this.fetchItemList();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

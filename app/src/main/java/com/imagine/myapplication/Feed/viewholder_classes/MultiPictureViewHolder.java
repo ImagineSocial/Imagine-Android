@@ -28,6 +28,8 @@ import com.imagine.myapplication.post_classes.MultiPicturePost;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MultiPictureViewHolder extends  CustomViewHolder {
     private static final String TAG = "MultiPictureViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -99,6 +101,12 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 itemView.getContext().startActivity(intent);
             }
         });
+
+        CircleImageView topicPostImageView = itemView.findViewById(R.id.topicPostImageView);
+        if (post.isTopicPost) {
+            topicPostImageView.setVisibility(View.VISIBLE);
+        }
+
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
         if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
             options.setVisibility(View.VISIBLE);

@@ -47,10 +47,9 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
 
     public void bindPicturePost(final PicturePost post){
         this.title = itemView.findViewById(R.id.community_item_title);
-        this.description = itemView.findViewById(R.id.community_item_description);
         this.image = itemView.findViewById(R.id.community_item_image);
+        image.setClipToOutline(true);
         title.setText(this.post.title);
-        description.setText(this.post.description);
         Glide.with(itemView).load(this.post.imageURL).into(image);
         if(post.user == null){
             helper.getUser(post.originalPoster, new UserCallback() {

@@ -31,6 +31,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class YouTubeViewHolder extends CustomViewHolder {
     private static final String TAG = "YouTubeViewHolder";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -92,6 +94,12 @@ public class YouTubeViewHolder extends CustomViewHolder {
                 itemView.getContext().startActivity(intent);
             }
         });
+
+        CircleImageView topicPostImageView = itemView.findViewById(R.id.topicPostImageView);
+        if (post.isTopicPost) {
+            topicPostImageView.setVisibility(View.VISIBLE);
+        }
+
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
         if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
             options.setVisibility(View.VISIBLE);

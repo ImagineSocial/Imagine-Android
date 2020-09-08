@@ -87,7 +87,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/comment_answer_view"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:background="#F2F2F8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,16 +99,17 @@
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/corner_4_background_white"
             app:layout_constraintBottom_toBottomOf="@id/comment_answer_view"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/post_commentview_send_button"
             app:layout_constraintStart_toEndOf="@+id/post_commentview_anonym_button"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/post_commentview_anonym_button"
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
@@ -122,7 +123,7 @@
 
         <ImageButton
             android:id="@+id/post_commentview_send_button"
-            android:layout_width="25dp"
+            android:layout_width="20dp"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
