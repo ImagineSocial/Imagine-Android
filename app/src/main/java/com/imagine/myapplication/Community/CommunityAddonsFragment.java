@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -66,8 +67,8 @@ public class CommunityAddonsFragment extends Fragment {
     }
 
     public void fetchTheAddons(){
-        CollectionReference ref = db.collection("Facts").document(this.community.topicID)
-                .collection("addOns");
+        Query ref = db.collection("Facts").document(this.community.topicID)
+                .collection("addOns").orderBy("popularity", Query.Direction.DESCENDING);
         ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

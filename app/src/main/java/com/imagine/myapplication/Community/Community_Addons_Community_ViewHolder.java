@@ -29,6 +29,12 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
         this.addon = addon;
         this.recyclerView = itemView.findViewById(R.id.community_addon_recyclerView);
         fetchCommunity(addon.linkedFactID);
+        TextView title = itemView.findViewById(R.id.community_addon_title);
+        TextView description = itemView.findViewById(R.id.community_addon_description);
+
+        title.setText(addon.headerTitle);
+        description.setText(addon.description);
+
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,10 +72,25 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
         }else{
             Glide.with(itemView).load(R.drawable.fact_stamp).into(image);
         }
-        TextView title = itemView.findViewById(R.id.community_addon_title);
-        TextView description = itemView.findViewById(R.id.community_addon_description);
+        TextView title = itemView.findViewById(R.id.community_addOn_community_title);
+        TextView description = itemView.findViewById(R.id.community_addOn_community_description);
+        final TextView followerCountLabel = itemView.findViewById(R.id.addOn_community_followerCount_label);
+        final TextView postCountLabel = itemView.findViewById(R.id.addOn_community_postCount_label);
         title.setText(comm.name);
         description.setText(comm.description);
+
+        comm.getPostCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                postCountLabel.setText("Beiträge: "+count);
+            }
+        });
+        comm.getFollowerCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                followerCountLabel.setText("Follower: "+count);
+            }
+        });
     }
 
     public void fetchCommunityPosts(){

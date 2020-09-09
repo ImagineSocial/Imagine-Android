@@ -1585,6 +1585,8 @@ public class Post_Helper {
             not.sentAt = docSnap.getTimestamp("sentAt");
             not.button = docSnap.getString("button");
             not.postID = docSnap.getString("postID");
+            not.comment = docSnap.getString("comment");
+            not.friendRequestName = docSnap.getString("name");
             notList.add(not);
         }
     }
