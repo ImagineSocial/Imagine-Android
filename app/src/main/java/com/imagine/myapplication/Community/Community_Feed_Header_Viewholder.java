@@ -93,7 +93,7 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
                 String commString = gson.toJson(community);
                 intent.putExtra("Comm",commString);
                 itemView.getContext().startActivity(intent);
-                
+
             }
         });
 
