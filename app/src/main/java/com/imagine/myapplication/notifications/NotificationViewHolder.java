@@ -16,7 +16,19 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
     public void bind(Notification not){
         TextView title = itemView.findViewById(R.id.notification_title_textView);
         TextView body = itemView.findViewById(R.id.notification_body_titleView);
-        title.setText(not.title);
-        body.setText(not.message);
+
+        body.setText(not.title);
+
+        switch (not.type) {
+            case "upvote":
+                title.setText("Dein Bild wurde geliked:");
+                break;
+            case "comment":
+                title.setText("Dein Beitrag wurde kommentiert:");
+                body.setText(not.comment);
+            case "friend":
+                title.setText("Du hast eine Freundschaftsanfrage:");
+                body.setText(not.friendRequestName+" möchte mit dir befreundet sein");
+        }
     }
 }

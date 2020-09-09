@@ -12,4 +12,6 @@ public class Notification {
     public Timestamp sentAt;
     public String button;
     public String postID;
+    public String comment;
+    public String friendRequestName;
 }
