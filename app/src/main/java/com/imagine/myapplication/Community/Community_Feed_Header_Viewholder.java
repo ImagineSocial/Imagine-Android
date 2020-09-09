@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
 import com.imagine.myapplication.R;
 
@@ -86,6 +88,12 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(itemView.getContext(),Community_New_Post.class);
+                Gson gson = new Gson();
+                String commString = gson.toJson(community);
+                intent.putExtra("Comm",commString);
+                itemView.getContext().startActivity(intent);
+                
             }
         });
 
