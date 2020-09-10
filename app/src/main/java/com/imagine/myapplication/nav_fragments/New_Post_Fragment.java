@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.health.SystemHealthManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,6 +49,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.imagine.myapplication.Community.Community;
+import com.imagine.myapplication.Community.Community_New_Post;
 import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Post_Fragment_Classes.LinkPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.MultiPictureFragment;
@@ -93,6 +96,17 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public final int COMMUNITY_PICK = 4;
     public Button shareButton;
     public View view;
+    public Community comm;
+    public Community_New_Post new_post_activity;
+
+    public New_Post_Fragment(){
+
+    }
+
+    public New_Post_Fragment(Community_New_Post new_post_activity, Community comm){
+        this.new_post_activity = new_post_activity;
+        this.comm = comm;
+    }
 
     @Nullable
     @Override
@@ -163,6 +177,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         });
 
         setThought();
+        if(this.comm != null && this.new_post_activity != null){
+            this.setUpCommunityViews();
+        }
     }
 
     @Override
@@ -485,6 +502,15 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
         intent.setType("image/*");
         startActivityForResult(intent,this.MULTIPLE_IMAGES);
+    }
+
+    public void setUpCommunityViews(){
+        ImageView commPreview = view.findViewById(R.id.linkedCommunity_imageView);
+        if(this.comm.imageURL != null){
+            Glide.with(this.view).load(comm.imageURL).into(commPreview);
+        }else{
+            System.out.println("!");
+        }
     }
 
     public void takePhotoFromCamera(){

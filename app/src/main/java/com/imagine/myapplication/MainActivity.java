@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity{
         //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
-        helper.getNotifictations(new NotificationCallback() {
+        /*helper.getNotifictations(new NotificationCallback() {
             @Override
             public void onCallback(ArrayList<Notification> notifications) {
                 setUpNotifications(notifications);
             }
-        });
+        });*/
     }
 
     @Override

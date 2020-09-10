@@ -91,7 +91,7 @@ public class Community_Feed_Header_Viewholder extends CustomViewHolder {
                 Intent intent = new Intent(itemView.getContext(),Community_New_Post.class);
                 Gson gson = new Gson();
                 String commString = gson.toJson(community);
-                intent.putExtra("Comm",commString);
+                intent.putExtra("comm",commString);
                 itemView.getContext().startActivity(intent);
 
             }
