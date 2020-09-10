@@ -109,12 +109,14 @@ public class MainActivity extends AppCompatActivity{
         //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
-        /*helper.getNotifictations(new NotificationCallback() {
+        helper.getNotifictations(new NotificationCallback() {
             @Override
             public void onCallback(ArrayList<Notification> notifications) {
-                setUpNotifications(notifications);
+                if(notifications != null){
+                    setUpNotifications(notifications);
+                }
             }
-        });*/
+        });
     }
 
     @Override
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity{
             };
 
     public void setUpNotifications(ArrayList<Notification> nots){
-        this.noti_recyclerView = findViewById(R.id.notifications_recyclerView);
+        this.noti_recyclerView = header.findViewById(R.id.notifications_recyclerView);
         NotificationsAdapter adapter = new NotificationsAdapter(nots,mContext);
         noti_recyclerView.setAdapter(adapter);
         noti_recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

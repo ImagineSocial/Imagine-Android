@@ -64,6 +64,8 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.CarouselViewPager;
 import com.synnapps.carouselview.ImageListener;
 
+import org.w3c.dom.Document;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -133,7 +135,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         pictureFolder_button.setOnClickListener(this);
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
         pictureCamera_button.setOnClickListener(this);
-        Button shareButton = getView().findViewById(R.id.share_button);
+        this.shareButton = getView().findViewById(R.id.share_button);
         shareButton.setOnClickListener(this);
         Button commLinker = getView().findViewById(R.id.linkCommunity_button);
         commLinker.setOnClickListener(this);
@@ -495,7 +497,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 Toast.makeText(getContext(),"Gib bitte einen Titel ein!",duration).show();
                 this.shareButton.setEnabled(true);
             }else{
-                DocumentReference docRef = db.collection("Posts").document();
+                DocumentReference docRef;
+                if(this.comm != null && this.new_post_activity != null){
+                    docRef = db.collection("TopicPosts").document();
+                }else{
+                    docRef = db.collection("Posts").document();
+                }
                 System.out.println("Das ist die Post ID:" + docRef.getId()+" "+TAG);
                 switch(type){
                     case "picture":
@@ -868,6 +875,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     if (linkedFactID != null) {
                         uploadCommunityData(docRef, linkedFactID);
                     }
+                    if(comm != null && new_post_activity != null){
+                        uploadCommunityData(docRef, comm.topicID);
+                    }
                     uploadUserData(docRef);
                     System.out.println("Post erfolgreich erstellt!");
                     postedSuccessful();
@@ -885,6 +895,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         Timestamp timestamp = new Timestamp(new Date());
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);
+        if(this.comm != null && this.new_post_activity != null){
+            data.put("type", "topicPost");
+        }
         communityRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -906,6 +919,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         Timestamp timestamp = new Timestamp(new Date());
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);
+        if(this.comm != null && this.new_post_activity != null){
+            data.put("type", "topicPost");
+        }
         userRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
