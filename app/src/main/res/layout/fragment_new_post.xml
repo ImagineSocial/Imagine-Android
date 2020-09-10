@@ -18,7 +18,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ibm_medium"
-            android:text="Community:"
+            android:text="Ziel:"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -234,11 +234,25 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:background="#FFF"
             android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="@+id/linkCommunity_button"
+            app:layout_constraintEnd_toStartOf="@+id/preview_imageView"
             app:layout_constraintTop_toBottomOf="@+id/picture_label"
             app:srcCompat="@drawable/folder" />
+
+        <ImageButton
+            android:id="@+id/newPost_dismiss_choosen_community_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/newPost_linkCommunity_infoButton"
+            app:layout_constraintEnd_toStartOf="@+id/newPost_linkCommunity_infoButton"
+            app:layout_constraintTop_toTopOf="@+id/newPost_linkCommunity_infoButton"
+            app:srcCompat="@drawable/dismiss_icon"
+            android:visibility="invisible"/>
 
         <com.synnapps.carouselview.CarouselView
             android:id="@+id/preview_imageView"
@@ -255,14 +269,14 @@
             android:id="@+id/share_button"
             android:layout_width="85dp"
             android:layout_height="35dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="35dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_border"
             android:text="Teilen"
             app:layout_constraintBottom_toTopOf="@+id/view2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/newPost_linkCommunity_infoButton" />
 
         <View
             android:id="@+id/view2"
@@ -298,41 +312,42 @@
 
         <Button
             android:id="@+id/linkCommunity_button"
-            android:layout_width="165dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_border"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/ibm_medium"
+            android:gravity="center"
             android:text="Community verlinken"
+            android:textAllCaps="false"
             android:textColor="#5076A9"
             android:textSize="13sp"
-            app:layout_constraintStart_toEndOf="@+id/picture_label2"
-            app:layout_constraintTop_toBottomOf="@+id/picture_label2" />
+            app:layout_constraintBottom_toBottomOf="@+id/newPost_destination_imageView"
+            app:layout_constraintEnd_toStartOf="@+id/newPost_linkCommunity_infoButton"
+            app:layout_constraintTop_toTopOf="@+id/newPost_destination_imageView" />
 
         <ImageView
             android:id="@+id/linkedCommunity_imageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="20dp"
-            android:scaleType="centerCrop"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/corner_radius_three"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="@+id/linkCommunity_button"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/newPost_dismiss_choosen_community_button"
             app:layout_constraintTop_toTopOf="@+id/linkCommunity_button"
             app:layout_constraintVertical_bias="0.6" />
 
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/ibm_light"
-            android:text="Verlinke eine Community um deinen Beitrag mit einer Interessensgemeinschaft zu teilen. Du findest deinen Beitrag im Haupt-Feed und in der jeweiligen Community."
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="@+id/linkedCommunity_imageView"
-            app:layout_constraintStart_toStartOf="@+id/linkCommunity_button"
-            app:layout_constraintTop_toBottomOf="@+id/linkedCommunity_imageView" />
+            android:id="@+id/linkedCommunity_label"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="@+id/linkedCommunity_imageView"
+            app:layout_constraintEnd_toStartOf="@+id/linkedCommunity_imageView"
+            app:layout_constraintTop_toTopOf="@+id/linkedCommunity_imageView" />
 
         <TextView
             android:id="@+id/titleCharacterLimit_textView"
@@ -346,5 +361,40 @@
             android:textSize="10sp"
             app:layout_constraintBottom_toTopOf="@+id/view5"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/newPost_destination_imageView"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            android:tint="@android:color/secondary_text_light"
+            app:layout_constraintStart_toStartOf="@+id/picture_label2"
+            app:layout_constraintTop_toBottomOf="@+id/picture_label2"
+            app:srcCompat="@drawable/feed_icon" />
+
+        <TextView
+            android:id="@+id/newPost_destination_label"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="center"
+            android:text="Feed"
+            app:layout_constraintBottom_toBottomOf="@+id/newPost_destination_imageView"
+            app:layout_constraintStart_toEndOf="@+id/newPost_destination_imageView"
+            app:layout_constraintTop_toTopOf="@+id/newPost_destination_imageView" />
+
+        <ImageButton
+            android:id="@+id/newPost_linkCommunity_infoButton"
+            android:layout_width="20dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="5dp"
+            android:background="@android:color/transparent"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/newPost_destination_imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picture_label2"
+            app:srcCompat="@drawable/info_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

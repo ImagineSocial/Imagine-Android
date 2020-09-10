@@ -48,15 +48,12 @@ public class Community_Picker_ViewHolder extends RecyclerView.ViewHolder {
 
     public void bindTopic(final Community comm, final CommunityPickActivity parent){
         TextView title_tv = itemView.findViewById(R.id.comm_title);
-        TextView description_tv = itemView.findViewById(R.id.comm_description);
         ImageView imageView = itemView.findViewById(R.id.comm_picture);
         ConstraintLayout contentView = itemView.findViewById(R.id.community_content_view);
         contentView.setClipToOutline(true);
         final String name = comm.name;
-        final String description = comm.description;
         final String imageURL = comm.imageURL;
         title_tv.setText(name);
-        description_tv.setText(description);
         if(imageURL != null) {
             Glide.with(itemView).load(imageURL).into(imageView);
         } else {

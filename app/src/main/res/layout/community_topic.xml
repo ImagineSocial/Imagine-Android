@@ -30,29 +30,11 @@
             app:autoSizeMinTextSize="8sp"
             app:autoSizeStepGranularity="1sp"
             app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toTopOf="@+id/comm_description"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/comm_picture"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/comm_picture" />
 
-        <TextView
-            android:id="@+id/comm_description"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="2dp"
-            android:background="#EFEFEF"
-            android:fontFamily="@font/ibm_regular"
-            android:text=""
-            android:textColor="#707176"
-            app:autoSizeMaxTextSize="13sp"
-            app:autoSizeMinTextSize="7sp"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/comm_title" />
 
 
         <ImageView

@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -131,10 +133,13 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         pictureFolder_button.setOnClickListener(this);
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
         pictureCamera_button.setOnClickListener(this);
-        shareButton = getView().findViewById(R.id.share_button);
+        Button shareButton = getView().findViewById(R.id.share_button);
         shareButton.setOnClickListener(this);
         Button commLinker = getView().findViewById(R.id.linkCommunity_button);
         commLinker.setOnClickListener(this);
+        ImageButton infoButton = getView().findViewById(R.id.newPost_linkCommunity_infoButton);
+        infoButton.setOnClickListener(this);
+
         CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
         preview_imageView.setImageListener(new ImageListener() {
             @Override
@@ -193,6 +198,15 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         newPictureButton.setAlpha(fullAlpha);
         newLinkButton.setAlpha(fullAlpha);
         newGIFButton.setAlpha(fullAlpha);
+
+        //Change Community Stuff
+        Button commLinker = getView().findViewById(R.id.linkCommunity_button);
+        ImageView communityPreview = getView().findViewById(R.id.linkedCommunity_imageView);
+        TextView communityPreviewLabel = getView().findViewById(R.id.linkedCommunity_label);
+        ImageButton dismissCommunityButton = getView().findViewById(R.id.newPost_dismiss_choosen_community_button);
+        ImageView destinationImageView = getView().findViewById(R.id.newPost_destination_imageView);
+        TextView destinationLabel = getView().findViewById(R.id.newPost_destination_label);
+
         switch (v.getId()) {
             case R.id.new_thought_button:
                 newThoughtButton.setAlpha(halfAlpha);
@@ -247,6 +261,25 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 Intent intent = new Intent(getContext(), CommunityPickActivity.class);
                 startActivityForResult(intent,COMMUNITY_PICK);
                 break;
+            case R.id.newPost_linkCommunity_infoButton:
+                new AlertDialog.Builder(getContext())
+                        .setMessage("Standardmäßig postest du im Imagine Feed. Poste hier alles, was " +
+                                "du mit der Welt teilen möchtest.\n\nWählst du eine Community aus, kannst du entscheiden," +
+                                " ob du deinen Beitrag im Imagine Feed teilst oder nur in einer Community. Die Follower einer Community sehen dann deinen Beitrag" +
+                                " in ihrem angepassten Imagine-Feed.\nPoste in der Community also alles, was sehr themenspezifisch ist oder nicht für die breite Masse zugänglich ist.")
+                        .show();
+                break;
+            case R.id.newPost_dismiss_choosen_community_button:
+                this.linkedFactID = null;
+                commLinker.setVisibility(View.VISIBLE);
+                communityPreview.setImageBitmap(null);
+                communityPreviewLabel.setText(null);
+                dismissCommunityButton.setVisibility(View.INVISIBLE);
+
+                Drawable res = getResources().getDrawable(R.drawable.feed_icon, null);
+                destinationImageView.setImageDrawable(res);
+                destinationLabel.setText("Feed");
+                break;
             default:
                 break;
         }
@@ -267,8 +300,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         // is called when the gallery, camera or communitypicker intent return with a result
         super.onActivityResult(requestCode, resultCode, data);
         ImageView communityPreview = getView().findViewById(R.id.linkedCommunity_imageView);
+        TextView communityPreviewLabel = getView().findViewById(R.id.linkedCommunity_label);
+        ImageButton dismissCommunityButton = getView().findViewById(R.id.newPost_dismiss_choosen_community_button);
+        Button chooseCommunityButton = getView().findViewById(R.id.linkCommunity_button);
         CarouselView carouselView = getView().findViewById(R.id.preview_imageView);
         Button new_picture_button = getView().findViewById(R.id.new_picture_button);
+        final ImageView destinationImageView = getView().findViewById(R.id.newPost_destination_imageView);
+        final TextView destinationLabel = getView().findViewById(R.id.newPost_destination_label);
+
         communityPreview.setClipToOutline(true);
         switch(requestCode){
             case GALLERY:
@@ -412,7 +451,30 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     String imageURL = data.getStringExtra("imageURL");
                     String commID = data.getStringExtra("commID");
                     this.linkedFactID = commID;
+
+                    dismissCommunityButton.setVisibility(View.VISIBLE);
+                    dismissCommunityButton.setOnClickListener(this);
+                    chooseCommunityButton.setVisibility(View.INVISIBLE);
+                    communityPreviewLabel.setText(name);
                     Glide.with(getView()).load(imageURL).into(communityPreview);
+
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Wo möchtest du posten?")
+                            .setMessage("Möchtest du den Beitrag mit allen im Hauptfeed teilen, oder nur in der Community posten?")
+                            .setPositiveButton("Mit allen teilen", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //passiert eigentlich nichts?
+                                }
+                            })
+                            .setNegativeButton("Mit der Community teilen", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Drawable res = getResources().getDrawable(R.drawable.community_post_icon, null);
+                                    destinationImageView.setImageDrawable(res);
+                                    destinationLabel.setText("Community");
+                                }
+                            })
+                            .show();
                 }
                 break;
         }
@@ -506,6 +568,19 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     public void setUpCommunityViews(){
         ImageView commPreview = view.findViewById(R.id.linkedCommunity_imageView);
+        commPreview.setClipToOutline(true);
+        TextView communityPreviewLabel = getView().findViewById(R.id.linkedCommunity_label);
+        Button chooseCommunityButton = getView().findViewById(R.id.linkCommunity_button);
+        ImageView destinationImageView = getView().findViewById(R.id.newPost_destination_imageView);
+        TextView destinationLabel = getView().findViewById(R.id.newPost_destination_label);
+
+        this.linkedFactID = this.comm.topicID;
+        chooseCommunityButton.setVisibility(View.INVISIBLE);
+        communityPreviewLabel.setText(this.comm.name);
+        Drawable res = getResources().getDrawable(R.drawable.community_post_icon, null);
+        destinationImageView.setImageDrawable(res);
+        destinationLabel.setText("Community");
+
         if(this.comm.imageURL != null){
             Glide.with(this.view).load(comm.imageURL).into(commPreview);
         }else{
@@ -516,9 +591,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
     public void takePhotoFromCamera(){
         // start the camera intent
         ContentValues values = new ContentValues();
-        values.put(MediaStore.Images.Media.TITLE,"Kamera Test");
+        values.put(MediaStore.Images.Media.TITLE,"camera_imagine");
         values.put(MediaStore.Images.Media.DESCRIPTION,
-                "Mit App aufgenommen!");
+                "Captured with the imagine app!");
         values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         imageUri = getContext().getContentResolver().insert(MediaStore.Images.Media
                 .EXTERNAL_CONTENT_URI,values);
