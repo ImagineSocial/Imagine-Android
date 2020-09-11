@@ -1,5 +1,6 @@
 package com.imagine.myapplication.Community;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +39,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public String commID;
     public String displayOption;
     public Communities_Fragment fragment;
+    public Context mContext;
 
     //Header
     public Button followButton;
@@ -49,6 +51,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager_test);
+        mContext = this;
         Intent intent = getIntent();
         this.name = intent.getStringExtra("name");
         this.description = intent.getStringExtra("description");
@@ -122,11 +125,11 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                Intent intent = new Intent(itemView.getContext(),Community_New_Post.class);
-//                Gson gson = new Gson();
-//                String commString = gson.toJson(community);
-//                intent.putExtra("comm",commString);
-//                this.getContext().startActivity(intent);
+                Intent intent = new Intent(mContext,Community_New_Post.class);
+                Gson gson = new Gson();
+                String commString = gson.toJson(community);
+                intent.putExtra("comm",commString);
+                mContext.startActivity(intent);
 
             }
         });
