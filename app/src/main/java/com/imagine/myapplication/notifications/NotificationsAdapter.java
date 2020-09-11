@@ -40,4 +40,8 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationViewH
     public int getItemCount() {
         return nots.size();
     }
+
+    public void resetNotifications(){
+        this.nots = new ArrayList<>();
+    }
 }

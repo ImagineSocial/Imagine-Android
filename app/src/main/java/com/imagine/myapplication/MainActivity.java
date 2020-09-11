@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity{
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public DrawerLayout drawer;
     public RecyclerView noti_recyclerView;
+    public NotificationsAdapter adapter;
     public Post_Helper helper = new Post_Helper();
     public static Feed_Fragment feed_fragment;
     public static Community_Posts_Fragment commPosts_fragment;
@@ -126,7 +128,18 @@ public class MainActivity extends AppCompatActivity{
         final FirebaseUser user = auth.getCurrentUser();
         if(user != null){
                 this.getUser(user.getUid());
+
         } else{
+            if(header != null){
+                ImageView headerImage = header.findViewById(R.id.sideMenu_profilePicture);
+                TextView name = header.findViewById(R.id.sideMenu_userName);
+                name.setText("Name");
+                Glide.with(mContext).load(default_user).into(headerImage);
+            }
+            if(noti_recyclerView != null && adapter != null){
+                adapter.resetNotifications();
+                adapter.notifyDataSetChanged();
+            }
             imageCircle.setVisibility(View.INVISIBLE);
             loginButton.setVisibility(View.VISIBLE);
             loginButton.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +151,7 @@ public class MainActivity extends AppCompatActivity{
                 }
             });
         }
+
     }
 
     @Override
@@ -211,7 +225,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void setUpNotifications(ArrayList<Notification> nots){
         this.noti_recyclerView = header.findViewById(R.id.notifications_recyclerView);
-        NotificationsAdapter adapter = new NotificationsAdapter(nots,mContext);
+        this.adapter = new NotificationsAdapter(nots,mContext);
         noti_recyclerView.setAdapter(adapter);
         noti_recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
     }

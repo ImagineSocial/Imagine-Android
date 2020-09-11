@@ -61,6 +61,7 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
                     public void onClick(View v) {
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         auth.signOut();
+                        activity.finish();
 
 
                     }
