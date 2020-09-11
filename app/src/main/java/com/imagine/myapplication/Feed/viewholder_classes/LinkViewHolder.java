@@ -55,7 +55,10 @@ public class LinkViewHolder extends CustomViewHolder {
                 R.id.profile_picture_imageView);
         // PreView Widgets
         final ImageView preViewImage = itemView.findViewById(R.id.preView_image);
-        final TextView preViewLink = itemView.findViewById(R.id.preView_link);
+        final TextView preViewLink = itemView.findViewById(R.id.link_preView_link);
+        final TextView previewTitle = itemView.findViewById(R.id.link_preView_title);
+        final TextView previewDescription = itemView.findViewById(R.id.link_preView_description);
+
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         final View.OnClickListener listener = new View.OnClickListener() {
@@ -72,12 +75,21 @@ public class LinkViewHolder extends CustomViewHolder {
             public void onData(MetaData metaData) {
                 String imageURL = metaData.getImageurl();
                 String link = metaData.getSitename();
+                String title = metaData.getTitle();
+                String description = metaData.getDescription();
+
                 if((imageURL != null) && (!imageURL.equals(""))){
                     Glide.with(itemView).load(imageURL).into(preViewImage);
                     preViewImage.setOnClickListener(listener);
                 }
                 if((link != null) && (!link.equals(""))){
                     preViewLink.setText(link);
+                }
+                if (title != null && !title.equals("")) {
+                    previewTitle.setText(title);
+                }
+                if (description != null && !description.equals("")) {
+                    previewDescription.setText(description);
                 }
             }
             @Override
@@ -189,7 +201,7 @@ public class LinkViewHolder extends CustomViewHolder {
 
     public void resetPreview(){
         // resets the link preview when the viewholder is recycled
-        TextView linkPreviewText = itemView.findViewById(R.id.preView_link);
+        TextView linkPreviewText = itemView.findViewById(R.id.link_preView_link);
         ImageView linkPreviewImage = itemView.findViewById(R.id.preView_image);
         linkPreviewText.setText("");
         Glide.with(itemView).load(R.drawable.link_preview_image).into(linkPreviewImage);

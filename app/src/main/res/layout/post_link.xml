@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    app:cardCornerRadius="8dp"
     android:layout_marginLeft="10dp"
     android:layout_marginTop="5dp"
     android:layout_marginRight="10dp"
-    android:layout_marginBottom="5dp">
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="5dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/cell_background_shape"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/cell_background_shape">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -95,32 +94,86 @@
         <TextView
             android:id="@+id/title_textView"
             android:layout_width="0dp"
-            android:layout_height="85dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:fontFamily="@font/ibm_regular"
             android:text=""
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            app:layout_constraintEnd_toStartOf="@+id/preView_image"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/profile_picture_imageView"
             app:layout_constraintTop_toBottomOf="@+id/profile_picture_imageView" />
 
         <ImageView
             android:id="@+id/preView_image"
-            android:layout_width="110dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/corner_radius_four"
             android:backgroundTint="#FFFEFE"
             android:scaleType="centerCrop"
-            android:background="@drawable/corner_radius_four"
-            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createDate_textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_textView"
             app:srcCompat="@drawable/link_preview_image" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="#80807F7F"
+            app:layout_constraintBottom_toBottomOf="@+id/preView_image"
+            app:layout_constraintEnd_toEndOf="@+id/preView_image"
+            app:layout_constraintStart_toStartOf="@+id/preView_image">
+
+            <TextView
+                android:id="@+id/link_preView_link"
+                android:layout_width="0dp"
+                android:layout_height="14dp"
+                android:fontFamily="@font/ibm_regular"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                app:autoSizeMinTextSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/link_preView_title"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
+                android:fontFamily="@font/ibm_medium"
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                app:autoSizeMinTextSize="10sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/link_preView_link" />
+
+            <TextView
+                android:id="@+id/link_preView_description"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:fontFamily="@font/ibm_regular"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/white"
+                android:textSize="10sp"
+                app:autoSizeMinTextSize="10sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/link_preView_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -200,7 +253,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:weightSum="1"
             android:layout_width="0dp"
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
@@ -208,6 +260,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:orientation="horizontal"
+            android:weightSum="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -277,19 +330,6 @@
                 android:text=""
                 android:textAlignment="center" />
         </LinearLayout>
-        <TextView
-            android:id="@+id/preView_link"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:background="#80807F7F"
-            android:maxLines="1"
-            android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            app:autoSizeMinTextSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/preView_image"
-            app:layout_constraintEnd_toEndOf="@+id/preView_image"
-            app:layout_constraintStart_toStartOf="@+id/preView_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

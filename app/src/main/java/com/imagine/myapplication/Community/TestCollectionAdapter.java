@@ -19,24 +19,24 @@ public class TestCollectionAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if(args.get("displayOption").equals("fact")){
             if(position == 0){
-                CommunityFactsFragment fragmentOne = new CommunityFactsFragment(args);
-                return fragmentOne;
-            } else if (position == 1){
-                CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
-                return fragmentTwo;
-            } else if(position == 2) {
                 CommunityAddonsFragment fragmentThree = new CommunityAddonsFragment(args);
                 return fragmentThree;
+            } else if (position == 1){
+                CommunityFactsFragment fragmentOne = new CommunityFactsFragment(args);
+                return fragmentOne;
+            } else if(position == 2) {
+                CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
+                return fragmentTwo;
             } else{
                 return null;
             }
         } else {
             if(position == 0) {
-                CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
-                return fragmentTwo;
-            }   else if ( position == 1){
                 CommunityAddonsFragment fragment = new CommunityAddonsFragment(args);
                 return fragment;
+            }   else if ( position == 1){
+                CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
+                return fragmentTwo;
             }
 
             else{

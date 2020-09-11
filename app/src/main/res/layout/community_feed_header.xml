@@ -38,10 +38,10 @@
         android:id="@+id/comm_activity_picture"
         android:layout_width="0dp"
         android:layout_height="160dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="55dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/community_feed_tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +99,7 @@
         android:layout_width="85dp"
         android:layout_height="28dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/button_border"
         android:enabled="false"
         android:fontFamily="@font/ibm_regular"
@@ -107,16 +107,10 @@
         android:textAllCaps="false"
         android:textColor="@color/md_black_1000"
         android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/community_feed_tab_layout"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1px"
-        android:layout_marginBottom="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/textView5"
@@ -152,5 +146,27 @@
         app:layout_constraintBottom_toBottomOf="@+id/comm_background_view"
         app:layout_constraintEnd_toEndOf="@+id/comm_background_view"
         app:srcCompat="@drawable/new_post_icon" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/community_feed_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        app:tabTextAppearance="@style/CustomTapDesign"
+        app:tabIndicatorFullWidth="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Themen" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Feed" />
+
+    </com.google.android.material.tabs.TabLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

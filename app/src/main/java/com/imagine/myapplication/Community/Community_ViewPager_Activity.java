@@ -2,14 +2,29 @@ package com.imagine.myapplication.Community;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
@@ -23,6 +38,13 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public String commID;
     public String displayOption;
     public Communities_Fragment fragment;
+
+    //Header
+    public Button followButton;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser = auth.getCurrentUser();
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +56,9 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         this.commID = intent.getStringExtra("commID");
         this.displayOption = intent.getStringExtra("displayOption");
 
+        Community community = new Community(name,imageURL,commID,description);
+        setCommunityHeader(community);
+
         HashMap<String,String> args = new HashMap<>();
         args.put("name",intent.getStringExtra("name"));
         args.put("description",intent.getStringExtra("description"));
@@ -44,9 +69,149 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         TestCollectionAdapter adapter = new TestCollectionAdapter(this,args);
         viewPager2.setAdapter(adapter);
         if(intent.getStringExtra("displayOption").equals("fact")){
-            viewPager2.setCurrentItem(0);
+            viewPager2.setCurrentItem(1);
         }else{
-            viewPager2.setCurrentItem(0);
+            viewPager2.setCurrentItem(1);
+        }
+    }
+
+    public void setCommunityHeader(final Community community) {
+        TextView title_tv = findViewById(R.id.comm_activity_title);
+        TextView description_tv = findViewById(R.id.comm_activity_description);
+        ImageView image_iv = findViewById(R.id.comm_activity_picture);
+        View backgroundView = findViewById(R.id.comm_background_view);
+        ImageButton newPostButton = findViewById(R.id.community_new_post_button);
+        final Button followButton = findViewById(R.id.community_follow_button);
+        this.followButton = followButton;
+        final TextView followerCountLabel = findViewById(R.id.comm_header_follower_label);
+        final TextView postCountLabel = findViewById(R.id.comm_header_post_count_label);
+        backgroundView.setClipToOutline(true);
+        image_iv.setClipToOutline(true);
+        title_tv.setText(community.name);
+        description_tv.setText(community.description);
+
+        if(community.imageURL == null || community.imageURL.equals("")){
+            Glide.with(this).load(R.drawable.placeholder_picture).into(image_iv);
+        }else{
+            Glide.with(this).load(community.imageURL).into(image_iv);
+        }
+
+        community.checkIfCommunityIsFollowed(new BooleanCallback() {
+            @Override
+            public void onCallback(Boolean bool) {
+                followButton.setEnabled(true);
+                if (bool) {
+                    followButton.setText("Unfollow");
+                    community.isBeingFollowed = true;
+                }
+            }
+        });
+
+        followButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (community.isBeingFollowed) {
+                    unfollowCommunityTapped(community);
+                } else {
+                    followCommunityTapped(community);
+                }
+            }
+        });
+
+        newPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                Intent intent = new Intent(itemView.getContext(),Community_New_Post.class);
+//                Gson gson = new Gson();
+//                String commString = gson.toJson(community);
+//                intent.putExtra("comm",commString);
+//                this.getContext().startActivity(intent);
+
+            }
+        });
+
+        community.getFollowerCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                followerCountLabel.setText(count+"");
+            }
+        });
+        community.getPostCount(new IntegerCallback() {
+            @Override
+            public void onCallback(int count) {
+                postCountLabel.setText(count+"");
+            }
+        });
+    }
+
+    public void followCommunityTapped(final Community community) {
+        if (currentUser != null) {
+            DocumentReference topicRef = db.collection("Users").document(currentUser.getUid()).collection("topics").document(community.topicID);
+
+            HashMap<String,Object> dataMap = new HashMap<>();
+            dataMap.put("createDate", Timestamp.now());
+            topicRef.set(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        updateFollowerCount(community,true);
+                        followButton.setText("Unfollow");
+                        community.isBeingFollowed = true;
+                    }
+                }
+            });
+        }
+    }
+
+    public void unfollowCommunityTapped(final Community community) {
+        if (currentUser != null) {
+            DocumentReference topicRef = db.collection("Users").document(currentUser.getUid()).collection("topics").document(community.topicID);
+            topicRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        community.isBeingFollowed = false;
+                        updateFollowerCount(community, false);
+                        followButton.setText("Follow");
+                    } else {
+                        System.out.println("####Not deleted community");
+                    }
+                }
+            });
+        }
+    }
+
+    public void updateFollowerCount(Community community, Boolean follow) {
+        if (currentUser != null) {
+            DocumentReference ref = db.collection("Facts").document(community.topicID);
+
+            if (follow) {
+                ref.update("follower", FieldValue.arrayUnion(currentUser.getUid()))
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    System.out.println("Community follow list updated! ");
+                                } else if(task.isCanceled()){
+                                    System.out.println("Community follow list update failed! ");
+                                }
+                            }
+                        });
+            } else {
+                ref.update("follower", FieldValue.arrayRemove(currentUser.getUid()))
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()){
+                                    System.out.println("Community follow list updated! ");
+                                } else if(task.isCanceled()){
+                                    System.out.println("Community follow list failed! ");
+                                }
+                            }
+                        });
+            }
+
         }
     }
 }

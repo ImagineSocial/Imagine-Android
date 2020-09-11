@@ -38,11 +38,16 @@ public class CommunityFactsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        final TextView proCountLabel = view.findViewById(R.id.comm_facts_prosCount);
+        final TextView conCountLabel = view.findViewById(R.id.comm_facts_consCount);
+
         Communities_Helper communities_helper = new Communities_Helper();
         communities_helper.getProArguments(args.get("commID"), new ArgumentsCallback() {
             @Override
             public void onCallback(ArrayList<Argument> args) {
                 pros = args;
+                proCountLabel.setText("("+pros.size()+")");
                 initProRecyclerView();
             }
         });
@@ -50,20 +55,10 @@ public class CommunityFactsFragment extends Fragment {
             @Override
             public void onCallback(ArrayList<Argument> args) {
                 cons = args;
+                conCountLabel.setText("("+cons.size()+")");
                 initContraRecyclerView();
             }
         });
-        ImageView imageView = getView().findViewById(R.id.comm_facts_imageView);
-        TextView title_tv = getView().findViewById(R.id.comm_facts_title_tv);
-        TextView description_tv = getView().findViewById(R.id.comm_facts_description_tv);
-        title_tv.setText(args.get("name"));
-        description_tv.setText(args.get("description"));
-        imageView.setClipToOutline(true);
-        if (args.get("imageURL") != null) {
-            Glide.with(getContext()).load(args.get("imageURL")).into(imageView);
-        } else {
-            Glide.with(getContext()).load(R.drawable.fact_stamp).into(imageView);
-        }
 
     }
 

@@ -43,10 +43,7 @@ public class CommunityFeedAdapter extends FeedAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(position == 0){
-            return R.layout.community_feed_header;
-        }
-        String type = postList.get(position-1).type;
+        String type = postList.get(position).type;
         switch(type){
             case "picture":
                 return R.layout.post_picture;
@@ -76,9 +73,6 @@ public class CommunityFeedAdapter extends FeedAdapter {
         View view;
 
         switch(viewType){
-            case R.layout.community_feed_header:
-                view = inflater.inflate(R.layout.community_feed_header,parent,false);
-                return new Community_Feed_Header_Viewholder(view);
             case R.layout.post_picture:
                 view = inflater.inflate(R.layout.post_picture,parent,false);
                 return new PictureViewHolder(view);
@@ -111,11 +105,7 @@ public class CommunityFeedAdapter extends FeedAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        if(position ==0){
-            ((Community_Feed_Header_Viewholder) holder).bind(this.community);
-            return;
-        }
-        Post post = postList.get(position-1);
+        Post post = postList.get(position);
         if( holder instanceof PictureViewHolder){
             ((PictureViewHolder) holder).bind((PicturePost) post);
         }else{
@@ -152,6 +142,6 @@ public class CommunityFeedAdapter extends FeedAdapter {
 
     @Override
     public int getItemCount() {
-        return postList.size()+1;
+        return postList.size();
     }
 }
