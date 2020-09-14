@@ -61,6 +61,7 @@ public class LinkViewHolder extends CustomViewHolder {
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+
         final View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,35 +71,20 @@ public class LinkViewHolder extends CustomViewHolder {
                 mContext.startActivity(intent);
             }
         };
-        RichPreview richPreview = new RichPreview(new ResponseListener() {
-            @Override
-            public void onData(MetaData metaData) {
-                String imageURL = metaData.getImageurl();
-                String link = metaData.getSitename();
-                String title = metaData.getTitle();
-                String description = metaData.getDescription();
 
-                if((imageURL != null) && (!imageURL.equals(""))){
-                    Glide.with(itemView).load(imageURL).into(preViewImage);
-                    preViewImage.setOnClickListener(listener);
-                }
-                if((link != null) && (!link.equals(""))){
-                    preViewLink.setText(link);
-                }
-                if (title != null && !title.equals("")) {
-                    previewTitle.setText(title);
-                }
-                if (description != null && !description.equals("")) {
-                    previewDescription.setText(description);
-                }
-            }
-            @Override
-            public void onError(Exception e) {
-                System.out.println("");
-            }
-        });
+        if(!post.linkImageURL.equals("")){
+            Glide.with(itemView).load(post.linkImageURL).into(preViewImage);
+        }else{
+            Glide.with(itemView).load(R.drawable.link_preview_image).into(preViewImage);
+        }
+        preViewImage.setOnClickListener(listener);
+        preViewLink.setOnClickListener(listener);
+        previewDescription.setOnClickListener(listener);
+        previewTitle.setOnClickListener(listener);
+        preViewLink.setText(post.linkShortURL);
+        previewTitle.setText(post.linkTitle);
+        previewDescription.setText(post.linkDescription);
         preViewImage.setClipToOutline(true);
-        richPreview.getPreview(post.link);
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(

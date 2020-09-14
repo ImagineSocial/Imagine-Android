@@ -75,6 +75,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import io.github.ponnamkarthik.richlinkpreview.MetaData;
+import io.github.ponnamkarthik.richlinkpreview.ResponseListener;
+import io.github.ponnamkarthik.richlinkpreview.RichPreview;
 
 public class New_Post_Fragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "New_Post_Fragment";
@@ -721,29 +724,60 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         }else
             System.out.println("Kein User in PostThought-Methode! "+TAG);
     }
-    public void postLink(DocumentReference docRef){
+    public void postLink(final DocumentReference docRef){
         // method to post a link
         EditText title_edit = getView().findViewById(R.id.title_editText);
         EditText description_edit = getView().findViewById(R.id.description_editText);
         EditText link_edit = getView().findViewById(R.id.link_editText);
-        FirebaseUser user = auth.getCurrentUser();
+        final FirebaseUser user = auth.getCurrentUser();
         if( !user.equals(null)){
-            String title = title_edit.getText().toString();
-            String description = description_edit.getText().toString();
-            String link = link_edit.getText().toString();
-            HashMap<String,Object> data = new HashMap<>();
-            data.put("title",title);
-            data.put("description",description);
-            data.put("originalPoster", user.getUid());
-            data.put("createTime", new Timestamp(new Date()));
-            data.put("thanksCount",new Integer(0));
-            data.put("wowCount", new Integer(0));
-            data.put("haCount", new Integer(0));
-            data.put("niceCount", new Integer(0));
-            data.put("type", "link");
-            data.put("report", "normal");
-            data.put("link",link);
-            uploadData(docRef,data);
+            final String title = title_edit.getText().toString();
+            final String description = description_edit.getText().toString();
+            final String link = link_edit.getText().toString();
+            RichPreview preview = new RichPreview(new ResponseListener() {
+                @Override
+                public void onData(MetaData metaData) {
+                    String linkImageURL = metaData.getImageurl();
+                    String linkShortURL = metaData.getSitename();
+                    String linkTitle = metaData.getTitle();
+                    String linkDescription = metaData.getDescription();
+                    HashMap<String,Object> data = new HashMap<>();
+                    data.put("title",title);
+                    data.put("description",description);
+                    data.put("originalPoster", user.getUid());
+                    data.put("createTime", new Timestamp(new Date()));
+                    data.put("thanksCount",new Integer(0));
+                    data.put("wowCount", new Integer(0));
+                    data.put("haCount", new Integer(0));
+                    data.put("niceCount", new Integer(0));
+                    data.put("type", "link");
+                    data.put("report", "normal");
+                    data.put("link",link);
+                    if(linkImageURL != null) data.put("linkImageURL",metaData.getImageurl());
+                    if(linkShortURL != null) data.put("linkShortURL",metaData.getSitename());
+                    if(linkDescription != null) data.put("linkDescription",metaData.getDescription());
+                    if(linkTitle != null) data.put("linkTitle",metaData.getTitle());
+                    uploadData(docRef,data);
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    HashMap<String,Object> data = new HashMap<>();
+                    data.put("title",title);
+                    data.put("description",description);
+                    data.put("originalPoster", user.getUid());
+                    data.put("createTime", new Timestamp(new Date()));
+                    data.put("thanksCount",new Integer(0));
+                    data.put("wowCount", new Integer(0));
+                    data.put("haCount", new Integer(0));
+                    data.put("niceCount", new Integer(0));
+                    data.put("type", "link");
+                    data.put("report", "normal");
+                    data.put("link",link);
+                    uploadData(docRef,data);
+                }
+            });
+            preview.getPreview(link);
         }else
             System.out.println("Kein User in PostLink-Methode! "+TAG);
     }

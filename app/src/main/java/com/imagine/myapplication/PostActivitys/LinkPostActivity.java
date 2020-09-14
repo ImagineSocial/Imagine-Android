@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
@@ -47,6 +48,7 @@ public class LinkPostActivity extends AppCompatActivity {
     public ImageButton sendComment;
     public boolean anonymToggle = false;
     public EditText commentText;
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
     public String comment;
 
     @Override
@@ -87,16 +89,25 @@ public class LinkPostActivity extends AppCompatActivity {
         init();
         TextView title_textView = findViewById(R.id.title_textView);
         TextView createTime_textView = findViewById(R.id.createDate_textView);
-        TextView name_textView = findViewById(R.id.name_textView);
         TextView description_textView = findViewById(R.id.description_tv);
+        TextView name_textView = findViewById(R.id.name_textView);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         ImageView linkImageView = findViewById(R.id.preView_image);
+        TextView linkTitle = findViewById(R.id.link_preView_title);
+        TextView linkLink = findViewById(R.id.link_preView_link);
+        TextView linkDescription = findViewById(R.id.link_preView_description);
         linkImageView.setClipToOutline(true);
-
+        if(!post.linkImageURL.equals("")){
+            Glide.with(this).load(post.linkImageURL).into(linkImageView);
+        }else{
+            Glide.with(this).load(R.drawable.link_preview_image).into(linkImageView);
+        }
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
-
+        linkTitle.setText(post.linkTitle);
+        linkDescription.setText(post.linkDescription);
+        linkLink.setText(post.linkShortURL);
         ConstraintLayout descriptionView = findViewById(R.id.description_view);
         if (post.description.equals("")) {
             descriptionView.setVisibility(View.INVISIBLE);

@@ -1071,6 +1071,10 @@ public class Post_Helper {
             String link_description = (String) docSnap.get("description");
             String link_report = (String) docSnap.get("report");
             String link_originalPoster = (String) docSnap.get("originalPoster");
+            String link_linkImageURL = docSnap.getString("linkImageURL");
+            String link_linkDescription = docSnap.getString("linkDescription");
+            String link_linkShortURL = docSnap.getString("linkShortURL");
+            String link_linkTitle = docSnap.getString("linkTitle");
             long link_thanksCount = (long) docSnap.getLong("thanksCount");
             long link_wowCount = (long) docSnap.getLong("wowCount");
             long link_haCount = (long) docSnap.getLong("haCount");
@@ -1092,6 +1096,10 @@ public class Post_Helper {
                 link_tags = link_tagsArray.toArray(link_tags);
                 linkPost.setTags(link_tags);
             }
+            if(link_linkDescription != null) linkPost.linkDescription = link_linkDescription;
+            if(link_linkImageURL != null) linkPost.linkImageURL = link_linkImageURL;
+            if(link_linkShortURL != null) linkPost.linkShortURL = link_linkShortURL;
+            if(link_linkTitle != null) linkPost.linkTitle = link_linkTitle;
             linkPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             linkPost.isTopicPost = isTopicPost;
             //Zur Liste hinzufügen

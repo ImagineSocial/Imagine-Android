@@ -8,6 +8,10 @@ public class LinkPost extends Post {
 
     //Attribute von LinkPost
     public String link = "";
+    public String linkDescription = "";
+    public String linkImageURL = "";
+    public String linkShortURL= "";
+    public String linkTitle = "";
     //Constructor
     public LinkPost(String title,String documentID, String description, String report, String createTime,
                        Timestamp creatTimstamp, String originalPoster, long thanksCount, long wowCount, long haCount,
