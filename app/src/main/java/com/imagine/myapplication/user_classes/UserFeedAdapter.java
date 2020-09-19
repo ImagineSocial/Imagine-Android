@@ -141,28 +141,43 @@ public class UserFeedAdapter extends FeedAdapter {
                 return new User_Feed_Header_Viewholder(view,this.activity);
             case R.layout.post_picture:
                 view = inflater.inflate(R.layout.post_picture,parent,false);
-                return new PictureViewHolder(view);
+                PictureViewHolder pictureViewHolder = new PictureViewHolder(view);
+                pictureViewHolder.mainActivty = this.activity;
+                return pictureViewHolder;
             case R.layout.post_thought:
                 view = inflater.inflate(R.layout.post_thought,parent,false);
-                return new ThoughtViewHolder(view);
+                ThoughtViewHolder thoughtViewHolder = new ThoughtViewHolder(view);
+                thoughtViewHolder.mainActivty = this.activity;
+                return thoughtViewHolder;
             case R.layout.post_link:
                 view = inflater.inflate(R.layout.post_link,parent,false);
-                return new LinkViewHolder(view);
+                LinkViewHolder linkViewHolder = new LinkViewHolder(view);
+                linkViewHolder.mainActivty = this.activity;
+                return linkViewHolder;
             case R.layout.post_youtube:
                 view = inflater.inflate(R.layout.post_youtube,parent,false);
-                return new YouTubeViewHolder(view);
+                YouTubeViewHolder youTubeViewHolder = new YouTubeViewHolder(view);
+                youTubeViewHolder.mainActivty = this.activity;
+                return youTubeViewHolder;
             case R.layout.post_gif:
                 view = inflater.inflate(R.layout.post_gif,parent,false);
-                return new GIFViewHolder(view);
+                GIFViewHolder gifViewHolder = new GIFViewHolder(view);
+                gifViewHolder.mainActivty = this.activity;
+                return gifViewHolder;
             case R.layout.post_multi_picture:
                 view = inflater.inflate(R.layout.post_multi_picture,parent,false);
-                return new MultiPictureViewHolder(view);
+                MultiPictureViewHolder multiPictureViewHolder = new MultiPictureViewHolder(view);
+                multiPictureViewHolder.mainActivty = this.activity;
+                return multiPictureViewHolder;
             case R.layout.post_translation:
                 view = inflater.inflate(R.layout.post_translation,parent,false);
-                return new TranslationViewHolder(view);
+                TranslationViewHolder translationViewHolder = new TranslationViewHolder(view);
+                translationViewHolder.mainActivty = this.activity;
+                return translationViewHolder;
             case R.layout.post_repost:
                 view = inflater.inflate(R.layout.post_repost,parent,false);
-                return new RepostViewHolder(view);
+                RepostViewHolder repostViewHolder = new RepostViewHolder(view);
+                repostViewHolder.mainActivty = this.activity;
             default:
                 view = inflater.inflate(R.layout.post_default,parent,false);
                 return new DefaultViewHolder(view);

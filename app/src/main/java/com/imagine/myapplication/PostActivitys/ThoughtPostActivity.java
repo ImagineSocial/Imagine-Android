@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -20,10 +25,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
+import com.imagine.myapplication.Community.Community;
+import com.imagine.myapplication.Community.Community_ViewPager_Activity;
+import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.R;
@@ -32,8 +46,15 @@ import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.post_classes.ThoughtPost;
 import com.imagine.myapplication.user_classes.UserActivity;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ThoughtPostActivity extends AppCompatActivity {
 
@@ -47,6 +68,9 @@ public class ThoughtPostActivity extends AppCompatActivity {
     public boolean anonymToggle = false;
     public EditText commentText;
     public String comment;
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
+    public Community comm;
 
 
     @Override
@@ -58,7 +82,9 @@ public class ThoughtPostActivity extends AppCompatActivity {
         //gets post obj from the intent
         Intent intent = getIntent();
         String objString = intent.getStringExtra("post");
+        String commString = intent.getStringExtra("comm");
         Gson gson = new Gson();
+        this.comm = gson.fromJson(commString,Community.class);
         post = gson.fromJson(objString, ThoughtPost.class);
         this.anonym = findViewById(R.id.post_commentview_anonym_button);
         this.sendComment = findViewById(R.id.post_commentview_send_button);
@@ -79,6 +105,9 @@ public class ThoughtPostActivity extends AppCompatActivity {
                 initRecyclerView();
             }
         });
+        if(this.comm != null){
+            this.setUpLinkedFact();
+        }
     }
 
     public void bind(){
@@ -256,5 +285,130 @@ public class ThoughtPostActivity extends AppCompatActivity {
                 System.out.println("default case! "+TAG);
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 5){
+            String name = data.getStringExtra("name");
+            String imageURL = data.getStringExtra("imageURL");
+            String commID = data.getStringExtra("commID");
+            String postID = data.getStringExtra("postID");
+
+            DocumentReference postRef = db.collection("Posts").document(postID);
+            HashMap<String,Object> updateData = new HashMap<>();
+            updateData.put("linkedFactID",commID);
+            postRef.update(updateData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        System.out.println("!");
+                    }
+                }
+            });
+
+
+            CollectionReference commRef = db.collection("Facts")
+                    .document(commID).collection("posts");
+            DocumentReference commPostRef = commRef.document(postID);
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("createTime",new Timestamp(new Date()));
+            commPostRef.set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        System.out.println("Erfolg!");
+                    } else if(task.isCanceled()){
+                        System.out.println("Fail!");
+                    }
+                }
+            });
+        }
+    }
+
+    public void showMenu(){
+        ImageButton options = findViewById(R.id.feed_menu_button);
+
+        PopupMenu menu = new PopupMenu(this,options);
+        menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.remove_post:
+                        helper.removePost(post);
+                        return true;
+                    case R.id.link_community:
+                        linkCommunity(post);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+        MenuInflater inflater = menu.getMenuInflater();
+        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        menu.show();
+    }
+
+    public void linkCommunity(Post post){
+        Intent intent = new Intent(this, CommunityPickActivity.class);
+        intent.putExtra("postID",post.documentID);
+        startActivityForResult(intent,5);
+    }
+
+    public void setUpLinkedFact(){
+        ImageView communityImage = findViewById(R.id.topicImageView);
+        Glide.with(this).load(comm.imageURL).into(communityImage);
+        communityImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String recentString = "";
+                try{
+                    FileInputStream inputStreamReader = mContext.openFileInput("recents.txt");
+                    if(inputStreamReader != null){
+                        InputStreamReader reader = new InputStreamReader(inputStreamReader);
+                        BufferedReader bufferedReader = new BufferedReader(reader);
+                        String onjString = "";
+                        StringBuilder stringBuilder = new StringBuilder();
+                        while((onjString = bufferedReader.readLine()) != null){
+                            stringBuilder.append("\n").append(onjString);
+                        }
+                        inputStreamReader.close();
+                        recentString = stringBuilder.toString();
+                        Gson gson = new Gson();
+                        Community[] recents = gson.fromJson(recentString,Community[].class);
+                        ArrayList<Community> recentsList = new ArrayList<>();
+                        int counter = 0;
+                        for(Community comm : recents){
+                            if(!comm.topicID.equals(comm.topicID)){
+                                recentsList.add(comm);
+                                counter++;
+                                if(counter == 10) break;
+                            }
+                        }
+                        recentsList.add(comm);
+                        String newRecents = gson.toJson(recentsList);
+                        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(mContext
+                                .openFileOutput("recents.txt", Context.MODE_PRIVATE));
+                        outputStreamWriter.write(newRecents);
+                        outputStreamWriter.close();
+                    }
+                }
+                catch(FileNotFoundException e){
+                    Log.e("login activity", "File not found: " + e.toString());
+                }
+                catch(IOException e){
+                    Log.e("login activity", "Can not read file: " + e.toString());
+                }
+                Intent intent = new Intent(mContext, Community_ViewPager_Activity.class);
+                intent.putExtra("name", comm.name);
+                intent.putExtra("description",comm.description);
+                intent.putExtra("imageURL", comm.imageURL);
+                intent.putExtra("commID", comm.topicID);
+                intent.putExtra("displayOption",comm.displayOption);
+                mContext.startActivity(intent);
+            }
+        });
     }
 }

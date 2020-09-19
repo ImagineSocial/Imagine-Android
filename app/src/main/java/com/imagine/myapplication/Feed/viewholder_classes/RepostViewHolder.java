@@ -73,6 +73,10 @@ public class RepostViewHolder extends CustomViewHolder{
                 String jsonObj = gson.toJson(post);
                 Intent intent = new Intent(itemView.getContext(), RepostPostActivity.class );
                 intent.putExtra("post",jsonObj);
+                if(community != null && !community.equals("")){
+                    String commString = gson.toJson(community);
+                    intent.putExtra("comm",commString);
+                }
                 itemView.getContext().startActivity(intent);
             }
         });

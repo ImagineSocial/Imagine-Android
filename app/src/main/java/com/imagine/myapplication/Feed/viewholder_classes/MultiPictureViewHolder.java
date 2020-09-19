@@ -70,6 +70,10 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                         String objString = gson.toJson(post);
                         Intent intent = new Intent(itemView.getContext(), MultiPicturePostActivity.class);
                         intent.putExtra("post",objString);
+                        if(community != null && !community.equals("")){
+                            String commString = gson.toJson(community);
+                            intent.putExtra("comm",commString);
+                        }
                         itemView.getContext().startActivity(intent);
                     }
                 });

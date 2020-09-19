@@ -49,7 +49,9 @@ public class GIFViewHolder extends CustomViewHolder {
         super(itemView);
         this.mContext = itemView.getContext();
     }
-    
+
+
+
     public void bind(final GIFPost post){
         // calls the init method and sets up the post specific views
         this.post = post;
@@ -146,6 +148,10 @@ public class GIFViewHolder extends CustomViewHolder {
                 String objString = gson.toJson(post);
                 Intent intent = new Intent(itemView.getContext(), GifPostActivity.class);
                 intent.putExtra("post",objString);
+                if(community != null && !community.equals("")){
+                    String commString = gson.toJson(community);
+                    intent.putExtra("comm",commString);
+                }
                 itemView.getContext().startActivity(intent);
             }
         });

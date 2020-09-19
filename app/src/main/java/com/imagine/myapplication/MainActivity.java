@@ -125,6 +125,22 @@ public class MainActivity extends AppCompatActivity{
     protected void onResume() {
         // Reloads the UserViews when resumed to main activity
         super.onResume();
+        if(drawer != null){
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        if(feed_fragment == null){
+            feed_fragment = new Feed_Fragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    feed_fragment).commit();
+            helper.getNotifictations(new NotificationCallback() {
+                @Override
+                public void onCallback(ArrayList<Notification> notifications) {
+                    if(notifications != null){
+                        setUpNotifications(notifications);
+                    }
+                }
+            });
+        }
         final FirebaseUser user = auth.getCurrentUser();
         if(user != null){
                 this.getUser(user.getUid());

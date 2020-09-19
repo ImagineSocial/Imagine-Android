@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
+import com.imagine.myapplication.PostActivitys.GifPostActivity;
 import com.imagine.myapplication.PostActivitys.LinkPostActivity;
 import com.imagine.myapplication.PostActivitys.MultiPicturePostActivity;
 import com.imagine.myapplication.R;
@@ -107,6 +108,10 @@ public class LinkViewHolder extends CustomViewHolder {
                 String objString = gson.toJson(post);
                 Intent intent = new Intent(itemView.getContext(), LinkPostActivity.class);
                 intent.putExtra("post",objString);
+                if(community != null && !community.equals("")){
+                    String commString = gson.toJson(community);
+                    intent.putExtra("comm",commString);
+                }
                 itemView.getContext().startActivity(intent);
             }
         });

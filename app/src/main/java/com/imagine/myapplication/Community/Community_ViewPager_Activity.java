@@ -70,6 +70,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         args.put("displayOption",intent.getStringExtra("displayOption"));
         ViewPager2 viewPager2 = findViewById(R.id.containerViewPager);
         TestCollectionAdapter adapter = new TestCollectionAdapter(this,args);
+        adapter.activity = this;
         viewPager2.setAdapter(adapter);
         if(intent.getStringExtra("displayOption").equals("fact")){
             viewPager2.setCurrentItem(1);
@@ -216,5 +217,11 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("!");
     }
 }

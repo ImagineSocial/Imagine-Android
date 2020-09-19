@@ -1,5 +1,7 @@
 package com.imagine.myapplication.Community;
 
+import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -8,6 +10,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import java.util.HashMap;
 
 public class TestCollectionAdapter extends FragmentStateAdapter {
+
+    public Activity activity;
+
     HashMap<String,String> args;
     public TestCollectionAdapter(@NonNull FragmentActivity fragmentActivity, HashMap<String,String> args) {
         super(fragmentActivity);
@@ -26,6 +31,7 @@ public class TestCollectionAdapter extends FragmentStateAdapter {
                 return fragmentOne;
             } else if(position == 2) {
                 CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
+                fragmentTwo.activity = this.activity;
                 return fragmentTwo;
             } else{
                 return null;
@@ -36,6 +42,7 @@ public class TestCollectionAdapter extends FragmentStateAdapter {
                 return fragment;
             }   else if ( position == 1){
                 CommunityFeedFragment fragmentTwo = new CommunityFeedFragment(args);
+                fragmentTwo.activity = this.activity;
                 return fragmentTwo;
             }
 

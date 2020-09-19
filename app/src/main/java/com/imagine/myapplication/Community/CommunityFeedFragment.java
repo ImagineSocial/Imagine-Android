@@ -1,5 +1,6 @@
 package com.imagine.myapplication.Community;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 public class CommunityFeedFragment extends Fragment {
-    ArrayList<Post> postList = new ArrayList<>();
-    Post_Helper helper = new Post_Helper();
-    RecyclerView recyclerView;
-    Community community;
-    HashMap<String,String> args;
+    public ArrayList<Post> postList = new ArrayList<>();
+    public Post_Helper helper = new Post_Helper();
+    public RecyclerView recyclerView;
+    public Community community;
+    public HashMap<String,String> args;
+    public Activity activity;
+
 
     public CommunityFeedFragment(HashMap<String, String> args) {
         this.args = args;
@@ -106,6 +109,7 @@ public class CommunityFeedFragment extends Fragment {
 
     public void initRecyclerView(){
         CommunityFeedAdapter adapter = new CommunityFeedAdapter(postList,this.community,getContext());
+        adapter.activity = this.activity;
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // TODO

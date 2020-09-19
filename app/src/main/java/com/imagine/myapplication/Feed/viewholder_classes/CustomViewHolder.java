@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,7 +54,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
     public View mItemView;
     public Context mContext;
     public Communities_Helper helper = new Communities_Helper();
-    public Community comm;
+    public Community community;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public Activity mainActivty;
 
@@ -142,6 +143,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
         helper.fetchLinkedCommunity(linkedTopicID, new LinkedCommunityCallback() {
             @Override
             public void onCallback(Community comm) {
+                community = comm;
                 setUpLinkedCommunity(comm);
            }
         });

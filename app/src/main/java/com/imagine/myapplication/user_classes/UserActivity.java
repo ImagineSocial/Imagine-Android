@@ -24,9 +24,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,6 +45,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -197,6 +201,41 @@ public class UserActivity extends AppCompatActivity {
                         System.out.println(e.getStackTrace().toString());
                     }
                 }
+            }else if(requestCode == 5){
+
+                    String name = data.getStringExtra("name");
+                    String imageURL = data.getStringExtra("imageURL");
+                    String commID = data.getStringExtra("commID");
+                    String postID = data.getStringExtra("postID");
+
+                    DocumentReference postRef = db.collection("Posts").document(postID);
+                    HashMap<String,Object> updateData = new HashMap<>();
+                    updateData.put("linkedFactID",commID);
+                    postRef.update(updateData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("!");
+                            }
+                        }
+                    });
+
+
+                    CollectionReference commRef = db.collection("Facts")
+                            .document(commID).collection("posts");
+                    DocumentReference commPostRef = commRef.document(postID);
+                    HashMap<String,Object> map = new HashMap<>();
+                    map.put("createTime",new Timestamp(new Date()));
+                    commPostRef.set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                System.out.println("Erfolg!");
+                            } else if(task.isCanceled()){
+                                System.out.println("Fail!");
+                            }
+                        }
+                    });
             }
         }
 

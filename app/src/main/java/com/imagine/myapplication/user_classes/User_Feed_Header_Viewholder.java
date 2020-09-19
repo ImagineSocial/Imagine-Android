@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.imagine.myapplication.Community.IntegerCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -61,6 +62,7 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
                     public void onClick(View v) {
                         FirebaseAuth auth = FirebaseAuth.getInstance();
                         auth.signOut();
+                        MainActivity.resetFragmentsAfterLogin();
                         activity.finish();
 
 
