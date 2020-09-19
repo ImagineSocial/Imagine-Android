@@ -7,4 +7,5 @@ public class Argument {
     public long downVotes;
     public long upVotes;
     public String proOrCon;
+    public String type;
 }

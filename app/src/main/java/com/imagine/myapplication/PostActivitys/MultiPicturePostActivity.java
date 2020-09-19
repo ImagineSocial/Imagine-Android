@@ -135,6 +135,9 @@ public class MultiPicturePostActivity extends AppCompatActivity {
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
         carouselView.setPageCount(imageArray.length);
+        carouselView.setSlideInterval(6000);
+        carouselView.setPageTransformInterval(800);
+        carouselView.setPageTransformInterval(800);
         carouselView.setImageListener(new ImageListener() {
             @Override
             public void setImageForPosition(int position, ImageView imageView) {
@@ -384,6 +387,7 @@ public class MultiPicturePostActivity extends AppCompatActivity {
     public void setUpLinkedFact(){
         ImageView communityImage = findViewById(R.id.topicImageView);
         Glide.with(this).load(comm.imageURL).into(communityImage);
+        communityImage.setClipToOutline(true);
         communityImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -45,7 +45,9 @@ public class Community_Posts_Adapter extends RecyclerView.Adapter<CommunityCusto
                 layoutParams.height = size;
                 layoutParams.width = size;
                 view.setLayoutParams(layoutParams);
-                return new CommunityGIFViewHolder(view);
+                view.setPadding(1,1,1,1);
+                CommunityGIFViewHolder holder = new CommunityGIFViewHolder(view);
+                return holder;
             case R.layout.community_picture:
                 view = inflater.inflate(R.layout.community_picture, parent, false);
                 int spacing1 = 2;
@@ -54,6 +56,7 @@ public class Community_Posts_Adapter extends RecyclerView.Adapter<CommunityCusto
                 layoutParams1.height = size1;
                 layoutParams1.width = size1;
                 view.setLayoutParams(layoutParams1);
+                view.setPadding(1,1,1,1);
                 return new CommunityPictureViewHolder(view);
             case R.layout.community_multipicture:
                 view = inflater.inflate(R.layout.community_multipicture,parent,false);
@@ -63,6 +66,7 @@ public class Community_Posts_Adapter extends RecyclerView.Adapter<CommunityCusto
                 layoutParams2.height = size2;
                 layoutParams2.width = size2;
                 view.setLayoutParams(layoutParams2);
+                view.setPadding(1,1,1,1);
                 return new CommunityMultiPictureViewHolder(view);
             default:
                 view = inflater.inflate(R.layout.community_default,parent, false);

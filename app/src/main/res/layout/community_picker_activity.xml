@@ -10,7 +10,6 @@
         app:tabTextAppearance="@style/CustomTapDesign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    #
     <androidx.viewpager2.widget.ViewPager2
         app:layout_constraintTop_toBottomOf="@+id/community_picker_tab_layout"
         app:layout_constraintStart_toStartOf="parent"

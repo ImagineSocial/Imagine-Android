@@ -44,6 +44,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
     }
 
     public void bind() {
+        this.mContext = itemView.getContext();
         if(facts != null && facts.size() == 3 ){
             TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
             weekylTextView.setText(this.textOfTheWeek);

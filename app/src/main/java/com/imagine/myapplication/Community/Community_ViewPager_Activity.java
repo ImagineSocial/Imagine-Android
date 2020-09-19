@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,8 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public String displayOption;
     public Communities_Fragment fragment;
     public Context mContext;
+    public TestCollectionAdapter adapter;
+    public ViewPager2 viewPager2;
 
     //Header
     public Button followButton;
@@ -59,24 +62,24 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         this.commID = intent.getStringExtra("commID");
         this.displayOption = intent.getStringExtra("displayOption");
 
-        Community community = new Community(name,imageURL,commID,description);
-        setCommunityHeader(community);
-
         HashMap<String,String> args = new HashMap<>();
         args.put("name",intent.getStringExtra("name"));
         args.put("description",intent.getStringExtra("description"));
         args.put("imageURL",intent.getStringExtra("imageURL"));
         args.put("commID",intent.getStringExtra("commID"));
         args.put("displayOption",intent.getStringExtra("displayOption"));
-        ViewPager2 viewPager2 = findViewById(R.id.containerViewPager);
-        TestCollectionAdapter adapter = new TestCollectionAdapter(this,args);
-        adapter.activity = this;
-        viewPager2.setAdapter(adapter);
+        this.viewPager2 = findViewById(R.id.containerViewPager);
+        this.adapter = new TestCollectionAdapter(this,args);
+        this.adapter.activity = this;
+        this.viewPager2.setAdapter(this.adapter);
         if(intent.getStringExtra("displayOption").equals("fact")){
-            viewPager2.setCurrentItem(1);
+            this.viewPager2.setCurrentItem(1);
         }else{
-            viewPager2.setCurrentItem(1);
+            this.viewPager2.setCurrentItem(1);
         }
+
+        Community community = new Community(name,imageURL,commID,description);
+        setCommunityHeader(community);
     }
 
     public void setCommunityHeader(final Community community) {
@@ -85,6 +88,39 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         ImageView image_iv = findViewById(R.id.comm_activity_picture);
         View backgroundView = findViewById(R.id.comm_background_view);
         ImageButton newPostButton = findViewById(R.id.community_new_post_button);
+        TabLayout tabLayout = findViewById(R.id.community_feed_tab_layout);
+        if(this.displayOption.equals("fact")){
+            new TabLayoutMediator(tabLayout, this.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    switch(position){
+                        case 0:
+                            tab.setText("Addons");
+                            return;
+                        case 1:
+                            tab.setText("Facts");
+                            return;
+                        case 2:
+                            tab.setText("Feed");
+                            return;
+                    }
+                }
+            }).attach();
+        }else{
+            new TabLayoutMediator(tabLayout, this.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+                @Override
+                public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                    switch(position){
+                        case 0:
+                            tab.setText("Addons");
+                            return;
+                        case 1:
+                            tab.setText("Feed");
+                            return;
+                    }
+                }
+            }).attach();
+        }
         final Button followButton = findViewById(R.id.community_follow_button);
         this.followButton = followButton;
         final TextView followerCountLabel = findViewById(R.id.comm_header_follower_label);

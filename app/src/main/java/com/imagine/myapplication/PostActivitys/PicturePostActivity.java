@@ -404,6 +404,7 @@ public class PicturePostActivity extends AppCompatActivity {
     public void setUpLinkedFact(){
         ImageView communityImage = findViewById(R.id.topicImageView);
         Glide.with(this).load(comm.imageURL).into(communityImage);
+        communityImage.setClipToOutline(true);
         communityImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

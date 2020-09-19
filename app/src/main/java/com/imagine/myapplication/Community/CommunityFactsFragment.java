@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.imagine.myapplication.ArgumentsCallback;
 import com.imagine.myapplication.R;
 
@@ -24,6 +22,7 @@ public class CommunityFactsFragment extends Fragment {
     HashMap<String,String> args;
     ArrayList<Argument> pros;
     ArrayList<Argument> cons;
+    CommunityFactsFragment frag;
 
     public CommunityFactsFragment(HashMap<String, String> args) {
         this.args = args;
@@ -38,7 +37,6 @@ public class CommunityFactsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         final TextView proCountLabel = view.findViewById(R.id.comm_facts_prosCount);
         final TextView conCountLabel = view.findViewById(R.id.comm_facts_consCount);
 
@@ -59,19 +57,26 @@ public class CommunityFactsFragment extends Fragment {
                 initContraRecyclerView();
             }
         });
-
+        this.frag = this;
     }
 
     public void initProRecyclerView(){
         RecyclerView pro_recycler = getView().findViewById(R.id.comm_facts_pros_recyclerView);
         ArgumentsAdapter adapter = new ArgumentsAdapter(this.pros,this.getContext());
+        adapter.frag = this.frag;
         pro_recycler.setAdapter(adapter);
         pro_recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
     public void initContraRecyclerView(){
         RecyclerView pro_recycler = getView().findViewById(R.id.comm_facts_cons_recyclerView);
         ArgumentsAdapter adapter = new ArgumentsAdapter(this.cons,this.getContext());
+        adapter.frag = this.frag;
         pro_recycler.setAdapter(adapter);
         pro_recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
+    }
+
+    public void showDialogFragment(){
+        ArgumentsDialogFragment frag = new ArgumentsDialogFragment();
+        frag.show(getFragmentManager(),"DialogFragment");
     }
 }
