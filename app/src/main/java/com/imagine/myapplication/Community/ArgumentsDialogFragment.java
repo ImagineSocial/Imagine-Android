@@ -15,7 +15,7 @@ public class ArgumentsDialogFragment extends androidx.fragment.app.DialogFragmen
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_fragment,container,false);
+        View view = inflater.inflate(R.layout.new_argument_dialog_fragment,container,false);
         return view;
     }
 }

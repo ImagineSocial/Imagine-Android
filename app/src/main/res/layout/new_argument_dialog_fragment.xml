@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="25dp">
+
+    <TextView
+        android:id="@+id/newArgumentHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Erstelle ein neues Argument"
+        android:textColor="@android:color/black"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/newArgumentTitleLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Titel:"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/newArgumentHeader"
+        app:layout_constraintTop_toBottomOf="@+id/newArgumentHeader" />
+
+    <EditText
+        android:id="@+id/newArgument_title_editText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="@font/ibm_regular"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:maxLength="@integer/argumentTitleMaximumCharacters"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/newArgumentTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/newArgumentTitleLabel" />
+
+    <View
+        style="@style/Divider"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newArgument_title_editText" />
+
+    <TextView
+        android:id="@+id/newArgumentDescriptionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Beschreibung:"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/newArgumentHeader"
+        app:layout_constraintTop_toBottomOf="@+id/newArgument_title_editText" />
+
+    <EditText
+        android:id="@+id/newArgument_description_editText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="@font/ibm_regular"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:textColor="@android:color/black"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/newArgumentTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/newArgumentDescriptionLabel" />
+
+    <View
+        android:id="@+id/view7"
+        style="@style/Divider"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newArgument_description_editText" />
+
+    <TextView
+        android:id="@+id/newArgumentFooterDescriptionLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/ibm_light"
+        android:text="Das hinzufügen und bewerten von Quellen und Gegenargumenten folgt bald. Wenn du eine Quelle hinzufügen möchtest, schreibe sie gerne mit in deine Beschreibung."
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view7" />
+
+    <Button
+        android:id="@+id/newArgument_createButton"
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Hinzufügen"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newArgumentFooterDescriptionLabel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
