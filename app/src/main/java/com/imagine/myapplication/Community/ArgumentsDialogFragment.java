@@ -20,10 +20,8 @@ public class ArgumentsDialogFragment extends androidx.fragment.app.DialogFragmen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.new_argument_dialog_fragment,container,false);
-        getDialog().setCanceledOnTouchOutside(true);
         return view;
     }
-
 
     @Override
     public void onResume() {
@@ -32,12 +30,8 @@ public class ArgumentsDialogFragment extends androidx.fragment.app.DialogFragmen
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
-
-        float density  = getResources().getDisplayMetrics().density;
-        int dpHeight = outMetrics.heightPixels;
-        int dpWidth  = outMetrics.widthPixels;
-        params.width = dpWidth;
-        params.height = dpHeight;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
     }
 }
