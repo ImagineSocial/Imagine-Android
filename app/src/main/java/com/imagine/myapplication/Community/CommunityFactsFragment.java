@@ -77,6 +77,7 @@ public class CommunityFactsFragment extends Fragment {
 
     public void showDialogFragment(){
         ArgumentsDialogFragment frag = new ArgumentsDialogFragment();
+        frag.setCancelable(true);
         frag.show(getFragmentManager(),"DialogFragment");
     }
 }
