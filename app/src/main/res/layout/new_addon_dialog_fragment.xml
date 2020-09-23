@@ -9,20 +9,20 @@
     >
 
     <TextView
-        android:id="@+id/newArgumentHeader"
+        android:id="@+id/newAddOnHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/ibm_medium"
-        android:text="Erstelle ein neues Argument"
+        android:text="Erstelle ein neues AddOn"
         android:textColor="@android:color/black"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/newArgumentTitleLabel"
+        android:id="@+id/newAddOnTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -30,11 +30,11 @@
         android:text="Titel:"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/newArgumentHeader"
-        app:layout_constraintTop_toBottomOf="@+id/newArgumentHeader" />
+        app:layout_constraintStart_toStartOf="@+id/newAddOnHeader"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOnHeader" />
 
     <EditText
-        android:id="@+id/newArgument_title_editText"
+        android:id="@+id/newAddOn_title_editText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginEnd="10dp"
@@ -47,8 +47,8 @@
         android:textColor="@android:color/black"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/newArgumentTitleLabel"
-        app:layout_constraintTop_toBottomOf="@+id/newArgumentTitleLabel" />
+        app:layout_constraintStart_toStartOf="@+id/newAddOnTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOnTitleLabel" />
 
     <View
         style="@style/Divider"
@@ -56,10 +56,10 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newArgument_title_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/newAddOn_title_editText" />
 
     <TextView
-        android:id="@+id/newArgumentDescriptionLabel"
+        android:id="@+id/newAddOnDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -67,11 +67,11 @@
         android:text="Beschreibung:"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/newArgumentHeader"
-        app:layout_constraintTop_toBottomOf="@+id/newArgument_title_editText" />
+        app:layout_constraintStart_toStartOf="@+id/newAddOnHeader"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOn_title_editText" />
 
     <EditText
-        android:id="@+id/newArgument_description_editText"
+        android:id="@+id/newAddOn_description_editText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@android:color/transparent"
@@ -82,8 +82,8 @@
         android:textColor="@android:color/black"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/newArgumentTitleLabel"
-        app:layout_constraintTop_toBottomOf="@+id/newArgumentDescriptionLabel" />
+        app:layout_constraintStart_toStartOf="@+id/newAddOnTitleLabel"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOnDescriptionLabel" />
 
     <View
         android:id="@+id/view7"
@@ -92,25 +92,49 @@
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newArgument_description_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/newAddOn_description_editText" />
 
     <TextView
-        android:id="@+id/newArgumentFooterDescriptionLabel"
+        android:id="@+id/newAddOnItemLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Bild:"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/newAddOn_description_editText"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOn_description_editText" />
+
+    <Button
+        android:id="@+id/newAddOn_addItemButton"
+        android:layout_width="115dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/button_border"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Auswählen"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/newAddOn_imageView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/newAddOnFooterDescriptionLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_light"
-        android:text="Das hinzufügen und bewerten von Quellen und Gegenargumenten folgt bald. Wenn du eine Quelle hinzufügen möchtest, schreibe sie gerne mit in deine Beschreibung."
         android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view7" />
+        app:layout_constraintTop_toBottomOf="@+id/newAddOn_imageView" />
 
     <Button
-        android:id="@+id/newArgument_createButton"
+        android:id="@+id/newAddOn_createButton"
         android:layout_width="115dp"
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
@@ -121,6 +145,25 @@
         android:textAllCaps="false"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newArgumentFooterDescriptionLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/newAddOnFooterDescriptionLabel" />
+
+    <View
+        android:id="@+id/view8"
+        style="@style/Divider"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOn_imageView" />
+
+    <ImageView
+        android:id="@+id/newAddOn_imageView"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="@+id/newAddOnItemLabel"
+        app:layout_constraintTop_toBottomOf="@+id/newAddOnItemLabel"
+        app:srcCompat="@drawable/default_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
