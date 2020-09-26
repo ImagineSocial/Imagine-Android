@@ -27,6 +27,7 @@ public class Addon{
     public String headerIntro; //
     public String moreInformationLink; //
     public long popularity; //
+    public boolean isHeader;
     public ArrayList<String> itemOrder;
     public String imageURL;
     public String linkedFactID;

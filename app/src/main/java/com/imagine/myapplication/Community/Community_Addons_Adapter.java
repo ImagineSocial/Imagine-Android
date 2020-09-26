@@ -36,6 +36,10 @@ public class Community_Addons_Adapter extends RecyclerView.Adapter<Community_Add
                 view = inflater.inflate(R.layout.community_addons_community_viewholder,parent,false);
                 Community_Addons_Community_ViewHolder commHolder = new Community_Addons_Community_ViewHolder(view,mContext);
                 return commHolder;
+            case R.layout.addons_header_viewholder:
+                view = inflater.inflate(R.layout.addons_header_viewholder,parent ,false);
+                Community_Addons_Header_Viewholder header = new Community_Addons_Header_Viewholder(view,mContext);
+                return header;
             default:
                 view = inflater.inflate(R.layout.community_addons_viewholder,parent,false);
                 Community_Addons_ViewHolder viewHolderDefault = new Community_Addons_ViewHolder(view,mContext);
@@ -47,7 +51,9 @@ public class Community_Addons_Adapter extends RecyclerView.Adapter<Community_Add
     public void onBindViewHolder(@NonNull Community_Addons_ViewHolder holder, int position) {
         if(holder instanceof Community_Addons_Community_ViewHolder){
             ((Community_Addons_Community_ViewHolder)holder).bind(addons.get(position));
-        }else{
+        }else if(holder instanceof Community_Addons_Header_Viewholder){
+            ((Community_Addons_Header_Viewholder)holder).bind(addons.get(position));
+        }else {
             holder.bind(addons.get(position));
         }
     }
@@ -55,6 +61,9 @@ public class Community_Addons_Adapter extends RecyclerView.Adapter<Community_Add
     @Override
     public int getItemViewType(int position) {
         Addon addon = addons.get(position);
+        if(addon.isHeader){
+            return  R.layout.addons_header_viewholder;
+        }
         if(addon.linkedFactID.equals("")){
             return R.layout.community_addons_viewholder;
         }else{
