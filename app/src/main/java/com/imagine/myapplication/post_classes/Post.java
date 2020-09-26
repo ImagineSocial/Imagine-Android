@@ -27,8 +27,8 @@ public abstract class Post {
     public Boolean isTopicPost = false;
     // Constructor
     public Post(String title, String documentID, String description, String report, String createTime,
-                Timestamp createTimestamp,String originalPoster, long thanksCount, long wowCount, long haCount,
-                long niceCount, String type) {
+                     Timestamp createTimestamp,String originalPoster, long thanksCount, long wowCount, long haCount,
+                     long niceCount, String type) {
         this.title = title;
         this.documentID=documentID;
         this.description = description;

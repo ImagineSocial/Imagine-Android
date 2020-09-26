@@ -109,5 +109,4 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
             Log.e("login activity", "Can not read file: " + e.toString());
         }
     }
-
 }

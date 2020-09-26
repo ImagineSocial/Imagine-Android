@@ -408,10 +408,11 @@ public class Communities_Helper {
                     argument.proOrCon = docSnap.getString("proOrContra");
                     argument.title = docSnap.getString("title");
                     argument.type = "arg";
+                    argument.proOrCon = "pro";
                     //argument.upVotes = docSnap.getLong("upVotes");
                     pros.add(argument);
                 }
-                addArgumentsFooter(callback,pros);
+                addArgumentsFooter(callback,pros,"pro");
             }
         });
     }
@@ -431,16 +432,19 @@ public class Communities_Helper {
                     argument.proOrCon = docSnap.getString("proOrContra");
                     argument.title = docSnap.getString("title");
                     argument.type = "arg";
+                    argument.proOrCon = "contra";
                     //argument.upVotes = docSnap.getLong("upVotes");
                     cons.add(argument);
                 }
-                addArgumentsFooter(callback,cons);
+                addArgumentsFooter(callback,cons,"contra");
             }
         });
     }
 
-    public void addArgumentsFooter(ArgumentsCallback callback, ArrayList<Argument> args){
+    public void addArgumentsFooter(ArgumentsCallback callback, ArrayList<Argument> args, String proOrCon){
         Argument arg = new Argument();
+        if(proOrCon.equals("pro"))arg.proOrCon = "pro";
+        else arg.proOrCon = "contra";
         arg.type = "footer";
         args.add(arg);
         callback.onCallback(args);
