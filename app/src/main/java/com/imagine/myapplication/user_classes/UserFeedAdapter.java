@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.imagine.myapplication.Community.Community_Feed_Header_Viewholder;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.DefaultViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.GIFViewHolder;

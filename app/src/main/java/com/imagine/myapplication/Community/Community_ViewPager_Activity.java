@@ -95,10 +95,10 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     switch(position){
                         case 0:
-                            tab.setText("Addons");
+                            tab.setText("Themen");
                             return;
                         case 1:
-                            tab.setText("Facts");
+                            tab.setText("Diskussion");
                             return;
                         case 2:
                             tab.setText("Feed");
@@ -112,7 +112,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     switch(position){
                         case 0:
-                            tab.setText("Addons");
+                            tab.setText("Themen");
                             return;
                         case 1:
                             tab.setText("Feed");
