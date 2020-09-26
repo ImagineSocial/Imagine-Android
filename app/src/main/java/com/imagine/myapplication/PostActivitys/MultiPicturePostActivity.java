@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -72,6 +73,7 @@ public class MultiPicturePostActivity extends AppCompatActivity {
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public Community comm;
+    public Boolean isSendingComment = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -118,6 +120,7 @@ public class MultiPicturePostActivity extends AppCompatActivity {
         TextView createTime_textView = findViewById(R.id.createDate_textView);
         TextView name_textView = findViewById(R.id.name_textView);
         TextView description_textView = findViewById(R.id.description_tv);
+        TextView commentCountLabel = findViewById(R.id.commentCountLabel);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         CarouselView carouselView = findViewById(R.id.carouselView);
@@ -131,9 +134,11 @@ public class MultiPicturePostActivity extends AppCompatActivity {
             description_textView.setText(description);
         }
 
-        final String [] imageArray = post.imageURLs;
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        commentCountLabel.setText(post.commentCount+"");
+
+        final String [] imageArray = post.imageURLs;
         carouselView.setPageCount(imageArray.length);
         carouselView.setSlideInterval(6000);
         carouselView.setPageTransformInterval(800);
@@ -168,6 +173,13 @@ public class MultiPicturePostActivity extends AppCompatActivity {
                 Glide.with(this).load(R.drawable.default_user).into(
                         profilePicture_imageView);
             }
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                if (post.user.userID.equals(user.getUid())) {
+                    showLikeCount(post);
+                }
+            }
         }
         anonym.setAlpha(0.5f);
         this.anonym.setOnClickListener(new View.OnClickListener() {
@@ -200,12 +212,19 @@ public class MultiPicturePostActivity extends AppCompatActivity {
                     sendComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            helper.addCommentToFirebase(new CommentsCallback() {
-                                @Override
-                                public void onCallback(ArrayList<Comment> comms) {
-
-                                }
-                            },post,anonymToggle,comment);
+                            if (!isSendingComment && !comment.equals("")) {
+                                isSendingComment = true;
+                                helper.addCommentToFirebase(new CommentsCallback() {
+                                    @Override
+                                    public void onCallback(ArrayList<Comment> comms) {
+                                        isSendingComment = false;
+                                        if (comms != null) {
+                                            commentText.setText(null);
+                                            commentText.clearFocus();
+                                        }
+                                    }
+                                }, post, anonymToggle, comment);
+                            }
                         }
                     });
                 }
@@ -290,28 +309,66 @@ public class MultiPicturePostActivity extends AppCompatActivity {
     }
 
     public void upDateButtonUI(String type, Post post){
-        // changes the ButtonUI when a button is clicked!
+        // changes the buttonUI when a button is clicked
         switch(type){
             case "thanks":
                 ImageButton thanksBUtton = findViewById(R.id.thanks_button);
-                thanksBUtton.setBackground(null);
+                TextView thanksCounttv = findViewById(R.id.thanks_count_textView);
+                thanksBUtton.setEnabled(false);
+                thanksBUtton.setVisibility(View.INVISIBLE);
+                thanksCounttv.setText(String.valueOf(post.thanksCount++));
                 break;
             case "wow":
                 ImageButton wowButton = findViewById(R.id.wow_button);
-                wowButton.setBackground(null);
+                TextView wowCounttv = findViewById(R.id.wow_count_textView);
+                wowButton.setEnabled(false);
+                wowButton.setVisibility(View.INVISIBLE);
+                wowCounttv.setText(String.valueOf(post.wowCount++));
                 break;
             case "ha":
                 ImageButton haButton = findViewById(R.id.ha_button);
-                haButton.setBackground(null);
+                TextView haCounttv = findViewById(R.id.ha_count_textView);
+                haButton.setEnabled(false);
+                haButton.setVisibility(View.INVISIBLE);
+                haCounttv.setText(String.valueOf(post.haCount++));
                 break;
             case "nice":
                 ImageButton niceButton = findViewById(R.id.nice_button);
-                niceButton.setBackground(null);
+                TextView niceCounttv = findViewById(R.id.nice_count_textView);
+                niceButton.setEnabled(false);
+                niceButton.setVisibility(View.INVISIBLE);
+                niceCounttv.setText(String.valueOf(post.niceCount++));
                 break;
             default:
-                System.out.println("default case! "+TAG);
+                Log.d(TAG,"Invalid type String!");
                 break;
         }
+    }
+
+    public void showLikeCount(Post post) {
+        ImageButton thanksBUtton = findViewById(R.id.thanks_button);
+        TextView thanksCounttv = findViewById(R.id.thanks_count_textView);
+        thanksBUtton.setEnabled(false);
+        thanksBUtton.setVisibility(View.INVISIBLE);
+        thanksCounttv.setText(String.valueOf(post.thanksCount));
+
+        ImageButton wowButton = findViewById(R.id.wow_button);
+        TextView wowCounttv = findViewById(R.id.wow_count_textView);
+        wowButton.setEnabled(false);
+        wowButton.setVisibility(View.INVISIBLE);
+        wowCounttv.setText(String.valueOf(post.wowCount));
+
+        ImageButton haButton = findViewById(R.id.ha_button);
+        TextView haCounttv = findViewById(R.id.ha_count_textView);
+        haButton.setEnabled(false);
+        haButton.setVisibility(View.INVISIBLE);
+        haCounttv.setText(String.valueOf(post.haCount));
+
+        ImageButton niceButton = findViewById(R.id.nice_button);
+        TextView niceCounttv = findViewById(R.id.nice_count_textView);
+        niceButton.setEnabled(false);
+        niceButton.setVisibility(View.INVISIBLE);
+        niceCounttv.setText(String.valueOf(post.niceCount));
     }
 
     @Override

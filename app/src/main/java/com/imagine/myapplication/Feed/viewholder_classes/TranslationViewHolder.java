@@ -46,11 +46,13 @@ public class TranslationViewHolder extends CustomViewHolder{
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
         TextView name_textView = itemView.findViewById(R.id.name_textView);
+        TextView commentCountLabel = itemView.findViewById(R.id.commentCountLabel);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        commentCountLabel.setText(post.commentCount+"");
 
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");

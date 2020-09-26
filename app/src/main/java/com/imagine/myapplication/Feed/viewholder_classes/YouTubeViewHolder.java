@@ -55,6 +55,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         YouTubePlayerView youTubePlayerView = itemView.findViewById(R.id.youtube_player);
+        TextView commentCountLabel = itemView.findViewById(R.id.commentCountLabel);
         youTubePlayerView.getYouTubePlayerWhenReady(new YouTubePlayerCallback() {
             @Override
             public void onYouTubePlayer(YouTubePlayer youTubePlayer) {
@@ -69,6 +70,7 @@ public class YouTubeViewHolder extends CustomViewHolder {
         });
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        commentCountLabel.setText(post.commentCount+"");
         if(post.originalPoster.equals("anonym")){
             name_textView.setText("Anonym");
             Glide.with(itemView).load(R.drawable.anonym_user).into(

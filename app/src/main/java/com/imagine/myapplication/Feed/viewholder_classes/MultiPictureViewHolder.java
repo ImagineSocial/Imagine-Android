@@ -50,12 +50,16 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);
         TextView name_textView = itemView.findViewById(R.id.name_textView);
+        TextView commentCountLabel = itemView.findViewById(R.id.commentCountLabel);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
         CarouselView carouselView = itemView.findViewById(R.id.carouselView);
         final String [] imageArray = post.imageURLs;
+
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        commentCountLabel.setText(post.commentCount+"");
+
         carouselView.setPageCount(imageArray.length);
         carouselView.setSlideInterval(6000);
         carouselView.setPageTransformInterval(800);

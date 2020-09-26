@@ -25,6 +25,9 @@ public abstract class Post {
     public String linkedFactId = "";
     public String[] tags = null;
     public Boolean isTopicPost = false;
+    public int commentCount = 0;
+
+
     // Constructor
     public Post(String title, String documentID, String description, String report, String createTime,
                      Timestamp createTimestamp,String originalPoster, long thanksCount, long wowCount, long haCount,
