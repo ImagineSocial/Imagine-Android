@@ -72,6 +72,7 @@ public class RepostPostActivity extends AppCompatActivity {
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public Community comm;
+    public Boolean isSendingComment = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,11 +117,13 @@ public class RepostPostActivity extends AppCompatActivity {
         TextView createTime_textView = findViewById(R.id.createDate_textView);
         TextView name_textView = findViewById(R.id.name_textView);
         TextView description_textView = findViewById(R.id.description_tv);
+        TextView commentCountLabel = findViewById(R.id.commentCountLabel);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
 
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        commentCountLabel.setText(post.commentCount+"");
 
         ConstraintLayout descriptionView = findViewById(R.id.description_view);
         if (post.description.equals("")) {
@@ -191,12 +194,19 @@ public class RepostPostActivity extends AppCompatActivity {
                     sendComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            helper.addCommentToFirebase(new CommentsCallback() {
-                                @Override
-                                public void onCallback(ArrayList<Comment> comms) {
-
-                                }
-                            },post,anonymToggle,comment);
+                            if (!isSendingComment && !comment.equals("")) {
+                                isSendingComment = true;
+                                helper.addCommentToFirebase(new CommentsCallback() {
+                                    @Override
+                                    public void onCallback(ArrayList<Comment> comms) {
+                                        isSendingComment = false;
+                                        if (comms != null) {
+                                            commentText.setText(null);
+                                            commentText.clearFocus();
+                                        }
+                                    }
+                                }, post, anonymToggle, comment);
+                            }
                         }
                     });
                 }

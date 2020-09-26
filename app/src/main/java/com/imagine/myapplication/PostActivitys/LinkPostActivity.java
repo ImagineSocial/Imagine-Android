@@ -73,6 +73,7 @@ public class LinkPostActivity extends AppCompatActivity {
     public Community comm;
     public String comment;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public Boolean isSendingComment = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,6 +120,7 @@ public class LinkPostActivity extends AppCompatActivity {
         TextView createTime_textView = findViewById(R.id.createDate_textView);
         TextView description_textView = findViewById(R.id.description_tv);
         TextView name_textView = findViewById(R.id.name_textView);
+        TextView commentCountLabel = findViewById(R.id.commentCountLabel);
         ImageView profilePicture_imageView = findViewById(
                 R.id.profile_picture_imageView);
         ImageView linkImageView = findViewById(R.id.preView_image);
@@ -131,8 +133,11 @@ public class LinkPostActivity extends AppCompatActivity {
         }else{
             Glide.with(this).load(R.drawable.link_preview_image).into(linkImageView);
         }
+
         title_textView.setText(post.title);
         createTime_textView.setText(post.createTime);
+        commentCountLabel.setText(post.commentCount+"");
+
         linkTitle.setText(post.linkTitle);
         linkDescription.setText(post.linkDescription);
         linkLink.setText(post.linkShortURL);
@@ -206,12 +211,19 @@ public class LinkPostActivity extends AppCompatActivity {
                     sendComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            helper.addCommentToFirebase(new CommentsCallback() {
-                                @Override
-                                public void onCallback(ArrayList<Comment> comms) {
-
-                                }
-                            },post,anonymToggle,comment);
+                            if (!isSendingComment && !comment.equals("")) {
+                                isSendingComment = true;
+                                helper.addCommentToFirebase(new CommentsCallback() {
+                                    @Override
+                                    public void onCallback(ArrayList<Comment> comms) {
+                                        isSendingComment = false;
+                                        if (comms != null) {
+                                            commentText.setText(null);
+                                            commentText.clearFocus();
+                                        }
+                                    }
+                                }, post, anonymToggle, comment);
+                            }
                         }
                     });
                 }

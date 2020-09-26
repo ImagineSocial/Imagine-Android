@@ -1,7 +1,6 @@
 package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,7 +10,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,6 +22,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.protobuf.Any;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
 import com.imagine.myapplication.Community.Community;
@@ -45,9 +44,6 @@ import com.imagine.myapplication.post_classes.ThoughtPost;
 import com.imagine.myapplication.post_classes.TranslationPost;
 import com.imagine.myapplication.post_classes.YouTubePost;
 
-import org.w3c.dom.Document;
-
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -694,19 +690,27 @@ public class Post_Helper {
         });
     }
 
-    public void addCommentToFirebase(final CommentsCallback callback, final Post post, final boolean anonym, String body){
+    public void addCommentToFirebase(final CommentsCallback callback, final Post post, final boolean anonym, final String body){
         DocumentReference commRef = db.collection("Comments").document(post.documentID)
                 .collection("threads").document();
         HashMap<String,Object> data = new HashMap<>();
         data.put("body",body);
         data.put("id",0);
         data.put("sentAt",new Timestamp(new Date()));
-        if(anonym) data.put("userID","anonym");
-        else data.put("userID",auth.getCurrentUser().getUid());
+        final FirebaseUser user = auth.getCurrentUser();
+        if (anonym)  {
+            data.put("userID","anonym");
+        } else {
+            data.put("userID",user.getUid());
+        }
         commRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    if (!post.originalPoster.equals(user.getUid())) {
+                        addNotificationToFirebase(post, body);
+                    }
+
                     if(anonym){
                         addAnonymousComment(callback,post);
                     }else{
@@ -714,6 +718,29 @@ public class Post_Helper {
                     }
                 }else{
                     callback.onCallback(null);
+                }
+            }
+        });
+    }
+
+    public void addNotificationToFirebase(Post post, String body) {
+        DocumentReference notificationsRef = db.collection("Users").document(post.originalPoster)
+                .collection("notifications").document();
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("type","comment");
+        data.put("comment",body);
+        data.put("name", "Ein User");   //...hat deinen Beitrag kommentiert
+        data.put("postID",post.documentID);
+        data.put("isTopicPost", post.isTopicPost);
+        data.put("forOP", true);
+
+        notificationsRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    System.out.println("Successfully set notification");
+                }else{
+                    System.out.println("Error when setting notification");
                 }
             }
         });
@@ -978,6 +1005,7 @@ public class Post_Helper {
             Timestamp thought_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(thought_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             //ThoughtPost erstellen
             System.out.println(dateString);
             ThoughtPost thoughtPost = new ThoughtPost(thought_title,thought_docID,thought_description,
@@ -989,6 +1017,9 @@ public class Post_Helper {
                 String[] thought_tags = new String[thought_tagsArray.size()];
                 thought_tags = thought_tagsArray.toArray(thought_tags);
                 thoughtPost.setTags(thought_tags);
+            }
+            if (commentCount!= null) {
+                thoughtPost.commentCount = commentCount.intValue();
             }
             thoughtPost.setLinkedFactId((String) docSnap.get("linkedFactID"));
             thoughtPost.isTopicPost = isTopicPost;
@@ -1028,6 +1059,7 @@ public class Post_Helper {
             Timestamp youtube_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(youtube_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             //YouTubePost Attribute
             String youtube_link = (String) docSnap.get("link");
             //YouTubePost erstellen
@@ -1040,6 +1072,9 @@ public class Post_Helper {
                 String[] youtube_tags = new String[youtube_tagsArray.size()];
                 youtube_tags = youtube_tagsArray.toArray(youtube_tags);
                 youTubePost.setTags(youtube_tags);
+            }
+            if (commentCount!= null) {
+                youTubePost.commentCount = commentCount.intValue();
             }
             youTubePost.setLinkedFactId((String) docSnap.get("linkedFactID"));
             youTubePost.isTopicPost = isTopicPost;
@@ -1083,6 +1118,7 @@ public class Post_Helper {
             Timestamp link_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(link_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             //LinkPost Attribute
             String link_link = (String) docSnap.get("link");
             //LinkPost erstellen
@@ -1095,6 +1131,9 @@ public class Post_Helper {
                 String[] link_tags = new String[link_tagsArray.size()];
                 link_tags = link_tagsArray.toArray(link_tags);
                 linkPost.setTags(link_tags);
+            }
+            if (commentCount!= null) {
+                linkPost.commentCount = commentCount.intValue();
             }
             if(link_linkDescription != null) linkPost.linkDescription = link_linkDescription;
             if(link_linkImageURL != null) linkPost.linkImageURL = link_linkImageURL;
@@ -1138,6 +1177,7 @@ public class Post_Helper {
             Timestamp gif_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(gif_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             //GIFPost Attribute
             String gif_link = (String) docSnap.get("link");
             //GIFPost erstellen
@@ -1150,6 +1190,9 @@ public class Post_Helper {
                 String[] gif_tags = new String[gif_tagsArray.size()];
                 gif_tags = gif_tagsArray.toArray(gif_tags);
                 GIFPost.setTags(gif_tags);
+            }
+            if (commentCount!= null) {
+                GIFPost.commentCount = commentCount.intValue();
             }
             GIFPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             GIFPost.isTopicPost = isTopicPost;
@@ -1191,6 +1234,7 @@ public class Post_Helper {
             Timestamp picture_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(picture_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             // PicturePost Attribute
             long picture_imageHeight = (long) docSnap.getLong("imageHeight");
             long picture_imageWidth = (long) docSnap.getLong("imageWidth");
@@ -1206,6 +1250,9 @@ public class Post_Helper {
                 String[] picture_tags = new String[picture_tagsArray.size()];
                 picture_tags = picture_tagsArray.toArray(picture_tags);
                 picturePost.setTags(picture_tags);
+            }
+            if (commentCount!= null) {
+                picturePost.commentCount = commentCount.intValue();
             }
             picturePost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             picturePost.isTopicPost = isTopicPost;
@@ -1245,6 +1292,7 @@ public class Post_Helper {
             Timestamp mpicture_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(mpicture_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             // MultiPicturePost Attribute
             long mpicture_imageHeight = (long) docSnap.getLong("imageHeight");
             long mpicture_imageWidth = (long) docSnap.getLong("imageWidth");
@@ -1263,6 +1311,9 @@ public class Post_Helper {
                 String[] mpicture_tags = new String[mpicture_tagsArray.size()];
                 mpicture_tags = mpicture_tagsArray.toArray(mpicture_tags);
                 mPicturePost.setTags(mpicture_tags);
+            }
+            if (commentCount!= null) {
+                mPicturePost.commentCount = commentCount.intValue();
             }
             mPicturePost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             mPicturePost.isTopicPost = isTopicPost;
@@ -1301,6 +1352,7 @@ public class Post_Helper {
             Timestamp translation_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(translation_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             //TranslationPost Attribute
             String translation_OGpostDocumentID = (String) docSnap.get("OGpostDocumentID");
             //TranslationPost erstellen
@@ -1314,6 +1366,9 @@ public class Post_Helper {
                 String[] mpicture_tags = new String[translation_tagsArray.size()];
                 mpicture_tags = translation_tagsArray.toArray(mpicture_tags);
                 translationPost.setTags(mpicture_tags);
+            }
+            if (commentCount!= null) {
+                translationPost.commentCount = commentCount.intValue();
             }
             translationPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             if(fromCommunities){
@@ -1352,6 +1407,7 @@ public class Post_Helper {
             Timestamp repost_createTime = (Timestamp) docSnap.getTimestamp("createTime");
             Long timeNow = new Date().getTime();
             String dateString = convertLongDateToAgoString(repost_createTime.toDate(),timeNow);
+            Double commentCount = docSnap.getDouble("commentCount");
             //RepostPost Attribute
             String repost_OGpostDocumentID = (String) docSnap.get("OGpostDocumentID");
             //RepostPost erstellen
@@ -1374,6 +1430,9 @@ public class Post_Helper {
                 String[] repost_tags = new String[repost_tagsArray.size()];
                 repost_tags = repost_tagsArray.toArray(repost_tags);
                 repostPost.setTags(repost_tags);
+            }
+            if (commentCount!= null) {
+                repostPost.commentCount = commentCount.intValue();
             }
             repostPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             repostPost.isTopicPost = isTopicPost;
