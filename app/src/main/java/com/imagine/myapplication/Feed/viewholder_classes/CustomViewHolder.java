@@ -66,6 +66,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
     public void init(final Post post){
         // sets up the onClickListeners for the buttons
         final VoteHelper vote = new VoteHelper();
+        this.mContext = itemView.getContext();
         ImageButton thanksButton = mItemView.findViewById(R.id.thanks_button);
         ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
         ImageButton haButton = mItemView.findViewById(R.id.ha_button);
