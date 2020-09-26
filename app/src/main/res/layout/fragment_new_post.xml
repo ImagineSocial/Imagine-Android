@@ -11,192 +11,7 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF">
 
-        <TextView
-            android:id="@+id/picture_label2"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/ibm_medium"
-            android:text="Ziel:"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pictureCamera_button" />
 
-        <ImageButton
-            android:id="@+id/pictureCamera_button"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="25dp"
-            android:background="#FFF"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="@+id/pictureFolder_Button"
-            app:layout_constraintTop_toBottomOf="@+id/pictureFolder_Button"
-            app:srcCompat="@drawable/camera" />
-
-        <TextView
-            android:id="@+id/picture_label"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/ibm_medium"
-            android:text="Bild:"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/link_editText" />
-
-        <EditText
-            android:id="@+id/link_editText"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:fontFamily="@font/ibm_regular"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/title_label"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/link_label" />
-
-        <TextView
-            android:id="@+id/link_label"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_medium"
-            android:text="Link:"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_editText" />
-
-        <EditText
-            android:id="@+id/description_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:fontFamily="@font/ibm_regular"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/title_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/description_label" />
-
-        <TextView
-            android:id="@+id/description_label"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_medium"
-            android:text="Beschreibung:"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_editText" />
-
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginStart="7dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="7dp"
-            android:background="@drawable/corner_radius_four"
-            android:stretchColumns="*"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-            <TableRow
-                android:id="@+id/tableRow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/corner_radius_four">
-
-                <Button
-                    android:id="@+id/new_thought_button"
-                    android:background="@drawable/button_background_decent"
-                    android:fontFamily="@font/ibm_medium"
-                    android:text="Text"
-                    android:textAllCaps="false"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/new_picture_button"
-                    android:background="@drawable/button_background_decent"
-                    android:fontFamily="@font/ibm_medium"
-                    android:text="Bild"
-                    android:textAllCaps="false"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/new_link_button"
-                    android:background="@drawable/button_background_decent"
-                    android:fontFamily="@font/ibm_medium"
-                    android:text="Link"
-                    android:textAllCaps="false"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/new_gif_button"
-                    android:background="@drawable/button_background_decent"
-                    android:fontFamily="@font/ibm_medium"
-                    android:text="GIF"
-                    android:textAllCaps="false"
-                    android:textSize="12sp" />
-            </TableRow>
-        </TableLayout>
-
-        <TextView
-            android:id="@+id/title_label"
-            android:layout_width="0dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:fontFamily="@font/ibm_medium"
-            android:text="Titel:"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
-
-        <EditText
-            android:id="@+id/title_editText"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@android:color/transparent"
-            android:ems="10"
-            android:fontFamily="@font/ibm_regular"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:maxLength="@integer/titleMaximumCharacters"
-            android:textSize="13sp"
-            app:layout_constraintEnd_toEndOf="@+id/title_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_label" />
 
         <View
             android:id="@+id/view3"
@@ -310,6 +125,206 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/corner_radius_four"
+            android:stretchColumns="*"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+            <TableRow
+                android:id="@+id/tableRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/corner_radius_four">
+
+                <Button
+                    android:id="@+id/new_thought_button"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/ibm_medium"
+                    android:text="Text"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAllCaps="false"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/new_picture_button"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/ibm_medium"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Bild"
+                    android:textAllCaps="false"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/new_link_button"
+                    android:background="@drawable/button_border"
+                    android:fontFamily="@font/ibm_medium"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="Link"
+                    android:textAllCaps="false"
+                    android:textSize="12sp" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/title_label"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Titel:"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+
+        <EditText
+            android:id="@+id/title_editText"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:maxLength="@integer/titleMaximumCharacters"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/title_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_label" />
+
+
+        <TextView
+            android:id="@+id/titleCharacterLimit_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/ibm_regular"
+            android:text="200"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/view5"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+        <EditText
+            android:id="@+id/description_editText"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/title_label"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_label" />
+
+        <EditText
+            android:id="@+id/link_editText"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/title_label"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/link_label" />
+
+        <TextView
+            android:id="@+id/link_label"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Link:"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_editText" />
+
+        <TextView
+            android:id="@+id/description_label"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Beschreibung:"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_editText" />
+
+        <TextView
+            android:id="@+id/picture_label2"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Ziel:"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pictureCamera_button" />
+
+        <ImageButton
+            android:id="@+id/pictureCamera_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="25dp"
+            android:background="#FFF"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="@+id/pictureFolder_Button"
+            app:layout_constraintTop_toBottomOf="@+id/pictureFolder_Button"
+            app:srcCompat="@drawable/camera" />
+
+        <TextView
+            android:id="@+id/picture_label"
+            android:layout_width="0dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Bild:"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/link_editText" />
+
         <Button
             android:id="@+id/linkCommunity_button"
             android:layout_width="wrap_content"
@@ -348,19 +363,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/linkedCommunity_imageView"
             app:layout_constraintEnd_toStartOf="@+id/linkedCommunity_imageView"
             app:layout_constraintTop_toTopOf="@+id/linkedCommunity_imageView" />
-
-        <TextView
-            android:id="@+id/titleCharacterLimit_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="2dp"
-            android:fontFamily="@font/ibm_regular"
-            android:text="200"
-            android:textColor="@android:color/black"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/view5"
-            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/newPost_destination_imageView"
