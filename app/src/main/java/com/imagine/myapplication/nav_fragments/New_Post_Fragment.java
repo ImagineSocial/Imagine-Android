@@ -132,8 +132,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         newPictureButton.setOnClickListener(this);
         Button newLinkButton = (Button) view.findViewById(R.id.new_link_button);
         newLinkButton.setOnClickListener(this);
-        Button newGIFButton = (Button) view.findViewById(R.id.new_gif_button);
-        newGIFButton.setOnClickListener(this);
         ImageButton pictureFolder_button = getView().findViewById(R.id.pictureFolder_Button);
         pictureFolder_button.setOnClickListener(this);
         ImageButton pictureCamera_button = getView().findViewById(R.id.pictureCamera_button);
@@ -198,11 +196,9 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         Button newThoughtButton = (Button) view.findViewById(R.id.new_thought_button);
         Button newPictureButton = (Button) view.findViewById(R.id.new_picture_button);
         Button newLinkButton = (Button) view.findViewById(R.id.new_link_button);
-        Button newGIFButton = (Button) view.findViewById(R.id.new_gif_button);
         newThoughtButton.setAlpha(fullAlpha);
         newPictureButton.setAlpha(fullAlpha);
         newLinkButton.setAlpha(fullAlpha);
-        newGIFButton.setAlpha(fullAlpha);
 
         //Change Community Stuff
         Button commLinker = getView().findViewById(R.id.linkCommunity_button);
@@ -234,10 +230,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             case R.id.new_link_button:
                 newLinkButton.setAlpha(halfAlpha);
                 showLink();
-                break;
-            case R.id.new_gif_button:
-                newGIFButton.setAlpha(halfAlpha);
-                showGIF();
                 break;
             case R.id.pictureFolder_Button:
                 new AlertDialog.Builder(getContext())
@@ -526,8 +518,11 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration).show();
                             this.shareButton.setEnabled(true);
                         } else {
-                            if(isYouTubeURL(link_editText.getText().toString())){
+                            String url = link_editText.getText().toString();
+                            if(isYouTubeURL(url)){
                                 postYouTube(docRef);
+                            } else if (isGIFURL(url)) {
+                                postGIF(docRef);
                             } else {
                                 postLink(docRef);
                             }
@@ -1056,6 +1051,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         }
         else
         {
+            success = false;
+        }
+        return success;
+    }
+
+    public boolean isGIFURL(String url){
+        // checks if url is valid .mp4
+        boolean success;
+
+        if (url.endsWith(".mp4")) {
+            success = true;
+        } else {
             success = false;
         }
         return success;
