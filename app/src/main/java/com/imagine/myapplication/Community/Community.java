@@ -26,30 +26,14 @@ public class Community {
     public String type;
     public Boolean isBeingFollowed = false;
     public long popularity;
+    public int postCount = 0;
+    public int followerCount = 0;
 
     public Community(String name, String imageURL, String topicID, String description){
         this.name = name;
         this.imageURL = imageURL;
         this.topicID = topicID;
         this.description = description;
-    }
-
-    public void getFollowerCount(final IntegerCallback callback) {
-        if (topicID != "") {
-            DocumentReference ref = FirebaseFirestore.getInstance().collection("Facts").document(topicID);
-            ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    Map<String, Object> docData = documentSnapshot.getData();
-                    List<String> follower = (docData.get("follower") != null)
-                            ? (List<String>) docData.get("follower")
-                            : (List<String>) null;
-
-                    int count = follower.size();
-                    callback.onCallback(count);
-                }
-            });
-        }
     }
 
     public void checkIfCommunityIsFollowed(final BooleanCallback callback) {
@@ -74,19 +58,6 @@ public class Community {
             }
         } else {
             callback.onCallback(false);
-        }
-    }
-
-    public void getPostCount(final IntegerCallback callback) {
-        if (topicID != "") {
-            Query ref = FirebaseFirestore.getInstance().collection("Facts").document(topicID).collection("posts");
-            ref.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                @Override
-                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    int count = queryDocumentSnapshots.size();
-                    callback.onCallback(count);
-                }
-            });
         }
     }
 }

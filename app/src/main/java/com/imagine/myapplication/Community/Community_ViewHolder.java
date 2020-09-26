@@ -59,11 +59,9 @@ public class Community_ViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 addToRecents(comm);
                 Intent intent = new Intent(itemView.getContext(),Community_ViewPager_Activity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("description",description);
-                intent.putExtra("imageURL", imageURL);
-                intent.putExtra("commID", commID);
-                intent.putExtra("displayOption",displayOption);
+                Gson gson = new Gson();
+                String jsonComm = gson.toJson(comm);
+                intent.putExtra("comm", jsonComm);
                 mContext.startActivity(intent);
             }
         });

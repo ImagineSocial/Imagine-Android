@@ -34,11 +34,7 @@ import java.util.HashMap;
 
 public class Community_ViewPager_Activity extends AppCompatActivity {
 
-    public String name;
-    public String description;
-    public String imageURL;
-    public String commID;
-    public String displayOption;
+    public Community comm;
     public Communities_Fragment fragment;
     public Context mContext;
     public TestCollectionAdapter adapter;
@@ -56,30 +52,27 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         setContentView(R.layout.viewpager_test);
         mContext = this;
         Intent intent = getIntent();
-        this.name = intent.getStringExtra("name");
-        this.description = intent.getStringExtra("description");
-        this.imageURL = intent.getStringExtra("imageURL");
-        this.commID = intent.getStringExtra("commID");
-        this.displayOption = intent.getStringExtra("displayOption");
+        String jsonComm = intent.getStringExtra("comm");
+        Gson gson = new Gson();
+        this.comm = gson.fromJson(jsonComm, Community.class);
 
         HashMap<String,String> args = new HashMap<>();
-        args.put("name",intent.getStringExtra("name"));
-        args.put("description",intent.getStringExtra("description"));
-        args.put("imageURL",intent.getStringExtra("imageURL"));
-        args.put("commID",intent.getStringExtra("commID"));
-        args.put("displayOption",intent.getStringExtra("displayOption"));
+        args.put("name", this.comm.name);
+        args.put("description",this.comm.description);
+        args.put("imageURL", this.comm.imageURL);
+        args.put("commID", this.comm.topicID);
+        args.put("displayOption", this.comm.displayOption);
         this.viewPager2 = findViewById(R.id.containerViewPager);
         this.adapter = new TestCollectionAdapter(this,args);
         this.adapter.activity = this;
         this.viewPager2.setAdapter(this.adapter);
-        if(intent.getStringExtra("displayOption").equals("fact")){
+        if(this.comm.displayOption.equals("fact")){
             this.viewPager2.setCurrentItem(1);
         }else{
             this.viewPager2.setCurrentItem(1);
         }
 
-        Community community = new Community(name,imageURL,commID,description);
-        setCommunityHeader(community);
+        setCommunityHeader(this.comm);
     }
 
     public void setCommunityHeader(final Community community) {
@@ -89,7 +82,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         View backgroundView = findViewById(R.id.comm_background_view);
         ImageButton newPostButton = findViewById(R.id.community_new_post_button);
         TabLayout tabLayout = findViewById(R.id.community_feed_tab_layout);
-        if(this.displayOption.equals("fact")){
+        if(this.comm.displayOption.equals("fact")){
             new TabLayoutMediator(tabLayout, this.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
                 @Override
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -129,6 +122,8 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         image_iv.setClipToOutline(true);
         title_tv.setText(community.name);
         description_tv.setText(community.description);
+        followerCountLabel.setText(community.followerCount+"");
+        postCountLabel.setText(community.postCount+"");
 
         if(community.imageURL == null || community.imageURL.equals("")){
             Glide.with(this).load(R.drawable.placeholder_picture).into(image_iv);
@@ -168,19 +163,6 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 intent.putExtra("comm",commString);
                 mContext.startActivity(intent);
 
-            }
-        });
-
-        community.getFollowerCount(new IntegerCallback() {
-            @Override
-            public void onCallback(int count) {
-                followerCountLabel.setText(count+"");
-            }
-        });
-        community.getPostCount(new IntegerCallback() {
-            @Override
-            public void onCallback(int count) {
-                postCountLabel.setText(count+"");
             }
         });
     }

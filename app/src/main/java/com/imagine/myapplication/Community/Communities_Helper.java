@@ -227,9 +227,19 @@ public class Communities_Helper {
                         final String description = (docData.get("description") != null)
                                 ? (String) docData.get("description")
                                 : (String) "";
+                        final long postCount = (docData.get("postCount") != null)
+                                ? (long) docData.get("postCount")
+                                : (long) 0;
+                        List<String> follower = (docData.get("follower") != null)
+                                ? (List<String>) docData.get("follower")
+                                : (List<String>) new ArrayList();
+                        int followerCount = follower.size();
+
                         final String displayOption =(String) docData.get("displayOption");
                         Community comm = new Community(communityName,communityImageURL,communityID,description);
                         comm.displayOption = displayOption;
+                        comm.followerCount = followerCount;
+                        comm.postCount = (int) postCount;
                         callback.onCallback(comm);
                         if(commCache.size() <= 20){
                             commCache.add(comm);
@@ -443,10 +453,19 @@ public class Communities_Helper {
         String imageURL = docSnap.getString("imageURL");
         String description = docSnap.getString("description");
         String displayOption = docSnap.getString("displayOption");
+        Double postCount = docSnap.getDouble("postCount");
+        List<String> follower = (List<String>) docSnap.get("follower");
         Community comm = new Community(name,imageURL,topicID,description);
         comm.displayOption = displayOption;
         comm.popularity = (long) docSnap.getLong("popularity");
         comm.type = type;
+        if (postCount!= null) {
+            comm.postCount = postCount.intValue();
+        }
+        if (follower != null) {
+            comm.followerCount = follower.size();
+        }
+
         list.add(comm);
     }
 }

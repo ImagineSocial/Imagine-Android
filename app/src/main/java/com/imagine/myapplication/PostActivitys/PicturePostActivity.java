@@ -447,11 +447,9 @@ public class PicturePostActivity extends AppCompatActivity {
                     Log.e("login activity", "Can not read file: " + e.toString());
                 }
                 Intent intent = new Intent(mContext, Community_ViewPager_Activity.class);
-                intent.putExtra("name", comm.name);
-                intent.putExtra("description",comm.description);
-                intent.putExtra("imageURL", comm.imageURL);
-                intent.putExtra("commID", comm.topicID);
-                intent.putExtra("displayOption",comm.displayOption);
+                Gson gson = new Gson();
+                String jsonComm = gson.toJson(comm);
+                intent.putExtra("comm", jsonComm);
                 mContext.startActivity(intent);
             }
         });

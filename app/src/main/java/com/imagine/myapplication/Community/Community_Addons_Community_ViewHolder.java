@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,12 +13,14 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Community_Addons_Community_ViewHolder extends Community_Addons_ViewHolder {
 
@@ -38,8 +41,11 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(addon.title);
-                System.out.println(addon.refs);
+                Intent intent = new Intent(mContext, Community_ViewPager_Activity.class);
+                Gson gson = new Gson();
+                String jsonComm = gson.toJson(comm);
+                intent.putExtra("comm", jsonComm);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -55,7 +61,19 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
                             String imageURL = docSnap.getString("imageURL");
                             String topicID = docSnap.getId();
                             String description = docSnap.getString("description");
+                            String displayOption = docSnap.getString("displayOption");
+                            Double postCount = docSnap.getDouble("postCount");
+                            List<String> follower = (List<String>) docSnap.get("follower");
+
                             comm = new Community(name,imageURL,topicID,description);
+                            comm.displayOption = displayOption;
+                            if (postCount!= null) {
+                                comm.postCount = postCount.intValue();
+                            }
+                            if (follower != null) {
+                                comm.followerCount = follower.size();
+                            }
+                            addon.community = comm;
                             setHeader();
                             fetchCommunityPosts();
                         }else if(task.isCanceled()){
@@ -78,19 +96,9 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
         final TextView postCountLabel = itemView.findViewById(R.id.addOn_community_postCount_label);
         title.setText(comm.name);
         description.setText(comm.description);
+        postCountLabel.setText("Beiträge: "+comm.postCount);
+        followerCountLabel.setText("Follower: "+comm.followerCount);
 
-        comm.getPostCount(new IntegerCallback() {
-            @Override
-            public void onCallback(int count) {
-                postCountLabel.setText("Beiträge: "+count);
-            }
-        });
-        comm.getFollowerCount(new IntegerCallback() {
-            @Override
-            public void onCallback(int count) {
-                followerCountLabel.setText("Follower: "+count);
-            }
-        });
     }
 
     public void fetchCommunityPosts(){

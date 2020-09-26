@@ -96,9 +96,18 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
                                 ? (String) docData.get("description")
                                 : (String) "";
                         final String displayOption =(String) docData.get("displayOption");
+                        long postCount = (docData.get("postCount") != null)
+                                ? (long) docData.get("postCount")
+                                : (long) 0;
+                        List<String> follower = (docData.get("follower") != null)
+                                ? (List<String>) docData.get("follower")
+                                : (List<String>) new ArrayList();
+                        int followerCount = follower.size();
 
                         Community comm = new Community(communityName,communityImageURL,factID,description);
                         comm.displayOption = displayOption;
+                        comm.followerCount = followerCount;
+                        comm.postCount = (int) postCount;
                         facts.add(comm);
 
                         if (facts.size() == 3) {
@@ -147,11 +156,9 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
 
     public void goToCommunity(Community community) {
         Intent intent = new Intent(mContext, Community_ViewPager_Activity.class);
-        intent.putExtra("name", community.name);
-        intent.putExtra("description",community.description);
-        intent.putExtra("imageURL", community.imageURL);
-        intent.putExtra("commID", community.topicID);
-        intent.putExtra("displayOption",community.displayOption);
+        Gson gson = new Gson();
+        String jsonComm = gson.toJson(community);
+        intent.putExtra("comm", jsonComm);
         mContext.startActivity(intent);
     }
 

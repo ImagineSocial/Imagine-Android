@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
@@ -39,11 +40,9 @@ public class Community_OwnComms_ViewHolder extends Community_ViewHolder {
             public void onClick(View v) {
                 addToRecents(comm);
                 Intent intent = new Intent(itemView.getContext(),Community_ViewPager_Activity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("description",description);
-                intent.putExtra("imageURL", imageURL);
-                intent.putExtra("commID", commID);
-                intent.putExtra("displayOption",displayOption);
+                Gson gson = new Gson();
+                String jsonComm = gson.toJson(comm);
+                intent.putExtra("comm", jsonComm);
                 mContext.startActivity(intent);
             }
         });
