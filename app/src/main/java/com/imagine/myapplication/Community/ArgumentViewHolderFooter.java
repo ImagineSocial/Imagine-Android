@@ -18,12 +18,12 @@ public class ArgumentViewHolderFooter extends ArgumentViewHolder {
     }
 
     @Override
-    public void bind(Argument arg) {
+    public void bind(final Argument arg) {
         Button adder = itemView.findViewById(R.id.add_argument_button);
         adder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                frag.showDialogFragment();
+                frag.showDialogFragment(arg.proOrCon);
             }
         });
     }

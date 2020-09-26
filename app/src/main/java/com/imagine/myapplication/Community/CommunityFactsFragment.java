@@ -23,6 +23,7 @@ public class CommunityFactsFragment extends Fragment {
     ArrayList<Argument> pros;
     ArrayList<Argument> cons;
     CommunityFactsFragment frag;
+    ArgumentsDialogFragment dialog;
 
     public CommunityFactsFragment(HashMap<String, String> args) {
         this.args = args;
@@ -39,7 +40,6 @@ public class CommunityFactsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final TextView proCountLabel = view.findViewById(R.id.comm_facts_prosCount);
         final TextView conCountLabel = view.findViewById(R.id.comm_facts_consCount);
-
         Communities_Helper communities_helper = new Communities_Helper();
         communities_helper.getProArguments(args.get("commID"), new ArgumentsCallback() {
             @Override
@@ -75,9 +75,16 @@ public class CommunityFactsFragment extends Fragment {
         pro_recycler.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
 
-    public void showDialogFragment(){
-        ArgumentsDialogFragment frag = new ArgumentsDialogFragment();
-        frag.setCancelable(true);
-        frag.show(getFragmentManager(),"DialogFragment");
+    public void showDialogFragment(String proOrCon){
+        this.dialog = new ArgumentsDialogFragment();
+        dialog.commID = this.args.get("commID");
+        dialog.proOrCon = proOrCon;
+        dialog.facts = this;
+        dialog.setCancelable(true);
+        dialog.show(getFragmentManager(),"DialogFragment");
+    }
+
+    public void removeDialogFragment(){
+        getFragmentManager().beginTransaction().remove(dialog).commit();
     }
 }
