@@ -114,6 +114,11 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".Community.Community_Addon_New_Addon_Activity"
+            android:configChanges = "orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

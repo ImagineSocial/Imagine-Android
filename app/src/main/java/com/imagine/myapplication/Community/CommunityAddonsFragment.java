@@ -69,6 +69,7 @@ public class CommunityAddonsFragment extends Fragment {
     public void fetchTheAddons(){
         Addon header = new Addon();
         header.isHeader = true;
+        header.community = this.community;
         addons.add(header);
         Query ref = db.collection("Facts").document(this.community.topicID)
                 .collection("addOns").orderBy("popularity", Query.Direction.DESCENDING);
