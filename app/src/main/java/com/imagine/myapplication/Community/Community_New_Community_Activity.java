@@ -36,8 +36,10 @@ import com.imagine.myapplication.R;
 import com.synnapps.carouselview.ImageListener;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.datatype.Duration;
 
@@ -157,6 +159,8 @@ public class Community_New_Community_Activity extends AppCompatActivity {
         String description = this.description.getText().toString();
         String OP = user.getUid();
         String imageURL = url;
+        List follower = new ArrayList<>();
+        follower.add(OP);
 
         HashMap<String,Object> data = new HashMap<>();
         data.put("OP",OP);
@@ -165,6 +169,7 @@ public class Community_New_Community_Activity extends AppCompatActivity {
         data.put("displayOption",this.displayOption);
         data.put("popularity", new Integer(10));
         data.put("createDate", new Date());
+        data.put("follower", follower); // Set yourself as the first follower
 
         if(imageURL != null){
             data.put("imageURL",imageURL);

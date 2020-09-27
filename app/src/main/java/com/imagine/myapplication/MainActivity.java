@@ -3,12 +3,15 @@ package com.imagine.myapplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -26,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,6 +41,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
@@ -95,7 +101,7 @@ public class MainActivity extends AppCompatActivity{
         feed_fragment.mainActivity = this.mainActivity;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 feed_fragment).commit();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
@@ -240,10 +246,64 @@ public class MainActivity extends AppCompatActivity{
             };
 
     public void setUpNotifications(ArrayList<Notification> nots){
-        this.noti_recyclerView = header.findViewById(R.id.notifications_recyclerView);
-        this.adapter = new NotificationsAdapter(nots,mContext);
-        noti_recyclerView.setAdapter(adapter);
-        noti_recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        if (header != null) {
+            this.noti_recyclerView = header.findViewById(R.id.notifications_recyclerView);
+            this.adapter = new NotificationsAdapter(nots, mContext);
+            noti_recyclerView.setAdapter(adapter);
+            noti_recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
+            TextView smallNotificationLabel = findViewById(R.id.toolbar_smallNotificationLabel);
+            Button deleteButton = header.findViewById(R.id.sideMenu_deleteNotificationsButton);
+
+            if (nots.size() != 0) {
+                GradientDrawable shape = new GradientDrawable();
+                shape.setCornerRadius(14);   //View is 14x14
+
+                shape.setColor(Color.RED);
+                smallNotificationLabel.setBackground(shape);
+                smallNotificationLabel.setClipToOutline(true);
+                smallNotificationLabel.setText(nots.size() + "");
+                smallNotificationLabel.setVisibility(View.VISIBLE);
+
+
+                deleteButton.setVisibility(View.VISIBLE);
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteAllNotifications();
+                    }
+                });
+
+            } else {
+                smallNotificationLabel.setVisibility(View.INVISIBLE);
+                deleteButton.setVisibility(View.INVISIBLE);
+            }
+
+        }
+    }
+
+    public void deleteAllNotifications() {
+        FirebaseUser user = auth.getCurrentUser();
+        if (user != null) {
+            final CollectionReference notRef = db.collection("Users").document(user.getUid())
+                    .collection("notifications");
+
+            notRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+                        DocumentReference ref = notRef.document(document.getId());
+                        ref.delete().addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("Failed to remove Notification");
+                            }
+                        });
+                    }
+                }
+            });
+        }
     }
 
     public void getUser(final String userID){

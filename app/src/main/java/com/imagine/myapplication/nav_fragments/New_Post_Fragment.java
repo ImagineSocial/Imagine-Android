@@ -897,6 +897,12 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         if(linkedFactID != null){
             data.put("linkedFactID",linkedFactID);
         }
+        FirebaseUser user = auth.getCurrentUser();
+        List notificationRecipients = new ArrayList<>();
+        notificationRecipients.add(user.getUid());
+
+        data.put("notificationRecipients", notificationRecipients); // So the ios User send notifications
+
         docRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
