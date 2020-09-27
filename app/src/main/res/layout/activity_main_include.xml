@@ -44,7 +44,7 @@
                 android:id="@+id/toolbarProfilePicture"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:padding="2dp"
+                android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -53,15 +53,15 @@
 
             <TextView
                 android:id="@+id/toolbar_smallNotificationLabel"
-                android:layout_width="14dp"
-                android:layout_height="14dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:background="@color/md_red_A100"
                 android:fontFamily="@font/ibm_regular"
                 android:text="0"
                 android:visibility="invisible"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="10sp"
+                android:textSize="8sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 

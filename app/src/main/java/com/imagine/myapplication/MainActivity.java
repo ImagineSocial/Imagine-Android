@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity{
 
             if (nots.size() != 0) {
                 GradientDrawable shape = new GradientDrawable();
-                shape.setCornerRadius(14);   //View is 14x14
+                shape.setCornerRadius(12);   //View is 12x12
 
                 shape.setColor(Color.RED);
                 smallNotificationLabel.setBackground(shape);

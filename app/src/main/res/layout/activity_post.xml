@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    >
 
     <ScrollView
         android:layout_width="match_parent"

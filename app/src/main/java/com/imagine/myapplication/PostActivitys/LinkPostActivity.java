@@ -2,6 +2,7 @@ package com.imagine.myapplication.PostActivitys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -141,6 +142,17 @@ public class LinkPostActivity extends AppCompatActivity {
         linkTitle.setText(post.linkTitle);
         linkDescription.setText(post.linkDescription);
         linkLink.setText(post.linkShortURL);
+
+        final View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = post.link;
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                mContext.startActivity(intent);
+            }
+        };
+
         ConstraintLayout descriptionView = findViewById(R.id.description_view);
         if (post.description.equals("")) {
             descriptionView.setVisibility(View.INVISIBLE);
