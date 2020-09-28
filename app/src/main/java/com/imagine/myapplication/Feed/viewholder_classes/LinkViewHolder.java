@@ -178,6 +178,9 @@ public class LinkViewHolder extends CustomViewHolder {
                     case R.id.link_community:
                         linkCommunity(post);
                         return true;
+                    case R.id.repost_post:
+                        showReportDialog();
+                        return true;
                     default:
                         return false;
                 }

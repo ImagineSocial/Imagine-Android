@@ -30,6 +30,7 @@ import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_H
 import com.imagine.myapplication.LinkedCommunityCallback;
 import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.RepostDialogFragment;
 import com.imagine.myapplication.post_classes.MultiPicturePost;
 import com.imagine.myapplication.post_classes.PicturePost;
 import com.imagine.myapplication.user_classes.User;
@@ -304,6 +305,15 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
         Intent intent = new Intent(itemView.getContext(), CommunityPickActivity.class);
         intent.putExtra("postID",post.documentID);
         this.mainActivty.startActivityForResult(intent,5);
+    }
+
+    public void showReportDialog(){
+        RepostDialogFragment frag = new RepostDialogFragment(itemView.getContext());
+        frag.show();
+    }
+
+    public void repostPost(Post post){
+        System.out.println("!");
     }
 
     public String getType(){

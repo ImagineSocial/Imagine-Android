@@ -8,4 +8,8 @@
         android:id="@+id/remove_post"
         android:title="Post entfernen"
         />
+    <item
+        android:id="@+id/repost_post"
+        android:title="Post melden"
+        />
 </menu>

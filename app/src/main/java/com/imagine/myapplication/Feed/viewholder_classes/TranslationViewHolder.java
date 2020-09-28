@@ -144,6 +144,9 @@ public class TranslationViewHolder extends CustomViewHolder{
                     case R.id.link_community:
                         linkCommunity(post);
                         return true;
+                    case R.id.repost_post:
+                        showReportDialog();
+                        return true;
                     default:
                         return false;
                 }

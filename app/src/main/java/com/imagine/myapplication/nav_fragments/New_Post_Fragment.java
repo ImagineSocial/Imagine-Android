@@ -233,20 +233,20 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.pictureFolder_Button:
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Poste ein oder mehrere Bilder")
-                        .setMessage("Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf 'Öffnen'")
-                        .setPositiveButton("Mehrere", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                chooseMultiplePhotosFromGallery();
-                            }
-                        })
-                        .setNegativeButton("Einzeln", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                choosePhotoFromGallery();
-                            }
-                        })
-                        .show();
+                    .setTitle("Poste ein oder mehrere Bilder")
+                    .setMessage("Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf 'Öffnen'")
+                    .setPositiveButton("Mehrere", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            chooseMultiplePhotosFromGallery();
+                        }
+                    })
+                    .setNegativeButton("Einzeln", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            choosePhotoFromGallery();
+                        }
+                    })
+                    .show();
                 break;
             case R.id.pictureCamera_button:
                 takePhotoFromCamera();
