@@ -24,6 +24,9 @@ public class Comments_Adapter extends RecyclerView.Adapter<CommentViewHolder> {
         this.mContext = mContext;
     }
 
+    public void getNewComments(ArrayList<Comment> comments){
+        this.comments = comments;
+    }
 
     @NonNull
     @Override

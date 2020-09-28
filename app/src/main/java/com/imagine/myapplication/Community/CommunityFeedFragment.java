@@ -16,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
@@ -108,6 +109,11 @@ public class CommunityFeedFragment extends Fragment {
     }
 
     public void initRecyclerView(){
+        if(postList.size() == 0){
+            DefaultPost placeHolder = new DefaultPost("placeHolder","placeHolder","placeHolder","placeHolder",
+                    "placeHolder",null,"placeHolder",0,0,0,0,"placeHolder");
+            postList.add(placeHolder);
+        }
         CommunityFeedAdapter adapter = new CommunityFeedAdapter(postList,this.community,getContext());
         adapter.activity = this.activity;
         this.recyclerView.setAdapter(adapter);

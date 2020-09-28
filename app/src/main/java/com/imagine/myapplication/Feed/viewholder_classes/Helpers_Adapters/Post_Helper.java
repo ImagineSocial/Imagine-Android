@@ -703,6 +703,18 @@ public class Post_Helper {
         } else {
             data.put("userID",user.getUid());
         }
+
+        final Comment comm = new Comment();
+        comm.body = body;
+        //comm.id = docSnap.getLong("is");
+        Timestamp sentAt = new Timestamp(new Date());
+        comm.sentAt = sentAt;
+        comm.userID = user.getUid();
+        Long timeNow = new Date().getTime();
+        String dateString = convertLongDateToAgoString(sentAt.toDate(),timeNow);
+        comm.sentAtString = dateString;
+        final ArrayList<Comment> comment = new ArrayList<>();
+        comment.add(comm);
         commRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -710,11 +722,10 @@ public class Post_Helper {
                     if (!post.originalPoster.equals(user.getUid())) {
                         addNotificationToFirebase(post, body);
                     }
-
                     if(anonym){
                         addAnonymousComment(callback,post);
                     }else{
-                        callback.onCallback(null);
+                        callback.onCallback(comment);
                     }
                 }else{
                     callback.onCallback(null);

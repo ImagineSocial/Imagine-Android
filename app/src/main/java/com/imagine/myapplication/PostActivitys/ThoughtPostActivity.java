@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -73,6 +74,8 @@ public class ThoughtPostActivity extends AppCompatActivity {
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public Community comm;
     public Boolean isSendingComment = false;
+    public RecyclerView recyclerView;
+    public Comments_Adapter adapter;
 
 
     @Override
@@ -203,9 +206,17 @@ public class ThoughtPostActivity extends AppCompatActivity {
                                     @Override
                                     public void onCallback(ArrayList<Comment> comms) {
                                         isSendingComment = false;
-                                        if (comms != null) {
+                                        if(comms == null){
+                                            Toast.makeText(mContext,"Kommentar konnte nicht hochgeladen werden!",Toast.LENGTH_SHORT).show();
+                                        }else{
                                             commentText.setText(null);
                                             commentText.clearFocus();
+                                            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                                            imm.hideSoftInputFromWindow(commentText.getWindowToken(),
+                                                    InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                                            comments.add(comms.get(0));
+                                            adapter.getNewComments(comments);
+                                            adapter.notifyDataSetChanged();
                                         }
                                     }
                                 }, post, anonymToggle, comment);
@@ -235,10 +246,8 @@ public class ThoughtPostActivity extends AppCompatActivity {
     }
 
     public void initRecyclerView(){
-        // initializes the recyclerView
-        //TODO: set up the onScrollListenenr
-        RecyclerView recyclerView = findViewById(R.id.post_activity_recyclerView);
-        Comments_Adapter adapter = new Comments_Adapter(comments,this);
+        this.recyclerView = findViewById(R.id.post_activity_recyclerView);
+        this.adapter = new Comments_Adapter(comments,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
