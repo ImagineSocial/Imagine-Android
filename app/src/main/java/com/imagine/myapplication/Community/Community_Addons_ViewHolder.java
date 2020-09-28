@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,11 +61,7 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Addon_Feed_Activity.class);
-                Gson gson = new Gson();
-                String itemsString = gson.toJson(addon.items);
-                String addonString = gson.toJson(addon);
-                intent.putExtra("items", itemsString);
-                intent.putExtra("addon", addonString);
+                Addon_Feed_Activity.addon = addon;
                 mContext.startActivity(intent);
             }
         });
