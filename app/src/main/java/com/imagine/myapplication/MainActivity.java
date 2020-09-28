@@ -245,7 +245,19 @@ public class MainActivity extends AppCompatActivity{
                 }
             };
 
-    public void setUpNotifications(ArrayList<Notification> nots){
+    public void showFeed() {
+        Fragment selectedFragment = null;
+
+        if (feed_fragment == null) {
+            feed_fragment = new Feed_Fragment();
+        }
+        selectedFragment = feed_fragment;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+
+        //feedfragment
+    }
+
+        public void setUpNotifications(ArrayList<Notification> nots){
         if (header != null) {
             this.noti_recyclerView = header.findViewById(R.id.notifications_recyclerView);
             this.adapter = new NotificationsAdapter(nots, mContext);

@@ -1,63 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/report_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/placeholder_picture"
-         />
+        app:srcCompat="@drawable/placeholder_picture" />
+
     <TextView
         android:id="@+id/report_exp"
-        app:layout_constraintTop_toBottomOf="@id/report_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/ibm_regular"
+        android:text="Ein Mitarbeiter wird deine Anfrage überprüfen. Sollte deine Meldung korrekt sein, wird dieser Beitrag optisch markiert. Zu einem späteren Zeitpunkt übernehmen die User demokratisch diese Überprüfung. \nVielen Dank für deine Mithilfe!"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
     <LinearLayout
         android:id="@+id/report_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/report_exp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
         android:orientation="vertical"
-        >
-        <CheckBox
-            android:id="@+id/racism_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rassismus"/>
-        <CheckBox
-            android:id="@+id/fakenews_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FakeNews"/>
-        <CheckBox
-            android:id="@+id/unap_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Unangebrachter Content"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/report_exp">
+
         <CheckBox
             android:id="@+id/hate_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hass"/>
+            android:text="Hass" />
+
+        <CheckBox
+            android:id="@+id/racism_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rassismus" />
+
+        <CheckBox
+            android:id="@+id/spam_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spam" />
+
+        <CheckBox
+            android:id="@+id/fakenews_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Misinformation" />
+
+        <CheckBox
+            android:id="@+id/unap_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Unangebrachte Inhalte" />
+
+        <CheckBox
+            android:id="@+id/other_check"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sonstiges" />
+
     </LinearLayout>
+
     <EditText
         android:id="@+id/report_reason"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/report_ll"
-        />
+        android:layout_height="65dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
     <Button
-        app:layout_constraintTop_toBottomOf="@id/report_reason"
         android:id="@+id/report_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_border"
         android:text="Melden"
-        />
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/report_reason" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_medium"
+        android:text="Anmerkungen:"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/report_ll" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/ibm_semi_bold"
+        android:text="Melden"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

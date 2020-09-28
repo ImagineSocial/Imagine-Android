@@ -971,21 +971,32 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
     public void postedSuccessful(){
         // called when the posting process is successfull
-        EditText title_edit = getView().findViewById(R.id.title_editText);
-        EditText description_edit = getView().findViewById(R.id.description_editText);
-        EditText link_edit = getView().findViewById(R.id.link_editText);
-        final CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
-        title_edit.getText().clear();
-        description_edit.getText().clear();
-        link_edit.getText().clear();
-        preview_imageView.setImageListener(new ImageListener() {
-            @Override
-            public void setImageForPosition(int position, ImageView imageView) {
-                Glide.with(getView()).load(R.drawable.default_image).into(imageView);
-            }
-        });
-        preview_imageView.setPageCount(1);
-        this.shareButton.setEnabled(true);
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Vielen Dank!")
+                .setMessage("Nett, dass du deine Weisheiten mit uns teilst.")
+
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText title_edit = getView().findViewById(R.id.title_editText);
+                        EditText description_edit = getView().findViewById(R.id.description_editText);
+                        EditText link_edit = getView().findViewById(R.id.link_editText);
+                        final CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
+                        title_edit.getText().clear();
+                        description_edit.getText().clear();
+                        link_edit.getText().clear();
+                        preview_imageView.setImageListener(new ImageListener() {
+                            @Override
+                            public void setImageForPosition(int position, ImageView imageView) {
+                                Glide.with(getView()).load(R.drawable.default_image).into(imageView);
+                            }
+                        });
+                        preview_imageView.setPageCount(1);
+                        shareButton.setEnabled(true);
+                    }
+                })
+                .setIcon(R.drawable.imagine_icon)
+                .show();
     }
     public void setThought(){
         this.type = "thought";
