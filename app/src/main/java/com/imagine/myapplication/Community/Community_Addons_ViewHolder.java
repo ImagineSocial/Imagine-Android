@@ -61,8 +61,10 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Addon_Feed_Activity.class);
                 Gson gson = new Gson();
-//                String jsonComm = gson.toJson(addon); Hier geht das nicht
-//                intent.putExtra("addon", jsonComm);
+                String itemsString = gson.toJson(addon.items);
+                String addonString = gson.toJson(addon);
+                intent.putExtra("items", itemsString);
+                intent.putExtra("addon", addonString);
                 mContext.startActivity(intent);
             }
         });

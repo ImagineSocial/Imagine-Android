@@ -3,38 +3,26 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Picture;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Community.Communities_Helper;
 import com.imagine.myapplication.Community.Community;
-import com.imagine.myapplication.Community.Community_Activity;
 import com.imagine.myapplication.Community.Community_ViewPager_Activity;
 import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.LinkedCommunityCallback;
-import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.RepostDialogFragment;
-import com.imagine.myapplication.post_classes.MultiPicturePost;
-import com.imagine.myapplication.post_classes.PicturePost;
-import com.imagine.myapplication.user_classes.User;
-import com.imagine.myapplication.UserCallback;
+import com.imagine.myapplication.ReportDialogFragment;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.Post;
 
@@ -45,8 +33,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
@@ -308,7 +294,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
     }
 
     public void showReportDialog(){
-        RepostDialogFragment frag = new RepostDialogFragment(itemView.getContext());
+        ReportDialogFragment frag = new ReportDialogFragment(itemView.getContext());
         frag.show();
     }
 

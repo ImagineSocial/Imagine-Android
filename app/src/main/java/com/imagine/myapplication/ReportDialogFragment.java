@@ -6,9 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
-public class RepostDialogFragment extends AlertDialog {
+public class ReportDialogFragment extends AlertDialog {
 
-    public RepostDialogFragment(@NonNull Context context) {
+    public ReportDialogFragment(@NonNull Context context) {
         super(context);
     }
 
