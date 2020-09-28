@@ -15,7 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
+import com.imagine.myapplication.PostActivitys.GifPostActivity;
+import com.imagine.myapplication.PostActivitys.LinkPostActivity;
+import com.imagine.myapplication.PostActivitys.MultiPicturePostActivity;
 import com.imagine.myapplication.PostActivitys.PicturePostActivity;
+import com.imagine.myapplication.PostActivitys.ThoughtPostActivity;
+import com.imagine.myapplication.PostActivitys.YouTubePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.GIFPost;
@@ -145,7 +150,11 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPost(post);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), PicturePostActivity.class);
+                intent.putExtra("post",jsonObj);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -173,7 +182,11 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPost(post);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), LinkPostActivity.class);
+                intent.putExtra("post",jsonObj);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -192,8 +205,8 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
             if(matcher.find()){
                 String result = matcher.group();
                 String previewLink = "https://img.youtube.com/vi/"+result+"/sddefault.jpg";
-                Glide.with(itemView).load(previewLink).into(imageView);
-                System.out.println("## Das ist die Preview: "+previewLink);
+                Glide.with(itemView).load(previewLink).into(image);
+                image.getLayoutParams().height = (int) itemView.getResources().getDimension(R.dimen.addon_youtube_16x9);;
             }
         } else {
             Glide.with(itemView).load(R.drawable.link_preview_image).into(imageView);
@@ -210,7 +223,11 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPost(post);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), YouTubePostActivity.class);
+                intent.putExtra("post",jsonObj);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -238,7 +255,11 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPost(post);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), MultiPicturePostActivity.class);
+                intent.putExtra("post",jsonObj);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -266,7 +287,11 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPost(post);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), GifPostActivity.class);
+                intent.putExtra("post",jsonObj);
+                mContext.startActivity(intent);
             }
         });
     }
@@ -287,17 +312,14 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToPost(post);
+                Gson gson = new Gson();
+                String jsonObj = gson.toJson(post);
+                Intent intent = new Intent(itemView.getContext(), ThoughtPostActivity.class);
+                intent.putExtra("post",jsonObj);
+                mContext.startActivity(intent);
             }
         });
     }
 
-    public void goToPost(Post post) {
-        Gson gson = new Gson();
-        String jsonObj = gson.toJson(post);
-        Intent intent = new Intent(itemView.getContext(), PicturePostActivity.class);
-        intent.putExtra("post",jsonObj);
-        mContext.startActivity(intent);
-    }
 
 }

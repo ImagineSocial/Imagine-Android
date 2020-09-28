@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.ItemCallback;
@@ -42,23 +44,26 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
         this.mContext = context;
     }
 
-    public void bind(final Addon addon){
-        this.addon = addon;
+    public void bind(final Addon boundAddon){
+        this.addon = boundAddon;
         TextView title = itemView.findViewById(R.id.community_addon_title);
         TextView description = itemView.findViewById(R.id.community_addon_description);
         ImageView headerImageView = itemView.findViewById(R.id.addOn_title_imageView);
         this.recyclerView = itemView.findViewById(R.id.community_addon_recyclerView);
-        title.setText(addon.title);
-        description.setText(addon.description);
-        if (addon.imageURL != null && !addon.imageURL.equals("")) {
-            Glide.with(itemView).load(addon.imageURL).into(headerImageView);
+        title.setText(boundAddon.title);
+        description.setText(boundAddon.description);
+        if (boundAddon.imageURL != null && !boundAddon.imageURL.equals("")) {
+            Glide.with(itemView).load(boundAddon.imageURL).into(headerImageView);
         }
         this.fetchItemList();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(addon.title);
-                System.out.println(addon.refs);
+                Intent intent = new Intent(mContext, Addon_Feed_Activity.class);
+                Gson gson = new Gson();
+//                String jsonComm = gson.toJson(addon); Hier geht das nicht
+//                intent.putExtra("addon", jsonComm);
+                mContext.startActivity(intent);
             }
         });
     }
