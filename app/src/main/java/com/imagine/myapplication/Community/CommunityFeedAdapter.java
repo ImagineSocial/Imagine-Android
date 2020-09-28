@@ -15,6 +15,7 @@ import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAd
 import com.imagine.myapplication.Feed.viewholder_classes.LinkViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.MultiPictureViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.PictureViewHolder;
+import com.imagine.myapplication.Feed.viewholder_classes.PlaceHolderViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.RepostViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.ThoughtViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.TranslationViewHolder;
@@ -63,6 +64,8 @@ public class CommunityFeedAdapter extends FeedAdapter {
                 return R.layout.post_translation;
             case "repost":
                 return R.layout.post_repost;
+            case "placeHolder":
+                return R.layout.placeholder_cell;
             default:
                 return R.layout.post_default;
         }
@@ -114,6 +117,11 @@ public class CommunityFeedAdapter extends FeedAdapter {
                 view = inflater.inflate(R.layout.post_repost,parent,false);
                 RepostViewHolder repostViewHolder = new RepostViewHolder(view);
                 repostViewHolder.mainActivty = this.activity;
+                return repostViewHolder;
+            case R.layout.placeholder_cell:
+                view = inflater.inflate(R.layout.placeholder_cell,parent,false);
+                PlaceHolderViewHolder placeHolderViewHolder = new PlaceHolderViewHolder(view);
+                return placeHolderViewHolder;
             default:
                 view = inflater.inflate(R.layout.post_default,parent,false);
                 return new DefaultViewHolder(view);
@@ -122,6 +130,9 @@ public class CommunityFeedAdapter extends FeedAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
+        if(holder instanceof PlaceHolderViewHolder){
+            ((PlaceHolderViewHolder) holder).bind();
+        }
         Post post = postList.get(position);
         if( holder instanceof PictureViewHolder){
             ((PictureViewHolder) holder).bind((PicturePost) post);

@@ -39,6 +39,7 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.io.ByteArrayOutputStream;
@@ -107,6 +108,11 @@ public class UserActivity extends AppCompatActivity {
     public void initRecyclerView(){
         //initializes RecyclerView and adds
         //onScrollListener
+        if(posts.size() == 0){
+            DefaultPost placeHolder = new DefaultPost("placeHolder","placeHolder","placeHolder","placeHolder",
+                    "placeHolder",null,"placeHolder",0,0,0,0,"placeHolder");
+            posts.add(placeHolder);
+        }
         recyclerView = findViewById(R.id.user_recyclerView);
         adapter = new UserFeedAdapter(posts,mContext,user,this);
         recyclerView.setAdapter(adapter);

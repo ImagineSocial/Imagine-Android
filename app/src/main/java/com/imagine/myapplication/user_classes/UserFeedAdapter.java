@@ -14,6 +14,7 @@ import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAd
 import com.imagine.myapplication.Feed.viewholder_classes.LinkViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.MultiPictureViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.PictureViewHolder;
+import com.imagine.myapplication.Feed.viewholder_classes.PlaceHolderViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.RepostViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.ThoughtViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.TranslationViewHolder;
@@ -76,6 +77,8 @@ public class UserFeedAdapter extends FeedAdapter {
                 return R.layout.post_translation;
             case "repost":
                 return R.layout.post_repost;
+            case "placeHolder":
+                return R.layout.placeholder_cell;
             default:
                 return R.layout.post_default;
         }
@@ -86,8 +89,12 @@ public class UserFeedAdapter extends FeedAdapter {
         //Checks what kind of subclass the holder is an instance of
         // calls the subclasses bind() method
         if(position ==0){
-            ((User_Feed_Header_Viewholder) holder).bind(this.user);
-            return;
+            if(holder instanceof PlaceHolderViewHolder){
+                ((PlaceHolderViewHolder) holder).bind();
+            }else{
+                ((User_Feed_Header_Viewholder) holder).bind(this.user);
+                return;
+            }
         }
         Post post = postList.get(position-1);
         if( holder instanceof PictureViewHolder){
@@ -177,6 +184,10 @@ public class UserFeedAdapter extends FeedAdapter {
                 view = inflater.inflate(R.layout.post_repost,parent,false);
                 RepostViewHolder repostViewHolder = new RepostViewHolder(view);
                 repostViewHolder.mainActivty = this.activity;
+            case R.layout.placeholder_cell:
+                view = inflater.inflate(R.layout.placeholder_cell,parent,false);
+                PlaceHolderViewHolder placeHolderViewHolder = new PlaceHolderViewHolder(view);
+                return placeHolderViewHolder;
             default:
                 view = inflater.inflate(R.layout.post_default,parent,false);
                 return new DefaultViewHolder(view);
