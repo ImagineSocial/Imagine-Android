@@ -143,7 +143,7 @@ public class LinkPostActivity extends AppCompatActivity {
         linkDescription.setText(post.linkDescription);
         linkLink.setText(post.linkShortURL);
 
-        final View.OnClickListener listener = new View.OnClickListener() {
+        linkImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String url = post.link;
@@ -151,7 +151,7 @@ public class LinkPostActivity extends AppCompatActivity {
                 intent.setData(Uri.parse(url));
                 mContext.startActivity(intent);
             }
-        };
+        });
 
         ConstraintLayout descriptionView = findViewById(R.id.description_view);
         if (post.description.equals("")) {

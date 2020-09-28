@@ -28,17 +28,17 @@ public class Community_Items_Adapter extends RecyclerView.Adapter<Community_Item
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view;
         switch(viewType){
-            case R.layout.community_items_default_viewholder:
-                view = inflater.inflate(R.layout.community_items_default_viewholder,parent,false);
+            case R.layout.addon_items_default_viewholder:
+                view = inflater.inflate(R.layout.addon_items_default_viewholder,parent,false);
                 return new Community_Items_ViewHolder(view);
-            case R.layout.community_items_community_viewholder:
-                view = inflater.inflate(R.layout.community_items_community_viewholder,parent,false);
+            case R.layout.addon_items_community_viewholder:
+                view = inflater.inflate(R.layout.addon_items_community_viewholder,parent,false);
                 return new Community_Items_ViewHolder(view);
-            case R.layout.community_items_picturepost_viewholder:
-                view = inflater.inflate(R.layout.community_items_picturepost_viewholder,parent,false);
+            case R.layout.addon_items_post_viewholder:
+                view = inflater.inflate(R.layout.addon_items_post_viewholder,parent,false);
                 return new Community_Items_ViewHolder(view);
             default:
-                view = inflater.inflate(R.layout.community_items_default_viewholder,parent,false);
+                view = inflater.inflate(R.layout.addon_items_default_viewholder,parent,false);
                 return new Community_Items_ViewHolder(view);
 
         }
@@ -53,12 +53,12 @@ public class Community_Items_Adapter extends RecyclerView.Adapter<Community_Item
     @Override
     public int getItemViewType(int position) {
         Object obj = items.get(position);
-        if(obj instanceof DefaultPost){
-            return R.layout.community_items_default_viewholder;
-        }else if(obj instanceof Community){
-            return R.layout.community_items_community_viewholder;
-        }else{
-            return R.layout.community_items_picturepost_viewholder;
+        if (obj instanceof DefaultPost) {
+            return R.layout.addon_items_default_viewholder;
+        } else if (obj instanceof Community) {
+            return R.layout.addon_items_community_viewholder;
+        } else {
+            return R.layout.addon_items_post_viewholder;
         }
 
 

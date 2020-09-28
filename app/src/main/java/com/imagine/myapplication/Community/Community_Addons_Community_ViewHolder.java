@@ -84,16 +84,16 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
     }
 
     public void setHeader(){
-        ImageView image = itemView.findViewById(R.id.community_addon_community_image);
+        ImageView image = itemView.findViewById(R.id.addon_community_item_image);
         if(this.comm.imageURL != null && !this.comm.equals("")){
             Glide.with(itemView).load(this.comm.imageURL).into(image);
         }else{
             Glide.with(itemView).load(R.drawable.fact_stamp).into(image);
         }
-        TextView title = itemView.findViewById(R.id.community_addOn_community_title);
-        TextView description = itemView.findViewById(R.id.community_addOn_community_description);
-        final TextView followerCountLabel = itemView.findViewById(R.id.addOn_community_followerCount_label);
-        final TextView postCountLabel = itemView.findViewById(R.id.addOn_community_postCount_label);
+        TextView title = itemView.findViewById(R.id.addon_community_item_title_label);
+        TextView description = itemView.findViewById(R.id.addon_community_item_description_label);
+        final TextView followerCountLabel = itemView.findViewById(R.id.addon_community_item_followercount_label);
+        final TextView postCountLabel = itemView.findViewById(R.id.addon_community_item_postcount_label);
         title.setText(comm.name);
         description.setText(comm.description);
         postCountLabel.setText("Beiträge: "+comm.postCount);

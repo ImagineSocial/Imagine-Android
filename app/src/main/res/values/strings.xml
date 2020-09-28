@@ -9,6 +9,8 @@
         Funktionen, unser Open Source Repository und vieles mehr:</string>
     <string name="toggle1">Ollah</string>
     <string name="toggle2">Ollah</string>
+
+    //newAddOn
     <string name="addOn_collection_header">Füge eine Kollektion mit Beiträgen und Themen hinzu.</string>
     <string name="addOn_collection_description">In diesem AddOn kann man nach belieben vorhandene oder neue Beiträge posten um ein Unterthema deiner Wahl besser zu beleuchten.\nAuch Themen kannst du hier verlinken. Möchtest du jedoch nur ein Thema hervorheben, kannst du das AddOn für einzelne Themen nutzen.</string>
     <string name="addOn_singleTopic_header">Verlinke ein aussagekräftiges Thema.</string>
@@ -18,4 +20,17 @@
     <string name="placeholder_user_feed">Dieser User hat noch keine Beiträge hochgeladen</string>
     <string name="placeholder_community_feed">Es sind noch keine Beiträge zu diesem Thema zu finden</string>
     <string name="placeholder_addon">Erstelle jetzt das erste Thema</string>
+
+    //newPost
+    <string name="new_post_header_label">Neuer Beitrag</string>
+    <string name="new_post_picture_label">Bild:</string>
+    <string name="new_post_picture_selection">Bild</string>
+    <string name="new_post_title_label">Titel:</string>
+    <string name="new_post_description_label">Beschreibung:</string>
+    <string name="new_post_destination_label">Ziel:</string>
+    <string name="new_post_link_community_button_label">Community verlinken</string>
+    <string name="new_post_share_button_label">Teilen</string>
+
+    //TopTopicFeedCell
+    <string name="topTopic_weekly_header_label">Die Themen der Woche:</string>
 </resources>

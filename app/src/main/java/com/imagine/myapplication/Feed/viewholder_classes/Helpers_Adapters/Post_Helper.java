@@ -836,31 +836,31 @@ public class Post_Helper {
                                     String type = docSnap.getString("type");
                                     switch(type){
                                         case "thought":
-                                            addThoughtPost(docSnap,true,true,false);
+                                            addThoughtPost(docSnap,false,true,false);
                                             break;
                                         case "youTubeVideo":
-                                            addYouTubePost(docSnap,true,true,false);
+                                            addYouTubePost(docSnap,false,true,false);
                                             break;
                                         case "link":
-                                            addLinkPost(docSnap,true,true,false);
+                                            addLinkPost(docSnap,false,true,false);
                                             break;
                                         case "GIF":
-                                            addGIFPost(docSnap,true,true,false);
+                                            addGIFPost(docSnap,false,true,false);
                                             break;
                                         case "picture":
-                                            addPicturePost(docSnap,true,true,false);
+                                            addPicturePost(docSnap,false,true,false);
                                             break;
                                         case "multiPicture":
-                                            addMultiPicturePost(docSnap,true,true,false);
+                                            addMultiPicturePost(docSnap,false,true,false);
                                             break;
                                         case "translation":
-                                            addTranslationPost(docSnap,true,true,false);
+                                            addTranslationPost(docSnap,false,true,false);
                                             break;
                                         case "repost":
-                                            addRepostPost(docSnap,true,true,false);
+                                            addRepostPost(docSnap,false,true,false);
                                             break;
                                         default:
-                                            addDefaulPost(docSnap,true,true,false);
+                                            addDefaulPost(docSnap,false,true,false);
                                             break;
                                     }
                                 }catch(Exception e){

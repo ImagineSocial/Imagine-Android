@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/round_secondary_color_background_view">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addon_item_secondlayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/round_primary_color_background_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/addon_community_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/corner_radius_three"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/community_addOn_guideline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.37" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round_secondary_color_background_view"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/addon_community_item_title_label"
+            app:layout_constraintStart_toStartOf="@+id/imageView5"
+            app:layout_constraintTop_toBottomOf="@+id/addon_community_item_title_label">
+
+
+            <TextView
+                android:id="@+id/addon_community_item_description_label"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/ibm_medium"
+                android:text=""
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addon_community_item_postcount_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/addon_community_item_postcount_label"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/ibm_regular"
+                android:text="Beiträge:"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/addon_community_item_followercount_label"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/ibm_regular"
+                android:text="Follower:"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="@+id/addon_community_item_postcount_label"
+                app:layout_constraintTop_toBottomOf="@+id/addon_community_item_postcount_label" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addon_community_item_image"
+        app:srcCompat="@drawable/community_post_icon" />
+
+    <TextView
+        android:id="@+id/addon_community_item_title_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:fontFamily="@font/ibm_semi_bold"
+        android:text="
+"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView5"
+        app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

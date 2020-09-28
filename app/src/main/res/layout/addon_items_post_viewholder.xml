@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="250dp"
+    android:layout_height="250dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/round_secondary_color_background_view">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addon_item_secondlayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@drawable/round_primary_color_background_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/addon_post_item_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/corner_radius_four"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addon_post_item_title" />
+
+        <TextView
+            android:id="@+id/addon_post_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="5dp"
+            android:autoSizeMaxTextSize="16dp"
+            android:autoSizeMinTextSize="12dp"
+            android:autoSizeStepGranularity="1dp"
+            android:background="@android:color/white"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="3"
+            android:textColor="#000"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addon_item_small_backgroundview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/addon_item_small_imageview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

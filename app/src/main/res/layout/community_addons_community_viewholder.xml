@@ -17,7 +17,7 @@
 
 
         <ImageView
-            android:id="@+id/community_addon_community_image"
+            android:id="@+id/addon_community_item_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:adjustViewBounds="true"
@@ -51,13 +51,13 @@
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/round_secondary_color_background_view"
-            app:layout_constraintEnd_toEndOf="@+id/community_addOn_community_title"
+            app:layout_constraintEnd_toEndOf="@+id/addon_community_item_title_label"
             app:layout_constraintStart_toStartOf="@+id/imageView5"
-            app:layout_constraintTop_toBottomOf="@+id/community_addOn_community_title">
+            app:layout_constraintTop_toBottomOf="@+id/addon_community_item_title_label">
 
 
             <TextView
-                android:id="@+id/community_addOn_community_description"
+                android:id="@+id/addon_community_item_description_label"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="5dp"
@@ -68,12 +68,12 @@
                 android:text="TextView"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/addOn_community_postCount_label"
+                app:layout_constraintEnd_toStartOf="@+id/addon_community_item_postcount_label"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/addOn_community_postCount_label"
+                android:id="@+id/addon_community_item_postcount_label"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
@@ -85,7 +85,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/addOn_community_followerCount_label"
+                android:id="@+id/addon_community_item_followercount_label"
                 android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
@@ -93,7 +93,7 @@
                 android:text="Follower:"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/addOn_community_postCount_label" />
+                app:layout_constraintEnd_toEndOf="@+id/addon_community_item_postcount_label" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -104,10 +104,10 @@
             android:layout_marginEnd="10dp"
             android:alpha="0.95"
             android:background="@drawable/round_secondary_color_background_view"
-            app:layout_constraintBottom_toTopOf="@+id/community_addOn_community_title"
-            app:layout_constraintEnd_toEndOf="@+id/community_addon_community_image"
+            app:layout_constraintBottom_toTopOf="@+id/addon_community_item_title_label"
+            app:layout_constraintEnd_toEndOf="@+id/addon_community_item_image"
             app:layout_constraintStart_toEndOf="@+id/community_addOn_guideline"
-            app:layout_constraintTop_toTopOf="@+id/community_addon_community_image">
+            app:layout_constraintTop_toTopOf="@+id/addon_community_item_image">
 
             <TextView
                 android:id="@+id/community_addon_title"
@@ -145,11 +145,11 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/community_addon_community_image"
+            app:layout_constraintTop_toBottomOf="@+id/addon_community_item_image"
             app:srcCompat="@drawable/community_post_icon" />
 
         <TextView
-            android:id="@+id/community_addOn_community_title"
+            android:id="@+id/addon_community_item_title_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
