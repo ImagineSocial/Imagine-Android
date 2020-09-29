@@ -48,6 +48,6 @@ public class Community_Addon_New_Addon_Activity extends AppCompatActivity {
         Community_Addons_PreView_Adapter adapter = new Community_Addons_PreView_Adapter(mContext,preViews);
         RecyclerView recyclerView = findViewById(R.id.addOnStore_recyclerView);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
     }
 }

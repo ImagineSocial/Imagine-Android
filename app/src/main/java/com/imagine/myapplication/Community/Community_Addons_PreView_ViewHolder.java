@@ -17,16 +17,23 @@ public class Community_Addons_PreView_ViewHolder extends RecyclerView.ViewHolder
 
     public void bind(PreView preView){
         ImageView image = itemView.findViewById(R.id.new_addOn_viewholder_previewImageView);
-        TextView text = itemView.findViewById(R.id.new_addOn_viewholder_titleLabel);
+        TextView title = itemView.findViewById(R.id.new_addOn_viewholder_titleLabel);
+        TextView description = itemView.findViewById(R.id.new_addOn_viewholder_description_label);
         switch (preView.type){
             case "one":
                 Glide.with(itemView).load(R.drawable.add_on_horizontal_scroll_example).into(image);
+                title.setText(R.string.addOn_collection_header);
+                description.setText(R.string.addOn_collection_description);
                 break;
             case "two":
                 Glide.with(itemView).load(R.drawable.add_on_qanda_example).into(image);
+                title.setText(R.string.addOn_QandA_header);
+                description.setText(R.string.addOn_QandA_description);
                 break;
             case "three":
                 Glide.with(itemView).load(R.drawable.add_on_single_topic_example).into(image);
+                title.setText(R.string.addOn_singleTopic_header);
+                description.setText(R.string.addOn_singleTopic_description);
                 break;
             default:
                 Glide.with(itemView).load(R.drawable.add_on_horizontal_scroll_example).into(image);

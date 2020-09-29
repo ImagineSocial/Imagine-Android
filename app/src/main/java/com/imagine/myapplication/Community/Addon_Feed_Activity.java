@@ -47,15 +47,8 @@ public class Addon_Feed_Activity extends AppCompatActivity {
             imageViewParams.height = 0;
             headerImageView.setLayoutParams(imageViewParams);
         }
-
-
     }
 
-    /*
-    app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-     */
 
     @Override
     protected void onDestroy() {

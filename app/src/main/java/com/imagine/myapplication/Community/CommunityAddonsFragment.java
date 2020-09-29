@@ -1,5 +1,6 @@
 package com.imagine.myapplication.Community;
 
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.health.SystemHealthManager;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
 import com.imagine.myapplication.R;
 
 import java.sql.Time;
@@ -67,18 +69,31 @@ public class CommunityAddonsFragment extends Fragment {
         String imageURL = args.get("imageURL");
         this.community = new Community(name,imageURL,commID,description);
         this.fragment = this;
+
+        Button newAddOnButton = view.findViewById(R.id.new_addon_button);
+        newAddOnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(fragment.getContext(),Community_Addon_New_Addon_Activity.class);
+                Gson gson = new Gson();
+                String commString = gson.toJson(community);
+                intent.putExtra("comm",commString);
+                fragment.getContext().startActivity(intent);
+            }
+        });
+
         setSmallBackgroundView(view);
         this.fetchTheAddons();
     }
 
     public void setSmallBackgroundView(View view) {
-        View newAddonButton = view.findViewById(R.id.new_addon_background);
+        ConstraintLayout backgroundView = view.findViewById(R.id.new_addon_background);
         GradientDrawable shape = new GradientDrawable();
         shape.setCornerRadius(40);
         shape.setColor(ContextCompat.getColor(view.getContext(), R.color.md_white_1000));
-        newAddonButton.setBackground(shape);
-        newAddonButton.setClipToOutline(true);
-        newAddonButton.setAlpha(0.9f);
+        backgroundView.setBackground(shape);
+        backgroundView.setClipToOutline(true);
+        backgroundView.setAlpha(0.95f);
     }
 
     public void fetchTheAddons(){
