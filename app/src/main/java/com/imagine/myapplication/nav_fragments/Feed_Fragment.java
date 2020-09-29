@@ -66,20 +66,26 @@ public class Feed_Fragment extends Fragment {
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                helper.getPostsForMainFeed( new FirebaseCallback() {
-                    @Override
-                    public void onCallback(ArrayList<Post> values) {
-                        postList = sortPostList(values);
-                        swipe.setRefreshing(false);
-                        if(recyclerView != null){
-                            FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
-                            adapter.refreshPosts(sortPostList(values));
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-
-                });
+                refreshFeed(swipe);
             }
+        });
+    }
+
+    public void refreshFeed(final SwipeRefreshLayout refreshLayout) {
+        helper.getPostsForMainFeed( new FirebaseCallback() {
+            @Override
+            public void onCallback(ArrayList<Post> values) {
+                postList = sortPostList(values);
+                if (refreshLayout != null) {
+                    refreshLayout.setRefreshing(false);
+                }
+                if(recyclerView != null){
+                    FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
+                    adapter.refreshPosts(sortPostList(values));
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
         });
     }
 

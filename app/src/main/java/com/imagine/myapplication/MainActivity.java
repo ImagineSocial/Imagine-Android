@@ -254,7 +254,7 @@ public class MainActivity extends AppCompatActivity{
         selectedFragment = feed_fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
 
-        //feedfragment
+        feed_fragment.refreshFeed(null);
     }
 
         public void setUpNotifications(ArrayList<Notification> nots){

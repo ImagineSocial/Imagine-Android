@@ -1,6 +1,7 @@
 package com.imagine.myapplication.nav_fragments;
 
 import android.Manifest;
+import android.animation.LayoutTransition;
 import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -35,6 +37,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.Constraints;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -54,6 +58,7 @@ import com.google.firebase.storage.UploadTask;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_New_Post;
 import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.Post_Fragment_Classes.LinkPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.MultiPictureFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
@@ -143,6 +148,20 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         ImageButton infoButton = getView().findViewById(R.id.newPost_linkCommunity_infoButton);
         infoButton.setOnClickListener(this);
 
+        ConstraintLayout pictureView = getView().findViewById(R.id.pictureView);
+        ConstraintLayout linkView = getView().findViewById(R.id.linkView);
+        ConstraintLayout descriptionView = getView().findViewById(R.id.descriptionView);
+        ConstraintLayout destinationView = getView().findViewById(R.id.destinationView);
+
+        linkView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        linkView.getLayoutTransition().setDuration(500);
+        pictureView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        pictureView.getLayoutTransition().setDuration(500);
+        descriptionView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        descriptionView.getLayoutTransition().setDuration(500);
+        destinationView.getLayoutTransition().enableTransitionType(LayoutTransition.CHANGING);
+        destinationView.getLayoutTransition().setDuration(500);
+
         CarouselView preview_imageView = getView().findViewById(R.id.preview_imageView);
         preview_imageView.setImageListener(new ImageListener() {
             @Override
@@ -211,6 +230,19 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.new_thought_button:
                 newThoughtButton.setAlpha(halfAlpha);
+                switch (type) {
+                    case "thought":
+                        break;
+                    case "link":
+                        hideLinkView(false);
+                        break;
+                    case "picture":
+                        hidePictureView(false);
+                        break;
+                    case "multiPicture":
+                        hidePictureView(false);
+                        break;
+                }
 
                 setThought();
                 break;
@@ -224,11 +256,38 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
 
                 }else{
+                    switch (type) {
+                        case "link":
+                            hideLinkView(true);
+                            break;
+                        case "picture":
+                            break;
+                        case "multiPicture":
+                            break;
+                        default:
+                            showPictureView();
+                            break;
+                    }
+
                     showPicture();
                 }
                 break;
             case R.id.new_link_button:
                 newLinkButton.setAlpha(halfAlpha);
+                switch (type) {
+                    case "link":
+                        break;
+                    case "picture":
+                        hidePictureView(true);
+                        break;
+                    case "multiPicture":
+                        hidePictureView(true);
+                        break;
+                    default:
+                        showLinkView();
+                        break;
+                }
+
                 showLink();
                 break;
             case R.id.pictureFolder_Button:
@@ -280,6 +339,73 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
             default:
                 break;
         }
+    }
+
+    public void showPictureView() {
+        ConstraintLayout pictureView = getView().findViewById(R.id.pictureView);
+        View view = getView().findViewById(R.id.thoughtDivider);
+        LinearLayout.LayoutParams pictureViewParams = (LinearLayout.LayoutParams) pictureView.getLayoutParams();
+        pictureViewParams.height = 275;
+        pictureView.setLayoutParams(pictureViewParams);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public void hidePictureView(final Boolean openLink) {
+        ConstraintLayout pictureView = getView().findViewById(R.id.pictureView);
+        View view = getView().findViewById(R.id.thoughtDivider);
+        LinearLayout.LayoutParams pictureViewParams = (LinearLayout.LayoutParams) pictureView.getLayoutParams();
+
+        pictureView.getLayoutTransition().addTransitionListener(new LayoutTransition.TransitionListener() {
+            @Override
+            public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+
+            }
+
+            Boolean startNextTransition = openLink;
+            @Override
+            public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+                if (startNextTransition) {
+                    showLinkView();
+                    startNextTransition = false;
+                }
+            }
+        });
+        pictureViewParams.height = 0;
+        pictureView.setLayoutParams(pictureViewParams);
+        view.setVisibility(View.INVISIBLE);
+    }
+
+    public void showLinkView() {
+        ConstraintLayout linkView = getView().findViewById(R.id.linkView);
+        View view = getView().findViewById(R.id.thoughtDivider);
+        LinearLayout.LayoutParams linkViewParams = (LinearLayout.LayoutParams) linkView.getLayoutParams();
+        linkViewParams.height = 100;
+        linkView.setLayoutParams(linkViewParams);
+        view.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLinkView(final Boolean openPicture) {
+        ConstraintLayout linkView = getView().findViewById(R.id.linkView);
+        View view = getView().findViewById(R.id.thoughtDivider);
+        LinearLayout.LayoutParams linkViewParams = (LinearLayout.LayoutParams) linkView.getLayoutParams();
+        linkView.getLayoutTransition().addTransitionListener(new LayoutTransition.TransitionListener() {
+            @Override
+            public void startTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+
+            }
+
+            Boolean startNextTransition = openPicture;
+            @Override
+            public void endTransition(LayoutTransition transition, ViewGroup container, View view, int transitionType) {
+                if (startNextTransition) {
+                    showPictureView();
+                    startNextTransition = false;
+                }
+            }
+        });
+        linkViewParams.height = 0;
+        linkView.setLayoutParams(linkViewParams);
+        view.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -993,6 +1119,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         });
                         preview_imageView.setPageCount(1);
                         shareButton.setEnabled(true);
+
+                        if (getActivity()!=null && getActivity() instanceof MainActivity){
+                            ((MainActivity)getActivity()).showFeed();
+                        }
                     }
                 })
                 .setIcon(R.drawable.imagine_icon)
