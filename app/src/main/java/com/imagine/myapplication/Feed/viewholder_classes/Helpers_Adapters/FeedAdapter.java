@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.imagine.myapplication.Feed.viewholder_classes.CommunityPostViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.HeaderViewHolder;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.CommunityPost;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
 import com.imagine.myapplication.post_classes.LinkPost;
@@ -198,7 +199,9 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                                 }else{
                                     if(holder instanceof RepostViewHolder){
                                         ((RepostViewHolder)holder).bind((RepostPost) post);
-                                    }else {
+                                    }else if(holder instanceof CommunityPostViewHolder) {
+                                        ((CommunityPostViewHolder)holder).bind((CommunityPost) post);
+                                    }else{
                                         ((DefaultViewHolder)holder).bind((DefaultPost)post);
                                     }
                                 }

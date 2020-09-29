@@ -7,5 +7,4 @@ public class CommunityPost extends Post {
     public String imageURL;
     public String description;
     public String displayOption;
-    public String type;
 }

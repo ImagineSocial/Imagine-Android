@@ -13,5 +13,7 @@ public class CommunityPostViewHolder extends CustomViewHolder {
         super(itemView);
     }
 
-
+    public void bind(CommunityPost post){
+        System.out.println("!");
+    }
 }
