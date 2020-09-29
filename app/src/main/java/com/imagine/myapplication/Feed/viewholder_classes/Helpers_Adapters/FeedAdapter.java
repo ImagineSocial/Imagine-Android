@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.imagine.myapplication.Feed.viewholder_classes.CommunityPostViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.HeaderViewHolder;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.DefaultPost;
@@ -34,18 +35,20 @@ import com.imagine.myapplication.Feed.viewholder_classes.YouTubeViewHolder;
 
 import java.util.ArrayList;
 
+import javax.xml.XMLConstants;
+
 public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     private static final String TAG = "FeedAdapter";
     public ArrayList<Post> postList;
     public Context mContext;
     public HeaderViewHolder header;
     public Activity mainActivity;
+    public boolean loadHeader = true;
 
     public FeedAdapter(ArrayList<Post> postList, Context mContext) {
         this.postList = postList;
         this.mContext = mContext;
     }
-
 
     public void addMorePosts(ArrayList<Post> posts){
         postList.addAll(posts);
@@ -57,10 +60,15 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     }
     @Override
     public int getItemViewType(int position) {
-        if(position == 0){
+        if(position == 0 && loadHeader){
             return R.layout.post_top_header;
         }
-        String type = postList.get(position-1).type;
+        String type;
+        if(loadHeader){
+            type = postList.get(position-1).type;
+        }else{
+            type = postList.get(position).type;
+        }
         switch(type){
             case "picture":
                 return R.layout.post_picture;
@@ -78,6 +86,8 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                 return R.layout.post_translation;
             case "repost":
                 return R.layout.post_repost;
+            case "comm":
+                return R.layout.post_community;
             default:
                 return R.layout.post_default;
         }
@@ -130,6 +140,11 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                 RepostViewHolder repostViewHolder = new RepostViewHolder(view);
                 repostViewHolder.mainActivty = this.mainActivity;
                 return repostViewHolder;
+            case R.layout.post_community:
+                view = inflater.inflate(R.layout.post_community,parent,false);
+                CommunityPostViewHolder communityPostViewHolder = new CommunityPostViewHolder(view);
+                communityPostViewHolder.mainActivty = this.mainActivity;
+                return communityPostViewHolder;
             case R.layout.post_top_header:
                 if(this.header == null){
                     view = inflater.inflate(R.layout.post_top_header,parent,false);
@@ -147,12 +162,18 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-            if(position == 0){
+            if(position == 0 && loadHeader){
                 ((HeaderViewHolder) holder).bind();
                 return;
             }
 
-        Post post = postList.get(position-1);
+        Post post;
+        if(loadHeader){
+             post = postList.get(position-1);
+        }
+        else{
+            post = postList.get(position);
+        }
             if( holder instanceof PictureViewHolder){
                 ((PictureViewHolder) holder).bind((PicturePost) post);
             }else{
@@ -191,6 +212,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
     @Override
     public int getItemCount() {
-        return postList.size()+1;
+        if(loadHeader) return postList.size()+1;
+        else return postList.size();
     }
 }

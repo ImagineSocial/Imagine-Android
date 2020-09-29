@@ -32,6 +32,7 @@ import com.imagine.myapplication.ItemCallback;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.notifications.Notification;
 import com.imagine.myapplication.notifications.NotificationCallback;
+import com.imagine.myapplication.post_classes.CommunityPost;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.post_classes.DefaultPost;
 import com.imagine.myapplication.post_classes.GIFPost;
@@ -61,7 +62,7 @@ public class Post_Helper {
     public ArrayList<Notification> notList;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public StorageReference storage = FirebaseStorage.getInstance().getReference();
-    public ArrayList<Object> items = new ArrayList<>();
+    public ArrayList<Post> items = new ArrayList<>();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public boolean firstFetch = false;
     public boolean moreFetch = false;
@@ -992,10 +993,14 @@ public class Post_Helper {
         String imageURL = docSnap.getString("imageURL");
         String description = docSnap.getString("description");
         String displayOption = docSnap.getString("displayOption");
-        Community comm = new Community(name,imageURL,topicID,description);
-        comm.displayOption = displayOption;
-        comm.popularity = (long) docSnap.getLong("popularity");
-        items.add(comm);
+        CommunityPost commPost = new CommunityPost();
+        commPost.name = name;
+        commPost.topicID = topicID;
+        commPost.displayOption = displayOption;
+        commPost.imageURL = imageURL;
+        commPost.description = description;
+        commPost.type = "comm";
+        items.add(commPost);
     }
 
 

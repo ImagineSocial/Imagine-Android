@@ -36,7 +36,7 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
     public Context mContext;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public ArrayList<PostRef> refs;
-    public ArrayList<Object> communityPosts = new ArrayList<>();
+    public ArrayList<Post> communityPosts = new ArrayList<>();
     public Post_Helper helper = new Post_Helper();
     public Community comm;
 
@@ -99,7 +99,7 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
     public void fetchThePosts(){
         this.helper.fetchAddonItems(this.refs, new ItemCallback() {
             @Override
-            public void onCallback(ArrayList<Object> values) {
+            public void onCallback(ArrayList<Post> values) {
                 addon.items = values;
                 initRecyclerView();
             }

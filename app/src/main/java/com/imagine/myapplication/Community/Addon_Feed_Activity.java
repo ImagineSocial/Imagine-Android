@@ -13,10 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
 import com.imagine.myapplication.R;
 
 import java.lang.reflect.Type;
@@ -30,7 +33,6 @@ public class Addon_Feed_Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addon_feed_activity);
-        ArrayList<Object> items = addon.items;
 
         ImageView headerImageView = findViewById(R.id.addon_feed_header_image);
         TextView titleLabel = findViewById(R.id.addon_feed_header_title);
@@ -47,6 +49,16 @@ public class Addon_Feed_Activity extends AppCompatActivity {
             imageViewParams.height = 0;
             headerImageView.setLayoutParams(imageViewParams);
         }
+
+        this.initRecyclerView();
+    }
+
+    public void initRecyclerView(){
+        RecyclerView recyclerView = findViewById(R.id.addon_feed_recyclerview);
+        FeedAdapter adapter = new FeedAdapter(addon.items,this);
+        adapter.loadHeader = false;
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
 

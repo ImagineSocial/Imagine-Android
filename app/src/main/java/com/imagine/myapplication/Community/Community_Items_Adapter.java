@@ -10,14 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.DefaultPost;
+import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
 
 public class Community_Items_Adapter extends RecyclerView.Adapter<Community_Items_ViewHolder> {
-    public ArrayList<Object> items;
+    public ArrayList<Post> items;
     public Context mContext;
 
-    public Community_Items_Adapter(ArrayList<Object> items, Context mContext) {
+    public Community_Items_Adapter(ArrayList<Post> items, Context mContext) {
         this.items = items;
         this.mContext = mContext;
     }

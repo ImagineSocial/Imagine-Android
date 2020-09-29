@@ -35,8 +35,7 @@ public class Addon{
     public String addonID;
     public Community community;
     public ArrayList<PostRef> refs;
-    public ArrayList<Object> items;
+    public ArrayList<Post> items;
     public Post_Helper helper = new Post_Helper();
     public CommunityAddonsFragment fragment;
-
 }
