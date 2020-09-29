@@ -1,13 +1,17 @@
 package com.imagine.myapplication.Community;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.health.SystemHealthManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,14 +67,25 @@ public class CommunityAddonsFragment extends Fragment {
         String imageURL = args.get("imageURL");
         this.community = new Community(name,imageURL,commID,description);
         this.fragment = this;
+        setSmallBackgroundView(view);
         this.fetchTheAddons();
     }
 
+    public void setSmallBackgroundView(View view) {
+        View newAddonButton = view.findViewById(R.id.new_addon_background);
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadius(40);
+        shape.setColor(ContextCompat.getColor(view.getContext(), R.color.md_white_1000));
+        newAddonButton.setBackground(shape);
+        newAddonButton.setClipToOutline(true);
+        newAddonButton.setAlpha(0.9f);
+    }
+
     public void fetchTheAddons(){
-        Addon header = new Addon();
-        header.isHeader = true;
-        header.community = this.community;
-        addons.add(header);
+//        Addon header = new Addon();
+//        header.isHeader = true;
+//        header.community = this.community;
+//        addons.add(header);
         Query ref = db.collection("Facts").document(this.community.topicID)
                 .collection("addOns").orderBy("popularity", Query.Direction.DESCENDING);
         ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
