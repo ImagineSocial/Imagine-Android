@@ -25,6 +25,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.protobuf.Any;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
+import com.imagine.myapplication.Community.BooleanCallback;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.PostRef;
 import com.imagine.myapplication.FirebaseCallback;
@@ -108,6 +109,9 @@ public class Post_Helper {
                                 break;
                             case "repost":
                                 addRepostPost(docSnap,false,false, false);
+                                break;
+                            case "comm":
+                                addCommPost(docSnap,false,false, false);
                                 break;
                             default:
                                 addDefaulPost(docSnap,false,false, false);
@@ -1494,6 +1498,14 @@ public class Post_Helper {
         }
     }
 
+    public void addCommPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem, boolean fromCommunities){
+        CommunityPost post = new CommunityPost();
+        post.type = "comm";
+        post.createTimestamp = docSnap.getTimestamp("createTime");
+        postList.add(post);
+    }
+
+
     public void removePost(Post post){
         DocumentReference postRef;
         if(post.isTopicPost){
@@ -1672,5 +1684,37 @@ public class Post_Helper {
             not.friendRequestName = docSnap.getString("name");
             notList.add(not);
         }
+    }
+
+    public void linkCommunityInFeed(Community comm, final BooleanCallback callback){
+        String userID = auth.getCurrentUser().getUid();
+        DocumentReference postRef = db.collection("Posts").document();
+        String title = comm.name;
+        String description = comm.description;
+        HashMap<String,Object> data = new HashMap<>();
+        data.put("title",title);
+        data.put("description",description);
+        data.put("originalPoster", userID);
+        data.put("createTime", new Timestamp(new Date()));
+        data.put("thanksCount",new Integer(0));
+        data.put("wowCount", new Integer(0));
+        data.put("haCount", new Integer(0));
+        data.put("niceCount", new Integer(0));
+        data.put("type", "comm");
+        data.put("report", "normal");
+        data.put("imageURL", comm.imageURL);
+        data.put("topicID", comm.topicID);
+        data.put("commName", comm.name);
+        data.put("commDescription",comm.description);
+        postRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    callback.onCallback(true);
+                }else{
+                    callback.onCallback(false);
+                }
+            }
+        });
     }
 }

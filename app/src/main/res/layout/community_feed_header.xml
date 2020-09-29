@@ -147,6 +147,18 @@
         app:layout_constraintEnd_toEndOf="@+id/comm_background_view"
         app:srcCompat="@drawable/new_post_icon" />
 
+    <Button
+        android:id="@+id/link_comm_in_feed"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="8dp"
+        android:text="Feed"
+        app:layout_constraintBottom_toBottomOf="@+id/comm_background_view"
+        app:layout_constraintEnd_toStartOf="@+id/community_new_post_button"/>
+
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/community_feed_tab_layout"
         android:layout_width="match_parent"

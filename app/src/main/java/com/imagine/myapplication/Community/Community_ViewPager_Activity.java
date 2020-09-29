@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
@@ -39,10 +41,11 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public Context mContext;
     public TestCollectionAdapter adapter;
     public ViewPager2 viewPager2;
+    public Post_Helper helper = new Post_Helper();
+    public FirebaseAuth auth = FirebaseAuth.getInstance();
 
     //Header
     public Button followButton;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser currentUser = auth.getCurrentUser();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -81,6 +84,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         ImageView image_iv = findViewById(R.id.comm_activity_picture);
         View backgroundView = findViewById(R.id.comm_background_view);
         ImageButton newPostButton = findViewById(R.id.community_new_post_button);
+        Button linkFeedButton = findViewById(R.id.link_comm_in_feed);
         TabLayout tabLayout = findViewById(R.id.community_feed_tab_layout);
         if(this.comm.displayOption.equals("fact")){
             new TabLayoutMediator(tabLayout, this.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
@@ -165,6 +169,27 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
 
             }
         });
+
+        linkFeedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(auth.getCurrentUser() == null){
+                    Toast.makeText(mContext,"Du musst eingeloggt sein um eine Community " +
+                            "im Feed zu teilen", Toast.LENGTH_SHORT).show();
+                }else{
+                    helper.linkCommunityInFeed(comm, new BooleanCallback() {
+                        @Override
+                        public void onCallback(Boolean bool) {
+                            if(bool){
+                                Toast.makeText(mContext," Community im Feed verlinkt!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(mContext, "Community verlinken fehlgeschlagen!",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void followCommunityTapped(final Community community) {
@@ -242,4 +267,5 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("!");
     }
+
 }
