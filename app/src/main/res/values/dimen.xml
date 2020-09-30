@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="addon_youtube_16x9">130dp</dimen>
+    <dimen name="pictureView_heightConstraint">150dp</dimen>
+    <dimen name="linkView_heightConstraint">75dp</dimen>
 </resources>

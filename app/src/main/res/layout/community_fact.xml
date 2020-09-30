@@ -37,8 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5
-" />
+            app:layout_constraintGuide_percent="0.5" />
 
         <TextView
             android:id="@+id/community_fact_title"

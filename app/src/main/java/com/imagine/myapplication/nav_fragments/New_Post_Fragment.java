@@ -345,7 +345,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         ConstraintLayout pictureView = getView().findViewById(R.id.pictureView);
         View view = getView().findViewById(R.id.thoughtDivider);
         LinearLayout.LayoutParams pictureViewParams = (LinearLayout.LayoutParams) pictureView.getLayoutParams();
-        pictureViewParams.height = 275;
+        pictureViewParams.height = (int) getView().getResources().getDimension(R.dimen.pictureView_heightConstraint);
         pictureView.setLayoutParams(pictureViewParams);
         view.setVisibility(View.VISIBLE);
     }
@@ -379,7 +379,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         ConstraintLayout linkView = getView().findViewById(R.id.linkView);
         View view = getView().findViewById(R.id.thoughtDivider);
         LinearLayout.LayoutParams linkViewParams = (LinearLayout.LayoutParams) linkView.getLayoutParams();
-        linkViewParams.height = 100;
+        linkViewParams.height = (int) getView().getResources().getDimension(R.dimen.linkView_heightConstraint);
         linkView.setLayoutParams(linkViewParams);
         view.setVisibility(View.VISIBLE);
     }
