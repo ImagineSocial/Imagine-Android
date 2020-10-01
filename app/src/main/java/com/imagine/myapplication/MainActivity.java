@@ -121,7 +121,12 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onCallback(ArrayList<Notification> notifications) {
                 if(notifications != null){
-                    setUpNotifications(notifications);
+                    if(noti_recyclerView != null){
+                        adapter.nots = notifications;
+                        adapter.notifyDataSetChanged();
+                    }else{
+                        setUpNotifications(notifications);
+                    }
                 }
             }
         });
@@ -161,6 +166,19 @@ public class MainActivity extends AppCompatActivity{
             if(noti_recyclerView != null && adapter != null){
                 adapter.resetNotifications();
                 adapter.notifyDataSetChanged();
+                helper.getNotifictations(new NotificationCallback() {
+                    @Override
+                    public void onCallback(ArrayList<Notification> notifications) {
+                        if(notifications != null){
+                            if(noti_recyclerView != null){
+                                adapter.nots = notifications;
+                                adapter.notifyDataSetChanged();
+                            }else{
+                                setUpNotifications(notifications);
+                            }
+                        }
+                    }
+                });
             }
             imageCircle.setVisibility(View.INVISIBLE);
             loginButton.setVisibility(View.VISIBLE);

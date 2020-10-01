@@ -21,14 +21,16 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
         switch (not.type) {
             case "upvote":
-                title.setText("Dein Bild wurde geliked:");
+                title.setText("Dein Bild wurde "+not.count+ " mal geliked:");
                 break;
             case "comment":
-                title.setText("Dein Beitrag wurde kommentiert:");
+                title.setText("Dein Beitrag wurde " + not.count+" mal kommentiert:");
                 body.setText(not.comment);
+                break;
             case "friend":
                 title.setText("Du hast eine Freundschaftsanfrage:");
                 body.setText(not.friendRequestName+" möchte mit dir befreundet sein");
+                break;
         }
     }
 }

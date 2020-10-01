@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -61,6 +62,7 @@ public class Post_Helper {
     public ArrayList<Post> postList = new ArrayList<Post>();
     public ArrayList<Post> commPostList = new ArrayList<>();
     public ArrayList<Notification> notList;
+    public ListenerRegistration register;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public StorageReference storage = FirebaseStorage.getInstance().getReference();
     public ArrayList<Post> items = new ArrayList<>();
@@ -1642,6 +1644,9 @@ public class Post_Helper {
     }
 
     public void getNotifictations(final NotificationCallback callback){
+        if(this.register != null){
+            this.register.remove();
+        }
         FirebaseUser user = auth.getCurrentUser();
         this.notList = new ArrayList<>();
         if(user == null){
@@ -1649,21 +1654,23 @@ public class Post_Helper {
         }else{
             final CollectionReference notColl = db.collection("Users").document(user.getUid())
                     .collection("notifications");
-            notColl.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            this.register = notColl.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     if(queryDocumentSnapshots != null){
                         List<DocumentSnapshot> nots = queryDocumentSnapshots.getDocuments();
+                        System.out.println("!");
                         for(DocumentSnapshot docSnap: nots){
                             addNotification(docSnap);
                         }
-                        callback.onCallback(notList);
+                        mergeNotifications(callback);
+                        notList = new ArrayList<>();
                     }else{
                         callback.onCallback(notList);
+                        notList = new ArrayList<>();
                     }
                 }
             });
-
         }
     }
 
@@ -1683,6 +1690,42 @@ public class Post_Helper {
             not.comment = docSnap.getString("comment");
             not.friendRequestName = docSnap.getString("name");
             notList.add(not);
+        }
+    }
+
+    public void mergeNotifications(final NotificationCallback callback){
+        HashMap<String,Notification> notMap = new HashMap<>();
+        ArrayList<String> notPostsIDs = new ArrayList<>();
+        ArrayList<Notification> finishedNots = new ArrayList<>();
+        for(Notification not: notList){
+            Notification notTest = notMap.get(not.postID+not.type);
+
+            if(notTest == null){
+                notMap.put(not.postID+not.type,not);
+                if(!notPostsIDs.contains(not.postID)){
+                    notPostsIDs.add(not.postID);
+                }
+            } else {
+                notTest.count ++;
+            }
+        }
+        for(String postId: notPostsIDs) {
+            Notification not;
+            not = notMap.get(postId + "upvote");
+            if (not != null) finishedNots.add(not);
+            not = notMap.get(postId + "comment");
+            if (not != null) finishedNots.add(not);
+            not = notMap.get(postId + "friend");
+            if (not != null) finishedNots.add(not);
+        }
+        callback.onCallback(finishedNots);
+    }
+
+    public void fetchPostsForNotifications(final NotificationCallback callback, ArrayList<String> postIDs){
+        int size = postIDs.size();
+        int[] count = {0};
+        for(String postID : postIDs){
+            //TODO
         }
     }
 

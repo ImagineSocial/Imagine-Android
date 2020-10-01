@@ -14,4 +14,5 @@ public class Notification {
     public String postID;
     public String comment;
     public String friendRequestName;
+    public int count = 1;
 }

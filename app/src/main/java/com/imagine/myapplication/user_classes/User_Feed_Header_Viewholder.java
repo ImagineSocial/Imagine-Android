@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.imagine.myapplication.Community.IntegerCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.CustomViewHolder;
+import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 

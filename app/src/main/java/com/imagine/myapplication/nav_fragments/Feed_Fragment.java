@@ -54,7 +54,6 @@ public class Feed_Fragment extends Fragment {
                     postList = sortPostList(values);
                     swipe.setRefreshing(false);
                     initRecyclerView(view);
-
                 }
 
             });
