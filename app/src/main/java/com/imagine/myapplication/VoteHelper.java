@@ -102,6 +102,7 @@ public class VoteHelper {
             data.put("button", button);
             data.put("postID", post.documentID);
             data.put("title", post.title);
+            data.put("isTopicPost",post.isTopicPost);
 
             if (post.isTopicPost) {
                 data.put("isTopicPost", true);

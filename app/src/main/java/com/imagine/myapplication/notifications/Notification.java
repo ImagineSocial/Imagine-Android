@@ -1,6 +1,7 @@
 package com.imagine.myapplication.notifications;
 
 import com.google.firebase.Timestamp;
+import com.imagine.myapplication.post_classes.Post;
 
 public class Notification {
 
@@ -15,4 +16,6 @@ public class Notification {
     public String comment;
     public String friendRequestName;
     public int count = 1;
+    public boolean isTopicPost = false;
+    public Post post;
 }
