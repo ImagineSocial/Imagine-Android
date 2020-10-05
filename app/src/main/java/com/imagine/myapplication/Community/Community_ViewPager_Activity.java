@@ -84,7 +84,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         ImageView image_iv = findViewById(R.id.comm_activity_picture);
         View backgroundView = findViewById(R.id.comm_background_view);
         ImageButton newPostButton = findViewById(R.id.community_new_post_button);
-        Button linkFeedButton = findViewById(R.id.link_comm_in_feed);
+        ImageButton linkFeedButton = findViewById(R.id.link_comm_in_feed);
         TabLayout tabLayout = findViewById(R.id.community_feed_tab_layout);
         if(this.comm.displayOption.equals("fact")){
             new TabLayoutMediator(tabLayout, this.viewPager2, new TabLayoutMediator.TabConfigurationStrategy() {

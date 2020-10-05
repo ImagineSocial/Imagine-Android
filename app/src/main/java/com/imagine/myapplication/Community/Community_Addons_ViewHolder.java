@@ -46,6 +46,12 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Addon boundAddon){
+        if (this.addon != null) {
+            if (this.addon.items != null) {
+                this.addon.items = null;
+                this.addon = null;
+            }
+        }
         this.addon = boundAddon;
         TextView title = itemView.findViewById(R.id.community_addon_title);
         TextView description = itemView.findViewById(R.id.community_addon_description);

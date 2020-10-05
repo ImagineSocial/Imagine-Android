@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFF">
+
+
+
+        <TextView
+            android:id="@+id/proposal_header_label"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/ibm_semi_bold"
+            android:text="Wie kann sich Imagine verbessern?"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/proposal_title_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Titel:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/proposal_header_label"
+            app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+        <EditText
+            android:id="@+id/proposal_title_textEdit"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/proposal_header_label"
+            app:layout_constraintStart_toStartOf="@+id/proposal_title_label"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_title_label" />
+
+        <View
+            android:id="@+id/dividerView1"
+            style="@style/Divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/proposal_summary_label" />
+        <TextView
+            android:id="@+id/proposal_summary_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Zusammenfassung:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/proposal_header_label"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_title_textEdit" />
+
+        <EditText
+            android:id="@+id/proposal_summary_textEdit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/proposal_header_label"
+            app:layout_constraintStart_toStartOf="@+id/proposal_title_label"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_summary_label" />
+
+        <View
+            android:id="@+id/dividerView2"
+            style="@style/Divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/proposal_idea_label" />
+
+        <TextView
+            android:id="@+id/proposal_idea_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="Idee:"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/proposal_header_label"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_summary_textEdit" />
+
+        <EditText
+            android:id="@+id/proposal_idea_textEdit"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:fontFamily="@font/ibm_regular"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="@+id/proposal_header_label"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/proposal_title_label"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_idea_label" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Bei Imagine wollen wir die wichtigen Entscheidungen gemeinsam treffen. \nReiche eigene Vorschläge ein und lass die Community entscheiden."
+            app:layout_constraintEnd_toEndOf="@+id/proposal_header_label"
+            app:layout_constraintStart_toStartOf="@+id/proposal_header_label"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_header_label" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="75dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_border"
+            android:text="Senden"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/proposal_idea_textEdit" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ibm_regular"
+            android:text="Bisherige Vorschläge"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
+

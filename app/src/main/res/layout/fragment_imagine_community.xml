@@ -4,11 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#FFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="900dp">
+        android:layout_height="900dp"
+        android:background="#FFF">
 
         <TextView
             android:id="@+id/imagine_community_header_label"
@@ -31,7 +33,7 @@
             app:layout_constraintGuide_percent="0.1" />"
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/imagine_community_card3"
+            android:id="@+id/imagine_community_imagineFund_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -62,7 +64,7 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/imagine_community_card1"
+            android:id="@+id/imagine_community_proposal_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -93,7 +95,7 @@
             app:layout_constraintGuide_percent="0.4" />"
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/imagine_community_card2"
+            android:id="@+id/imagine_community_bugs_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -124,7 +126,7 @@
             app:layout_constraintGuide_percent="0.25" />"
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/imagine_community_card4"
+            android:id="@+id/imagine_community_settings_card"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -161,7 +163,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="400dp"
             android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

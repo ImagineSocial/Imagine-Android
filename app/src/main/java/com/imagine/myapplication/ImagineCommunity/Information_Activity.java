@@ -1,4 +1,4 @@
-package com.imagine.myapplication.nav_fragments;
+package com.imagine.myapplication.ImagineCommunity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,24 +30,19 @@ import com.imagine.myapplication.R;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Information_Fragment extends Fragment implements View.OnClickListener {
+public class Information_Activity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Information_Fragment";
     public FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.setting_and_impressum_activity,container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ImageButton toGDPRButton = view.findViewById(R.id.toGDPRButton);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.setting_and_impressum_activity);
+        ImageButton toGDPRButton = findViewById(R.id.toGDPRButton);
         toGDPRButton.setOnClickListener(this);
-        Button toWebsiteButton = view.findViewById(R.id.goToWebsiteButton);
+        Button toWebsiteButton = findViewById(R.id.goToWebsiteButton);
         toWebsiteButton.setOnClickListener(this);
-        Button deleteAccountButton = view.findViewById(R.id.delete_account_button);
+        Button deleteAccountButton = findViewById(R.id.delete_account_button);
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             deleteAccountButton.setAlpha(1);
@@ -54,21 +51,34 @@ public class Information_Fragment extends Fragment implements View.OnClickListen
         }
     }
 
+//    @Nullable
+//    @Override
+//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return inflater.inflate(R.layout.setting_and_impressum_activity,container, false);
+//    }
+
+
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//
+//    }
+
     @Override
     public void onClick(View v) {
         // setting up the onClick events
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Context context = getContext();
+
         switch (v.getId()) {
             case R.id.toGDPRButton:
                 String gdprURL = "https://www.imagine.social/datenschutzerklärung-app";
                 intent.setData(Uri.parse(gdprURL));
-                context.startActivity(intent);
+                this.startActivity(intent);
                 break;
             case R.id.goToWebsiteButton:
                 String url = "https://imagine.social";
                 intent.setData(Uri.parse(url));
-                context.startActivity(intent);
+                this.startActivity(intent);
                 break;
             case R.id.delete_account_button:
                 sendDeleteRequest();
@@ -78,7 +88,7 @@ public class Information_Fragment extends Fragment implements View.OnClickListen
 
     public void sendDeleteRequest() {
         // sending delete request into MaltesDB
-        final Button deleteAccountButton = getView().findViewById(R.id.delete_account_button);
+        final Button deleteAccountButton = findViewById(R.id.delete_account_button);
         deleteAccountButton.setAlpha((float) 0.5);
         deleteAccountButton.setEnabled(false);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -95,12 +105,14 @@ public class Information_Fragment extends Fragment implements View.OnClickListen
         dataMap.put("sentAt", stamp);
         dataMap.put("name", "System");
         dataMap.put("UserID", user.getUid());
+        final Context context = this;
         malteRef.set(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
                     System.out.println("OLLOLO!!");
-                    Toast.makeText(getContext(),"Dein Account wird innerhalb von 48h gelöscht." +
+
+                    Toast.makeText(context,"Dein Account wird innerhalb von 48h gelöscht." +
                             " Logge dich aus, wir übernehmen den Rest.",Toast.LENGTH_LONG).show();
                 } else{
                     System.out.println("upload to database failed! "+TAG);

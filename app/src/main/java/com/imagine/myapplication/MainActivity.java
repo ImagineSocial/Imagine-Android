@@ -11,12 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -44,17 +42,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
-import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Community_Posts_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
-import com.imagine.myapplication.nav_fragments.Information_Fragment;
+import com.imagine.myapplication.nav_fragments.Imagine_Community_Fragment;
 import com.imagine.myapplication.nav_fragments.New_Post_Fragment;
 import com.imagine.myapplication.notifications.Notification;
 import com.imagine.myapplication.notifications.NotificationCallback;
 import com.imagine.myapplication.notifications.NotificationsAdapter;
-import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 
@@ -79,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
     public static Community_Posts_Fragment commPosts_fragment;
     public static New_Post_Fragment newPosts_fragment;
     public static Communities_Fragment comms_fragment;
-    public static Information_Fragment infos_fragment;
+    public static Imagine_Community_Fragment infos_fragment;
     public Activity mainActivity;
     public Context mContext;
     public Button loginButton;
@@ -241,9 +237,9 @@ public class MainActivity extends AppCompatActivity{
                             }
                             selectedFragment = comms_fragment;
                             break;
-                        case R.id.nav_info:
+                        case R.id.imagine_community:
                             if(infos_fragment == null){
-                                infos_fragment = new Information_Fragment();
+                                infos_fragment = new Imagine_Community_Fragment();
                             }
                             selectedFragment = infos_fragment;
                             break;

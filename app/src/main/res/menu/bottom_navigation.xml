@@ -21,7 +21,7 @@
         android:title="Communities"
         />
     <item
-        android:id="@+id/nav_info"
+        android:id="@+id/imagine_community"
         android:icon="@drawable/info_hippy_icon"
         android:title="Imagine"
         />

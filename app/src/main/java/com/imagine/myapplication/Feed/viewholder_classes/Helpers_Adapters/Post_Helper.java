@@ -752,7 +752,9 @@ public class Post_Helper {
         data.put("comment",body);
         data.put("name", "Ein User");   //...hat deinen Beitrag kommentiert
         data.put("postID",post.documentID);
-        data.put("isTopicPost", post.isTopicPost);
+        if (post.isTopicPost) {
+            data.put("isTopicPost", true);
+        }
         data.put("forOP", true);
 
         notificationsRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
