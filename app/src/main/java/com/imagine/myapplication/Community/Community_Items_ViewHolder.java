@@ -110,8 +110,8 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
 
         titleLabel.setText(community.name);
         descriptionLabel.setText(community.description);
-        postCountLabel.setText("Beiträge: "+community.postCount);
-        followerCountLabel.setText("Follower: "+community.followerCount);
+        postCountLabel.setText(R.string.postcount+community.postCount);
+        followerCountLabel.setText(R.string.followercount+community.followerCount);
 
         if(community.imageURL != null && !community.equals("")){
             Glide.with(itemView).load(community.imageURL).into(addonImageView);

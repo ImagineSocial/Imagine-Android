@@ -96,8 +96,8 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
         final TextView postCountLabel = itemView.findViewById(R.id.addon_community_item_postcount_label);
         title.setText(comm.name);
         description.setText(comm.description);
-        postCountLabel.setText("Beiträge: "+comm.postCount);
-        followerCountLabel.setText("Follower: "+comm.followerCount);
+        postCountLabel.setText(R.string.postcount+comm.postCount);
+        followerCountLabel.setText(R.string.followercount+comm.followerCount);
 
     }
 
