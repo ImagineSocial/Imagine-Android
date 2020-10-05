@@ -97,16 +97,16 @@ public class Community_New_Community_Activity extends AppCompatActivity {
 
     public void checkEditTexts(){
         if(auth.getCurrentUser() == null){
-            Toast.makeText(this,"Bitte logge dich ein um eine Community zu erstellen!",
+            Toast.makeText(this,R.string.community_new_community_activty_login,
                     Toast.LENGTH_SHORT).show();
             return;
         }
         if(title.getText().toString().equals("")){
-            Toast.makeText(this,"Bitte geben Sie einen Name für Ihre COmmunity ein!",
+            Toast.makeText(this,R.string.community_new_community_activty_name,
                     Toast.LENGTH_SHORT).show();
         }else{
             if(description.getText().toString().equals("")){
-                Toast.makeText(this,"Bitte geben Sie eine Beschriebung für Ihre Community ein!",
+                Toast.makeText(this,R.string.community_new_community_activty_description,
                         Toast.LENGTH_SHORT).show();
             } else{
                 DocumentReference docRef = db.collection("Facts").document();
@@ -182,10 +182,10 @@ public class Community_New_Community_Activity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(mContext,"Community erstellt!",Toast.LENGTH_SHORT);
+                    Toast.makeText(mContext,R.string.community_new_community_activity_success,Toast.LENGTH_SHORT);
                     resetEditText();
                 } else if(task.isCanceled())
-                    Toast.makeText(mContext,"Community NICHT erstellt!",Toast.LENGTH_SHORT);
+                    Toast.makeText(mContext,R.string.community_new_community_activity_fail,Toast.LENGTH_SHORT);
 
             }
         });

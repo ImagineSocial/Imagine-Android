@@ -19,13 +19,13 @@ public class Communities_Sub_Header extends Community_ViewHolder {
         TextView header = itemView.findViewById(R.id.communities_sub_header);
         switch(comm.type){
             case "topicsHeader":
-                header.setText("Angesagt");
+                header.setText(R.string.communities_sub_header_trending);
                 break;
             case "factsHeader":
-                header.setText("Aktuelle Diskussionen");
+                header.setText(R.string.communities_sub_header_current_discussions);
                 break;
             case "ownHeader":
-                header.setText("Deine Communities");
+                header.setText(R.string.communities_sub_header_followed_communities);
                 break;
         }
     }

@@ -22,13 +22,13 @@ public class Community_Addons_PreView_ViewHolder extends RecyclerView.ViewHolder
         switch (preView.type){
             case "one":
                 Glide.with(itemView).load(R.drawable.add_on_horizontal_scroll_example).into(image);
-                title.setText(R.string.addOn_collection_header);
-                description.setText(R.string.addOn_collection_description);
+                title.setText(R.string.community_addons_preview_viewholder_title);
+                description.setText(R.string.community_addons_preview_viewholder_description);
                 break;
             case "two":
                 Glide.with(itemView).load(R.drawable.add_on_qanda_example).into(image);
-                title.setText(R.string.addOn_QandA_header);
-                description.setText(R.string.addOn_QandA_description);
+                title.setText(R.string.community_addons_preview_viewholder_qanda_header);
+                description.setText(R.string.community_addons_preview_viewholder_qanda_description);
                 break;
             case "three":
                 Glide.with(itemView).load(R.drawable.add_on_single_topic_example).into(image);

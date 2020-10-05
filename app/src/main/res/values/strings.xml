@@ -9,14 +9,11 @@
         Funktionen, unser Open Source Repository und vieles mehr:</string>
     <string name="toggle1">Ollah</string>
     <string name="toggle2">Ollah</string>
-
+    <string name="postcount">Beiträge: </string>
+    <string name="followercount">Follower: </string>
     //newAddOn
-    <string name="addOn_collection_header">Füge eine Kollektion mit Beiträgen und Themen hinzu.</string>
-    <string name="addOn_collection_description">In diesem AddOn kann man nach belieben vorhandene oder neue Beiträge posten um ein Unterthema deiner Wahl besser zu beleuchten.\nAuch Themen kannst du hier verlinken. Möchtest du jedoch nur ein Thema hervorheben, kannst du das AddOn für einzelne Themen nutzen.</string>
     <string name="addOn_singleTopic_header">Verlinke ein aussagekräftiges Thema.</string>
     <string name="addOn_singleTopic_description">Verlinke mit diesem AddOn eine andere Community, die den Menschen aus der derzeitigen Community interessant finden könnten. Die Darstellung enthält Bilder-Beiträge, sowie die Beschreibung der Community in der Vorschau.</string>
-    <string name="addOn_QandA_header">Füge ein Frage/Antwort AddOn hinzu.</string>
-    <string name="addOn_QandA_description">Füge dieses AddOn hinzu, um einen Ort für mögliche Fragen zu  schaffen. Anfänger können so schneller lernen und Neulinge oder Fremde sich einfacher an einem Ort oder einer Community zurechtfinden.</string>
     <string name="placeholder_user_feed">Dieser User hat noch keine Beiträge hochgeladen</string>
     <string name="placeholder_community_feed">Es sind noch keine Beiträge zu diesem Thema zu finden</string>
     <string name="placeholder_addon">Erstelle jetzt das erste Thema</string>
@@ -33,4 +30,75 @@
 
     //TopTopicFeedCell
     <string name="topTopic_weekly_header_label">Die Themen der Woche:</string>
+    //Addon
+    // --leer--
+    //Addon_Feed_Activity
+    // --leer--
+    //Argument
+    // --leer--
+    //ArgumentActivty
+    // --leer--
+    //ArgumentsAdapter
+    // --leer--
+    //ArgumentsDialogFragment
+    <string name="arguments_dialog_fragment_toast_no_user">Du musst eingeloggt sein um Argumente zu erstellen!</string>
+    <string name="arguments_dialog_fragment_toast_fields_empty">Bitte geben einen Titel und eine Beschreibung an!</string>
+    <string name="arguments_dialog_fragment_toast_argument_fail">Argument wurde nicht hinzugefügt!</string>
+    //ArgumentViewHolder
+    //--leer--
+    //ArgumentViewHolderFooter
+    //--leer--
+    //BooleanCallback
+    //--leer--
+    //Communites_Header
+    <string name="communities_header_header_text">Communities</string>
+    //Communities_Helper
+    //---System.out´s hab ich so gelassen
+    //Communities_Sub_Header
+    <string name="communities_sub_header_trending">Angesagt</string>
+    <string name="communities_sub_header_current_discussions">Aktuelle Diskussonen</string>
+    <string name="communities_sub_header_followed_communities">Deine Communities</string>
+    //Community
+    //--leer--
+    //Community_Activity
+    //--leer--
+    //Community_Adapter
+    //--leer--
+    //Community_Addon_New_Addon_Activity
+    //--leer--
+    //Community_Addons_Adapter
+    //--leer--
+    //Community_Addons_Community_ViewHolder
+    //--leer--
+    //Community_Addons_Header_ViewHolder
+    //--leer--
+    //Community_Addons_PreView_Adapter
+    //--leer--
+    //Community_Addons_PreView_VIewHolder
+    <string name="community_addons_preview_viewholder_title">Füge eine Kollektion mit Beiträgen und Themen hinzu.</string>
+    <string name="community_addons_preview_viewholder_description">In dies</string>
+    <string name="community_addons_preview_viewholder_qanda_header">Füge ein Frage/Antwort AddOn hinzu.</string>
+    <string name="community_addons_preview_viewholder_qanda_description">Füge dieses AddOn hinzu, um einen Ort für mögliche Fragen zu  schaffen.
+        Anfänger können so schneller lernen und Neulinge oder Fremde sich einfacher an einem Ort oder einer Community zurechtfinden.</string>
+    //Community_Addons_ViewHolder
+    //--leer--
+    //Community_All_Communities_Activity
+    //--leer--
+    //Community_Fact_ViewHolder
+    //--leer--
+    //Community_Footer_ViewHolder
+    //--leer--
+    //Community_Items_Adapter
+    //--leer--
+    //Community_Items_ViewHolder
+    //--leer--
+    //Community_New_Community_Activity
+    <string name="community_new_community_activty_login">Bitte logge dich ein um eine Community zu erstellen!</string>
+    <string name="community_new_community_activty_name">Bitte geben Sie einen Namen für Ihre Community ein!</string>
+    <string name="community_new_community_activty_description">Bitte geben Sie eine Beschreibung für Ihre Community ein!</string>
+    <string name="community_new_community_activity_success">Community erstellt!</string>
+    <string name="community_new_community_activity_fail">Community konnte nicht erstellt werden!</string>
+
+
+
 </resources>
