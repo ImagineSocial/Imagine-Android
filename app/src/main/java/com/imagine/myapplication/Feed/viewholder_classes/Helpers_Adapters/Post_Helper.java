@@ -112,7 +112,7 @@ public class Post_Helper {
                             case "repost":
                                 addRepostPost(docSnap,false,false, false,null);
                                 break;
-                            case "comm":
+                            case "singleTopic":
                                 addCommPost(docSnap,false,false, false,null);
                                 break;
                             default:
@@ -286,6 +286,9 @@ public class Post_Helper {
                                 break;
                             case "repost":
                                 addRepostPost(docSnap,false,false,false,null);
+                                break;
+                            case "singleTopic":
+                                addCommPost(docSnap,false,false, false,null);
                                 break;
                             default:
                                 addDefaulPost(docSnap,false,false,false,null);
@@ -543,6 +546,9 @@ public class Post_Helper {
                                     case "repost":
                                         addRepostPost(documentSnapshot,isTopicPost,false,false,null);
                                         break;
+                                    case "singleTopic":
+                                        addCommPost(documentSnapshot,false,false, false,null);
+                                        break;
                                     default:
                                         addDefaulPost(documentSnapshot,isTopicPost,false,false,null);
                                         break;
@@ -630,6 +636,9 @@ public class Post_Helper {
                                         break;
                                     case "repost":
                                         addRepostPost(documentSnapshot,isTopicPost,false,false,null);
+                                        break;
+                                    case "singleTopic":
+                                        addCommPost(documentSnapshot,false,false, false,null);
                                         break;
                                     default:
                                         addDefaulPost(documentSnapshot,isTopicPost,false,false,null);
@@ -1829,7 +1838,7 @@ public class Post_Helper {
                                 case "repost":
                                     addRepostPost(docSnap,not.isTopicPost,false, false,not);
                                     break;
-                                case "comm":
+                                case "singleTopic":
                                     addCommPost(docSnap,not.isTopicPost,false, false,not);
                                     break;
                                 default:
@@ -1852,11 +1861,9 @@ public class Post_Helper {
         }
     }
 
-    public void linkCommunityInFeed(Community comm, final BooleanCallback callback){
+    public void linkCommunityInFeed(String title, String description, Community comm, final BooleanCallback callback){
         String userID = auth.getCurrentUser().getUid();
         DocumentReference postRef = db.collection("Posts").document();
-        String title = comm.name;
-        String description = comm.description;
         HashMap<String,Object> data = new HashMap<>();
         data.put("title",title);
         data.put("description",description);
@@ -1866,12 +1873,9 @@ public class Post_Helper {
         data.put("wowCount", new Integer(0));
         data.put("haCount", new Integer(0));
         data.put("niceCount", new Integer(0));
-        data.put("type", "comm");
+        data.put("type", "singleTopic");
         data.put("report", "normal");
-        data.put("imageURL", comm.imageURL);
-        data.put("topicID", comm.topicID);
-        data.put("commName", comm.name);
-        data.put("commDescription",comm.description);
+        data.put("linkedFactID", comm.topicID);
         postRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

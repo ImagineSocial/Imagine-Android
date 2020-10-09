@@ -36,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/communityDescriptionConstraintLayout" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/community_addOn_guideline"
@@ -46,7 +46,7 @@
             app:layout_constraintGuide_percent="0.37" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
+            android:id="@+id/communityDescriptionConstraintLayout"
             android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
@@ -98,6 +98,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/community_addOn_constraintLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"

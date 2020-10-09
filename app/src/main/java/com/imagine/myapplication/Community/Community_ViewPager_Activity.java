@@ -1,18 +1,21 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -39,7 +42,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public Community comm;
     public Communities_Fragment fragment;
     public Context mContext;
-    public TestCollectionAdapter adapter;
+    public Community_Fragment_Adapter adapter;
     public ViewPager2 viewPager2;
     public Post_Helper helper = new Post_Helper();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -66,7 +69,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         args.put("commID", this.comm.topicID);
         args.put("displayOption", this.comm.displayOption);
         this.viewPager2 = findViewById(R.id.containerViewPager);
-        this.adapter = new TestCollectionAdapter(this,args);
+        this.adapter = new Community_Fragment_Adapter(this,args);
         this.adapter.activity = this;
         this.viewPager2.setAdapter(this.adapter);
         if(this.comm.displayOption.equals("fact")){
@@ -173,20 +176,54 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         linkFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(auth.getCurrentUser() == null){
                     Toast.makeText(mContext,"Du musst eingeloggt sein um eine Community " +
                             "im Feed zu teilen", Toast.LENGTH_SHORT).show();
-                }else{
-                    helper.linkCommunityInFeed(comm, new BooleanCallback() {
+                }else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                    LinearLayout layout = new LinearLayout(mContext);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+
+// Add a TextView here for the "Title" label, as noted in the comments
+                    final EditText titleBox = new EditText(mContext);
+                    titleBox.setHint("Title");
+                    layout.addView(titleBox); // Notice this is an add method
+
+// Add another TextView here for the "Description" label
+                    final EditText descriptionBox = new EditText(mContext);
+                    descriptionBox.setHint("Description");
+                    layout.addView(descriptionBox); // Another add method
+
+                    dialog.setView(layout); // Again this is a set method, not add
+                    dialog.setPositiveButton("Posten", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onCallback(Boolean bool) {
-                            if(bool){
-                                Toast.makeText(mContext," Community im Feed verlinkt!", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(mContext, "Community verlinken fehlgeschlagen!",Toast.LENGTH_SHORT).show();
+                        public void onClick(DialogInterface dialog, int which) {
+                            String description = descriptionBox.getText().toString();
+                            String title = titleBox.getText().toString();
+                            if (!title.equals("")) {
+                                helper.linkCommunityInFeed(title, description, comm, new BooleanCallback() {
+                                    @Override
+                                    public void onCallback(Boolean bool) {
+                                        if (bool) {
+                                            Toast.makeText(mContext, " Community im Feed verlinkt!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(mContext, "Community verlinken fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(mContext,"Bitte füge einen Titel hinzu.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+                    dialog.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });
