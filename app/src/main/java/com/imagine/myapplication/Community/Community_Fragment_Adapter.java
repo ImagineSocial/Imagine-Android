@@ -9,12 +9,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.HashMap;
 
-public class TestCollectionAdapter extends FragmentStateAdapter {
+public class Community_Fragment_Adapter extends FragmentStateAdapter {
 
     public Activity activity;
 
     HashMap<String,String> args;
-    public TestCollectionAdapter(@NonNull FragmentActivity fragmentActivity, HashMap<String,String> args) {
+    public Community_Fragment_Adapter(@NonNull FragmentActivity fragmentActivity, HashMap<String,String> args) {
         super(fragmentActivity);
         this.args = args;
     }

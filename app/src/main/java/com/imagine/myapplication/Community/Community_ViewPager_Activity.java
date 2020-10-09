@@ -1,18 +1,21 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TableLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -39,7 +42,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public Community comm;
     public Communities_Fragment fragment;
     public Context mContext;
-    public TestCollectionAdapter adapter;
+    public Community_Fragment_Adapter adapter;
     public ViewPager2 viewPager2;
     public Post_Helper helper = new Post_Helper();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -66,7 +69,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         args.put("commID", this.comm.topicID);
         args.put("displayOption", this.comm.displayOption);
         this.viewPager2 = findViewById(R.id.containerViewPager);
-        this.adapter = new TestCollectionAdapter(this,args);
+        this.adapter = new Community_Fragment_Adapter(this,args);
         this.adapter.activity = this;
         this.viewPager2.setAdapter(this.adapter);
         if(this.comm.displayOption.equals("fact")){
@@ -92,13 +95,13 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     switch(position){
                         case 0:
-                            tab.setText(R.string.community_viewpager_activity_topics);
+                            tab.setText("Themen");
                             return;
                         case 1:
-                            tab.setText(R.string.community_viewpager_activity_discussion);
+                            tab.setText("Diskussion");
                             return;
                         case 2:
-                            tab.setText(R.string.community_viewpager_activity_feed);
+                            tab.setText("Feed");
                             return;
                     }
                 }
@@ -109,10 +112,10 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     switch(position){
                         case 0:
-                            tab.setText(R.string.community_viewpager_activity_discussion);
+                            tab.setText("Themen");
                             return;
                         case 1:
-                            tab.setText(R.string.community_viewpager_activity_feed);
+                            tab.setText("Feed");
                             return;
                     }
                 }
@@ -140,7 +143,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
             public void onCallback(Boolean bool) {
                 followButton.setEnabled(true);
                 if (bool) {
-                    followButton.setText(R.string.follow);
+                    followButton.setText("Unfollow");
                     community.isBeingFollowed = true;
                 }
             }
@@ -173,19 +176,54 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         linkFeedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(auth.getCurrentUser() == null){
-                    Toast.makeText(mContext,R.string.community_viewpager_activity_login, Toast.LENGTH_SHORT).show();
-                }else{
-                    helper.linkCommunityInFeed(comm, new BooleanCallback() {
+                    Toast.makeText(mContext,"Du musst eingeloggt sein um eine Community " +
+                            "im Feed zu teilen", Toast.LENGTH_SHORT).show();
+                }else {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                    LinearLayout layout = new LinearLayout(mContext);
+                    layout.setOrientation(LinearLayout.VERTICAL);
+
+// Add a TextView here for the "Title" label, as noted in the comments
+                    final EditText titleBox = new EditText(mContext);
+                    titleBox.setHint("Title");
+                    layout.addView(titleBox); // Notice this is an add method
+
+// Add another TextView here for the "Description" label
+                    final EditText descriptionBox = new EditText(mContext);
+                    descriptionBox.setHint("Description");
+                    layout.addView(descriptionBox); // Another add method
+
+                    dialog.setView(layout); // Again this is a set method, not add
+                    dialog.setPositiveButton("Posten", new DialogInterface.OnClickListener() {
                         @Override
-                        public void onCallback(Boolean bool) {
-                            if(bool){
-                                Toast.makeText(mContext,R.string.community_viewpager_activity_succ, Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(mContext, R.string.community_viewpager_activity_fail,Toast.LENGTH_SHORT).show();
+                        public void onClick(DialogInterface dialog, int which) {
+                            String description = descriptionBox.getText().toString();
+                            String title = titleBox.getText().toString();
+                            if (!title.equals("")) {
+                                helper.linkCommunityInFeed(title, description, comm, new BooleanCallback() {
+                                    @Override
+                                    public void onCallback(Boolean bool) {
+                                        if (bool) {
+                                            Toast.makeText(mContext, " Community im Feed verlinkt!", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Toast.makeText(mContext, "Community verlinken fehlgeschlagen!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(mContext,"Bitte füge einen Titel hinzu.", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+                    dialog.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    dialog.show();
                 }
             }
         });
@@ -202,7 +240,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         updateFollowerCount(community,true);
-                        followButton.setText(getResources().getString(R.string.unfollow));
+                        followButton.setText("Unfollow");
                         community.isBeingFollowed = true;
                     }
                 }
@@ -219,7 +257,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         community.isBeingFollowed = false;
                         updateFollowerCount(community, false);
-                        followButton.setText(getResources().getString(R.string.follow));
+                        followButton.setText("Follow");
                     } else {
                         System.out.println("####Not deleted community");
                     }
