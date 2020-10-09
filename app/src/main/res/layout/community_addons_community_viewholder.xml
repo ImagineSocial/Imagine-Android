@@ -79,7 +79,7 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/ibm_regular"
-                android:text="Beiträge:"
+                android:text="@string/postcount"
                 android:textSize="9sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="7dp"
                 android:fontFamily="@font/ibm_regular"
-                android:text="Follower:"
+                android:text="@string/followercount"
                 android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/addon_community_item_postcount_label" />

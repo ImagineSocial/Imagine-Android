@@ -19,7 +19,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/ibm_bold"
-            android:text="Willkommen"
+            android:text="@string/fragment_imagine_community_welcome"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +50,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/ibm_medium"
                 android:gravity="center"
-                android:text="Imagine\nFund"
+                android:text="@string/fragment_imagine_community_fund"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -81,7 +81,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/ibm_medium"
                 android:gravity="center"
-                android:text="Vorschläge"
+                android:text="@string/fragment_imagine_community_suggest"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -112,7 +112,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/ibm_medium"
                 android:gravity="center"
-                android:text="Fehler/Bugs"
+                android:text="@string/fragment_imagine_community_errors"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -143,7 +143,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/ibm_medium"
                 android:gravity="center"
-                android:text="Einstellungen"
+                android:text="@string/fragment_imagine_community_settings"
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/ibm_medium"
-            android:text="Top Vorschläge"
+            android:text="@string/fragment_imagine_community_top_sugg"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"

@@ -165,7 +165,7 @@ public class LinkPostActivity extends AppCompatActivity {
         }
 
         if(post.originalPoster.equals("anonym")){
-            name_textView.setText("Anonym");
+            name_textView.setText(getResources().getString(R.string.anonym));
             Glide.with(this).load(R.drawable.default_user).into(
                     profilePicture_imageView);
         }else{
@@ -233,7 +233,7 @@ public class LinkPostActivity extends AppCompatActivity {
                                     public void onCallback(ArrayList<Comment> comms) {
                                         isSendingComment = false;
                                         if(comms == null){
-                                            Toast.makeText(mContext,"Kommentar konnte nicht hochgeladen werden!",Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(mContext,getResources().getString(R.string.post_activity_comment_fail),Toast.LENGTH_SHORT).show();
                                         }else{
                                             commentText.setText(null);
                                             commentText.clearFocus();
@@ -255,18 +255,6 @@ public class LinkPostActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-            }
-        });
-
-        this.sendComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String comment = commentText.getText().toString();
-                if(comment.equals("")){
-                    Toast.makeText(mContext,"Kein Text",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(mContext,"Hat Text",Toast.LENGTH_SHORT).show();
-                }
             }
         });
 

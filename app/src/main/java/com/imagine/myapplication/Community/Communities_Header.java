@@ -16,6 +16,6 @@ public class Communities_Header extends Community_ViewHolder {
     @Override
     public void bind(Community comm) {
         TextView header = itemView.findViewById(R.id.communities_header);
-        header.setText(R.string.communities_header_header_text);
+        header.setText(itemView.getResources().getString(R.string.communities_header_header_text));
     }
 }

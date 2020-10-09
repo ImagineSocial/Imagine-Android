@@ -88,12 +88,12 @@ public class LoginActivity extends AppCompatActivity {
         surname_infoLabel = findViewById(R.id.surname_info_label);
         //Setting up the onClickListeners
         setLogin();
-        login_button.setText("Login");
+        login_button.setText(getResources().getString(R.string.login_activity_login));
         login_checked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setLogin();
-                login_button.setText("Login");
+                login_button.setText(getResources().getString(R.string.login_activity_login));
             }
         });
 
@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setSignUp();
-                login_button.setText("Sign up");
+                login_button.setText(getResources().getString(R.string.login_activity_signup));
             }
         });
 
@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
         // Checking for required fields
         Editable password = password_ed.getText();
         if((password.toString() == "") || email_ed.getText().toString().equals("")){
-            Toast.makeText(this,"Bitte Email und Passwort eingeben",duration).show();
+            Toast.makeText(this,getResources().getString(R.string.login_activity_mailpass),duration).show();
         } else {
             startLogin();
         }
@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 String error = e.getMessage();
-                Toast.makeText(mContext,"Login failed! "+error,duration).show();
+                Toast.makeText(mContext,getResources().getString(R.string.login_activity_loginfail)+error,duration).show();
             }
         });
     }
@@ -194,17 +194,17 @@ public class LoginActivity extends AppCompatActivity {
             if (name_ed.getText().toString().equals("") || surname_ed.getText().toString().equals("")
                     || password_ed.getText().toString().equals("") || repeatPassword_ed.getText().toString().equals("")
                     || email_ed.getText().toString().equals("")) {
-                Toast.makeText(mContext, "Bitte fülle alle Felder aus.", duration).show();
+                Toast.makeText(mContext, getResources().getString(R.string.login_activty_fields), duration).show();
 
             } else {
                 if (password_ed.getText().toString().equals(repeatPassword_ed.getText().toString())) {
                     startSignUp();
                 } else {
-                    Toast.makeText(mContext, "Die Passwörter stimmen nicht überein.", duration).show();
+                    Toast.makeText(mContext, getResources().getString(R.string.login_activty_pass_veri), duration).show();
                 }
             }
         } else {
-            Toast.makeText(mContext, "Bitte akzeptiere unsere Datenschutzrichtlinien, bevor du fortfährst.", duration).show();
+            Toast.makeText(mContext, getResources().getString(R.string.login_activity_data), duration).show();
         }
     }
 
@@ -227,15 +227,15 @@ public class LoginActivity extends AppCompatActivity {
                         }else{
                             Exception e = task.getException();
                             if(e instanceof FirebaseAuthWeakPasswordException){
-                                Toast.makeText(mContext,"Sign up failed! Password is too weak!",duration).show();
+                                Toast.makeText(mContext,getResources().getString(R.string.login_activity_fail_pass),duration).show();
                                 login_button.setEnabled(true);
                             }
                             if( e instanceof FirebaseAuthInvalidCredentialsException){
-                                Toast.makeText(mContext,"Sign up failed! The email is malformed!",duration).show();
+                                Toast.makeText(mContext,getResources().getString(R.string.login_activity_fail_mal),duration).show();
                                 login_button.setEnabled(true);
                             }
                             if( e instanceof FirebaseAuthUserCollisionException){
-                                Toast.makeText(mContext,"Sign up failed! Email already in use!",duration).show();
+                                Toast.makeText(mContext,getResources().getString(R.string.login_activity_fail_used),duration).show();
                                 login_button.setEnabled(true);
                             }
                         }
@@ -333,7 +333,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void dismissAfterSuccess(){
         // Finishing activity why no super.finish()?
-        Toast.makeText(getBaseContext(),"Willkommen bei Imagine", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(),getResources().getString(R.string.login_activity_welcome), Toast.LENGTH_LONG).show();
         super.onBackPressed();
     }
 }

@@ -19,13 +19,13 @@ public class Communities_Sub_Header extends Community_ViewHolder {
         TextView header = itemView.findViewById(R.id.communities_sub_header);
         switch(comm.type){
             case "topicsHeader":
-                header.setText(R.string.communities_sub_header_trending);
+                header.setText(itemView.getResources().getString(R.string.communities_sub_header_trending));
                 break;
             case "factsHeader":
-                header.setText(R.string.communities_sub_header_current_discussions);
+                header.setText(itemView.getResources().getString(R.string.communities_sub_header_current_discussions));
                 break;
             case "ownHeader":
-                header.setText(R.string.communities_sub_header_followed_communities);
+                header.setText(itemView.getResources().getString(R.string.communities_sub_header_followed_communities));
                 break;
         }
     }

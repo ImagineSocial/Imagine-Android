@@ -14,7 +14,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_semi_bold"
-        android:text="Willkommen im AddOn Store"
+        android:text="@string/new_addon_activity_welcome"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="Wähle eine Erweiterung aus, um die Community auf deine Weise zu vervollständigen.  Biete einen detaillierten Einblick, eine andere Sichtweise oder einen einfachen Einstieg. Es sind dir keine Grenzen gesetzt."
+        android:text="@string/new_addon_activity_description"
         android:textColor="@android:color/black"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/addOnStore_header"
@@ -41,7 +41,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/button_border"
-        android:text="Weiter"
+        android:text="@string/new_addon_activity_next"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

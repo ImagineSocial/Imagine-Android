@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/ibm_medium"
-            android:text="imagine"
+            android:text="@string/imagine_tag"
             android:textColor="#5377A6"
             android:textSize="22sp"
             tools:layout_editor_absoluteX="149dp"
@@ -77,7 +77,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_border"
             android:fontFamily="@font/ibm_medium"
-            android:text="Login"
+            android:text="@string/activity_login_login"
             android:visibility="invisible"
             android:textAllCaps="false"
             android:textSize="12sp" />

@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/ibm_medium"
-            android:text="Vorschlag"
+            android:text="@string/proposal_cell_suggest"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/circleImageView"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Datum"
+            android:text="@string/proposal_cell_date"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

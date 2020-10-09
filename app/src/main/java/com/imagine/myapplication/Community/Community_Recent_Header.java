@@ -37,7 +37,7 @@ public class Community_Recent_Header extends Community_ViewHolder {
     @Override
     public void bind(Community comm) {
         TextView header = itemView.findViewById(R.id.communities_recent_title);
-        header. setText("Kürzlich besucht:");
+        header. setText(itemView.getResources().getString(R.string.community_recent_header_recents));
         this.recyclerView = itemView.findViewById(R.id.communities_recent_recycler);
         getRecents();
         this.fragment.setHeaderRef(this);

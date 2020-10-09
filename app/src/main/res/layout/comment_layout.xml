@@ -36,7 +36,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/ibm_medium"
-        android:text="Name"
+        android:text="@string/comment_layout_name"
         android:textColor="@android:color/black"
         android:textSize="11sp"
         app:layout_constraintEnd_toStartOf="@+id/createDate_textView"

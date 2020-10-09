@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ibm_regular"
-        android:text="Posts:"
+        android:text="@string/community_feed_header_posts"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/community_follow_button"
         app:layout_constraintStart_toStartOf="@+id/textView5" />
@@ -103,7 +103,7 @@
         android:background="@drawable/button_border"
         android:enabled="false"
         android:fontFamily="@font/ibm_regular"
-        android:text="Follow"
+        android:text="@string/follow"
         android:textAllCaps="false"
         android:textColor="@color/md_black_1000"
         android:textSize="13sp"
@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="Follower:"
+        android:text="@string/followercount"
         android:textSize="11sp"
         app:layout_constraintStart_toEndOf="@+id/community_follow_button"
         app:layout_constraintTop_toTopOf="@+id/community_follow_button" />
@@ -157,7 +157,7 @@
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         android:src="@drawable/link_community_button"
-        android:text="Feed"
+        android:text="@string/community_feed_header_feed"
         android:textSize="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/comm_background_view"
         app:layout_constraintEnd_toStartOf="@+id/community_new_post_button" />
@@ -176,12 +176,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Themen" />
+            android:text="@string/community_feed_header_topics" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feed" />
+            android:text="@string/community_feed_header_feed" />
 
     </com.google.android.material.tabs.TabLayout>
 

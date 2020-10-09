@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity{
             if(header != null){
                 ImageView headerImage = header.findViewById(R.id.sideMenu_profilePicture);
                 TextView name = header.findViewById(R.id.sideMenu_userName);
-                name.setText("Name");
+                name.setText(getResources().getString(R.string.main_activity_name));
                 Glide.with(mContext).load(default_user).into(headerImage);
             }
             if(noti_recyclerView != null && adapter != null){

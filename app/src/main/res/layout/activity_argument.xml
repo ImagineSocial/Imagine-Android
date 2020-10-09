@@ -45,13 +45,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_semi_bold"
                 android:textSize="14sp"
-                android:text="Quellen:"/>
+                android:text="@string/activity_argument_sources"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_semi_bold"
                 android:textSize="14sp"
-                android:text="Hier noch RecyclerView?"/>
+                android:text="@string/activity_argument_recycler"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="vertical"
@@ -63,13 +63,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_semi_bold"
                 android:textSize="14sp"
-                android:text="Gegenargumente:"/>
+                android:text="@string/activity_argument_counterargs"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibm_semi_bold"
                 android:textSize="14sp"
-                android:text="Hier noch RecyclerView?"/>
+                android:text="@string/activity_argument_recycler"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

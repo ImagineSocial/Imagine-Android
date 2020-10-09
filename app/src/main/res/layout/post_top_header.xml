@@ -162,7 +162,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="2dp"
         android:fontFamily="@font/ibm_semi_bold"
-        android:text="Shalom!"
+        android:text="@string/post_top_header_greet"
         android:textColor="@android:color/black"
         android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/owenView"

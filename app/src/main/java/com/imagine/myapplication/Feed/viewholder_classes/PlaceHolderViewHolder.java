@@ -18,6 +18,6 @@ public class PlaceHolderViewHolder extends CustomViewHolder {
         ImageView image = itemView.findViewById(R.id.placeholder_imageview);
         TextView description = itemView.findViewById(R.id.placeholder_description_label);
         Glide.with(itemView).load(R.drawable.placeholder_picture).into(image);
-        description.setText("Hier gibt es leider noch nichts zu sehen.");
+        description.setText(itemView.getResources().getString(R.string.placeholder_viewholder_description));
     }
 }

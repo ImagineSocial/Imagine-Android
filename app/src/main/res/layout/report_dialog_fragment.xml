@@ -21,7 +21,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_regular"
-        android:text="Ein Mitarbeiter wird deine Anfrage überprüfen. Sollte deine Meldung korrekt sein, wird dieser Beitrag optisch markiert. Zu einem späteren Zeitpunkt übernehmen die User demokratisch diese Überprüfung. \nVielen Dank für deine Mithilfe!"
+        android:text="@string/report_dialog_fragment_exp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,37 +43,37 @@
             android:id="@+id/hate_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hass" />
+            android:text="@string/report_dialog_fragment_hate" />
 
         <CheckBox
             android:id="@+id/racism_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rassismus" />
+            android:text="@string/report_dialog_fragment_racism" />
 
         <CheckBox
             android:id="@+id/spam_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Spam" />
+            android:text="@string/report_dialog_fragment_spam" />
 
         <CheckBox
             android:id="@+id/fakenews_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Misinformation" />
+            android:text="@string/report_dialog_fragment_fake" />
 
         <CheckBox
             android:id="@+id/unap_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Unangebrachte Inhalte" />
+            android:text="@string/report_dialog_fragment_unapp" />
 
         <CheckBox
             android:id="@+id/other_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sonstiges" />
+            android:text="@string/report_dialog_fragment_else" />
 
     </LinearLayout>
 
@@ -96,7 +96,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/button_border"
-        android:text="Melden"
+        android:text="@string/report_dialog_fragment_report"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,7 +109,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/ibm_medium"
-        android:text="Anmerkungen:"
+        android:text="@string/report_dialog_fragment_note"
         android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report_ll" />
@@ -120,7 +120,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/ibm_semi_bold"
-        android:text="Melden"
+        android:text="@string/report_dialog_fragment_report"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -9,7 +9,7 @@
         android:id="@+id/add_argument_button"
         android:layout_width="130dp"
         android:layout_height="35dp"
-        android:text="Hinzufügen"
+        android:text="@string/addons_header_viewholder_add"
         android:textSize="15sp"
         android:layout_margin="20dp"
         android:textAllCaps="false"

@@ -72,7 +72,7 @@ public class GIFViewHolder extends CustomViewHolder {
 
         videoView.setVideoPath(post.link);
         if(post.originalPoster.equals("anonym")){
-            name_textView.setText("Anonym");
+            name_textView.setText(itemView.getResources().getString(R.string.anonym));
             Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);
         }else{

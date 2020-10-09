@@ -292,14 +292,14 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.pictureFolder_Button:
                 new AlertDialog.Builder(getContext())
-                    .setTitle("Poste ein oder mehrere Bilder")
-                    .setMessage("Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf 'Öffnen'")
-                    .setPositiveButton("Mehrere", new DialogInterface.OnClickListener() {
+                    .setTitle(getResources().getString(R.string.new_post_fragment_folder_dialog_title))
+                    .setMessage(getResources().getString(R.string.new_post_fragment_folder_dialog_message))
+                    .setPositiveButton(getResources().getString(R.string.new_post_fragment_folder_dialog_multiple), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             chooseMultiplePhotosFromGallery();
                         }
                     })
-                    .setNegativeButton("Einzeln", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(getResources().getString(R.string.new_post_fragment_folder_dialog_single), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             choosePhotoFromGallery();
@@ -319,10 +319,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 break;
             case R.id.newPost_linkCommunity_infoButton:
                 new AlertDialog.Builder(getContext())
-                        .setMessage("Standardmäßig postest du im Imagine Feed. Poste hier alles, was " +
-                                "du mit der Welt teilen möchtest.\n\nWählst du eine Community aus, kannst du entscheiden," +
-                                " ob du deinen Beitrag im Imagine Feed teilst oder nur in einer Community. Die Follower einer Community sehen dann deinen Beitrag" +
-                                " in ihrem angepassten Imagine-Feed.\nPoste in der Community also alles, was sehr themenspezifisch ist oder nicht für die breite Masse zugänglich ist.")
+                        .setMessage(getResources().getString(R.string.new_post_fragment_info_message))
                         .show();
                 break;
             case R.id.newPost_dismiss_choosen_community_button:
@@ -334,7 +331,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
 
                 Drawable res = getResources().getDrawable(R.drawable.feed_icon, null);
                 destinationImageView.setImageDrawable(res);
-                destinationLabel.setText("Feed");
+                destinationLabel.setText(getResources().getString(R.string.new_post_fragment_destination));
                 break;
             default:
                 break;
@@ -517,7 +514,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     ClipData clipData = data.getClipData();
                     if(clipData != null){   //multiPicture
                         if(clipData.getItemCount()>3){
-                            Toast.makeText(getContext(),"Bitte wähle nicht mehr als drei BIlder aus!",
+                            Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_three),
                                     duration).show();
                             return;
                         }
@@ -562,7 +559,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         carouselView.setPageTransformInterval(800);
                         new_picture_button.setAlpha(halfAlpha);
                     } else {    //picture
-                        Toast.makeText(getContext(),"Um ein Bild auszuwählen klicken Sie bitte auf 'Einzeln'!",duration)
+                        Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_single_image),duration)
                         .show();
                         new_picture_button.setAlpha(halfAlpha);
                     }
@@ -582,19 +579,19 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     Glide.with(getView()).load(imageURL).into(communityPreview);
 
                     new AlertDialog.Builder(getContext())
-                            .setTitle("Wo möchtest du posten?")
-                            .setMessage("Möchtest du den Beitrag mit allen im Hauptfeed teilen, oder nur in der Community posten?")
-                            .setPositiveButton("Mit allen teilen", new DialogInterface.OnClickListener() {
+                            .setTitle(getResources().getString(R.string.new_post_fragment_dialog_community_title))
+                            .setMessage(getResources().getString(R.string.new_post_fragment_dialog_community_message))
+                            .setPositiveButton(getResources().getString(R.string.new_post_fragment_dialog_community_positiv), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     //passiert eigentlich nichts?
                                 }
                             })
-                            .setNegativeButton("Mit der Community teilen", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(getResources().getString(R.string.new_post_fragment_dialog_community_negative), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Drawable res = getResources().getDrawable(R.drawable.community_post_icon, null);
                                     destinationImageView.setImageDrawable(res);
-                                    destinationLabel.setText("Community");
+                                    destinationLabel.setText(getResources().getString(R.string.new_post_fragment_community));
                                 }
                             })
                             .show();
@@ -615,7 +612,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         String title = title_editText.getText().toString();
         if(currentUser != null){
             if(title.equals("") || title_editText.getText().equals(null)){
-                Toast.makeText(getContext(),"Gib bitte einen Titel ein!",duration).show();
+                Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_share_title),duration).show();
                 this.shareButton.setEnabled(true);
             }else{
                 DocumentReference docRef;
@@ -629,7 +626,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                     case "picture":
                         if(carousel.getPageCount() == 0 || imageHeight == 0f
                                 || imageWidth == 0f){
-                            Toast.makeText(getContext(),"Bitte wähle ein Bild aus", duration)
+                            Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_share_image), duration)
                             .show();
                             this.shareButton.setEnabled(true);
                         }else{
@@ -641,7 +638,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         break;
                     case "link":
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
-                            Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration).show();
+                            Toast.makeText(getContext(), getResources().getString(R.string.new_post_fragment_share_link), duration).show();
                             this.shareButton.setEnabled(true);
                         } else {
                             String url = link_editText.getText().toString();
@@ -656,7 +653,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                         break;
                     case "gif":
                         if(link_editText.getText().equals("") || link_editText.getText().equals(null)){
-                            Toast.makeText(getContext(), "Gib bitte einen Link ein!", duration).show();
+                            Toast.makeText(getContext(), getResources().getString(R.string.new_post_fragment_share_link), duration).show();
                             this.shareButton.setEnabled(true);
                         } else {
                             postGIF(docRef);
@@ -668,7 +665,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             this.shareButton.setEnabled(true);
                             loadPicturesToFirebase(docRef);
                         } else {
-                            Toast.makeText(getContext(),"Bitte geben Sie einen Title an!",duration).show();
+                            Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_share_title),duration).show();
                         }
                         break;
                     default:
@@ -677,7 +674,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 }
             }
         }else{
-            Toast.makeText(getContext(),"Log dich ein um zu Posten.",duration).show();
+            Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_share_login),duration).show();
             this.shareButton.setEnabled(true);
         }
     }
@@ -818,7 +815,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 });
             }
         } else {
-            Toast.makeText(getContext(),"Bitte wähle mehrere Bilder aus!",duration).show();
+            Toast.makeText(getContext(),getResources().getString(R.string.new_post_fragment_images),duration).show();
         }
     }
 
@@ -928,7 +925,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 data.put("link", link);
                 uploadData(docRef, data);
             } else {
-             Toast.makeText(getContext(), "Im Moment unterstützen wir leider nur Links im .mp4 Format.", Toast.LENGTH_SHORT).show();
+             Toast.makeText(getContext(), getResources().getString(R.string.new_post_fragment_mp4), Toast.LENGTH_SHORT).show();
              this.shareButton.setEnabled(true);
              }
         } else {
@@ -1099,10 +1096,10 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         // called when the posting process is successfull
 
         new AlertDialog.Builder(getContext())
-                .setTitle("Vielen Dank!")
-                .setMessage("Nett, dass du deine Weisheiten mit uns teilst.")
+                .setTitle(getResources().getString(R.string.new_post_fragment_succ_title))
+                .setMessage(getResources().getString(R.string.new_post_fragment_succ_message))
 
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getResources().getString(R.string.new_post_fragment_succ_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         EditText title_edit = getView().findViewById(R.id.title_editText);
                         EditText description_edit = getView().findViewById(R.id.description_editText);

@@ -75,7 +75,7 @@
                 android:layout_marginTop="7dp"
                 android:layout_marginEnd="5dp"
                 android:fontFamily="@font/ibm_regular"
-                android:text="Beiträge:"
+                android:text="@string/postcount"
                 android:textSize="9sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/ibm_regular"
-                android:text="Follower:"
+                android:text="@string/followercount"
                 android:textSize="9sp"
                 app:layout_constraintEnd_toEndOf="@+id/addon_community_item_postcount_label"
                 app:layout_constraintTop_toBottomOf="@+id/addon_community_item_postcount_label" />
@@ -112,8 +112,6 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="10dp"
         android:fontFamily="@font/ibm_semi_bold"
-        android:text="
-"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView5"

@@ -67,7 +67,7 @@
                     android:id="@+id/new_thought_button"
                     android:background="@drawable/button_border"
                     android:fontFamily="@font/ibm_medium"
-                    android:text="Text"
+                    android:text="@string/fragment_new_post_thought"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:textAllCaps="false"
@@ -89,7 +89,7 @@
                     android:fontFamily="@font/ibm_medium"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
-                    android:text="Link"
+                    android:text="@string/fragment_new_post_link"
                     android:textAllCaps="false"
                     android:textSize="12sp" />
             </TableRow>
@@ -192,7 +192,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:fontFamily="@font/ibm_medium"
-                    android:text="Link:"
+                    android:text="@string/fragment_new_post_link_label"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -432,7 +432,7 @@
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/ibm_regular"
                     android:gravity="center"
-                    android:text="Feed"
+                    android:text="@string/fragment_new_post_feed_label"
                     app:layout_constraintBottom_toBottomOf="@+id/newPost_destination_imageView"
                     app:layout_constraintStart_toEndOf="@+id/newPost_destination_imageView"
                     app:layout_constraintTop_toTopOf="@+id/newPost_destination_imageView" />

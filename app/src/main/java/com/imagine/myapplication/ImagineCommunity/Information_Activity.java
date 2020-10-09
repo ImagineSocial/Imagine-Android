@@ -112,8 +112,7 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
                 if(task.isSuccessful()){
                     System.out.println("OLLOLO!!");
 
-                    Toast.makeText(context,"Dein Account wird innerhalb von 48h gelöscht." +
-                            " Logge dich aus, wir übernehmen den Rest.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,getResources().getString(R.string.informaton_activity_delete),Toast.LENGTH_LONG).show();
                 } else{
                     System.out.println("upload to database failed! "+TAG);
                     deleteAccountButton.setAlpha(1);

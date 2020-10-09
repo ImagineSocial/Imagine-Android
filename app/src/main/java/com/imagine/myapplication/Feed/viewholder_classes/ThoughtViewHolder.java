@@ -53,7 +53,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
         commentCountLabel.setText(post.commentCount+"");
 
         if(post.originalPoster.equals("anonym")){
-            username_textView.setText("Anonym");
+            username_textView.setText(itemView.getResources().getString(R.string.anonym));
             Glide.with(itemView).load(R.drawable.anonym_user).into(
                     profilePicture_imageView);
         }else{

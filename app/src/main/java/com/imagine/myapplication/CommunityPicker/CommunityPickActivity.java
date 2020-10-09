@@ -44,13 +44,13 @@ public class CommunityPickActivity extends AppCompatActivity {
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 switch(position){
                     case 0:
-                        tab.setText("Communities");
+                        tab.setText(getResources().getString(R.string.community_pick_activity_communities));
                         return;
                     case 1:
-                        tab.setText("Diskussionen");
+                        tab.setText(getResources().getString(R.string.community_pick_activity_discussion));
                         return;
                     case 2:
-                        tab.setText("Deine Communitys");
+                        tab.setText(getResources().getString(R.string.community_pick_activity_own_comms));
                 }
             }
         }).attach();

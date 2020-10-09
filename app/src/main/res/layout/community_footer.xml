@@ -24,7 +24,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_border"
-            android:text="Hinzufügen"
+            android:text="@string/addons_header_viewholder_add"
             android:textAllCaps="false" />
 
         <Button
@@ -34,7 +34,7 @@
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:background="@drawable/button_border"
-            android:text="Alle anzeigen"
+            android:text="@string/community_footer_show_all"
             android:textAllCaps="false" />
 
     </LinearLayout>

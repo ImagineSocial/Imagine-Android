@@ -79,11 +79,11 @@ public class ArgumentsDialogFragment extends androidx.fragment.app.DialogFragmen
             if(auth.getCurrentUser() != null){
                 this.addArgument();
             }else{
-                Toast.makeText(getContext(),R.string.arguments_dialog_fragment_toast_no_user,
+                Toast.makeText(getContext(),getResources().getString(R.string.arguments_dialog_fragment_toast_no_user),
                         Toast.LENGTH_SHORT);
             }
         }else{
-            Toast.makeText(getView().getContext(),R.string.arguments_dialog_fragment_toast_fields_empty
+            Toast.makeText(getView().getContext(),getResources().getString(R.string.arguments_dialog_fragment_toast_fields_empty)
                     ,Toast.LENGTH_SHORT).show();
         }
     }
@@ -104,7 +104,7 @@ public class ArgumentsDialogFragment extends androidx.fragment.app.DialogFragmen
                 if(task.isSuccessful()){
                     facts.removeDialogFragment();
                 }else{
-                    Toast.makeText(mContext,R.string.arguments_dialog_fragment_toast_argument_fail,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,getResources().getString(R.string.arguments_dialog_fragment_toast_argument_fail),Toast.LENGTH_SHORT).show();
                 }
             }
         });

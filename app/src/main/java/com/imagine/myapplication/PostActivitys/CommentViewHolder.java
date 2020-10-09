@@ -43,12 +43,12 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         date.setText(comm.sentAtString);
         body.setText(comm.body);
         if(comm.userID.equals("anonym")){
-            name.setText("Anonym");
+            name.setText(itemView.getResources().getString(R.string.anonym));
             Glide.with(itemView).load(R.drawable.anonym_user).into(profile);
         }else{
             if(comm.user == null){
                 Glide.with(itemView).load(R.drawable.default_user).into(profile);
-                name.setText("Anonym");
+                name.setText(itemView.getResources().getString(R.string.anonym));
                 this.getUser(comm.userID);
             }else{
                 name.setText(comm.user.name);
@@ -97,13 +97,13 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         });
         System.out.println(this.comment);
         if(comment.userID.equals("anonym")){
-            name.setText("Anonym");
+            name.setText(itemView.getResources().getString(R.string.anonym));
             Glide.with(itemView).load(R.drawable.default_user).into(profile);
         }else{
 
             if(comment.user == null){
                 Glide.with(itemView).load(R.drawable.default_user).into(profile);
-                name.setText("Anonym");
+                name.setText(itemView.getResources().getString(R.string.anonym));
             }else{
                 name.setText(comment.user.name);
                 if(!comment.user.imageURL.equals("")){

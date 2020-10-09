@@ -92,13 +92,13 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     switch(position){
                         case 0:
-                            tab.setText("Themen");
+                            tab.setText(R.string.community_viewpager_activity_topics);
                             return;
                         case 1:
-                            tab.setText("Diskussion");
+                            tab.setText(R.string.community_viewpager_activity_discussion);
                             return;
                         case 2:
-                            tab.setText("Feed");
+                            tab.setText(R.string.community_viewpager_activity_feed);
                             return;
                     }
                 }
@@ -109,10 +109,10 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                     switch(position){
                         case 0:
-                            tab.setText("Themen");
+                            tab.setText(R.string.community_viewpager_activity_discussion);
                             return;
                         case 1:
-                            tab.setText("Feed");
+                            tab.setText(R.string.community_viewpager_activity_feed);
                             return;
                     }
                 }
@@ -140,7 +140,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
             public void onCallback(Boolean bool) {
                 followButton.setEnabled(true);
                 if (bool) {
-                    followButton.setText("Unfollow");
+                    followButton.setText(R.string.follow);
                     community.isBeingFollowed = true;
                 }
             }
@@ -174,16 +174,15 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(auth.getCurrentUser() == null){
-                    Toast.makeText(mContext,"Du musst eingeloggt sein um eine Community " +
-                            "im Feed zu teilen", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext,R.string.community_viewpager_activity_login, Toast.LENGTH_SHORT).show();
                 }else{
                     helper.linkCommunityInFeed(comm, new BooleanCallback() {
                         @Override
                         public void onCallback(Boolean bool) {
                             if(bool){
-                                Toast.makeText(mContext," Community im Feed verlinkt!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext,R.string.community_viewpager_activity_succ, Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(mContext, "Community verlinken fehlgeschlagen!",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, R.string.community_viewpager_activity_fail,Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -203,7 +202,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         updateFollowerCount(community,true);
-                        followButton.setText("Unfollow");
+                        followButton.setText(getResources().getString(R.string.unfollow));
                         community.isBeingFollowed = true;
                     }
                 }
@@ -220,7 +219,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         community.isBeingFollowed = false;
                         updateFollowerCount(community, false);
-                        followButton.setText("Follow");
+                        followButton.setText(getResources().getString(R.string.follow));
                     } else {
                         System.out.println("####Not deleted community");
                     }

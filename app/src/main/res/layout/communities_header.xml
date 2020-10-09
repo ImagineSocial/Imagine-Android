@@ -12,7 +12,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:fontFamily="@font/ibm_medium"
-        android:text="Communities"
+        android:text="@string/communities_header_title"
         android:textColor="@android:color/black"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"

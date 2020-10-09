@@ -50,7 +50,7 @@ public class OwnCommsFragment extends Fragment {
                 }
             },auth.getCurrentUser().getUid());
         }else {
-            Toast.makeText(getContext(),"Logge dich ein um hier deine Communities zu sehen!",Toast.LENGTH_LONG)
+            Toast.makeText(getContext(),getResources().getString(R.string.own_comms_fragment_login),Toast.LENGTH_LONG)
                 .show();
         }
 
