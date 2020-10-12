@@ -1,6 +1,5 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.MenuInflater;
@@ -10,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -18,9 +16,7 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
-import com.imagine.myapplication.PostActivitys.GifPostActivity;
 import com.imagine.myapplication.PostActivitys.LinkPostActivity;
-import com.imagine.myapplication.PostActivitys.MultiPicturePostActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
@@ -28,9 +24,6 @@ import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.post_classes.LinkPost;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import io.github.ponnamkarthik.richlinkpreview.MetaData;
-import io.github.ponnamkarthik.richlinkpreview.ResponseListener;
-import io.github.ponnamkarthik.richlinkpreview.RichPreview;
 
 public class LinkViewHolder extends CustomViewHolder {
     private static final String TAG = "LinkViewHolder";
@@ -124,17 +117,13 @@ public class LinkViewHolder extends CustomViewHolder {
         }
 
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
-        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
-            options.setVisibility(View.VISIBLE);
-            options.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMenu();
-                }
-            });
-        } else {
-            options.setVisibility(View.INVISIBLE);
-        }
+        options.setVisibility(View.VISIBLE);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu();
+            }
+        });
     }
 
     public void setName(final LinkPost post){
@@ -175,11 +164,8 @@ public class LinkViewHolder extends CustomViewHolder {
                     case R.id.remove_post:
                         removePost(post);
                         return true;
-                    case R.id.link_community:
-                        linkCommunity(post);
-                        return true;
-                    case R.id.repost_post:
-                        showReportDialog();
+                    case R.id.report_post:
+                        showReportDialog(post);
                         return true;
                     default:
                         return false;
@@ -187,7 +173,11 @@ public class LinkViewHolder extends CustomViewHolder {
             }
         });
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
+            inflater.inflate(R.menu.feed_post_menu_own, menu.getMenu());
+        }else{
+            inflater.inflate(R.menu.feed_post_menu_foreign, menu.getMenu());
+        }
         menu.show();
     }
 

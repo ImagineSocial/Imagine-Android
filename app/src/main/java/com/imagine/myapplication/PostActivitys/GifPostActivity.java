@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +31,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
@@ -49,6 +46,7 @@ import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.Post_Fragment_Classes.GifPostFragment;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.ReportDialogFragment;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.GIFPost;
 import com.imagine.myapplication.post_classes.Post;
@@ -280,17 +278,13 @@ public class GifPostActivity extends AppCompatActivity {
         });
 
         ImageButton options = findViewById(R.id.feed_menu_button);
-        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
-            options.setVisibility(View.VISIBLE);
-            options.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMenu();
-                }
-            });
-        } else {
-            options.setVisibility(View.INVISIBLE);
-        }
+        options.setVisibility(View.VISIBLE);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu();
+            }
+        });
 
     }
 
@@ -457,17 +451,16 @@ public class GifPostActivity extends AppCompatActivity {
 
     public void showMenu(){
         ImageButton options = findViewById(R.id.feed_menu_button);
-
-        PopupMenu menu = new PopupMenu(this,options);
+        PopupMenu menu = new PopupMenu(this.mContext,options);
         menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.remove_post:
-                        helper.removePost(post);
+                        removePost(post);
                         return true;
-                    case R.id.link_community:
-                        linkCommunity(post);
+                    case R.id.report_post:
+                        showReportDialog();
                         return true;
                     default:
                         return false;
@@ -475,7 +468,11 @@ public class GifPostActivity extends AppCompatActivity {
             }
         });
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
+            inflater.inflate(R.menu.feed_post_menu_own, menu.getMenu());
+        }else{
+            inflater.inflate(R.menu.feed_post_menu_foreign, menu.getMenu());
+        }
         menu.show();
     }
 
@@ -523,6 +520,17 @@ public class GifPostActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void removePost(Post post){
+        Post_Helper helper = new Post_Helper();
+        helper.removePost(post);
+    }
+
+    public void showReportDialog(){
+        ReportDialogFragment frag = new ReportDialogFragment(this);
+        frag.post = this.post;
+        frag.show();
     }
 
 }

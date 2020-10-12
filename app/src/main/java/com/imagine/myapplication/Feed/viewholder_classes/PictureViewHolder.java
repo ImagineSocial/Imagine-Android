@@ -1,6 +1,5 @@
 package com.imagine.myapplication.Feed.viewholder_classes;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -92,17 +91,13 @@ public class PictureViewHolder extends CustomViewHolder {
         }
 
         ImageButton options = itemView.findViewById(R.id.feed_menu_button);
-        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
-            options.setVisibility(View.VISIBLE);
-            options.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMenu();
-                }
-            });
-        } else {
-            options.setVisibility(View.INVISIBLE);
-        }
+        options.setVisibility(View.VISIBLE);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu();
+            }
+        });
     }
 
     public void setName(final PicturePost post){
@@ -143,11 +138,8 @@ public class PictureViewHolder extends CustomViewHolder {
                     case R.id.remove_post:
                         removePost(post);
                         return true;
-                    case R.id.link_community:
-                        linkCommunity(post);
-                        return true;
-                    case R.id.repost_post:
-                        showReportDialog();
+                    case R.id.report_post:
+                        showReportDialog(post);
                         return true;
                     default:
                         return false;
@@ -155,7 +147,11 @@ public class PictureViewHolder extends CustomViewHolder {
             }
         });
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
+            inflater.inflate(R.menu.feed_post_menu_own, menu.getMenu());
+        }else{
+            inflater.inflate(R.menu.feed_post_menu_foreign, menu.getMenu());
+        }
         menu.show();
     }
 

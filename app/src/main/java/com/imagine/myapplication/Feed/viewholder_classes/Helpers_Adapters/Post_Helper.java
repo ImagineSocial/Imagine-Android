@@ -1063,6 +1063,7 @@ public class Post_Helper {
             // Zur Liste hinzufügen
             if(not != null) {
                 not.post = thoughtPost;
+                not.postType = "thought";
                 return;
             }
             if(fromCommunities){
@@ -1123,6 +1124,7 @@ public class Post_Helper {
             // Zur Liste hinzufügen
             if(not != null) {
                 not.post = youTubePost;
+                not.postType = "youTubeVideo";
                 return;
             }
             if(fromCommunities){
@@ -1191,6 +1193,7 @@ public class Post_Helper {
             //Zur Liste hinzufügen
             if(not != null) {
                 not.post = linkPost;
+                not.postType = "link";
                 return;
             }
             if(fromCommunities){
@@ -1251,6 +1254,7 @@ public class Post_Helper {
             //Zur Liste hinzufügen
             if(not != null) {
                 not.post = GIFPost;
+                not.postType = "GIF";
                 return;
             }
             if(fromCommunities){
@@ -1316,6 +1320,7 @@ public class Post_Helper {
             // Zur Liste hinzufügen
             if(not != null) {
                 not.post = picturePost;
+                not.postType = "picture";
                 return;
             }
             if(fromCommunities){
@@ -1382,6 +1387,7 @@ public class Post_Helper {
             //Zur Liste hinzufügen
             if(not != null) {
                 not.post = mPicturePost;
+                not.postType = "multiPicture";
                 return;
             }
             if(fromCommunities){
@@ -1440,6 +1446,7 @@ public class Post_Helper {
             translationPost.setLinkedFactId((String)docSnap.get("linkedFactID"));
             if(not != null) {
                 not.post = translationPost;
+                not.postType = "translation";
                 return;
             }
             if(fromCommunities){
@@ -1489,6 +1496,7 @@ public class Post_Helper {
                     repost_OGpostDocumentID);
             if(not != null) {
                 not.post = repostPost;
+                not.postType = "repost";
                 return;
             }
             if(fromCommunities){
@@ -1546,6 +1554,7 @@ public class Post_Helper {
         // Zur Liste hinzufügen
         if(not != null) {
             not.post = defaultPost;
+            not.postType = "Default";
             return;
         }
         if(fromCommunities){
@@ -1722,7 +1731,6 @@ public class Post_Helper {
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     if(queryDocumentSnapshots != null){
                         List<DocumentSnapshot> nots = queryDocumentSnapshots.getDocuments();
-                        System.out.println("!");
                         for(DocumentSnapshot docSnap: nots){
                             addNotification(docSnap);
                         }
@@ -1860,6 +1868,30 @@ public class Post_Helper {
             });
         }
     }
+
+    public void deleteNotificationsFromPostID(String postID){
+        final FirebaseUser user = auth.getCurrentUser();
+        if(user != null){
+           Query query = db.collection("Users").document(user.getUid()).collection("notifications")
+                    .whereEqualTo("postID",postID);
+           query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        QuerySnapshot result = task.getResult();
+                        List<DocumentSnapshot> docList = result.getDocuments();
+                        for(DocumentSnapshot docSnap : docList){
+                            db.collection("Users").document(user.getUid()).collection("notifications")
+                                    .document(docSnap.getId()).delete();
+                        }
+                    }else{
+                        return;
+                    }
+               }
+           });
+        }else return;
+    }
+
 
     public void linkCommunityInFeed(String title, String description, Community comm, final BooleanCallback callback){
         String userID = auth.getCurrentUser().getUid();

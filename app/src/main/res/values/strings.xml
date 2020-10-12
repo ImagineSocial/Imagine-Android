@@ -33,6 +33,9 @@
     <string name="unfollow">Unfollow</string>
     <string name="anonym">Anonym</string>
     <string name="post_activity_comment_fail">Kommentar konnte nicht hochgeladen werden!</string>
+    <string name="topics">Themen</string>
+    <string name="discussion">Diskussion</string>
+    <string name="feed">Feed</string>
     <string name="imagine_tag">imagine</string>
     //TopTopicFeedCell
     <string name="topTopic_weekly_header_label">Die Themen der Woche:</string>
@@ -100,6 +103,8 @@
     //--leer--
     //Community_Footer_ViewHolder
     //--leer--
+    //Community_Fragment_Adapter
+    //--leer--
     //Community_Items_Adapter
     //--leer--
     //Community_Items_ViewHolder
@@ -127,6 +132,11 @@
     <string name="community_viewpager_activity_topics">Themen:</string>
     <string name="community_viewpager_activity_discussion">Diskussionen:</string>
     <string name="community_viewpager_activity_feed">Feed:</string>
+    <string name="community_viewpager_activity_title">Bitte füge einen Titel hinzu.</string>
+    <string name="community_viewpager_activity_abort">Abbrechen</string>
+    <string name="community_viewpager_activity_title_hint">Titel</string>
+    <string name="community_viewpager_activity_description_hint">Beschreibung</string>
+    <string name="community_viewpager_activity_post">Posten</string>
     //CommunityAddonsFragment
     //--leer--
     //CommunityFactsFragment
@@ -136,8 +146,6 @@
     //CommunityFeedFragment
     //--leer--
     //Recent_Communities_Adapter
-    //--leer--
-    //TestCollectionAdapter
     //--leer--
 
     //--------------------------------------------------------------------------

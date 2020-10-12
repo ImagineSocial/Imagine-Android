@@ -33,7 +33,12 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationViewH
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        holder.bind(nots.get(position));
+        Notification not  = nots.get(position);
+        if(not.type.equals("friend")){
+            return;
+        }else{
+            holder.bind(nots.get(position));
+        }
     }
 
     @Override

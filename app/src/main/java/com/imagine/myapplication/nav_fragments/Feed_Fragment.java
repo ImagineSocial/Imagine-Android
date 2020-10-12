@@ -3,6 +3,7 @@ package com.imagine.myapplication.nav_fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.imagine.myapplication.post_classes.Post;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class Feed_Fragment extends Fragment {
 
@@ -165,4 +167,11 @@ public class Feed_Fragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LocaleList localeList = getResources().getConfiguration().getLocales();
+        Locale locale = getResources().getConfiguration().locale;
+        System.out.println("!");
+    }
 }

@@ -18,4 +18,5 @@ public class Notification {
     public int count = 1;
     public boolean isTopicPost = false;
     public Post post;
+    public String postType;
 }

@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.imagine.myapplication.ImagineCommunity.Information_Activity;
 import com.imagine.myapplication.ImagineCommunity.ProposalActivity;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.SettingsActivity;
 import com.imagine.myapplication.user_classes.UserActivity;
 
 public class Imagine_Community_Fragment extends Fragment implements View.OnClickListener {
@@ -58,7 +59,7 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
                 mContext.startActivity(intent);
                 break;
             case R.id.imagine_community_settings_card:
-                Intent InfoIntent = new Intent(mContext, Information_Activity.class);
+                Intent InfoIntent = new Intent(mContext, SettingsActivity.class);
                 mContext.startActivity(InfoIntent);
                 break;
         }

@@ -287,16 +287,18 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
         helper.removePost(post);
     }
 
+    public void showReportDialog(Post post){
+        ReportDialogFragment frag = new ReportDialogFragment(itemView.getContext());
+        frag.post = post;
+        frag.show();
+    }
+
     public void linkCommunity(Post post){
         Intent intent = new Intent(itemView.getContext(), CommunityPickActivity.class);
         intent.putExtra("postID",post.documentID);
         this.mainActivty.startActivityForResult(intent,5);
     }
 
-    public void showReportDialog(){
-        ReportDialogFragment frag = new ReportDialogFragment(itemView.getContext());
-        frag.show();
-    }
 
     public void repostPost(Post post){
         System.out.println("!");

@@ -3,6 +3,7 @@ package com.imagine.myapplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadLocale();
         this.mContext = this;
         mainActivity = this;
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -185,6 +188,7 @@ public class MainActivity extends AppCompatActivity{
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     mContext.startActivity(intent);
                 }
+
             });
         }
 
@@ -267,7 +271,6 @@ public class MainActivity extends AppCompatActivity{
         }
         selectedFragment = feed_fragment;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-
         feed_fragment.refreshFeed(null);
     }
 
@@ -453,6 +456,37 @@ public class MainActivity extends AppCompatActivity{
             });
         }
     }
+
+
+    public void loadLocale(){
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
+    }
+
+    public void changeLang(String lang) {
+        Locale myLocale;
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void saveLocale(String lang) {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
 
     public static void resetFragmentsAfterLogin(){
         feed_fragment = null;

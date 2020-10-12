@@ -6,7 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
+import com.imagine.myapplication.post_classes.Post;
+
 public class ReportDialogFragment extends AlertDialog {
+
+    public Post post;
 
     public ReportDialogFragment(@NonNull Context context) {
         super(context);

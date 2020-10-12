@@ -44,6 +44,7 @@ import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.ReportDialogFragment;
 import com.imagine.myapplication.VoteHelper;
 import com.imagine.myapplication.post_classes.PicturePost;
 import com.imagine.myapplication.post_classes.Post;
@@ -260,17 +261,13 @@ public class PicturePostActivity extends AppCompatActivity {
         });
 
         ImageButton options = findViewById(R.id.feed_menu_button);
-        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
-            options.setVisibility(View.VISIBLE);
-            options.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showMenu();
-                }
-            });
-        } else {
-            options.setVisibility(View.INVISIBLE);
-        }
+        options.setVisibility(View.VISIBLE);
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenu();
+            }
+        });
 
     }
 
@@ -432,10 +429,10 @@ public class PicturePostActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.remove_post:
-                        helper.removePost(post);
+                        removePost(post);
                         return true;
-                    case R.id.link_community:
-                        linkCommunity(post);
+                    case R.id.report_post:
+                        showReportDialog();
                         return true;
                     default:
                         return false;
@@ -443,7 +440,11 @@ public class PicturePostActivity extends AppCompatActivity {
             }
         });
         MenuInflater inflater = menu.getMenuInflater();
-        inflater.inflate(R.menu.feed_post_menu, menu.getMenu());
+        if(auth.getCurrentUser()!= null&& post.originalPoster.equals(auth.getCurrentUser().getUid())){
+            inflater.inflate(R.menu.feed_post_menu_own, menu.getMenu());
+        }else{
+            inflater.inflate(R.menu.feed_post_menu_foreign, menu.getMenu());
+        }
         menu.show();
     }
 
@@ -505,5 +506,16 @@ public class PicturePostActivity extends AppCompatActivity {
                 mContext.startActivity(intent);
             }
         });
+    }
+
+    public void removePost(Post post){
+        Post_Helper helper = new Post_Helper();
+        helper.removePost(post);
+    }
+
+    public void showReportDialog(){
+        ReportDialogFragment frag = new ReportDialogFragment(this);
+        frag.post = this.post;
+        frag.show();
     }
 }
