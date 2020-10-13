@@ -69,8 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(langPref, lang);
         editor.commit();
-        Intent refresh = new Intent(this, SettingsActivity.class);
+        MainActivity.languageChange = true;
         finish();
-        startActivity(refresh);
     }
 }

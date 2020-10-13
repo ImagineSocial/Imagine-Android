@@ -1,5 +1,7 @@
 package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
+import android.content.Context;
+import android.os.LocaleList;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -51,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Post_Helper {
@@ -73,11 +76,29 @@ public class Post_Helper {
     public String userID;
     public int count;
     public int size;
+    public Context mContext;
 
     public  void getPostsForMainFeed( final FirebaseCallback callback){
         // fetches the initial posts for the main feed
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query postsRef;
+
+        switch(locale.getLanguage()){
+            case "de":
+                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+                break;
+            case "en":
+                postsRef = db.collection("Data").document("en").collection("posts")
+                    .orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+                break;
+            default:
+                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+                break;
+        }
+
         firstFetch = true;
-        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -251,7 +272,22 @@ public class Post_Helper {
         // whole postLists is returned
         moreFetch = true;
         lastSnapTimeSaver = lastSnapTime;
-        Query postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(15);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query postsRef;
+
+        switch(locale.getLanguage()){
+            case "de":
+                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(15);
+                break;
+            case "en":
+                postsRef = db.collection("Data").document("en").collection("posts")
+                        .orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(15);
+                break;
+            default:
+                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+                break;
+        }
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

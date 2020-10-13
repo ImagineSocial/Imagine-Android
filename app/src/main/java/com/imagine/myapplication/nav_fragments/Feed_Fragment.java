@@ -47,6 +47,7 @@ public class Feed_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the post for the feed
         super.onViewCreated(view, savedInstanceState);
+        helper.mContext = this.getContext();
         final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeMainFeed);
         if(postList.size() == 0){
             swipe.setRefreshing(true);
@@ -172,6 +173,5 @@ public class Feed_Fragment extends Fragment {
         super.onResume();
         LocaleList localeList = getResources().getConfiguration().getLocales();
         Locale locale = getResources().getConfiguration().locale;
-        System.out.println("!");
     }
 }

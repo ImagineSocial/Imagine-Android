@@ -67,6 +67,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.imagine.myapplication.R.drawable.default_user;
 
 public class MainActivity extends AppCompatActivity{
+
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public DrawerLayout drawer;
@@ -85,6 +86,7 @@ public class MainActivity extends AppCompatActivity{
     public User userObj;
     public View header;
     public Gson gson = new Gson();
+    public static boolean languageChange = false;
 
     private static final String TAG = "MainActivity";
     @Override
@@ -134,6 +136,10 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onResume() {
         // Reloads the UserViews when resumed to main activity
+        if(MainActivity.languageChange){
+            this.resetAfterLanguageChange();
+        }
+
         super.onResume();
         if(drawer != null){
             drawer.closeDrawer(GravityCompat.START);
@@ -495,4 +501,12 @@ public class MainActivity extends AppCompatActivity{
         comms_fragment = null;
         infos_fragment = null;
     }
+
+    public void resetAfterLanguageChange(){
+        MainActivity.languageChange = false;
+        Intent intent = new Intent(this, MainActivity.class);
+        finish();
+        startActivity(intent);
+    }
+
 }
