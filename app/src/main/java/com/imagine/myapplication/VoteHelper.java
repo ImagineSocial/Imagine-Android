@@ -104,10 +104,6 @@ public class VoteHelper {
             data.put("title", post.title);
             data.put("isTopicPost",post.isTopicPost);
 
-            if (post.isTopicPost) {
-                data.put("isTopicPost", true);
-            }
-
             ref.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

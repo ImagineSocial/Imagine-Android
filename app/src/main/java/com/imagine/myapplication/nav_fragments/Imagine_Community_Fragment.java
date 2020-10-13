@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.imagine.myapplication.ImagineCommunity.Imagine_Fund_Activity;
 import com.imagine.myapplication.ImagineCommunity.Information_Activity;
 import com.imagine.myapplication.ImagineCommunity.ProposalActivity;
 import com.imagine.myapplication.R;
@@ -52,7 +53,8 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
                 //gotobugsview
                 break;
             case R.id.imagine_community_imagineFund_card:
-                //gotofunc
+                Intent fundIntent = new Intent(mContext, Imagine_Fund_Activity.class);
+                mContext.startActivity(fundIntent);
                 break;
             case R.id.imagine_community_proposal_card:
                 Intent intent = new Intent(mContext, ProposalActivity.class);

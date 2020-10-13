@@ -12,6 +12,43 @@
         android:background="#FFF">
 
         <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/ibm_medium"
+            android:text="@string/setting_and_impressum_activity_settings"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/ibm_regular"
+            android:text="@string/setting_and_impressum_activity_language"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/setting_german_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/setting_german_button" />
+
+        <Button
+            android:id="@+id/setting_german_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/ibm_medium"
+            android:text="@string/setting_and_impressum_activity_german"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/setting_english_button"
+            app:layout_constraintTop_toTopOf="@+id/setting_english_button" />
+
+        <TextView
             android:id="@+id/textView12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -69,16 +106,24 @@
             android:layout_width="160dp"
             android:layout_height="35dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
             android:alpha="0.5"
             android:background="@drawable/button_border"
             android:enabled="false"
             android:text="@string/setting_and_impressum_activity_delete"
             android:textAllCaps="false"
             android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goToWebsiteButton" />
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/setting_english_button" />
 
+        <View
+            android:id="@+id/view3"
+            style="@style/Divider"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goToWebsiteButton" />
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
@@ -146,7 +191,7 @@
             android:id="@+id/goToWebsiteButton"
             android:layout_width="0dp"
             android:layout_height="35dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/button_border"
             android:text="@string/setting_and_impressum_activity_web"
             android:textAllCaps="false"
@@ -154,6 +199,18 @@
             app:layout_constraintEnd_toEndOf="@+id/textView11"
             app:layout_constraintStart_toStartOf="@+id/delete_account_button"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <Button
+            android:id="@+id/setting_english_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/button_border"
+            android:fontFamily="@font/ibm_medium"
+            android:text="@string/setting_and_impressum_activity_english"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@+id/textView11"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

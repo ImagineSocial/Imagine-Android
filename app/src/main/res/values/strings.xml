@@ -602,6 +602,10 @@
     <string name="setting_and_impressum_activity_data">Unsere Datenschutzerklärung:</string>
     <string name="setting_and_impressum_activity_tv10">Ein wirklich soziales Netzwerk: demokratisch, transparent und unterhaltend. Ohne Platz für Manipulation und Datenmissbrauch.</string>
     <string name="setting_and_impressum_activity_web">https://imagine.social</string>
+    <string name="setting_and_impressum_activity_language">Sprache:</string>
+    <string name="setting_and_impressum_activity_german">Deutsch</string>
+    <string name="setting_and_impressum_activity_english">Englisch</string>
+    <string name="setting_and_impressum_activity_settings">Einstellungen:</string>
     //side_menu
     <string name="side_menu_name">Name</string>
     <string name="side_menu_notis">Benachrichtigungen:</string>
