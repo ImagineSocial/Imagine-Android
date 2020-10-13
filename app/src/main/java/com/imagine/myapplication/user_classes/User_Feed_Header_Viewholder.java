@@ -104,7 +104,7 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
         // when the picture is changed
         FirebaseUser user = auth.getCurrentUser();
         String imageURL = user.getPhotoUrl().toString();
-        CircleImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
+        ImageView profileImageView = itemView.findViewById(R.id.userHeaderProfileImageView);
         if (!imageURL.equals("")) {
             Glide.with(itemView).load(imageURL).into(profileImageView);
         }
