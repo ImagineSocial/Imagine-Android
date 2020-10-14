@@ -66,7 +66,7 @@
     //BooleanCallback
     //--leer--
     //Communites_Header
-    <string name="communities_header_header_text">Zeile 69 values-de</string>
+    <string name="communities_header_header_text">Communities</string>
     //Communities_Helper
     //---System.out´s hab ich so gelassen
     //Communities_Sub_Header

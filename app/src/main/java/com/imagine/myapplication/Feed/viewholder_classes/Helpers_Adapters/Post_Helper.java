@@ -758,7 +758,9 @@ public class Post_Helper {
         } else {
             data.put("userID",user.getUid());
         }
-
+        if (post.isTopicPost) {
+            data.put("isTopicPost", true);
+        }
         final Comment comm = new Comment();
         comm.body = body;
         //comm.id = docSnap.getLong("is");

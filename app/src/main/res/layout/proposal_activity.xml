@@ -147,7 +147,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/proposal_send_button"
             android:layout_width="75dp"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
@@ -169,7 +169,7 @@
             android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            app:layout_constraintTop_toBottomOf="@+id/proposal_send_button" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
