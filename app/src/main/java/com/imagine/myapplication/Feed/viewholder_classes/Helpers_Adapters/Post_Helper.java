@@ -373,7 +373,12 @@ public class Post_Helper {
                     String typeOne = queryDocumentSnapshot.getString("type") == null ?
                             "feedPost"
                             : queryDocumentSnapshot.getString("type") ;
-                    final boolean isTopicPost = queryDocumentSnapshot.getBoolean("isTopicPost") != null;
+                    final boolean isTopicPost;
+                    if(typeOne.equals("feedPost")){
+                        isTopicPost = false;
+                    }else{
+                        isTopicPost = true;
+                    }
                     final DocumentReference docRef = typeOne.equals("topicPost") ?
                             db.collection("TopicPosts").document(postID) :
                             db.collection("Posts").document(postID);

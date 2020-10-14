@@ -1054,7 +1054,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);
         if(this.comm != null && this.new_post_activity != null){
-            data.put("type", true);
+            data.put("type", "topicPost");
         }
         communityRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -1078,7 +1078,7 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);
         if(this.comm != null && this.new_post_activity != null){
-            data.put("type", true);
+            data.put("isTopicPost", true);
         }
         userRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
