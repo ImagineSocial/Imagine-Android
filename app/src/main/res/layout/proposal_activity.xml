@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:fillViewport="true"
     android:focusable="true"
+    android:windowSoftInputMode="stateHidden"
     android:focusableInTouchMode="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -138,6 +139,7 @@
             app:layout_constraintTop_toBottomOf="@+id/proposal_header_label" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/proposal_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginTop="10dp"

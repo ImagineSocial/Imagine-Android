@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,6 +45,8 @@ public class ProposalActivity extends AppCompatActivity {
         setContentView(R.layout.proposal_activity);
         this.mContext = this;
 
+        getWindow().setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //TO tell the textinput view to shut up when starting
         getProposals();
 
         Button sendButton = findViewById(R.id.proposal_send_button);
@@ -63,7 +67,7 @@ public class ProposalActivity extends AppCompatActivity {
         // fetches the comments for the postActivitys
         final ArrayList<Proposal> proposalArray = new ArrayList<>();
 
-        Query proposalRef = db.collection("Proposals").orderBy("supporter", Query.Direction.DESCENDING);
+        Query proposalRef = db.collection("Campaigns").orderBy("supporter", Query.Direction.DESCENDING);
         proposalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -89,12 +93,19 @@ public class ProposalActivity extends AppCompatActivity {
                         proposalArray.add(proposal);
                     }
 
-                    //Sette recyclerview
+                    System.out.println("###fodnenendn"+proposalArray);
+                    setRecyclerView(proposalArray);
                 }else if(task.isCanceled()){
                     System.out.println("Task Failed!");
                 }
             }
         });
+    }
+
+    public void setRecyclerView(ArrayList<Proposal> proposals) {
+        RecyclerView recyclerView = findViewById(R.id.proposal_recyclerView);
+        ProposalAdapter adapter = new ProposalAdapter(proposals, this);
+        recyclerView.setAdapter(adapter);
     }
 
     public void sendTapped() {
