@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/ibm_semi_bold"
             android:text="@string/proposal_activity_header"
@@ -128,6 +128,14 @@
             app:layout_constraintStart_toStartOf="@+id/proposal_title_label"
             app:layout_constraintTop_toBottomOf="@+id/proposal_idea_label" />
 
+        <View
+            android:id="@+id/dividerView3"
+            style="@style/Divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintBottom_toTopOf="@+id/proposal_send_button" />
+
         <TextView
             android:id="@+id/textView21"
             android:layout_width="0dp"
@@ -165,7 +173,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/ibm_regular"
             android:text="@string/proposal_activity_recents"
             android:textColor="@android:color/black"

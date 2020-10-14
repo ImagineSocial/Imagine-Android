@@ -40,7 +40,6 @@ public class ProposalAdapter extends RecyclerView.Adapter<ProposalViewHolder> {
 
     @Override
     public int getItemCount() {
-        System.out.println("##Return size: "+proposalList.size());
         return proposalList.size();
     }
 }

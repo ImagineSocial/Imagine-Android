@@ -1,6 +1,7 @@
 package com.imagine.myapplication.ImagineCommunity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,7 +50,13 @@ public class ProposalActivity extends AppCompatActivity {
 
         getWindow().setSoftInputMode(
             WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //TO tell the textinput view to shut up when starting
-        getProposals();
+
+        getProposals(false, new ProposalCallback() {
+            @Override
+            public void onCallback(ArrayList<Proposal> proposals) {
+                setRecyclerView(proposals);
+            }
+        });
 
         Button sendButton = findViewById(R.id.proposal_send_button);
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -63,11 +72,15 @@ public class ProposalActivity extends AppCompatActivity {
         });
     }
 
-    public void getProposals(){
+    public void getProposals(Boolean justTenCampaigns, final ProposalCallback callback){
         // fetches the comments for the postActivitys
         final ArrayList<Proposal> proposalArray = new ArrayList<>();
 
         Query proposalRef = db.collection("Campaigns").orderBy("supporter", Query.Direction.DESCENDING);
+        if (justTenCampaigns) {
+            proposalRef = proposalRef.limit(10);
+        }
+
         proposalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -93,8 +106,7 @@ public class ProposalActivity extends AppCompatActivity {
                         proposalArray.add(proposal);
                     }
 
-                    System.out.println("###fodnenendn"+proposalArray);
-                    setRecyclerView(proposalArray);
+                    callback.onCallback(proposalArray);
                 }else if(task.isCanceled()){
                     System.out.println("Task Failed!");
                 }
@@ -105,6 +117,7 @@ public class ProposalActivity extends AppCompatActivity {
     public void setRecyclerView(ArrayList<Proposal> proposals) {
         RecyclerView recyclerView = findViewById(R.id.proposal_recyclerView);
         ProposalAdapter adapter = new ProposalAdapter(proposals, this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
@@ -139,13 +152,32 @@ public class ProposalActivity extends AppCompatActivity {
         data.put("supporter", 0);
         data.put("opposition", 0);
 
+        final Button sendButton = findViewById(R.id.proposal_send_button);
+        sendButton.setEnabled(false);
 
         proposalRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("Thank you for your input!")
+                            .setMessage("Together we will build the future!")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    EditText title =  findViewById(R.id.proposal_title_textEdit);
+                                    EditText summary =  findViewById(R.id.proposal_summary_textEdit);
+                                    EditText description =  findViewById(R.id.proposal_idea_textEdit);
+                                    title.setText("");
+                                    summary.setText("");
+                                    description.setText("");
+
+                                    sendButton.setEnabled(true);
+                                }
+                            })
+                            .show();
                     System.out.println("Successfully added proposal");
                 }else{
+                    sendButton.setEnabled(true);
                     System.out.println("Trying to add proposal was not successfull: ");
                 }
             }

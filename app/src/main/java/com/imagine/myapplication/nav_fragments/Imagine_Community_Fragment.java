@@ -6,19 +6,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.ImagineCommunity.Imagine_Fund_Activity;
-import com.imagine.myapplication.ImagineCommunity.Information_Activity;
+import com.imagine.myapplication.ImagineCommunity.Proposal;
 import com.imagine.myapplication.ImagineCommunity.ProposalActivity;
+import com.imagine.myapplication.ImagineCommunity.ProposalAdapter;
+import com.imagine.myapplication.ImagineCommunity.ProposalCallback;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.SettingsActivity;
-import com.imagine.myapplication.user_classes.UserActivity;
+
+import java.util.ArrayList;
 
 public class Imagine_Community_Fragment extends Fragment implements View.OnClickListener {
 
@@ -33,6 +37,7 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.mContext = view.getContext();
 
         CardView settingCard = view.findViewById(R.id.imagine_community_settings_card);
         settingCard.setOnClickListener(this);
@@ -42,8 +47,21 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
         bugCard.setOnClickListener(this);
         CardView fundCard = view.findViewById(R.id.imagine_community_imagineFund_card);
         fundCard.setOnClickListener(this);
+        RecyclerView recyclerView = view.findViewById(R.id.imagine_community_recyclerview);
 
-        this.mContext = view.getContext();
+        getCampaigns(recyclerView);
+    }
+
+    public void getCampaigns(final RecyclerView recyclerView) {
+        ProposalActivity proposalActivity = new ProposalActivity();
+        proposalActivity.getProposals(true, new ProposalCallback() {
+            @Override
+            public void onCallback(ArrayList<Proposal> proposals) {
+                ProposalAdapter adapter = new ProposalAdapter(proposals, mContext);
+                recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
 
     @Override
