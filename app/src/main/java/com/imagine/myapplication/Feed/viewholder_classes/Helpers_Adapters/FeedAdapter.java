@@ -59,17 +59,23 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     public void refreshPosts(ArrayList<Post> posts){
         postList = posts;
     }
+
+
     @Override
     public int getItemViewType(int position) {
+
         if(position == 0 && loadHeader){
             return R.layout.post_top_header;
         }
+
         String type;
+
         if(loadHeader){
             type = postList.get(position-1).type;
         }else{
             type = postList.get(position).type;
         }
+
         switch(type){
             case "picture":
                 return R.layout.post_picture;

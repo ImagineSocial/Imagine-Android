@@ -39,41 +39,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/report_exp">
 
-        <CheckBox
-            android:id="@+id/hate_check"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/report_dialog_fragment_hate" />
-
-        <CheckBox
-            android:id="@+id/racism_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/report_dialog_fragment_racism" />
-
-        <CheckBox
-            android:id="@+id/spam_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/report_dialog_fragment_spam" />
-
-        <CheckBox
-            android:id="@+id/fakenews_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/report_dialog_fragment_fake" />
-
-        <CheckBox
-            android:id="@+id/unap_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/report_dialog_fragment_unapp" />
-
-        <CheckBox
-            android:id="@+id/other_check"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/report_dialog_fragment_else" />
+            android:orientation="vertical">
+            <RadioButton
+                android:id="@+id/hate_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_dialog_fragment_hate"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/racism_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_dialog_fragment_racism"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton
+                android:id="@+id/spam_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_dialog_fragment_spam"/>
+            <RadioButton
+                android:id="@+id/fake_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_dialog_fragment_fake"/>
+            <RadioButton
+                android:id="@+id/unap_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_dialog_fragment_unapp"/>
+            <RadioButton
+                android:id="@+id/else_radio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/report_dialog_fragment_else"/>
+        </RadioGroup>
 
     </LinearLayout>
 

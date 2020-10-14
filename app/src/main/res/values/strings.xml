@@ -594,6 +594,10 @@
     <string name="report_dialog_fragment_else">Sonstiges</string>
     <string name="report_dialog_fragment_report">Melden</string>
     <string name="report_dialog_fragment_note">Anmerkungen:</string>
+    <string name="report_dialog_fragment_toast">Bitte wählen Sie einen Grund für Ihre Meldung aus!</string>
+    <string name="report_dialog_fragment_login">Sie müssen eingeloggt sein um einen Post zu melden!</string>
+    <string name="report_dialog_fragment_fail">Meldung konnte nicht abgesendet werden!</string>
+    <string name="report_dialog_fragment_succ">Post wurde erfolgreich gemeldet!</string>
     //setting_and_impressum_activity
     <string name="setting_and_impressum_activity_tv12">Bei Fragen oder Anregungen, freuen wir uns von dir zu hören. Du erreichst uns über unsere Social Media Kanäle, GitHub oder per Mail.</string>
     <string name="setting_and_impressum_activity_welcome">Willkommen bei Imagine!</string>
