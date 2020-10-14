@@ -108,7 +108,11 @@ public class Post_Helper {
                         lastSnapTime = lastSnap.getTimestamp("createTime");
                     }
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
-                        switch((String)docSnap.get("type")){
+                        String report = docSnap.getString("report");
+                        if(report != null){
+                            if(report.equals("blocked"))continue;
+                        }
+                        switch(docSnap.getString("type")){
                             case "thought":
                                 addThoughtPost(docSnap,false,false, false,null);
                                 break;
@@ -298,6 +302,10 @@ public class Post_Helper {
                     }
                     System.out.println(queryDocumentSnapshots.size());
                     for(QueryDocumentSnapshot docSnap : queryDocumentSnapshots){
+                        String report = docSnap.getString("report");
+                        if(report != null){
+                            if(report.equals("blocked"))continue;
+                        }
                         switch((String)docSnap.get("type")){
                             case "thought":
                                 addThoughtPost(docSnap,false,false,false,null);
@@ -366,7 +374,7 @@ public class Post_Helper {
                             "feedPost"
                             : queryDocumentSnapshot.getString("type") ;
                     final boolean isTopicPost = queryDocumentSnapshot.getBoolean("isTopicPost") != null;
-                    DocumentReference docRef = typeOne.equals("topicPost") ?
+                    final DocumentReference docRef = typeOne.equals("topicPost") ?
                             db.collection("TopicPosts").document(postID) :
                             db.collection("Posts").document(postID);
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -381,6 +389,14 @@ public class Post_Helper {
                                     return;
                                 }
                                 System.out.println(id+"   "+type);
+                                String report = documentSnapshot.getString("report");
+                                if(report != null){
+                                    if(report.equals("blocked")){
+                                        count++;
+                                        if(count == size)callback.onCallback(postList);
+                                        return;
+                                    }
+                                }
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
                                         addThoughtPost(documentSnapshot,isTopicPost,false,false,null);
@@ -465,6 +481,14 @@ public class Post_Helper {
                                     return;
                                 }
                                 System.out.println(id+"   "+type);
+                                String report = documentSnapshot.getString("report");
+                                if(report != null){
+                                    if(report.equals("blocked")){
+                                        count++;
+                                        if(count == size)callback.onCallback(postList);
+                                        return;
+                                    }
+                                }
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
                                         addThoughtPost(documentSnapshot,isTopicPost,false,false,null);
@@ -556,6 +580,14 @@ public class Post_Helper {
                                     };
                                     return;
                                 }
+                                String report = documentSnapshot.getString("report");
+                                if(report != null){
+                                    if(report.equals("blocked")){
+                                        count++;
+                                        if(count == size)callback.onCallback(postList);
+                                        return;
+                                    }
+                                }
                                 System.out.println(id+"   "+type);
                                 switch(documentSnapshot.getString("type")){
                                     case "thought":
@@ -646,6 +678,14 @@ public class Post_Helper {
                                 if(type == null ){
                                     count++;
                                     return;
+                                }
+                                String report = documentSnapshot.getString("report");
+                                if(report != null){
+                                    if(report.equals("blocked")){
+                                        count++;
+                                        if(count == size)callback.onCallback(postList);
+                                        return;
+                                    }
                                 }
                                 System.out.println(id+"   "+type);
                                 switch(documentSnapshot.getString("type")){
@@ -1634,13 +1674,13 @@ public class Post_Helper {
             }
         });
         if(post.linkedFactId == null || post.linkedFactId.equals("")){
-            postRef = db.collection("Posts").document(post.documentID);
-            postRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    System.out.println("Löschen erfolgreich!");
-                }
-            });
+            //postRef = db.collection("Posts").document(post.documentID);
+            //postRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            //    @Override
+            //public void onComplete(@NonNull Task<Void> task) {
+            //        System.out.println("Löschen erfolgreich!");
+            //        }
+            //});
         }else{
             DocumentReference commRef = db.collection("Facts").document(post.linkedFactId)
                     .collection("posts").document(post.documentID);
@@ -1652,18 +1692,15 @@ public class Post_Helper {
             });
         }
 
-
         if(post instanceof PicturePost){
-
                 String pathString = post.documentID+".png";
-                StorageReference pictureRef = storage.child("postPictures").child(pathString);
-                pictureRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        System.out.println("Löschen erfolgreich!");
+                        StorageReference pictureRef = storage.child("postPictures").child(pathString);
+                        pictureRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                System.out.println("Löschen erfolgreich!");
                     }
                 });
-
             }
         if (post instanceof MultiPicturePost){
 
@@ -1680,6 +1717,8 @@ public class Post_Helper {
                 }
             }
 
+        db.collection("Users").document(auth.getCurrentUser().getUid()).collection("posts")
+                .document(post.documentID).delete();
     }
 
 
