@@ -1652,14 +1652,30 @@ public class Post_Helper {
     }
 
     public void addCommPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem, boolean fromCommunities, Notification not){
-        CommunityPost post = new CommunityPost();
-        post.type = "comm";
-        post.createTimestamp = docSnap.getTimestamp("createTime");
-        if(not != null) {
-            not.post = post;
-            return;
+        try{
+            CommunityPost post = new CommunityPost();
+            post.type = docSnap.getString("type");
+            post.createTimestamp = docSnap.getTimestamp("createTime");
+            post.description = docSnap.getString("description");
+            post.haCount = docSnap.getLong("haCount");
+            post.linkedFactId = docSnap.getString("linkedFactID");
+            post.niceCount = docSnap.getLong("niceCount");
+            post.originalPoster = docSnap.getString("originalPoster");
+            post.report = docSnap.getString("report");
+            post.thanksCount = docSnap.getLong("thanksCount");
+            post.title = docSnap.getString("title");
+            post.wowCount = docSnap.getLong("wowCount");
+            Long timeNow = new Date().getTime();
+            String dateString = convertLongDateToAgoString(post.createTimestamp.toDate(),timeNow);
+            post.createTime = dateString;
+            if(not != null) {
+                not.post = post;
+                return;
+            }
+            postList.add(post);
+        }catch(Exception e){
+            addDefaulPost(docSnap,isTopicPost,isAddonItem,fromCommunities,not);
         }
-        postList.add(post);
     }
 
 

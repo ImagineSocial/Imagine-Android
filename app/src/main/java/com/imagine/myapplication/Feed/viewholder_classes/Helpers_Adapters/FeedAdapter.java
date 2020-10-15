@@ -93,7 +93,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                 return R.layout.post_translation;
             case "repost":
                 return R.layout.post_repost;
-            case "comm":
+            case "singleTopic":
                 return R.layout.post_topic;
             default:
                 return R.layout.post_default;
@@ -148,7 +148,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                 repostViewHolder.mainActivty = this.mainActivity;
                 return repostViewHolder;
             case R.layout.post_topic:
-                view = inflater.inflate(R.layout.post_community,parent,false);
+                view = inflater.inflate(R.layout.post_topic,parent,false);
                 CommunityPostViewHolder communityPostViewHolder = new CommunityPostViewHolder(view);
                 communityPostViewHolder.mainActivty = this.mainActivity;
                 return communityPostViewHolder;
