@@ -2,10 +2,12 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -48,6 +50,9 @@ public class CommunityPostViewHolder extends CustomViewHolder {
         TextView commentCountLabel = itemView.findViewById(R.id.commentCountLabel);
         ImageView profilePicture_imageView = itemView.findViewById(
                 R.id.profile_picture_imageView);
+
+        CardView cardView = itemView.findViewById(R.id.addOn_singleCommunity_cardView);
+        cardView.setCardElevation(0);
 
         if(post.originalPoster.equals("anonym")){
             name_textView.setText(itemView.getResources().getString(R.string.anonym));

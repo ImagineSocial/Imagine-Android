@@ -106,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@+id/profile_picture_imageView" />
 
         <include
-            android:id="@+id/includeTopic"
+            android:id="@+id/addOn_singleCommunity_cardView"
             layout="@layout/community_addons_community_viewholder"
             android:layout_width="0dp"
             android:layout_height="400dp"
@@ -128,7 +128,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/includeTopic">
+            app:layout_constraintTop_toBottomOf="@+id/addOn_singleCommunity_cardView">
 
             <ImageButton
                 android:id="@+id/thanks_button"
@@ -230,7 +230,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/includeTopic">
+            app:layout_constraintTop_toBottomOf="@+id/addOn_singleCommunity_cardView">
 
             <TextView
                 android:id="@+id/thanks_count_textView"
