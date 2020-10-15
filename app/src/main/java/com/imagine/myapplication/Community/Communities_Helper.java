@@ -1,5 +1,8 @@
 package com.imagine.myapplication.Community;
 
+import android.content.Context;
+import android.os.LocaleList;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,6 +21,7 @@ import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Communities_Helper {
@@ -28,6 +32,7 @@ public class Communities_Helper {
     public ArrayList<Community> factsList = new ArrayList<>();
     public DocumentSnapshot lastTopic = null;
     public DocumentSnapshot lastFact = null;
+    public Context mContext;
 
     public void getCommunities(final CommunityCallback callback, String userID){
         final ArrayList<Community> topics = new ArrayList<>();        // Topic-Communities Array
@@ -58,10 +63,31 @@ public class Communities_Helper {
         }
 
         // Fetching the Communities
-        Query topicQuery = db.collection("Facts")
-                .whereEqualTo("displayOption","topic")
-                .orderBy("popularity", Query.Direction.DESCENDING)
-                .limit(8);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        Query topicQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                topicQuery = db.collection("Facts")
+                        .whereEqualTo("displayOption","topic")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .limit(8);
+                break;
+            case "en":
+                topicQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .whereEqualTo("displayOption","topic")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .limit(8);
+                break;
+            default:
+                topicQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .whereEqualTo("displayOption","topic")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .limit(8);
+                break;
+        }
         topicQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -82,10 +108,30 @@ public class Communities_Helper {
             }
         });
         //Fetching the Topics
-        Query factsQuery = db.collection("Facts")
-                .whereEqualTo("displayOption","fact")
-                .orderBy("popularity", Query.Direction.DESCENDING)
-                .limit(8);
+
+        Query factsQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                factsQuery = db.collection("Facts")
+                        .whereEqualTo("displayOption","facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .limit(8);
+                break;
+            case "en":
+                factsQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .whereEqualTo("displayOption","facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .limit(8);
+                break;
+            default:
+                factsQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .whereEqualTo("displayOption","facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .limit(8);
+                break;
+        }
         factsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -118,7 +164,28 @@ public class Communities_Helper {
                         final int size = docMap.size();
                         final int[] count = {0};
                         for(DocumentSnapshot docSnap : docMap){
-                            DocumentReference docRef = db.collection("Facts").document(docSnap.getId());
+                            DocumentReference docRef;
+                            String commLang = docSnap.getString("language");
+                            String selectLang = locale.getLanguage();
+                            if(commLang == null){
+                                if(selectLang.equals("de")){
+                                    docRef = db.collection("Facts").document(docSnap.getId());
+                                }
+                                else{
+                                    count[0]++;
+                                    if(count[0] == size){
+                                        if(topicFinished[0] && factsFinished[0]){
+                                            addFooter(topics,facts,ownComms,callback);
+                                        }else{
+                                            ownCommsFinished[0] = true;
+                                        }
+                                    }
+                                    continue;
+                                }
+                            }else{
+                                docRef = db.collection("Data").document("en")
+                                        .collection("topics").document(docSnap.getId());
+                            }
                             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -368,6 +435,10 @@ public class Communities_Helper {
                     final int size = docMap.size();
                     final int[] count = {0};
                     for(DocumentSnapshot docSnap : docMap){
+                        String commLang = docSnap.getString("language");
+                        if(commLang == null){
+
+                        }
                         DocumentReference docRef = db.collection("Facts").document(docSnap.getId());
                         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override

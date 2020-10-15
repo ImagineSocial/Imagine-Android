@@ -72,7 +72,7 @@ public class Communities_Fragment extends Fragment{
         if (currentUser != null) {
             userID = currentUser.getUid();
         }
-
+        helper.mContext = getContext();
         if(this.commList.size() == 0){
             helper.getCommunities(new CommunityCallback() {
                 @Override

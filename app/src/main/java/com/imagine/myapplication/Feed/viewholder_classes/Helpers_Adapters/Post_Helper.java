@@ -1654,6 +1654,7 @@ public class Post_Helper {
     public void addCommPost(DocumentSnapshot docSnap,boolean isTopicPost,boolean isAddonItem, boolean fromCommunities, Notification not){
         try{
             CommunityPost post = new CommunityPost();
+            post.documentID = docSnap.getId();
             post.type = docSnap.getString("type");
             post.createTimestamp = docSnap.getTimestamp("createTime");
             post.description = docSnap.getString("description");
@@ -1665,7 +1666,11 @@ public class Post_Helper {
             post.thanksCount = docSnap.getLong("thanksCount");
             post.title = docSnap.getString("title");
             post.wowCount = docSnap.getLong("wowCount");
-            Long timeNow = new Date().getTime();
+            long timeNow = new Date().getTime();
+            Double commentCount = docSnap.getDouble("commentCount");
+            if(commentCount != null){
+                post.commentCount = commentCount.intValue();
+            }
             String dateString = convertLongDateToAgoString(post.createTimestamp.toDate(),timeNow);
             post.createTime = dateString;
             if(not != null) {

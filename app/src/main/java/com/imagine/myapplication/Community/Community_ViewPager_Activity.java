@@ -183,8 +183,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                     LinearLayout layout = new LinearLayout(mContext);
                     layout.setOrientation(LinearLayout.VERTICAL);
-
-// Add a TextView here for the "Title" label, as noted in the comments
+                    // Add a TextView here for the "Title" label, as noted in the comments
                     final EditText titleBox = new EditText(mContext);
                     titleBox.setHint(getResources().getString(R.string.community_viewpager_activity_title_hint));
                     layout.addView(titleBox); // Notice this is an add method
