@@ -112,7 +112,7 @@ public class ReportDialogFragment extends AlertDialog {
 
     public void upLoadReportData(){
         LocaleList localeList = getContext().getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        final Locale locale = localeList.get(0);
         DocumentReference docRef = db.collection("Reports").document();
         HashMap<String,Object> data = new HashMap<>();
         data.put("language",locale.getLanguage());
@@ -127,10 +127,34 @@ public class ReportDialogFragment extends AlertDialog {
                     Toast.makeText(mContext,mContext.getResources().getString(R.string.report_dialog_fragment_succ)
                         ,Toast.LENGTH_SHORT).show();
                     if(post.isTopicPost){
-                        db.collection("TopicPosts").document(post.documentID).update("report","blocked");
+                        switch (locale.getLanguage()){
+                            case "de":
+                                db.collection("TopicPosts").document(post.documentID).update("report","blocked");
+                                break;
+                            case "en":
+                                db.collection("Data").document("en").collection("topicPosts").
+                                        document(post.documentID).update("report","blocked");
+                                break;
+                            default:
+                                db.collection("Data").document("en").collection("topicPosts").
+                                        document(post.documentID).update("report","blocked");
+                                break;
+                        }
                         dismiss();
                     }else{
-                        db.collection("Posts").document(post.documentID).update("report","blocked");
+                        switch (locale.getLanguage()){
+                            case "de":
+                                db.collection("Posts").document(post.documentID).update("report","blocked");
+                                break;
+                            case "en":
+                                db.collection("Data").document("en").collection("posts").
+                                        document(post.documentID).update("report","blocked");
+                                break;
+                            default:
+                                db.collection("Data").document("en").collection("posts").
+                                        document(post.documentID).update("report","blocked");
+                                break;
+                        }
                         dismiss();
                     }
                 }else{

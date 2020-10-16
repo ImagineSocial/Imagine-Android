@@ -358,9 +358,28 @@ public class Post_Helper {
             firstFetch = true;
         }
         this.commID = commID;
-        Query postsColl = db.collection("Facts").document(commID).collection("posts")
-                .orderBy("createTime", Query.Direction.DESCENDING)
-                .limit(20);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        Query postsColl;
+        switch(locale.getLanguage()){
+            case "de":
+                postsColl = db.collection("Facts").document(commID).collection("posts")
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .limit(20);
+                break;
+            case "en":
+                postsColl = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("posts")
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .limit(20);
+                break;
+            default:
+                postsColl = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("posts")
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .limit(20);
+                break;
+        }
         postsColl.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -383,9 +402,28 @@ public class Post_Helper {
                     }else{
                         isTopicPost = true;
                     }
-                    final DocumentReference docRef = typeOne.equals("topicPost") ?
-                            db.collection("TopicPosts").document(postID) :
-                            db.collection("Posts").document(postID);
+                    final DocumentReference docRef;
+                    switch(locale.getLanguage()){
+                        case "de":
+                            docRef = typeOne.equals("topicPost") ?
+                                    db.collection("TopicPosts").document(postID) :
+                                    db.collection("Posts").document(postID);
+                            break;
+                        case "en":
+                            docRef = typeOne.equals("topicPost") ?
+                                    db.collection("Data").document("en")
+                                            .collection("topicPosts").document(postID) :
+                                    db.collection("Data").document("en")
+                                            .collection("posts").document(postID);
+                            break;
+                        default:
+                            docRef = typeOne.equals("topicPost") ?
+                                    db.collection("Data").document("en")
+                                            .collection("topicPosts").document(postID) :
+                                    db.collection("Data").document("en")
+                                            .collection("posts").document(postID);
+                            break;
+                    }
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -454,10 +492,31 @@ public class Post_Helper {
         if(lastSnap == null || this.commID == null){
             return;
         }
-        Query postsColl = db.collection("Facts").document(commID).collection("posts")
-                .orderBy("createTime", Query.Direction.DESCENDING)
-                .startAfter(lastSnap)
-                .limit(20);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        Query postsColl;
+        switch(locale.getLanguage()){
+            case "de":
+                postsColl = db.collection("Facts").document(commID).collection("posts")
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .startAfter(lastSnap)
+                        .limit(20);
+                break;
+            case "en":
+                postsColl = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("posts")
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .startAfter(lastSnap)
+                        .limit(20);
+                break;
+            default:
+                postsColl = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("posts")
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .startAfter(lastSnap)
+                        .limit(20);
+                break;
+        }
         postsColl.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -475,9 +534,28 @@ public class Post_Helper {
                             "feedPost"
                             : queryDocumentSnapshot.getString("type") ;
                     final boolean isTopicPost = queryDocumentSnapshot.getBoolean("isTopicPost") != null;
-                    DocumentReference docRef = typeOne.equals("topicPost") ?
-                            db.collection("TopicPosts").document(postID) :
-                            db.collection("Posts").document(postID);
+                    final DocumentReference docRef;
+                    switch(locale.getLanguage()){
+                        case "de":
+                            docRef = typeOne.equals("topicPost") ?
+                                    db.collection("TopicPosts").document(postID) :
+                                    db.collection("Posts").document(postID);
+                            break;
+                        case "en":
+                            docRef = typeOne.equals("topicPost") ?
+                                    db.collection("Data").document("en")
+                                            .collection("topicPosts").document(postID) :
+                                    db.collection("Data").document("en")
+                                            .collection("posts").document(postID);
+                            break;
+                        default:
+                            docRef = typeOne.equals("topicPost") ?
+                                    db.collection("Data").document("en")
+                                            .collection("topicPosts").document(postID) :
+                                    db.collection("Data").document("en")
+                                            .collection("posts").document(postID);
+                            break;
+                    }
                     docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -843,16 +921,18 @@ public class Post_Helper {
     public void addNotificationToFirebase(Post post, String body) {
         DocumentReference notificationsRef = db.collection("Users").document(post.originalPoster)
                 .collection("notifications").document();
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
         HashMap<String,Object> data = new HashMap<>();
         data.put("type","comment");
         data.put("comment",body);
+        data.put("language",locale.getLanguage());
         data.put("name", "Ein User");   //...hat deinen Beitrag kommentiert
         data.put("postID",post.documentID);
         if (post.isTopicPost) {
             data.put("isTopicPost", true);
         }
         data.put("forOP", true);
-
         notificationsRef.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

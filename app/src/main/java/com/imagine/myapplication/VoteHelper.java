@@ -129,6 +129,8 @@ public class VoteHelper {
 
     public void notifyUser(String button, Post post) {
         if (!post.originalPoster.equals("") && !post.originalPoster.equals("anonym")) {
+            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+            final Locale locale = localeList.get(0);
             DocumentReference ref = db.collection("Users").document(post.originalPoster)
                     .collection("notifications").document();
             HashMap<String,Object> data = new HashMap<>();
@@ -136,8 +138,8 @@ public class VoteHelper {
             data.put("button", button);
             data.put("postID", post.documentID);
             data.put("title", post.title);
+            data.put("language",locale.getLanguage());
             data.put("isTopicPost",post.isTopicPost);
-
             ref.set(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {

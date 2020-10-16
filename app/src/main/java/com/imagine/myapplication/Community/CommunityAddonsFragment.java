@@ -3,6 +3,7 @@ package com.imagine.myapplication.Community;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.os.health.SystemHealthManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class CommunityAddonsFragment extends Fragment {
@@ -101,8 +103,25 @@ public class CommunityAddonsFragment extends Fragment {
 //        header.isHeader = true;
 //        header.community = this.community;
 //        addons.add(header);
-        Query ref = db.collection("Facts").document(this.community.topicID)
-                .collection("addOns").orderBy("popularity", Query.Direction.DESCENDING);
+        LocaleList localeList = getContext().getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        Query ref;
+        switch(locale.getLanguage()){
+            case "de":
+                ref = db.collection("Facts").document(this.community.topicID)
+                        .collection("addOns").orderBy("popularity", Query.Direction.DESCENDING);
+                break;
+            case "en":
+                ref = db.collection("Data").document("en")
+                        .collection("topics").document(this.community.topicID).collection("addOns")
+                        .orderBy("popularity", Query.Direction.DESCENDING);
+                break;
+            default:
+                ref = db.collection("Data").document("en")
+                        .collection("topics").document(this.community.topicID).collection("addOns")
+                        .orderBy("popularity", Query.Direction.DESCENDING);
+                break;
+        }
         ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

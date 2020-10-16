@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,7 @@ import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Community_ViewPager_Activity extends AppCompatActivity {
 
@@ -231,9 +233,11 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public void followCommunityTapped(final Community community) {
         if (currentUser != null) {
             DocumentReference topicRef = db.collection("Users").document(currentUser.getUid()).collection("topics").document(community.topicID);
-
+            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+            final Locale locale = localeList.get(0);
             HashMap<String,Object> dataMap = new HashMap<>();
             dataMap.put("createDate", Timestamp.now());
+            dataMap.put("language",locale.getLanguage());
             topicRef.set(dataMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
