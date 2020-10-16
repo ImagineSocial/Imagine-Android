@@ -34,7 +34,7 @@ public class Community_Posts_Fragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(getContext());
         if(postList.size() == 0){
             helper.getCommunityPosts(new FirebaseCallback() {
                 @Override

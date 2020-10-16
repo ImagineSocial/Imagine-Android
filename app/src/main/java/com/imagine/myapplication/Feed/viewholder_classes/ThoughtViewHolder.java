@@ -29,7 +29,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public ThoughtPost post;
     public User userObj;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
 
     public ThoughtViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -39,6 +39,7 @@ public class ThoughtViewHolder extends CustomViewHolder {
     public void bind(final ThoughtPost post){
         // calls the init method ad sets up the post specific views
         init(post);
+        helper = new Post_Helper(itemView.getContext());
         this.post = post;
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);

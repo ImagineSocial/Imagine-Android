@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.PostActivitys.RepostPostActivity;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
@@ -29,7 +30,7 @@ public class RepostViewHolder extends CustomViewHolder{
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public RepostPost post;
     public User userObj;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
 
     public RepostViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -39,6 +40,7 @@ public class RepostViewHolder extends CustomViewHolder{
     public void bind(final RepostPost post){
         // calls init method and sets up the post specific views
         init(post);
+        helper = new Post_Helper(itemView.getContext());
         this.post = post;
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);

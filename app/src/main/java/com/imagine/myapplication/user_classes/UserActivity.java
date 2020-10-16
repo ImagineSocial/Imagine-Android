@@ -56,7 +56,7 @@ public class UserActivity extends AppCompatActivity {
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public ArrayList<Post> posts = new ArrayList<>();
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public User_Feed_Header_Viewholder header;
     public RecyclerView recyclerView;
     public UserFeedAdapter adapter;
@@ -70,6 +70,7 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        helper = new Post_Helper(this);
         this.mContext = this;
         Gson gson = new Gson();
         Intent intent = getIntent();

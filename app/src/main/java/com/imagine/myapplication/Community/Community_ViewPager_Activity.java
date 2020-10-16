@@ -44,7 +44,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public Context mContext;
     public Community_Fragment_Adapter adapter;
     public ViewPager2 viewPager2;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public FirebaseAuth auth = FirebaseAuth.getInstance();
 
     //Header
@@ -56,6 +56,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager_test);
+        helper = new Post_Helper(this);
         mContext = this;
         Intent intent = getIntent();
         String jsonComm = intent.getStringExtra("comm");

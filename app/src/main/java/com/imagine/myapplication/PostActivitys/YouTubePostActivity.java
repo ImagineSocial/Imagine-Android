@@ -69,7 +69,7 @@ public class YouTubePostActivity extends AppCompatActivity {
     public ArrayList<Comment> comments;
     public YouTubePost post;
     public Context mContext = this;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public ImageButton anonym;
     public ImageButton sendComment;
     public boolean anonymToggle = false;
@@ -86,25 +86,26 @@ public class YouTubePostActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-    FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.post_frame, new YouTubePostFragment()).commit();
-    // gets the post Object from the intent
-    Intent intent = getIntent();
-    String objString = intent.getStringExtra("post");
-    String commString = intent.getStringExtra("comm");
-    Gson gson = new Gson();
-    this.comm = gson.fromJson(commString,Community.class);
-    post = gson.fromJson(objString, YouTubePost.class);
-    this.anonym = findViewById(R.id.post_commentview_anonym_button);
-    this.sendComment = findViewById(R.id.post_commentview_send_button);
-}
+        helper = new Post_Helper(this);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.post_frame, new YouTubePostFragment()).commit();
+        // gets the post Object from the intent
+        Intent intent = getIntent();
+        String objString = intent.getStringExtra("post");
+        String commString = intent.getStringExtra("comm");
+        Gson gson = new Gson();
+        this.comm = gson.fromJson(commString,Community.class);
+        post = gson.fromJson(objString, YouTubePost.class);
+        this.anonym = findViewById(R.id.post_commentview_anonym_button);
+        this.sendComment = findViewById(R.id.post_commentview_send_button);
+    }
 
     @Override
     protected void onStart() {
         //starts bind method and fetches the comments
         super.onStart();
         bind();
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(this);
         helper.getComments(post.documentID, new CommentsCallback() {
             @Override
             public void onCallback(ArrayList<Comment> comms) {
@@ -280,7 +281,7 @@ public class YouTubePostActivity extends AppCompatActivity {
 
     public void init(){
         // adds the onClickListeners for the Buttons
-        final VoteHelper vote = new VoteHelper();
+        final VoteHelper vote = new VoteHelper(this);
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
@@ -508,7 +509,7 @@ public class YouTubePostActivity extends AppCompatActivity {
     }
 
     public void removePost(Post post){
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(this);
         helper.removePost(post);
     }
 

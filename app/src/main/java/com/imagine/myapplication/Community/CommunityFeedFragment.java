@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 public class CommunityFeedFragment extends Fragment {
     public ArrayList<Post> postList = new ArrayList<>();
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public RecyclerView recyclerView;
     public Community community;
     public HashMap<String,String> args;
@@ -49,7 +49,7 @@ public class CommunityFeedFragment extends Fragment {
         recyclerView = view.findViewById(R.id.comm_activity_recyclerView);
         final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeCommunityFeed);
         swipe.setRefreshing(true);
-
+        helper = new Post_Helper(getContext());
 
         String name = args.get("name");
         String imageURL = args.get("imageURL");

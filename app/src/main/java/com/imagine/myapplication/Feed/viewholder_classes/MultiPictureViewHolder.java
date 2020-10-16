@@ -33,7 +33,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
     public MultiPicturePost post;
     public Context mContext;
     public User userObj;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
 
     public MultiPictureViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -43,6 +43,7 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
     public void bind(final MultiPicturePost post){
         // calls the init method and sets up the post specific views
         init(post);
+        helper = new Post_Helper(itemView.getContext());
         this.post = post;
         TextView title_textView = itemView.findViewById(R.id.title_textView);
         TextView createTime_textView = itemView.findViewById(R.id.createDate_textView);

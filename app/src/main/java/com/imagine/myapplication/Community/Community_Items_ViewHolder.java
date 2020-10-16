@@ -39,7 +39,7 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
     public Post post;
     public Community comm;
     public Context mContext;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public TextView title;
     public ImageView image;
 
@@ -50,6 +50,7 @@ public class Community_Items_ViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Object object){
         this.mContext = itemView.getContext();
+        helper = new Post_Helper(itemView.getContext());
         if (object instanceof PicturePost) {
             PicturePost post = (PicturePost) object;
             this.bindPicturePost(post);

@@ -40,7 +40,7 @@ public class OwnCommsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         this.recyclerView = getView().findViewById(R.id.communities_recyclerview);
-        Communities_Helper helper = new Communities_Helper();
+        Communities_Helper helper = new Communities_Helper(getContext());
         if(auth.getCurrentUser() != null){
             helper.getOwnCommunities(new CommunityCallback() {
                 @Override

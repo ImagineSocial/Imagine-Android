@@ -44,7 +44,6 @@ import java.util.ArrayList;
 
 public class Communities_Fragment extends Fragment{
     private static final String TAG = "Communities_Fragment";
-    public Communities_Helper helper = new Communities_Helper();
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public Community_Recent_Header recent_header;
     public RecyclerView recyclerView;
@@ -72,7 +71,7 @@ public class Communities_Fragment extends Fragment{
         if (currentUser != null) {
             userID = currentUser.getUid();
         }
-        helper.mContext = getContext();
+        Communities_Helper helper = new Communities_Helper(getContext());
         if(this.commList.size() == 0){
             helper.getCommunities(new CommunityCallback() {
                 @Override

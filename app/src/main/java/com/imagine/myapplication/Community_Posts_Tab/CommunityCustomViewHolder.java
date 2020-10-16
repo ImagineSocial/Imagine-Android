@@ -15,12 +15,13 @@ import com.imagine.myapplication.post_classes.DefaultPost;
 
 public class CommunityCustomViewHolder extends RecyclerView.ViewHolder {
 
-    public Communities_Helper comm_helper = new Communities_Helper();
-    public Post_Helper post_helper = new Post_Helper();
+    public Communities_Helper comm_helper;
+    public Post_Helper post_helper;
     public Community community;
 
     public CommunityCustomViewHolder(@NonNull View itemView) {
         super(itemView);
+        post_helper = new Post_Helper(itemView.getContext());
     }
 
     public void bind(DefaultPost post){
@@ -29,6 +30,7 @@ public class CommunityCustomViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setLinkedFact(final String commID){
+        comm_helper = new Communities_Helper(itemView.getContext());
         comm_helper.fetchLinkedCommunity(commID, new LinkedCommunityCallback() {
             @Override
             public void onCallback(Community comm) {

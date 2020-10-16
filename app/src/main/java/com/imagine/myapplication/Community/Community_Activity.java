@@ -25,7 +25,7 @@ import java.util.Comparator;
 
 public class Community_Activity extends AppCompatActivity {
     ArrayList<Post> postList = new ArrayList<>();
-    Post_Helper helper = new Post_Helper();
+    Post_Helper helper;
     RecyclerView recyclerView;
     Community community;
 
@@ -34,6 +34,7 @@ public class Community_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community_activity);
         recyclerView = findViewById(R.id.comm_activity_recyclerView);
+        helper = new Post_Helper(this);
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         String imageURL = intent.getStringExtra("imageURL");

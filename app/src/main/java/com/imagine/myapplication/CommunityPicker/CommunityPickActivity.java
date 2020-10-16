@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class CommunityPickActivity extends AppCompatActivity {
 
-    public Communities_Helper helper = new Communities_Helper();
+    public Communities_Helper helper;
     public ArrayList<Community> commList = new ArrayList<>();
     public String postID;
 
@@ -32,7 +32,7 @@ public class CommunityPickActivity extends AppCompatActivity {
         // fetches the communities from the database
         super.onCreate(savedInstanceState);
         setContentView(R.layout.community_picker_activity);
-
+        helper = new Communities_Helper(this);
         ViewPager2 viewPager2 = findViewById(R.id.community_picker_viewpager);
         TabLayout tabLayout = findViewById(R.id.community_picker_tab_layout);
         Intent intent = getIntent();

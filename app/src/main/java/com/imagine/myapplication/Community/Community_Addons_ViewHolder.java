@@ -37,7 +37,7 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public ArrayList<PostRef> refs;
     public ArrayList<Post> communityPosts = new ArrayList<>();
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public Community comm;
 
     public Community_Addons_ViewHolder(@NonNull View itemView, Context context) {
@@ -46,6 +46,7 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final Addon boundAddon){
+        helper = new Post_Helper(itemView.getContext());
         if (this.addon != null) {
             if (this.addon.items != null) {
                 this.addon.items = null;

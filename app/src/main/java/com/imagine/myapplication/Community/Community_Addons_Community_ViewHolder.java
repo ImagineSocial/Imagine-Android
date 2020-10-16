@@ -103,7 +103,7 @@ public class Community_Addons_Community_ViewHolder extends Community_Addons_View
     }
 
     public void fetchCommunityPosts(){
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(itemView.getContext());
         helper.getPostsForCommunityFeed(this.comm.topicID, new FirebaseCallback() {
             @Override
             public void onCallback(ArrayList<Post> values) {

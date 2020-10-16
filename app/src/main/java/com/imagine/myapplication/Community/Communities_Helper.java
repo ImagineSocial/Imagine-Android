@@ -34,6 +34,10 @@ public class Communities_Helper {
     public DocumentSnapshot lastFact = null;
     public Context mContext;
 
+    public Communities_Helper(Context mContext) {
+        this.mContext = mContext;
+    }
+
     public void getCommunities(final CommunityCallback callback, String userID){
         final ArrayList<Community> topics = new ArrayList<>();        // Topic-Communities Array
         final ArrayList<Community> facts = new ArrayList<>();         // Facts Communites Array
@@ -113,21 +117,21 @@ public class Communities_Helper {
         switch(locale.getLanguage()){
             case "de":
                 factsQuery = db.collection("Facts")
-                        .whereEqualTo("displayOption","facts")
+                        .whereEqualTo("displayOption","fact")
                         .orderBy("popularity", Query.Direction.DESCENDING)
                         .limit(8);
                 break;
             case "en":
                 factsQuery = db.collection("Data").document("en")
                         .collection("topics")
-                        .whereEqualTo("displayOption","facts")
+                        .whereEqualTo("displayOption","fact")
                         .orderBy("popularity", Query.Direction.DESCENDING)
                         .limit(8);
                 break;
             default:
                 factsQuery = db.collection("Data").document("en")
                         .collection("topics")
-                        .whereEqualTo("displayOption","facts")
+                        .whereEqualTo("displayOption","fact")
                         .orderBy("popularity", Query.Direction.DESCENDING)
                         .limit(8);
                 break;
@@ -249,11 +253,34 @@ public class Communities_Helper {
         if(lastTopic == null){
             return;
         }
-        Query commQuery = db.collection("Facts")
-                .orderBy("popularity", Query.Direction.DESCENDING)
-                .whereEqualTo("displayOption","topic")
-                .startAfter(lastTopic)
-                .limit(20);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query commQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                commQuery = db.collection("Facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","topic")
+                        .startAfter(lastTopic)
+                        .limit(20);
+                break;
+            case "en":
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","topic")
+                        .startAfter(lastTopic)
+                        .limit(20);
+                break;
+            default:
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","topic")
+                        .startAfter(lastTopic)
+                        .limit(20);
+                break;
+        }
         commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -279,7 +306,23 @@ public class Communities_Helper {
         if(linkedCommID != null && !linkedCommID.equals("")){
             Community comm = getCommFromCache(linkedCommID);
             if(comm == null){
-                DocumentReference commRef = db.collection("Facts").document(linkedCommID);
+                LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+                Locale locale = localeList.get(0);
+                DocumentReference commRef;
+                switch(locale.getLanguage()){
+                    case "de":
+                        commRef = db.collection("Facts").document(linkedCommID);
+                        break;
+                    case "en":
+                        commRef = db.collection("Data").document("en").collection("topics")
+                        .document(linkedCommID);
+                        break;
+                    default:
+                        commRef = db.collection("Data").document("en").collection("topics")
+                                .document(linkedCommID);
+                        break;
+
+                }
                 commRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -339,11 +382,34 @@ public class Communities_Helper {
         if(lastFact == null){
             return;
         }
-        Query commQuery = db.collection("Facts")
-                .orderBy("popularity", Query.Direction.DESCENDING)
-                .whereEqualTo("displayOption","fact")
-                .startAfter(lastFact)
-                .limit(20);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query commQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                commQuery = db.collection("Facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","fact")
+                        .startAfter(lastTopic)
+                        .limit(20);
+                break;
+            case "en":
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","fact")
+                        .startAfter(lastTopic)
+                        .limit(20);
+                break;
+            default:
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","fact")
+                        .startAfter(lastTopic)
+                        .limit(20);
+                break;
+        }
         commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -368,11 +434,32 @@ public class Communities_Helper {
     public void getTopics(final CommunityCallback callback){
         // fetches  communities from the "Facts" collection when the
         // onScrollListener is triggered
-        Query topicQuery = db.collection("Facts")
-                .whereEqualTo("displayOption","topic")
-                .orderBy("popularity", Query.Direction.DESCENDING)
-                .limit(20);
-        topicQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query commQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                commQuery = db.collection("Facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","topic")
+                        .limit(20);
+                break;
+            case "en":
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","topic")
+                        .limit(20);
+                break;
+            default:
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","topic")
+                        .limit(20);
+                break;
+        }
+        commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -397,11 +484,32 @@ public class Communities_Helper {
     public void getFacts(final CommunityCallback callback){
         // fetches  communities from the "Facts" collection when the
         // onScrollListener is triggered
-        Query topicQuery = db.collection("Facts")
-                .whereEqualTo("displayOption","fact")
-                .orderBy("popularity", Query.Direction.DESCENDING)
-                .limit(20);
-        topicQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query commQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                commQuery = db.collection("Facts")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","fact")
+                        .limit(20);
+                break;
+            case "en":
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","fact")
+                        .limit(20);
+                break;
+            default:
+                commQuery = db.collection("Data").document("en")
+                        .collection("topics")
+                        .orderBy("popularity", Query.Direction.DESCENDING)
+                        .whereEqualTo("displayOption","fact")
+                        .limit(20);
+                break;
+        }
+        commQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
@@ -435,11 +543,24 @@ public class Communities_Helper {
                     final int size = docMap.size();
                     final int[] count = {0};
                     for(DocumentSnapshot docSnap : docMap){
+                        DocumentReference docRef;
                         String commLang = docSnap.getString("language");
+                        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+                        final Locale locale = localeList.get(0);
                         if(commLang == null){
-
+                            if(locale.getLanguage().equals("de")){
+                                docRef = db.collection("Facts").document(docSnap.getId());
+                            }else{
+                                count[0]++;
+                                if(count[0] == size){
+                                    callback.onCallback(ownComms);
+                                }
+                                continue;
+                            }
+                        }else{
+                            docRef = db.collection("Data").document("en")
+                                    .collection("topics").document(docSnap.getId());
                         }
-                        DocumentReference docRef = db.collection("Facts").document(docSnap.getId());
                         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -452,6 +573,9 @@ public class Communities_Helper {
                                     }
                                 }else{
                                     count[0]++;
+                                    if(count[0] == size){
+                                        callback.onCallback(ownComms);
+                                    }
                                     System.out.println("Fetch Failed"+TAG);
                                 }
                             }
@@ -466,8 +590,25 @@ public class Communities_Helper {
 
     public void getProArguments(String commID,final ArgumentsCallback callback){
         final ArrayList<Argument> pros = new ArrayList<>();
-        Query proQuery = db.collection("Facts").document(commID).collection("arguments")
-                .whereEqualTo("proOrContra","pro");
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        Query proQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                proQuery = db.collection("Facts").document(commID).collection("arguments")
+                        .whereEqualTo("proOrContra","pro");
+                break;
+            case "en":
+                proQuery = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("arguments")
+                        .whereEqualTo("proOrContra","pro");
+                break;
+            default:
+                proQuery = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("arguments")
+                        .whereEqualTo("proOrContra","pro");
+                break;
+        }
         proQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -490,8 +631,25 @@ public class Communities_Helper {
 
     public void getContraArguments(String commID,final ArgumentsCallback callback){
         final ArrayList<Argument> cons = new ArrayList<>();
-        Query proQuery = db.collection("Facts").document(commID).collection("arguments")
-                .whereEqualTo("proOrContra","contra");
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        Query proQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                proQuery = db.collection("Facts").document(commID).collection("arguments")
+                        .whereEqualTo("proOrContra","contra");
+                break;
+            case "en":
+                proQuery = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("arguments")
+                        .whereEqualTo("proOrContra","contra");
+                break;
+            default:
+                proQuery = db.collection("Data").document("en").collection("topics")
+                        .document(commID).collection("arguments")
+                        .whereEqualTo("proOrContra","contra");
+                break;
+        }
         proQuery.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -540,7 +698,6 @@ public class Communities_Helper {
         if (follower != null) {
             comm.followerCount = follower.size();
         }
-
         list.add(comm);
     }
 }

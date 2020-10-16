@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.PostActivitys.LinkPostActivity;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.post_classes.Post;
 import com.imagine.myapplication.user_classes.User;
 import com.imagine.myapplication.user_classes.UserActivity;
 import com.imagine.myapplication.UserCallback;
@@ -30,7 +31,7 @@ public class LinkViewHolder extends CustomViewHolder {
     FirebaseAuth auth = FirebaseAuth.getInstance();
     public LinkPost post;
     public User userObj;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
 
     public LinkViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -40,6 +41,7 @@ public class LinkViewHolder extends CustomViewHolder {
     public void bind(final LinkPost post){
         // calls the init method and sets up the post specific views
         this.post = post;
+        helper = new Post_Helper(itemView.getContext());
         init(post);
         resetPreview();
         TextView title_textView = itemView.findViewById(R.id.title_textView);

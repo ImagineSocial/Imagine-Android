@@ -78,7 +78,11 @@ public class Post_Helper {
     public int size;
     public Context mContext;
 
-    public  void getPostsForMainFeed( final FirebaseCallback callback){
+    public Post_Helper(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public  void getPostsForMainFeed(final FirebaseCallback callback){
         // fetches the initial posts for the main feed
         LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
         Locale locale = localeList.get(0);
@@ -883,9 +887,27 @@ public class Post_Helper {
         stringArray.add("GIF");
         stringArray.add("multiPicture");
         stringArray.add("picture");
-        Query postsQuery = db.collection("TopicPosts").whereIn("type",stringArray)
-                .orderBy("createTime", Query.Direction.DESCENDING)
-                .limit(50);
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        Query postsQuery;
+        switch(locale.getLanguage()){
+            case "de":
+                postsQuery = db.collection("TopicPosts").whereIn("type",stringArray)
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .limit(50);
+                break;
+            case "en":
+                postsQuery = db.collection("Data").document("en").collection("topicPosts").whereIn("type",stringArray)
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .limit(50);
+                break;
+            default:
+                postsQuery = db.collection("Data").document("en").collection("topicPosts").whereIn("type",stringArray)
+                        .orderBy("createTime", Query.Direction.DESCENDING)
+                        .limit(50);
+                break;
+        }
+
         postsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -1686,10 +1708,36 @@ public class Post_Helper {
 
     public void removePost(Post post){
         DocumentReference postRef;
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
         if(post.isTopicPost){
-            postRef = db.collection("TopicPosts").document(post.documentID);
+            switch(locale.getLanguage()){
+                case "de":
+                    postRef = db.collection("TopicPosts").document(post.documentID);
+                    break;
+                case "en":
+                    postRef = db.collection("Data").document("en").collection("topicPosts")
+                        .document(post.documentID);
+                    break;
+                default:
+                    postRef = db.collection("Data").document("en").collection("topicPosts")
+                        .document(post.documentID);
+                    break;
+            }
         }else{
-            postRef = db.collection("Posts").document(post.documentID);
+            switch(locale.getLanguage()){
+                case "de":
+                    postRef = db.collection("Posts").document(post.documentID);
+                    break;
+                case "en":
+                    postRef = db.collection("Data").document("en").collection("posts")
+                        .document(post.documentID);
+                    break;
+                default:
+                    postRef = db.collection("Data").document("en").collection("posts")
+                        .document(post.documentID);
+                    break;
+            }
         }
         postRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -1708,8 +1756,23 @@ public class Post_Helper {
             //        }
             //});
         }else{
-            DocumentReference commRef = db.collection("Facts").document(post.linkedFactId)
-                    .collection("posts").document(post.documentID);
+            DocumentReference commRef;
+            switch(locale.getLanguage()){
+                case "de":
+                    commRef = db.collection("Facts").document(post.linkedFactId)
+                            .collection("posts").document(post.documentID);
+                    break;
+                case "en":
+                    commRef = db.collection("Data").document("en")
+                            .collection("topics").document(post.linkedFactId).collection("posts")
+                            .document(post.documentID);
+                    break;
+                default:
+                    commRef = db.collection("Data").document("en")
+                            .collection("topics").document(post.linkedFactId).collection("posts")
+                            .document(post.documentID);
+                    break;
+            }
             commRef.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -1717,7 +1780,6 @@ public class Post_Helper {
                 }
             });
         }
-
         if(post instanceof PicturePost){
                 String pathString = post.documentID+".png";
                         StorageReference pictureRef = storage.child("postPictures").child(pathString);
@@ -1835,7 +1897,22 @@ public class Post_Helper {
                     if(queryDocumentSnapshots != null){
                         List<DocumentSnapshot> nots = queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot docSnap: nots){
-                            addNotification(docSnap);
+                            String notLang = docSnap.getString("language");
+                            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+                            Locale locale = localeList.get(0);
+                            if(notLang == null){
+                                if(locale.getLanguage().equals("de")){
+                                    addNotification(docSnap);
+                                }else{
+                                    continue;
+                                }
+                            }else{
+                                if(locale.getLanguage().equals("en")){
+                                    addNotification(docSnap);
+                                }else{
+                                    continue;
+                                }
+                            }
                         }
                         mergeNotifications(callback);
                         notList = new ArrayList<>();

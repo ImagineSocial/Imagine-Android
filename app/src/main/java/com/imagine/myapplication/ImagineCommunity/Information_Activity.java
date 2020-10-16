@@ -137,6 +137,7 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(langPref, lang);
         editor.commit();
+        MainActivity.resetFragmentsAfterLogin();
         MainActivity.languageChange = true;
         finish();
     }

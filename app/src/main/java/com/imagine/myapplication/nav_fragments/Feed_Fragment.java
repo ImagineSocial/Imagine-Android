@@ -32,7 +32,7 @@ public class Feed_Fragment extends Fragment {
     public RecyclerView recyclerView;
     public int lastPosition;
     public ArrayList<Post> postList = new ArrayList<Post>();
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public Activity mainActivity;
     public boolean isloading;
 
@@ -47,7 +47,7 @@ public class Feed_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the post for the feed
         super.onViewCreated(view, savedInstanceState);
-        helper.mContext = this.getContext();
+        helper = new Post_Helper(getContext());
         final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeMainFeed);
         if(postList.size() == 0){
             swipe.setRefreshing(true);

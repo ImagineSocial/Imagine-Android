@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity{
     public DrawerLayout drawer;
     public RecyclerView noti_recyclerView;
     public NotificationsAdapter adapter;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public static Feed_Fragment feed_fragment;
     public static Community_Posts_Fragment commPosts_fragment;
     public static New_Post_Fragment newPosts_fragment;
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        helper = new Post_Helper(this);
         loadLocale();
         this.mContext = this;
         mainActivity = this;

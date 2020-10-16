@@ -27,7 +27,7 @@ public class Community_All_Communities_Activity extends AppCompatActivity {
         setContentView(R.layout.fragment_communities);
         this.recyclerView = findViewById(R.id.communities_recyclerview);
 
-        this.helper = new Communities_Helper();
+        this.helper = new Communities_Helper(this);
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
         if(type.equals("topic")){

@@ -34,7 +34,7 @@ public class GIFViewHolder extends CustomViewHolder {
     public FirebaseAuth auth = FirebaseAuth.getInstance();
     public GIFPost post;
     public User userObj;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public int frameWidth;
     public int frameHeight;
     private MediaPlayer mediaPlayer;
@@ -49,6 +49,7 @@ public class GIFViewHolder extends CustomViewHolder {
     public void bind(final GIFPost post){
         // calls the init method and sets up the post specific views
         this.post = post;
+        helper = new Post_Helper(itemView.getContext());
         init(post);
         //GIF Widgets
         TextView title_textView = itemView.findViewById(R.id.title_textView);

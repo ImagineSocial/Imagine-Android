@@ -65,7 +65,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
     public ArrayList<Comment> comments;
     public ThoughtPost post;
     public Context mContext = this;
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
     public ImageButton anonym;
     public ImageButton sendComment;
     public boolean anonymToggle = false;
@@ -83,6 +83,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        helper = new Post_Helper(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.post_frame, new ThoughtPostFragment()).commit();
         //gets post obj from the intent
@@ -102,7 +103,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
         // starts ther bind method and fetches the comments
         super.onStart();
         bind();
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(this);
         helper.getComments(post.documentID, new CommentsCallback() {
             @Override
             public void onCallback(ArrayList<Comment> comms) {
@@ -264,7 +265,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
 
     public void init(){
         // sets up the onClicklisteners for the buttons
-        final VoteHelper vote = new VoteHelper();
+        final VoteHelper vote = new VoteHelper(this);
         ImageButton thanksButton = findViewById(R.id.thanks_button);
         ImageButton wowButton = findViewById(R.id.wow_button);
         ImageButton haButton = findViewById(R.id.ha_button);
@@ -491,7 +492,7 @@ public class ThoughtPostActivity extends AppCompatActivity {
     }
 
     public void removePost(Post post){
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(this);
         helper.removePost(post);
     }
 

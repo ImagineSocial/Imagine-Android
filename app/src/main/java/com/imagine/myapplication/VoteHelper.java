@@ -1,5 +1,8 @@
 package com.imagine.myapplication;
 
+import android.content.Context;
+import android.os.LocaleList;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,17 +17,49 @@ import com.imagine.myapplication.post_classes.Post;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class VoteHelper {
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public Context mContext;
+
+    public VoteHelper(Context mContext) {
+        this.mContext = mContext;
+    }
 
     public void updateVotes(String type, Post post){
         DocumentReference ref;
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
         if (post.isTopicPost) {
-            ref = db.collection("TopicPosts").document(post.documentID);
+            switch(locale.getLanguage()){
+                case "de":
+                    ref = db.collection("TopicPosts").document(post.documentID);
+                    break;
+                case "en":
+                    ref = db.collection("Data").document("en").collection("topicPosts")
+                        .document(post.documentID);
+                    break;
+                default:
+                    ref = db.collection("Data").document("en").collection("topicPosts")
+                            .document(post.documentID);
+                    break;
+            }
         } else {
-            ref = db.collection("Posts").document(post.documentID);
+            switch(locale.getLanguage()){
+                case "de":
+                    ref = db.collection("Posts").document(post.documentID);
+                    break;
+                case "en":
+                    ref = db.collection("Data").document("en").collection("posts")
+                            .document(post.documentID);
+                    break;
+                default:
+                    ref = db.collection("Data").document("en").collection("posts")
+                            .document(post.documentID);
+                    break;
+            }
         }
 
         notifyUser(type, post);
@@ -96,7 +131,6 @@ public class VoteHelper {
         if (!post.originalPoster.equals("") && !post.originalPoster.equals("anonym")) {
             DocumentReference ref = db.collection("Users").document(post.originalPoster)
                     .collection("notifications").document();
-
             HashMap<String,Object> data = new HashMap<>();
             data.put("type","upvote");
             data.put("button", button);

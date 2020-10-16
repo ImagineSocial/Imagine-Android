@@ -15,6 +15,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.os.health.SystemHealthManager;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -78,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import io.github.ponnamkarthik.richlinkpreview.MetaData;
@@ -616,10 +618,37 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 this.shareButton.setEnabled(true);
             }else{
                 DocumentReference docRef;
+                LocaleList localeList = getResources().getConfiguration().getLocales();
+                final Locale locale = localeList.get(0);
                 if(this.comm != null && this.new_post_activity != null){
-                    docRef = db.collection("TopicPosts").document();
+                    switch(locale.getLanguage()){
+                        case "de":
+                            docRef = db.collection("TopicPosts").document();
+                            break;
+                        case "en":
+                            docRef = db.collection("Data").document("en")
+                            .collection("topicsPosts").document();
+                            break;
+                        default:
+                            docRef = db.collection("Data").document("en")
+                                    .collection("topicsPosts").document();
+                            break;
+                    }
+
                 }else{
-                    docRef = db.collection("Posts").document();
+                    switch(locale.getLanguage()){
+                        case "de":
+                            docRef = db.collection("Posts").document();
+                            break;
+                        case "en":
+                            docRef = db.collection("Data").document("en")
+                                    .collection("posts").document();
+                            break;
+                        default:
+                            docRef = db.collection("Data").document("en")
+                                    .collection("posts").document();
+                            break;
+                    }
                 }
                 System.out.println("Das ist die Post ID:" + docRef.getId()+" "+TAG);
                 switch(type){
@@ -1049,7 +1078,22 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         // uploads the posts data to the communityDocument if it is shared inside a
         // community_topic
         String documentID = docRef.getId();
-        DocumentReference communityRef = db.collection("Facts").document(linkedFactID).collection("posts").document(documentID);
+        LocaleList localeList = getResources().getConfiguration().getLocales();
+        final Locale locale = localeList.get(0);
+        DocumentReference communityRef;
+        switch(locale.getLanguage()){
+            case "de":
+                communityRef = db.collection("Facts").document(linkedFactID).collection("posts").document(documentID);
+                break;
+            case "en":
+                communityRef = db.collection("Data").document("en").collection("topics")
+                        .document(linkedFactID).collection("posts").document(documentID);
+                break;
+            default:
+                communityRef = db.collection("Data").document("en").collection("topics")
+                        .document(linkedFactID).collection("posts").document(documentID);
+                break;
+        }
         Timestamp timestamp = new Timestamp(new Date());
         HashMap<String,Object> data = new HashMap<>();
         data.put("createTime",timestamp);

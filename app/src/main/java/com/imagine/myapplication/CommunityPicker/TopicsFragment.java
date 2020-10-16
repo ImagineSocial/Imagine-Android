@@ -37,7 +37,7 @@ public class TopicsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         this.recyclerView = getView().findViewById(R.id.communities_recyclerview);
-        Communities_Helper helper = new Communities_Helper();
+        Communities_Helper helper = new Communities_Helper(getContext());
         helper.getTopics(new CommunityCallback() {
             @Override
             public void onCallback(ArrayList<Community> commList) {

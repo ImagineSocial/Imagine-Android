@@ -46,8 +46,8 @@ import java.util.ArrayList;
 public class CommunityPostViewHolder extends CustomViewHolder {
 
     public CommunityPost post;
-    public Communities_Helper helper = new Communities_Helper();
-    public Post_Helper postHelper = new Post_Helper();
+    public Communities_Helper helper;
+    public Post_Helper postHelper;
     public Community community;
     public ArrayList<Post> postList;
     public FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -57,6 +57,8 @@ public class CommunityPostViewHolder extends CustomViewHolder {
     }
 
     public void bind(final CommunityPost post){
+        helper = new Communities_Helper(itemView.getContext());
+        postHelper = new Post_Helper(itemView.getContext());
         this.post = post;
         init(post);
         if(post.linkedFactId != null){

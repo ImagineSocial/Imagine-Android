@@ -40,7 +40,7 @@ public class CommunityFactsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         final TextView proCountLabel = view.findViewById(R.id.comm_facts_prosCount);
         final TextView conCountLabel = view.findViewById(R.id.comm_facts_consCount);
-        Communities_Helper communities_helper = new Communities_Helper();
+        Communities_Helper communities_helper = new Communities_Helper(getContext());
         communities_helper.getProArguments(args.get("commID"), new ArgumentsCallback() {
             @Override
             public void onCallback(ArrayList<Argument> args) {

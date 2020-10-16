@@ -23,10 +23,11 @@ import com.imagine.myapplication.user_classes.User;
 
 public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-    public Post_Helper helper = new Post_Helper();
+    public Post_Helper helper;
 
     public NotificationViewHolder(@NonNull View itemView) {
         super(itemView);
+        helper = new Post_Helper(itemView.getContext());
     }
     public void bind(final Notification not) {
         TextView title = itemView.findViewById(R.id.notification_title_textView);

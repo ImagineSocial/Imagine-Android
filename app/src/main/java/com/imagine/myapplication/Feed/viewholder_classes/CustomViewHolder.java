@@ -40,7 +40,6 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
     private static final String TAG = "CustomViewHolder";
     public View mItemView;
     public Context mContext;
-    public Communities_Helper helper = new Communities_Helper();
     public Community community;
     public FirebaseFirestore db = FirebaseFirestore.getInstance();
     public Activity mainActivty;
@@ -52,7 +51,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
 
     public void init(final Post post){
         // sets up the onClickListeners for the buttons
-        final VoteHelper vote = new VoteHelper();
+        final VoteHelper vote = new VoteHelper(itemView.getContext());
         this.mContext = itemView.getContext();
         ImageButton thanksButton = mItemView.findViewById(R.id.thanks_button);
         ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
@@ -128,6 +127,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
 
     public void setLinkedFact(final String linkedTopicID){
         // sets the linkedfactID and fetches communitydata to display
+        Communities_Helper helper = new Communities_Helper(itemView.getContext());
         helper.fetchLinkedCommunity(linkedTopicID, new LinkedCommunityCallback() {
             @Override
             public void onCallback(Community comm) {
@@ -283,7 +283,7 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
     }
 
     public void removePost(Post post){
-        Post_Helper helper = new Post_Helper();
+        Post_Helper helper = new Post_Helper(itemView.getContext());
         helper.removePost(post);
     }
 
