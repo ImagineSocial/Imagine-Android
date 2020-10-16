@@ -137,6 +137,7 @@
     <string name="community_viewpager_activity_title_hint">Titel</string>
     <string name="community_viewpager_activity_description_hint">Beschreibung</string>
     <string name="community_viewpager_activity_post">Posten</string>
+    <string name="community_viewpager_activity_post_community_title">Teile diese Community im Haupt-Feed mit deinen Mitmenschen. Nutze den Title um z.B. zu beschreiben, was diese Community für dich besonders macht.</string>
     //CommunityAddonsFragment
     //--leer--
     //CommunityFactsFragment
@@ -622,4 +623,8 @@
     //--leer--
     //viewpager_test_fragment
     //--leer--
+    //report_bug_activity
+    <string name="bug_description">Erkläre uns bitte mit deinen Worten kurz, wo es ein Problem gibt. Je mehr Informationen wir haben, desto besser können wir das Problem eingrenzen.
+        Wir werden uns so schnell wie möglich darum kümmern!</string>
+    <string name="bug_header">Wo gibt es ein Problem?</string>
 </resources>

@@ -28,17 +28,19 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
     public NotificationViewHolder(@NonNull View itemView) {
         super(itemView);
     }
-    public void bind(final Notification not){
+    public void bind(final Notification not) {
         TextView title = itemView.findViewById(R.id.notification_title_textView);
         TextView body = itemView.findViewById(R.id.notification_body_titleView);
-        if(not.post.user == null){
-            helper.getUser(not.post.originalPoster, new UserCallback() {
-                @Override
-                public void onCallback(User user) {
-                    not.post.user = user;
-                    setOnClicks(not);
-                }
-            });
+        if (not.post != null) {
+            if (not.post.user == null) {
+                helper.getUser(not.post.originalPoster, new UserCallback() {
+                    @Override
+                    public void onCallback(User user) {
+                        not.post.user = user;
+                        setOnClicks(not);
+                    }
+                });
+            }
         }
         body.setText(not.title);
 

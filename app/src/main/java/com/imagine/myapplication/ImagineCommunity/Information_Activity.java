@@ -1,9 +1,15 @@
 package com.imagine.myapplication.ImagineCommunity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.LocaleList;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +31,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.protobuf.Any;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class Information_Activity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "Information_Fragment";
@@ -43,11 +51,29 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
         Button toWebsiteButton = findViewById(R.id.goToWebsiteButton);
         toWebsiteButton.setOnClickListener(this);
         Button deleteAccountButton = findViewById(R.id.delete_account_button);
+
+        Button germanButton = findViewById(R.id.setting_german_button);
+        Button englishButton = findViewById(R.id.setting_english_button);
+        germanButton.setOnClickListener(this);
+        englishButton.setOnClickListener(this);
+
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
             deleteAccountButton.setAlpha(1);
             deleteAccountButton.setOnClickListener(this);
             deleteAccountButton.setEnabled(true);
+        }
+
+        LocaleList localeList = getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+
+        switch(locale.getLanguage()) {
+            case "de":
+                germanButton.setAlpha(0.5f);
+                break;
+            case "en":
+                englishButton.setAlpha(0.5f);
+                break;
         }
     }
 
@@ -68,6 +94,8 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         // setting up the onClick events
         Intent intent = new Intent(Intent.ACTION_VIEW);
+        Button germanButton = findViewById(R.id.setting_german_button);
+        Button englishButton = findViewById(R.id.setting_english_button);
 
         switch (v.getId()) {
             case R.id.toGDPRButton:
@@ -83,7 +111,34 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
             case R.id.delete_account_button:
                 sendDeleteRequest();
                 break;
+            case R.id.setting_german_button:
+                changeLocale("de");
+                englishButton.setAlpha(1);
+                germanButton.setAlpha(0.5f);
+                break;
+            case R.id.setting_english_button:
+                changeLocale("en");
+                englishButton.setAlpha(0.5f);
+                germanButton.setAlpha(1);
+                break;
         }
+    }
+
+    public void changeLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+        MainActivity.languageChange = true;
+        finish();
     }
 
     public void sendDeleteRequest() {

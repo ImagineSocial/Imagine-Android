@@ -183,17 +183,17 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
                     LinearLayout layout = new LinearLayout(mContext);
                     layout.setOrientation(LinearLayout.VERTICAL);
-                    // Add a TextView here for the "Title" label, as noted in the comments
+
                     final EditText titleBox = new EditText(mContext);
                     titleBox.setHint(getResources().getString(R.string.community_viewpager_activity_title_hint));
-                    layout.addView(titleBox); // Notice this is an add method
+                    layout.addView(titleBox);
 
-// Add another TextView here for the "Description" label
                     final EditText descriptionBox = new EditText(mContext);
                     descriptionBox.setHint(getResources().getString(R.string.community_viewpager_activity_description_hint));
                     layout.addView(descriptionBox); // Another add method
 
-                    dialog.setView(layout); // Again this is a set method, not add
+                    dialog.setView(layout);
+                    dialog.setTitle(getResources().getString(R.string.community_viewpager_activity_post_community_title));
                     dialog.setPositiveButton(getResources().getString(R.string.community_viewpager_activity_post), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

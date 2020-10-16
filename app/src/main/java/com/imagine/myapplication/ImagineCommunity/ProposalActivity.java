@@ -178,7 +178,7 @@ public class ProposalActivity extends AppCompatActivity {
                     System.out.println("Successfully added proposal");
                 }else{
                     sendButton.setEnabled(true);
-                    System.out.println("Trying to add proposal was not successfull: ");
+                    Toast.makeText(mContext, "Something went wrong, please try later again.", Toast.LENGTH_LONG).show();
                 }
             }
         });

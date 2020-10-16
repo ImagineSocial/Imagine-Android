@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.ImagineCommunity.Imagine_Fund_Activity;
+import com.imagine.myapplication.ImagineCommunity.Information_Activity;
 import com.imagine.myapplication.ImagineCommunity.Proposal;
 import com.imagine.myapplication.ImagineCommunity.ProposalActivity;
 import com.imagine.myapplication.ImagineCommunity.ProposalAdapter;
 import com.imagine.myapplication.ImagineCommunity.ProposalCallback;
+import com.imagine.myapplication.ImagineCommunity.ReportBugActivity;
 import com.imagine.myapplication.R;
-import com.imagine.myapplication.SettingsActivity;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,8 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imagine_community_bugs_card:
-                //gotobugsview
+                Intent bugIntent = new Intent(mContext, ReportBugActivity.class);
+                mContext.startActivity(bugIntent);
                 break;
             case R.id.imagine_community_imagineFund_card:
                 Intent fundIntent = new Intent(mContext, Imagine_Fund_Activity.class);
@@ -79,7 +81,7 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
                 mContext.startActivity(intent);
                 break;
             case R.id.imagine_community_settings_card:
-                Intent InfoIntent = new Intent(mContext, SettingsActivity.class);
+                Intent InfoIntent = new Intent(mContext, Information_Activity.class);
                 mContext.startActivity(InfoIntent);
                 break;
         }
