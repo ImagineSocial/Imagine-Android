@@ -2,6 +2,7 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.LocaleList;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HeaderViewHolder extends CustomViewHolder implements View.OnClickListener {
@@ -50,8 +52,22 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
             weekylTextView.setText(this.textOfTheWeek);
             setFacts(HeaderViewHolder.facts);
         }else{
-            DocumentReference topTopicRef = db.collection("TopTopicData").document("TopTopicData");
-
+            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+            final Locale locale = localeList.get(0);
+            DocumentReference topTopicRef;
+            switch(locale.getLanguage()){
+                case "de":
+                    topTopicRef = db.collection("TopTopicData").document("TopTopicData");
+                    break;
+                case "en":
+                    topTopicRef = db.collection("Data").document("en")
+                            .collection("topTopicData").document("TopTopicData");
+                    break;
+                default:
+                    topTopicRef = db.collection("Data").document("en")
+                            .collection("topTopicData").document("TopTopicData");
+                    break;
+            }
             topTopicRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -62,7 +78,6 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
                                 : (String) "";
                         TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
                         weekylTextView.setText(textOfTheWeek);
-
                         List<String> linkedFactIDs = (docData.get("linkedFactIDs") != null)
                                 ? (List<String>) docData.get("linkedFactIDs")
                                 : (List<String>) null;
@@ -79,8 +94,22 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
 
         final List<Community> facts = new ArrayList<Community>();
         for (final String factID : linkedFactIDs) {
-            DocumentReference factRef = db.collection("Facts").document(factID);
-
+            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+            final Locale locale = localeList.get(0);
+            DocumentReference factRef;
+            switch(locale.getLanguage()){
+                case "de":
+                    factRef = db.collection("Facts").document(factID);
+                    break;
+                case "en":
+                    factRef = db.collection("Data").document("en")
+                            .collection("topics").document(factID);
+                    break;
+                default:
+                    factRef = db.collection("Data").document("en")
+                            .collection("topics").document(factID);
+                    break;
+            }
             factRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -112,7 +141,6 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
 
                         if (facts.size() == 3) {
                             setFacts(facts);
-
                         }
                     } catch (NullPointerException e) {
                         System.out.println(documentSnapshot.getId() + "Got a problem fetching a fact for the top topic Data");
