@@ -2,6 +2,7 @@ package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.imagine.myapplication.Feed.viewholder_classes.CommunityPostViewHolder;
 import com.imagine.myapplication.Feed.viewholder_classes.HeaderViewHolder;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogFragment;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogType;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.CommunityPost;
 import com.imagine.myapplication.post_classes.DefaultPost;
@@ -45,6 +48,7 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
     public HeaderViewHolder header;
     public Activity mainActivity;
     public boolean loadHeader = true;
+    boolean showsInfo = false;
 
     public FeedAdapter(ArrayList<Post> postList, Context mContext) {
         this.postList = postList;
@@ -66,6 +70,20 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
 
         if(position == 0 && loadHeader){
             return R.layout.post_top_header;
+        }
+
+        if (position == 6 && mContext != null && !showsInfo) {
+            showsInfo = true;
+            String langPref = "info_likes";
+            SharedPreferences prefs = mContext.getSharedPreferences("CommonPrefs",
+                    Activity.MODE_PRIVATE);
+            Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+
+            if (!alreadyLaunched) {
+                InfoDialogFragment frag = new InfoDialogFragment(mContext);
+                frag.type = InfoDialogType.likes;
+                frag.show();
+            }
         }
 
         String type;

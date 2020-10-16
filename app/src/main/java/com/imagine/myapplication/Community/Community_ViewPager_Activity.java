@@ -1,8 +1,10 @@
 package com.imagine.myapplication.Community;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.view.View;
@@ -33,6 +35,8 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogFragment;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogType;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
@@ -82,6 +86,17 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         }
 
         setCommunityHeader(this.comm);
+
+        String langPref = "info_communityHeader";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+
+        if (!alreadyLaunched) {
+            InfoDialogFragment frag = new InfoDialogFragment(this);
+            frag.type = InfoDialogType.communityHeader;
+            frag.show();
+        }
     }
 
     public void setCommunityHeader(final Community community) {
@@ -197,6 +212,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
 
                     dialog.setView(layout);
                     dialog.setTitle(getResources().getString(R.string.community_viewpager_activity_post_community_title));
+                    dialog.setMessage(getResources().getString(R.string.community_viewpager_activity_post_community_message));
                     dialog.setPositiveButton(getResources().getString(R.string.community_viewpager_activity_post), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

@@ -2,10 +2,12 @@ package com.imagine.myapplication.nav_fragments;
 
 import android.Manifest;
 import android.animation.LayoutTransition;
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -59,6 +61,8 @@ import com.google.firebase.storage.UploadTask;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_New_Post;
 import com.imagine.myapplication.CommunityPicker.CommunityPickActivity;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogFragment;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogType;
 import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.Post_Fragment_Classes.LinkPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.MultiPictureFragment;
@@ -66,6 +70,7 @@ import com.imagine.myapplication.Post_Fragment_Classes.PicturePostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.ThoughtPostFragment;
 import com.imagine.myapplication.Post_Fragment_Classes.YouTubePostFragment;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.ReportDialogFragment;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.CarouselViewPager;
 import com.synnapps.carouselview.ImageListener;
@@ -208,6 +213,17 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         setThought();
         if(this.comm != null && this.new_post_activity != null){
             this.setUpCommunityViews();
+        }
+
+        String langPref = "info_newPost";
+        SharedPreferences prefs = getContext().getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+
+        if (!alreadyLaunched) {
+            InfoDialogFragment frag = new InfoDialogFragment(getContext());
+            frag.type = InfoDialogType.newPost;
+            frag.show();
         }
     }
 

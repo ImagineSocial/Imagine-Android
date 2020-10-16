@@ -44,6 +44,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogFragment;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogType;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 import com.imagine.myapplication.nav_fragments.Community_Posts_Fragment;
 import com.imagine.myapplication.nav_fragments.Feed_Fragment;
@@ -132,6 +134,17 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+
+        String langPref = "info_intro";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+
+        if (!alreadyLaunched) {
+            InfoDialogFragment frag = new InfoDialogFragment(this);
+            frag.type = InfoDialogType.intro;
+            frag.show();
+        }
     }
 
     @Override
