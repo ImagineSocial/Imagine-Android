@@ -91,7 +91,7 @@
     //--leer--
     //Community_Addons_PreView_VIewHolder
     <string name="community_addons_preview_viewholder_title">Füge eine Kollektion mit Beiträgen und Themen hinzu.</string>
-    <string name="community_addons_preview_viewholder_description">In dies</string>
+    <string name="community_addons_preview_viewholder_description">In diesem AddOn kann man nach belieben vorhandene oder neue Beiträge posten um ein Unterthema deiner Wahl besser zu beleuchten.\nAuch Themen kannst du hier verlinken. Möchtest du jedoch nur ein Thema hervorheben, kannst du das AddOn für einzelne Themen nutzen.</string>
     <string name="community_addons_preview_viewholder_qanda_header">Füge ein Frage/Antwort AddOn hinzu.</string>
     <string name="community_addons_preview_viewholder_qanda_description">Füge dieses AddOn hinzu, um einen Ort für mögliche Fragen zu  schaffen.
         Anfänger können so schneller lernen und Neulinge oder Fremde sich einfacher an einem Ort oder einer Community zurechtfinden.</string>
@@ -246,7 +246,7 @@
     //Imagine_Community_Fragment
     //--leer--
     //New_Post_Fragment
-    <string name="new_post_fragment_folder_dialog_title">Post ein oder mehrere Bilder</string>
+    <string name="new_post_fragment_folder_dialog_title">Poste ein oder mehrere Bilder</string>
     <string name="new_post_fragment_folder_dialog_message">Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf \'Öffnen\'</string>
     <string name="new_post_fragment_folder_dialog_multiple">Mehrere</string>
     <string name="new_post_fragment_folder_dialog_single">Einzeln</string>
@@ -283,8 +283,8 @@
     //NotificationsAdapter
     //--leer--
     //NotificationViewHolder
-    <string name="notification_viewholder_post">Dein Beitrag wurde </string>
-    <string name="notification_viewholder_upvote"> mal geliked.</string>
+    <string name="notification_viewholder_post">Mit deinem Beitrag wurde </string>
+    <string name="notification_viewholder_upvote"> mal interagiert.</string>
     <string name="notification_viewholder_comment"> mal kommentiert.</string>
     <string name="notification_viewholder_friend_title">Du hast eine Freundschaftsanfrage:</string>
     <string name="notification_viewholder_friend_body"> möchte mit dir befreundet sein</string>
@@ -531,7 +531,7 @@
     <string name="fragment_new_post_link_label">Link:</string>
     <string name="fragment_new_post_feed_label">Feed</string>
     //new addon_activity
-    <string name="new_addon_activity_welcome">Willkommen im Addon Store</string>
+    <string name="new_addon_activity_welcome">Willkommen im AddOn Store</string>
     <string name="new_addon_activity_description">Wähle eine Erweiterung aus, um die Community auf deine Weise zu vervollständigen.
          Biete einen detaillierten Einblick, eine andere Sichtweise oder einen einfachen Einstieg. Es sind dir keine Grenzen gesetzt.</string>
     <string name="new_addon_activity_next">Weiter</string>
@@ -591,7 +591,7 @@
     <string name="report_dialog_fragment_hate">Hass</string>
     <string name="report_dialog_fragment_racism">Rassismus</string>
     <string name="report_dialog_fragment_spam">Spam</string>
-    <string name="report_dialog_fragment_fake">Fakenews</string>
+    <string name="report_dialog_fragment_fake">Missinformation</string>
     <string name="report_dialog_fragment_unapp">Unangebrachte Inhalte</string>
     <string name="report_dialog_fragment_else">Sonstiges</string>
     <string name="report_dialog_fragment_report">Melden</string>

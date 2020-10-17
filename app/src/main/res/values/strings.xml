@@ -1,44 +1,44 @@
 <resources>
     <string name="app_name">Imagine</string>
     <string name="contact">Malte Schoppe\nSpitalhofstraße 56\n94032 Passau\n\nImagine@passau.enactus.de</string>
-    <string name="info_string">Unsere Pläne sind groß, der Weg jedoch noch weit. \nIn unserem Android-Prototypen
-        findest du die Grundfunktionen von Imagine. \nMatz (goat) und Malte (auch goat) arbeiten
-        fleißig an neuen Funktionen der App. Wir sind dabei, die Android-Entwicklung zu erlernen,
-        daher wird es noch ein wenig dauern, bis wir den Stand der iOS-App erreicht haben.\n\nAuf
-        unserer Website findest du weitere Informationen zu Imagine, unseren Zielen, unseren kommenden
-        Funktionen, unser Open Source Repository und vieles mehr:</string>
+    <string name="info_string">Our plans are big, but the road ahead is still long. \nIn our Android prototype
+        you will find the basic functions of Imagine. \nMatz (goat) and Malte (also goat) work
+        diligently working on new functions of the App. We are learning the Android development,
+        so it will still take a while until we reach the state of the iOS app. \n\nOn
+        on our website you will find more information about Imagine, our goals, our upcoming
+        functions, our open source repository and much more:</string>
     <string name="toggle1">Ollah</string>
     <string name="toggle2">Ollah</string>
     //newAddOn
-    <string name="addOn_singleTopic_header">Verlinke ein aussagekräftiges Thema.</string>
-    <string name="addOn_singleTopic_description">Verlinke mit diesem AddOn eine andere Community, die den Menschen aus der derzeitigen Community interessant finden könnten. Die Darstellung enthält Bilder-Beiträge, sowie die Beschreibung der Community in der Vorschau.</string>
-    <string name="placeholder_user_feed">Dieser User hat noch keine Beiträge hochgeladen</string>
-    <string name="placeholder_community_feed">Es sind noch keine Beiträge zu diesem Thema zu finden</string>
-    <string name="placeholder_addon">Erstelle jetzt das erste Thema</string>
+    <string name="addOn_singleTopic_header">Link a meaningful topic.</string>
+    <string name="addOn_singleTopic_description">Link with this AddOn another community, which might find the people from the current community interesting. The presentation contains picture posts, as well as the description of the community in the preview.</string>
+    <string name="placeholder_user_feed">This user has not uploaded any posts yet</string>
+    <string name="placeholder_community_feed">There are no posts for this community yet</string>
+    <string name="placeholder_addon">Create the first topic now</string>
 
     //newPost
-    <string name="new_post_header_label">Neuer Beitrag</string>
-    <string name="new_post_picture_label">Bild:</string>
-    <string name="new_post_picture_selection">Bild</string>
-    <string name="new_post_title_label">Titel:</string>
-    <string name="new_post_description_label">Beschreibung:</string>
-    <string name="new_post_destination_label">Ziel:</string>
-    <string name="new_post_link_community_button_label">Community verlinken</string>
-    <string name="new_post_share_button_label">Teilen</string>
+    <string name="new_post_header_label">New post</string>
+    <string name="new_post_picture_label">Picture:</string>
+    <string name="new_post_picture_selection">Picture</string>
+    <string name="new_post_title_label">Title:</string>
+    <string name="new_post_description_label">Description:</string>
+    <string name="new_post_destination_label">Destination:</string>
+    <string name="new_post_link_community_button_label">Link Community</string>
+    <string name="new_post_share_button_label">Share</string>
 
     //Mehrere Verwendungsorte
-    <string name="postcount">Beiträge: </string>
+    <string name="postcount">Posts: </string>
     <string name="followercount">Follower: </string>
     <string name="follow">Follow</string>
     <string name="unfollow">Unfollow</string>
     <string name="anonym">Anonym</string>
-    <string name="post_activity_comment_fail">Kommentar konnte nicht hochgeladen werden!</string>
-    <string name="topics">Themen</string>
-    <string name="discussion">Diskussion</string>
+    <string name="post_activity_comment_fail">Comment could not be uploaded!</string>
+    <string name="topics">Topics</string>
+    <string name="discussion">Discussions</string>
     <string name="feed">Feed</string>
     <string name="imagine_tag">imagine</string>
     //TopTopicFeedCell
-    <string name="topTopic_weekly_header_label">Die Themen der Woche:</string>
+    <string name="topTopic_weekly_header_label">The topics of the week:</string>
 
     //--------------------------------------------------------------------------
     //---------------------------Community--------------------------------------
@@ -56,9 +56,9 @@
     //ArgumentsAdapter
     // --leer--
     //ArgumentsDialogFragment
-    <string name="arguments_dialog_fragment_toast_no_user">Du musst eingeloggt sein um Argumente zu erstellen!</string>
-    <string name="arguments_dialog_fragment_toast_fields_empty">Bitte geben einen Titel und eine Beschreibung an!</string>
-    <string name="arguments_dialog_fragment_toast_argument_fail">Argument wurde nicht hinzugefügt!</string>
+    <string name="arguments_dialog_fragment_toast_no_user">You must be logged in to create arguments!</string>
+    <string name="arguments_dialog_fragment_toast_fields_empty">Please enter a title and a description!</string>
+    <string name="arguments_dialog_fragment_toast_argument_fail">The argument was not added!</string>
     //ArgumentViewHolder
     //--leer--
     //ArgumentViewHolderFooter
@@ -70,9 +70,9 @@
     //Communities_Helper
     //---System.out´s hab ich so gelassen
     //Communities_Sub_Header
-    <string name="communities_sub_header_trending">Angesagt</string>
-    <string name="communities_sub_header_current_discussions">Aktuelle Diskussonen</string>
-    <string name="communities_sub_header_followed_communities">Deine Communities</string>
+    <string name="communities_sub_header_trending">Trending</string>
+    <string name="communities_sub_header_current_discussions">Recent Diskussonen</string>
+    <string name="communities_sub_header_followed_communities">Your Communities</string>
     //Community
     //--leer--
     //Community_Activity
@@ -90,11 +90,11 @@
     //Community_Addons_PreView_Adapter
     //--leer--
     //Community_Addons_PreView_VIewHolder
-    <string name="community_addons_preview_viewholder_title">Füge eine Kollektion mit Beiträgen und Themen hinzu.</string>
-    <string name="community_addons_preview_viewholder_description">In dies</string>
-    <string name="community_addons_preview_viewholder_qanda_header">Füge ein Frage/Antwort AddOn hinzu.</string>
-    <string name="community_addons_preview_viewholder_qanda_description">Füge dieses AddOn hinzu, um einen Ort für mögliche Fragen zu  schaffen.
-        Anfänger können so schneller lernen und Neulinge oder Fremde sich einfacher an einem Ort oder einer Community zurechtfinden.</string>
+    <string name="community_addons_preview_viewholder_title">Add a collection of posts and topics.</string>
+    <string name="community_addons_preview_viewholder_description">In this AddOn you can post existing or new posts to illuminate a subtopic of your choice. You can also link topics here. If you only want to highlight one topic, you can use the AddOn for single topics.</string>
+    <string name="community_addons_preview_viewholder_qanda_header">Add a question/answer AddOn.</string>
+    <string name="community_addons_preview_viewholder_qanda_description">Add this AddOn to create a place for possible questions.
+        Beginners can learn faster and newcomers or strangers can find their way around a place or community more easily.</string>
     //Community_Addons_ViewHolder
     //--leer--
     //Community_All_Communities_Activity
@@ -110,35 +110,35 @@
     //Community_Items_ViewHolder
     //--leer--
     //Community_New_Community_Activity
-    <string name="community_new_community_activty_login">Bitte logge dich ein um eine Community zu erstellen!</string>
-    <string name="community_new_community_activty_name">Bitte geben Sie einen Namen für Ihre Community ein!</string>
-    <string name="community_new_community_activty_description">Bitte geben Sie eine Beschreibung für Ihre Community ein!</string>
-    <string name="community_new_community_activity_success">Community erstellt!</string>
-    <string name="community_new_community_activity_fail">Community konnte nicht erstellt werden!</string>
+    <string name="community_new_community_activty_login">Please log in to create a community!</string>
+    <string name="community_new_community_activty_name">Please enter a name for your community!</string>
+    <string name="community_new_community_activty_description">Please enter a description for your community!</string>
+    <string name="community_new_community_activity_success">Community created!</string>
+    <string name="community_new_community_activity_fail">Community could not be created!</string>
     //Community_New_Post
     //--leer--
     //Community_Own_Comms_ViewHolder
     //--leer
     //Community:Recent_Header
-    <string name="community_recent_header_recents">Kürzlich besucht:</string>
+    <string name="community_recent_header_recents">Recently visited:</string>
     //Community_Recent_ViewHolder
     //--leer--
     //Community_ViewHolder
     //--leer--
     Community_ViewPager_Activity
-    <string name="community_viewpager_activity_login">Du musst eingeloggt sein um eine Community im Feed zu teilen.</string>
-    <string name="community_viewpager_activity_succ">Community im Feed verlinkt.</string>
-    <string name="community_viewpager_activity_fail">Teilen der Community ist fehlgeschlagen.</string>
-    <string name="community_viewpager_activity_topics">Themen:</string>
-    <string name="community_viewpager_activity_discussion">Diskussionen:</string>
+    <string name="community_viewpager_activity_login">You must be logged in to share a community in the feed.</string>
+    <string name="community_viewpager_activity_succ">Community linked in the feed.</string>
+    <string name="community_viewpager_activity_fail">Sharing the community has failed.</string>
+    <string name="community_viewpager_activity_topics">Topics:</string>
+    <string name="community_viewpager_activity_discussion">Discussions:</string>
     <string name="community_viewpager_activity_feed">Feed:</string>
-    <string name="community_viewpager_activity_title">Bitte füge einen Titel hinzu.</string>
-    <string name="community_viewpager_activity_abort">Abbrechen</string>
-    <string name="community_viewpager_activity_title_hint">Titel</string>
-    <string name="community_viewpager_activity_description_hint">Beschreibung</string>
-    <string name="community_viewpager_activity_post">Posten</string>
-    <string name="community_viewpager_activity_post_community_title">Teile diese Community</string>
-    <string name="community_viewpager_activity_post_community_message">Teile diese Community im Haupt-Feed mit deinen Mitmenschen. Nutze den Title um z.B. zu beschreiben, was diese Community für dich besonders macht.</string>    //CommunityAddonsFragment
+    <string name="community_viewpager_activity_title">Please add a title.</string>
+    <string name="community_viewpager_activity_abort">Cancel</string>
+    <string name="community_viewpager_activity_title_hint">Title</string>
+    <string name="community_viewpager_activity_description_hint">Description</string>
+    <string name="community_viewpager_activity_post">Post</string>
+    <string name="community_viewpager_activity_post_community_title">Share this community</string>
+    <string name="community_viewpager_activity_post_community_message">Share this community with your fellow men in the main feed. Use the title to describe what makes this community special for you.</string>    //CommunityAddonsFragment
     //--leer--
     //CommunityFactsFragment
     //--leer--
@@ -174,14 +174,14 @@
     //--leer--
     //CommunityPickActivty
     <string name="community_pick_activity_communities">Communities</string>
-    <string name="community_pick_activity_discussion">Diskussionen</string>
-    <string name="community_pick_activity_own_comms">Deine Communities</string>
+    <string name="community_pick_activity_discussion">Discussionw</string>
+    <string name="community_pick_activity_own_comms">Your Communities</string>
     //CommunityPickerAdapter
     //--leer--
     //FactsFragment
     //--leer--
     //OwnCommsFragment
-    <string name="own_comms_fragment_login">Logge dich ein um hier deine Communities zu sehen!</string>
+    <string name="own_comms_fragment_login">Log in to see your communities here!</string>
     //PickerCollectionAdapter
     //--leer--
     //TopicsFragment
@@ -200,8 +200,8 @@
     //CustomViewHolder
     //--leer--
     //DefaultViewHolder
-    <string name="default_viewholder_unknow_date">Unbekanntes Datum</string>
-    <string name="default_viewholder_unknow_post">Fehlerhafter Post</string>
+    <string name="default_viewholder_unknow_date">Unknown Date</string>
+    <string name="default_viewholder_unknow_post">Wrong Post</string>
     //GIFViewHolder
     // nur anonym
     //HeaderVIewHolder
@@ -213,7 +213,7 @@
     //PictureViewHolder
     // nur anonym
     //PlaceHolderViewHolder
-    <string name="placeholder_viewholder_description">Hier gibt es leider noch nichts zu sehen.</string>
+    <string name="placeholder_viewholder_description">Unfortunately there is nothing to see here yet.</string>
     //RepostViewHolder
     // nur anonym
     //ThoughtViewHolder
@@ -228,7 +228,7 @@
     //--------------------------------------------------------------------------
 
     //Information_Activity
-    <string name="informaton_activity_delete">Dein Account wird innerhalb von 48h gelöscht. Logge dich aus, wir übernehmen den Rest.</string>
+    <string name="informaton_activity_delete">Your account will be deleted within 48h. Log out, we will do the rest.</string>
     //ProposalActivity
     //--leer--
 
@@ -245,30 +245,30 @@
     //Imagine_Community_Fragment
     //--leer--
     //New_Post_Fragment
-    <string name="new_post_fragment_folder_dialog_title">Post ein oder mehrere Bilder</string>
-    <string name="new_post_fragment_folder_dialog_message">Halte ein Bild gedrückt, um bis zu drei Bilder auszuwählen. Tippe anschließend auf \'Öffnen\'</string>
-    <string name="new_post_fragment_folder_dialog_multiple">Mehrere</string>
-    <string name="new_post_fragment_folder_dialog_single">Einzeln</string>
-    <string name="new_post_fragment_info_message">"Standardmäßig postest du im Imagine Feed. Poste hier alles, was " +
-                                "du mit der Welt teilen möchtest.\n\nWählst du eine Community aus, kannst du entscheiden," +
-                                " ob du deinen Beitrag im Imagine Feed teilst oder nur in einer Community. Die Follower einer Community sehen dann deinen Beitrag" +
-                                " in ihrem angepassten Imagine-Feed.\nPoste in der Community also alles, was sehr themenspezifisch ist oder nicht für die breite Masse zugänglich ist."</string>
+    <string name="new_post_fragment_folder_dialog_title">Post one or more images</string>
+    <string name="new_post_fragment_folder_dialog_message">Press and hold an image to select up to three images. Then tap on \'Open\'.</string>
+    <string name="new_post_fragment_folder_dialog_multiple">Multiple</string>
+    <string name="new_post_fragment_folder_dialog_single">Just one</string>
+    <string name="new_post_fragment_info_message">"By default you post in the Imagine Feed. Post here everything that " +
+                                "you want to share with the world.\n\nWhen you choose a community, you can decide" +
+                                "whether you share your post in the Imagine Feed or just in a community. The followers of a community will see your post" +
+                                "In its customized Imagine-Feed.\nShare in the community everything that is very topic-specific or is not accessible to the general public.</string>
     <string name="new_post_fragment_destination">Feed</string>
-    <string name="new_post_fragment_three">Bitte wähle nicht mehr als drei Bilder aus.</string>
-    <string name="new_post_fragment_single_image">Um ein Bild auszuwählen klicken Sie bitte auf \'Einzeln\'.</string>
-    <string name="new_post_fragment_dialog_community_title">Wo möchtest du Posten?</string>
-    <string name="new_post_fragment_dialog_community_message">Möchtest du den Beitrag mit allen im Hauptfeed, oder nur in der Community posten?</string>
-    <string name="new_post_fragment_dialog_community_positiv">Mit allen teilen.</string>
-    <string name="new_post_fragment_dialog_community_negative">Mit der Community teilen.</string>
+    <string name="new_post_fragment_three">Please select no more than three images.</string>
+    <string name="new_post_fragment_single_image">To select a picture please click on \'Single\'..</string>
+    <string name="new_post_fragment_dialog_community_title">Where would you like a post?</string>
+    <string name="new_post_fragment_dialog_community_message">Do you want to share the post with everyone in the main feed, or just in the community?</string>
+    <string name="new_post_fragment_dialog_community_positiv">Share with everyone.</string>
+    <string name="new_post_fragment_dialog_community_negative">Share with the community.</string>
     <string name="new_post_fragment_community">Community</string>
-    <string name="new_post_fragment_share_title">Gib bitte einen Title ein.</string>
-    <string name="new_post_fragment_share_image">Bitte wähle ein Bild aus.</string>
-    <string name="new_post_fragment_share_link">Gib bitte einen Link ein.</string>
-    <string name="new_post_fragment_share_login">Logge dich ein um zu Posten.</string>
-    <string name="new_post_fragment_images">Bitte wähle mehrere Bilder aus.</string>
-    <string name="new_post_fragment_mp4">Im Moment unterstützen wir leider nur Links im .mp4 Format.</string>
-    <string name="new_post_fragment_succ_title">Vielen Dank!</string>
-    <string name="new_post_fragment_succ_message">Nett, dass du deine Weisheiten mit uns teilst.</string>
+    <string name="new_post_fragment_share_title">Please enter a title.</string>
+    <string name="new_post_fragment_share_image">Please select an image.</string>
+    <string name="new_post_fragment_share_link">Please enter a link.</string>
+    <string name="new_post_fragment_share_login">Log in to post.</string>
+    <string name="new_post_fragment_images">Please select multiple images.</string>
+    <string name="new_post_fragment_mp4">At the moment we only support links in .mp4 format.</string>
+    <string name="new_post_fragment_succ_title">Thanks a lot!</string>
+    <string name="new_post_fragment_succ_message">Nice of you to share your wisdom with us.</string>
     <string name="new_post_fragment_succ_ok">OK</string>
 
     //--------------------------------------------------------------------------
@@ -282,11 +282,11 @@
     //NotificationsAdapter
     //--leer--
     //NotificationViewHolder
-    <string name="notification_viewholder_post">Dein Beitrag wurde </string>
-    <string name="notification_viewholder_upvote"> mal geliked.</string>
-    <string name="notification_viewholder_comment"> mal kommentiert.</string>
-    <string name="notification_viewholder_friend_title">Du hast eine Freundschaftsanfrage:</string>
-    <string name="notification_viewholder_friend_body"> möchte mit dir befreundet sein</string>
+    <string name="notification_viewholder_post">Your post was </string>
+    <string name="notification_viewholder_upvote"> times interacted with.</string>
+    <string name="notification_viewholder_comment"> times commented.</string>
+    <string name="notification_viewholder_friend_title">You have a friend request:</string>
+    <string name="notification_viewholder_friend_body"> wants to be friends with you</string>
 
     //--------------------------------------------------------------------------
     //-----------------------------post_classes---------------------------------
@@ -395,15 +395,15 @@
     //LoginActivity
     <string name="login_activity_login">Login</string>
     <string name="login_activity_signup">Sign up</string>
-    <string name="login_activity_mailpass">Bitte Email und Passwort eingeben</string>
-    <string name="login_activity_loginfail">Login fehlgeschlagen. </string>
-    <string name="login_activty_fields">Bitte fülle alle Felder aus.</string>
-    <string name="login_activty_pass_veri">Die Passwörter stimmen nicht überein.</string>
-    <string name="login_activity_data">Bitte akzeptiere unsere Datenschutzerklärung.</string>
-    <string name="login_activity_fail_pass">Registrierung fehlgeschlagen. Das Passwort ist zu schwach.</string>
-    <string name="login_activity_fail_mal">Registrierung fehlgeschlagen. Falsches Emailformat</string>
-    <string name="login_activity_fail_used">Registrierung fehlgeschlagen. Die Email wird bereits benutzt.</string>
-    <string name="login_activity_welcome">Willkommen bei Imagine</string>
+    <string name="login_activity_mailpass">Please enter email and password</string>
+    <string name="login_activity_loginfail">Login failed. </string>
+    <string name="login_activty_fields">Please fill out all fields.</string>
+    <string name="login_activty_pass_veri">The passwords do not match.</string>
+    <string name="login_activity_data">Please accept our privacy policy.</string>
+    <string name="login_activity_fail_pass">Registration failed. The password is too weak.</string>
+    <string name="login_activity_fail_mal">Registration failed. Wrong email format</string>
+    <string name="login_activity_fail_used">Registration failed. The email is already in use.</string>
+    <string name="login_activity_welcome">Welcome to Imagine</string>
     //MainActivivty
     <string name="main_activity_name">Name</string>
     //MyApplication
@@ -422,26 +422,26 @@
     //--------------------------------------------------------------------------
 
     //activity_argument
-    <string name="activity_argument_sources">Quellen:</string>
+    <string name="activity_argument_sources">Sources:</string>
     <string name="activity_argument_recycler">Hier noch RecyclerView?</string>
-    <string name="activity_argument_counterargs">Gegenargumente:</string>
+    <string name="activity_argument_counterargs">Counterarguments:</string>
     //activity_login
     <string name="activity_login_login">Login</string>
     <string name="activity_login_signup">SignUp</string>
-    <string name="activity_login_surname">Nachname</string>
-    <string name="activity_login_pass_rep">Passwort wiederholden:</string>
+    <string name="activity_login_surname">Surname</string>
+    <string name="activity_login_pass_rep">Repeat password:</string>
     <string name="activity_login_email">E-Mail:</string>
     <string name="activity_login_pass">Passwort:</string>
     <string name="activity_login_name">Name</string>
-    <string name="activity_login_data">Ich akzeptiere die Datenschutzverordnung</string>
-    <string name="activity_login_show">Anzeigen</string>
-    <string name="activity_login_name_hide">Dein Nachname wird nur für deine Freunde sichtbar sein.</string>
+    <string name="activity_login_data">I accept the privacy policy</string>
+    <string name="activity_login_show">Show</string>
+    <string name="activity_login_name_hide">Your last name will only be visible to your friends.</string>
     //activity_main
     //--leer--
     //activity_main_include
     //--imagineTag und login
     //activity_post
-    <string name="activity_post_comment">Kommentare:</string>
+    <string name="activity_post_comment">Comments:</string>
     //activity_user
     //--leer--
     //activity_community_new_post
@@ -455,7 +455,7 @@
     //addon_items_post_viewholder
     //--leer--
     //addons_header_viewholder
-    <string name="addons_header_viewholder_add">Hinzufügen</string>
+    <string name="addons_header_viewholder_add">Add</string>
     //argument
     //--leer--
     //argument_footer
@@ -481,17 +481,17 @@
     <string name="community_feed_header_feed">Feed</string>
     <string name="community_feed_header_topics">Feed</string>
     //community_footer
-    <string name="community_footer_show_all">Alle anzeigen</string>
+    <string name="community_footer_show_all">Show all</string>
     //community_gif#
     //--leer--
     //community_multipicture
     //--leer--
     //community_new_activity
-    <string name="community_new_activity_pic">Bild:</string>
-    <string name="community_new_activity_description">Beschreibung:</string>
-    <string name="community_new_activity_title">Titel:</string>
-    <string name="community_new_activity_new_label">Erstelle eine neue Community</string>
-    <string name="community_new_activity_finish">Fertig</string>
+    <string name="community_new_activity_pic">Picture:</string>
+    <string name="community_new_activity_description">Description:</string>
+    <string name="community_new_activity_title">Title:</string>
+    <string name="community_new_activity_new_label">Create a new community</string>
+    <string name="community_new_activity_finish">Done</string>
     //community_own_comms
     //--leer--
     //community_picker_activity
@@ -518,34 +518,34 @@
     //fragment_feed
     //--leer--
     //fragment_imagine_community
-    <string name="fragment_imagine_community_welcome">Willkommen</string>
+    <string name="fragment_imagine_community_welcome">Welcome</string>
     <string name="fragment_imagine_community_fund">Imagine\nFund</string>
-    <string name="fragment_imagine_community_suggest">Vorschläge</string>
-    <string name="fragment_imagine_community_errors">Fehler/Bugs</string>
-    <string name="fragment_imagine_community_settings">Einstellungen</string>
-    <string name="fragment_imagine_community_top_sugg">Top Vorschläge</string>
+    <string name="fragment_imagine_community_suggest">Proposals</string>
+    <string name="fragment_imagine_community_errors">Bugs</string>
+    <string name="fragment_imagine_community_settings">Settings</string>
+    <string name="fragment_imagine_community_top_sugg">Top Proposals</string>
     //fragment_new_post
     <string name="fragment_new_post_thought">Text</string>
     <string name="fragment_new_post_link">Link</string>
     <string name="fragment_new_post_link_label">Link:</string>
     <string name="fragment_new_post_feed_label">Feed</string>
     //new addon_activity
-    <string name="new_addon_activity_welcome">Willkommen im Addon Store</string>
-    <string name="new_addon_activity_description">Wähle eine Erweiterung aus, um die Community auf deine Weise zu vervollständigen.
-         Biete einen detaillierten Einblick, eine andere Sichtweise oder einen einfachen Einstieg. Es sind dir keine Grenzen gesetzt.</string>
-    <string name="new_addon_activity_next">Weiter</string>
+    <string name="new_addon_activity_welcome">Welcome to the AddOn Store</string>
+    <string name="new_addon_activity_description">Choose an extension to complete the community in your own way.
+         Offer a detailed insight, a different perspective or an easy start. There are no limits.</string>
+    <string name="new_addon_activity_next">Next</string>
     //new addon_dialog_fragment
-    <string name="new_addon_dialog_fragment_create">Erstelle ein neues Addon</string>
-    <string name="new_addon_dialog_fragment_title">Titel:</string>
-    <string name="new_addon_dialog_fragment_description">Beschreibung</string>
-    <string name="new_addon_dialog_fragment_pic">Bild:</string>
-    <string name="new_addon_dialog_fragment_choose">Auswählen</string>
+    <string name="new_addon_dialog_fragment_create">Create a new AddOn</string>
+    <string name="new_addon_dialog_fragment_title">Title:</string>
+    <string name="new_addon_dialog_fragment_description">Description</string>
+    <string name="new_addon_dialog_fragment_pic">Picture:</string>
+    <string name="new_addon_dialog_fragment_choose">Choose</string>
     //new_addon_viewholder
     // nur komsiche Sachen
     //new argument_dielog_fragment
-    <string name="new_argument_dialog_fragment_create">Erstelle ein neues Argument</string>
-    <string name="new_argument_dialog_fragment_sources">Das hinzufügen und bewerten von Quellen und Gegenargumenten folgt bald.
-        Wenn du eine Quelle hinzufügen möchtest, schreibe sie gerne mit in deine Beschreibung.</string>
+    <string name="new_argument_dialog_fragment_create">Create a new argument</string>
+    <string name="new_argument_dialog_fragment_sources">Adding and evaluating sources and counterarguments will follow soon.
+        If you want to add a source, please include it in your description.</string>
     //notification_cell
     //--leer--
     //placeholder_cell
@@ -573,48 +573,48 @@
     //post_youtube
     //--leer--
     //proposal_activity
-    <string name="proposal_activity_header">Wie kann sich Imagine verbessern?</string>
-    <string name="proposal_activity_title">Titel:</string>
-    <string name="proposal_activity_summary">Zusammenfassung:</string>
-    <string name="proposal_activity_idea">Idee:</string>
-    <string name="proposal_activity_tv21">Bei Imagine wollen wir die wichtigen Entscheidungen gemeinsam treffen. \nReiche eigene Vorschläge ein und lass die Community entscheiden.</string>
-    <string name="proposal_activity_send">Senden</string>
-    <string name="proposal_activity_recents">Bisherige Vorschläge</string>
+    <string name="proposal_activity_header">How can Imagine improve?</string>
+    <string name="proposal_activity_title">Title:</string>
+    <string name="proposal_activity_summary">Summary:</string>
+    <string name="proposal_activity_idea">Idea:</string>
+    <string name="proposal_activity_tv21">At Imagine we want to make the important decisions together. \Submit your own proposals and let the community decide.</string>
+    <string name="proposal_activity_send">Send</string>
+    <string name="proposal_activity_recents">Previous proposals</string>
     //proposal_cell
-    <string name="proposal_cell_suggest">Vorschlag</string>
-    <string name="proposal_cell_date">Datum</string>
+    <string name="proposal_cell_suggest">proposal</string>
+    <string name="proposal_cell_date">Date</string>
     //report_dialog_fragment
-    <string name="report_dialog_fragment_exp">Ein Mitarbeiter wird deine Anfrage überprüfen.
-        Sollte deine Meldung korrekt sein, wird dieser Beitrag optisch markiert. Zu einem späteren Zeitpunkt übernehmen die User demokratisch diese Überprüfung.
-        \nVielen Dank für deine Mithilfe!</string>
-    <string name="report_dialog_fragment_hate">Hass</string>
-    <string name="report_dialog_fragment_racism">Rassismus</string>
+    <string name="report_dialog_fragment_exp">A colleague will review your request.
+        If your message is correct, this post will be highlighted. At a later date the users will democratically take over this check.
+        \nThanks for your help!</string>
+    <string name="report_dialog_fragment_hate">Hate</string>
+    <string name="report_dialog_fragment_racism">Racism</string>
     <string name="report_dialog_fragment_spam">Spam</string>
-    <string name="report_dialog_fragment_fake">Fakenews</string>
-    <string name="report_dialog_fragment_unapp">Unangebrachte Inhalte</string>
-    <string name="report_dialog_fragment_else">Sonstiges</string>
-    <string name="report_dialog_fragment_report">Melden</string>
-    <string name="report_dialog_fragment_note">Anmerkungen:</string>
-    <string name="report_dialog_fragment_toast">Bitte wählen Sie einen Grund für Ihre Meldung aus!</string>
-    <string name="report_dialog_fragment_login">Sie müssen eingeloggt sein um einen Post zu melden!</string>
-    <string name="report_dialog_fragment_fail">Meldung konnte nicht abgesendet werden!</string>
-    <string name="report_dialog_fragment_succ">Post wurde erfolgreich gemeldet!</string>
+    <string name="report_dialog_fragment_fake">Misinformation</string>
+    <string name="report_dialog_fragment_unapp">Inappropriate content</string>
+    <string name="report_dialog_fragment_else">Others</string>
+    <string name="report_dialog_fragment_report">Report</string>
+    <string name="report_dialog_fragment_note">Notes:</string>
+    <string name="report_dialog_fragment_toast">Please select a reason for your message!</string>
+    <string name="report_dialog_fragment_login">You must be logged in to report a post!</string>
+    <string name="report_dialog_fragment_fail">Message could not be sent!</string>
+    <string name="report_dialog_fragment_succ">Post was successfully reported!</string>
     //setting_and_impressum_activity
-    <string name="setting_and_impressum_activity_tv12">Bei Fragen oder Anregungen, freuen wir uns von dir zu hören. Du erreichst uns über unsere Social Media Kanäle, GitHub oder per Mail.</string>
-    <string name="setting_and_impressum_activity_welcome">Willkommen bei Imagine!</string>
-    <string name="setting_and_impressum_activity_contact">Kontakt:</string>
-    <string name="setting_and_impressum_activity_delete">Account löschen</string>
-    <string name="setting_and_impressum_activity_data">Unsere Datenschutzerklärung:</string>
-    <string name="setting_and_impressum_activity_tv10">Ein wirklich soziales Netzwerk: demokratisch, transparent und unterhaltend. Ohne Platz für Manipulation und Datenmissbrauch.</string>
+    <string name="setting_and_impressum_activity_tv12">If you have any questions or suggestions, we look forward to hearing from you. You can reach us through our social media channels, GitHub, or by email.</string>
+    <string name="setting_and_impressum_activity_welcome">Welcome to Imagine!</string>
+    <string name="setting_and_impressum_activity_contact">Contact:</string>
+    <string name="setting_and_impressum_activity_delete">Delete Account</string>
+    <string name="setting_and_impressum_activity_data">Our privacy policy:</string>
+    <string name="setting_and_impressum_activity_tv10">A truly social network: democratic, transparent and entertaining. Without room for manipulation and data abuse.</string>
     <string name="setting_and_impressum_activity_web">https://imagine.social</string>
-    <string name="setting_and_impressum_activity_language">Sprache:</string>
-    <string name="setting_and_impressum_activity_german">Deutsch</string>
-    <string name="setting_and_impressum_activity_english">Englisch</string>
-    <string name="setting_and_impressum_activity_settings">Einstellungen:</string>
+    <string name="setting_and_impressum_activity_language">Language:</string>
+    <string name="setting_and_impressum_activity_german">German</string>
+    <string name="setting_and_impressum_activity_english">English</string>
+    <string name="setting_and_impressum_activity_settings">Settings:</string>
     //side_menu
     <string name="side_menu_name">Name</string>
-    <string name="side_menu_notis">Benachrichtigungen:</string>
-    <string name="side_menu_delete">Alle entfernen</string>
+    <string name="side_menu_notis">Notifications:</string>
+    <string name="side_menu_delete">Delete all</string>
     //test_zoom_image
     //--leer--
     //user_header
@@ -624,9 +624,9 @@
     //viewpager_test_fragment
     //--leer--
     //report_bug_activity
-    <string name="bug_description">Erkläre uns bitte mit deinen Worten kurz, wo es ein Problem gibt. Je mehr Informationen wir haben, desto besser können wir das Problem eingrenzen.
-        Wir werden uns so schnell wie möglich darum kümmern!</string>
-    <string name="bug_header">Wo gibt es ein Problem?</string>
+    <string name="bug_description">Please use your words to briefly explain to us where there is a problem. The more information we have, the better we can narrow down the problem.
+        We will take care of it as soon as possible!</string>
+    <string name="bug_header">What\'s the problem?</string>
     //InfoDialogFragment
     <string name="done">Done</string>
     <string name="next">Next</string>
