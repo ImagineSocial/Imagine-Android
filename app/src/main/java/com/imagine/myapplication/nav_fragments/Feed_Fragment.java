@@ -2,6 +2,7 @@ package com.imagine.myapplication.nav_fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.FeedAdapter;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogFragment;
+import com.imagine.myapplication.ImagineCommunity.InfoDialogType;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
@@ -63,6 +66,17 @@ public class Feed_Fragment extends Fragment {
         }else {
             initRecyclerView(view);
             loadPosition();
+        }
+
+        String langPref = "info_likes";
+        SharedPreferences prefs = getContext().getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+
+        if (!alreadyLaunched) {
+            InfoDialogFragment frag = new InfoDialogFragment(getContext());
+            frag.type = InfoDialogType.likes;
+            frag.show();
         }
 
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

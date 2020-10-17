@@ -327,35 +327,39 @@ public class Communities_Helper {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         Map<String, Object> docData = documentSnapshot.getData();
-                        final String communityName = (docData.get("name") != null)      // Condition
-                                ? (String) docData.get("name")              // IF-True
-                                : (String) "";                              // ELSE
-                        final String communityImageURL = (docData.get("imageURL") != null)
-                                ? (String) docData.get("imageURL")
-                                : (String) "";
-                        final String communityID = linkedCommID;
-                        final String description = (docData.get("description") != null)
-                                ? (String) docData.get("description")
-                                : (String) "";
-                        final long postCount = (docData.get("postCount") != null)
-                                ? (long) docData.get("postCount")
-                                : (long) 0;
-                        List<String> follower = (docData.get("follower") != null)
-                                ? (List<String>) docData.get("follower")
-                                : (List<String>) new ArrayList();
-                        int followerCount = follower.size();
+                        if (docData != null) {
+                            final String communityName = (docData.get("name") != null)      // Condition
+                                    ? (String) docData.get("name")              // IF-True
+                                    : (String) "";                              // ELSE
+                            final String communityImageURL = (docData.get("imageURL") != null)
+                                    ? (String) docData.get("imageURL")
+                                    : (String) "";
+                            final String communityID = linkedCommID;
+                            final String description = (docData.get("description") != null)
+                                    ? (String) docData.get("description")
+                                    : (String) "";
+                            final long postCount = (docData.get("postCount") != null)
+                                    ? (long) docData.get("postCount")
+                                    : (long) 0;
+                            List<String> follower = (docData.get("follower") != null)
+                                    ? (List<String>) docData.get("follower")
+                                    : (List<String>) new ArrayList();
+                            int followerCount = follower.size();
 
-                        final String displayOption =(String) docData.get("displayOption");
-                        Community comm = new Community(communityName,communityImageURL,communityID,description);
-                        comm.displayOption = displayOption;
-                        comm.followerCount = followerCount;
-                        comm.postCount = (int) postCount;
-                        callback.onCallback(comm);
-                        if(commCache.size() <= 20){
-                            commCache.add(comm);
-                        }else{
-                            commCache.remove(19);
-                            commCache.add(comm);
+                            final String displayOption = (String) docData.get("displayOption");
+                            Community comm = new Community(communityName, communityImageURL, communityID, description);
+                            comm.displayOption = displayOption;
+                            comm.followerCount = followerCount;
+                            comm.postCount = (int) postCount;
+                            callback.onCallback(comm);
+                            if (commCache.size() <= 20) {
+                                commCache.add(comm);
+                            } else {
+                                commCache.remove(19);
+                                commCache.add(comm);
+                            }
+                        } else {
+                            System.out.println("##no document for community because Matz was too busy watching granny hentai");
                         }
                     }
                 });
