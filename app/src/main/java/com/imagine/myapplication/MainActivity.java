@@ -134,12 +134,10 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
-
         String langPref = "info_intro";
         SharedPreferences prefs = getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);
         Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
-
         if (!alreadyLaunched) {
             InfoDialogFragment frag = new InfoDialogFragment(this);
             frag.type = InfoDialogType.intro;
