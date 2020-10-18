@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         helper = new Post_Helper(this);
         loadLocale();
+        showIntro();
         this.mContext = this;
         mainActivity = this;
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -494,14 +495,13 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(langPref, lang);
         editor.commit();
-        showIntro();
     }
 
     public void showIntro() {
         String langPref = "info_intro";
         SharedPreferences prefs = getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);
-        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+        boolean alreadyLaunched = prefs.getBoolean(langPref, false);
 
         if (!alreadyLaunched) {
             InfoDialogFragment frag = new InfoDialogFragment(this);
