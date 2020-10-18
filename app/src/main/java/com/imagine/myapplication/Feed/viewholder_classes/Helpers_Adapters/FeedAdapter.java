@@ -72,19 +72,6 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
             return R.layout.post_top_header;
         }
 
-        if (position == 6 && mContext != null && !showsInfo) {
-            showsInfo = true;
-            String langPref = "info_likes";
-            SharedPreferences prefs = mContext.getSharedPreferences("CommonPrefs",
-                    Activity.MODE_PRIVATE);
-            Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
-
-            if (!alreadyLaunched) {
-                InfoDialogFragment frag = new InfoDialogFragment(mContext);
-                frag.type = InfoDialogType.likes;
-                frag.show();
-            }
-        }
 
         String type;
 
