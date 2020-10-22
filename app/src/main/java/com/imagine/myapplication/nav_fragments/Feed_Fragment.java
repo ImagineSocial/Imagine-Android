@@ -69,11 +69,14 @@ public class Feed_Fragment extends Fragment {
         }
 
         String langPref = "info_likes";
+        String introShown = "info_intro";
+
         SharedPreferences prefs = getContext().getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);
         Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+        Boolean alreadyShownIntro = prefs.getBoolean(introShown, false);
 
-        if (!alreadyLaunched) {
+        if (!alreadyLaunched && alreadyShownIntro) {
             InfoDialogFragment frag = new InfoDialogFragment(getContext());
             frag.type = InfoDialogType.likes;
             frag.show();

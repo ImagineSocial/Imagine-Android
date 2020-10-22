@@ -47,8 +47,10 @@ public class InfoDialogFragment extends AlertDialog {
             switch (type) {
                 case communityHeader:
                     infoView = R.drawable.info_view_community_header;
+                    break;
                 case likes:
                     infoView = R.drawable.info_view_likes;
+                    break;
             }
         }
         carouselView.setPageTransformInterval(600);

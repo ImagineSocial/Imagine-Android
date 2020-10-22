@@ -115,10 +115,6 @@ public class MainActivity extends AppCompatActivity{
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this.navViewListener);
         this.header = navigationView.getHeaderView(0);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,toolbar,
-//                R.string.toggle1,R.string.toggle2);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
         //Reference to UserImage and LoginButton in Toolbar
         this.imageCircle = findViewById(R.id.toolbarProfilePicture);
         this.loginButton = findViewById(R.id.toolbarLoginButton);
@@ -478,8 +474,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void changeLang(String lang) {
         Locale myLocale;
-        if (lang.equalsIgnoreCase(""))
+        if (lang.equalsIgnoreCase("")) {
             return;
+        }
         myLocale = new Locale(lang);
         saveLocale(lang);
         Locale.setDefault(myLocale);

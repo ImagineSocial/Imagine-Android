@@ -92,10 +92,12 @@ public class User_Feed_Header_Viewholder extends CustomViewHolder {
         }else{
             Glide.with(itemView).load(user.imageURL).into(profileImageView);
         }
-        if (user.statusQuote.equals("")) {
-            statusTextLabel.setText("");
-        }else {
-            statusTextLabel.setText(user.statusQuote);
+        if (user.statusQuote != null) {
+            if (user.statusQuote.equals("")) {
+                statusTextLabel.setText("");
+            } else {
+                statusTextLabel.setText(user.statusQuote);
+            }
         }
     }
 

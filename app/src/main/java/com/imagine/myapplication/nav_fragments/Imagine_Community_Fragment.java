@@ -55,7 +55,7 @@ public class Imagine_Community_Fragment extends Fragment implements View.OnClick
 
     public void getCampaigns(final RecyclerView recyclerView) {
         ProposalActivity proposalActivity = new ProposalActivity();
-        proposalActivity.getProposals(true, new ProposalCallback() {
+        proposalActivity.getProposals(mContext,true, new ProposalCallback() {
             @Override
             public void onCallback(ArrayList<Proposal> proposals) {
                 ProposalAdapter adapter = new ProposalAdapter(proposals, mContext);

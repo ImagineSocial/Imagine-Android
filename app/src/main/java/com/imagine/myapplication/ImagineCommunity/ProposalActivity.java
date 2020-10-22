@@ -3,6 +3,7 @@ package com.imagine.myapplication.ImagineCommunity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ProposalActivity extends AppCompatActivity {
 
@@ -51,7 +53,7 @@ public class ProposalActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(
             WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //TO tell the textinput view to shut up when starting
 
-        getProposals(false, new ProposalCallback() {
+        getProposals(mContext,false, new ProposalCallback() {
             @Override
             public void onCallback(ArrayList<Proposal> proposals) {
                 setRecyclerView(proposals);
@@ -72,46 +74,62 @@ public class ProposalActivity extends AppCompatActivity {
         });
     }
 
-    public void getProposals(Boolean justTenCampaigns, final ProposalCallback callback){
+    public void getProposals(Context context, Boolean justTenCampaigns, final ProposalCallback callback){
         // fetches the comments for the postActivitys
         final ArrayList<Proposal> proposalArray = new ArrayList<>();
 
-        Query proposalRef = db.collection("Campaigns").orderBy("supporter", Query.Direction.DESCENDING);
-        if (justTenCampaigns) {
-            proposalRef = proposalRef.limit(10);
-        }
+        if (context != null) {
+            LocaleList localeList = context.getResources().getConfiguration().getLocales();
+            Locale locale = localeList.get(0);
 
-        proposalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    QuerySnapshot querySnapshot = task.getResult();
-                    List<DocumentSnapshot> docsList = querySnapshot.getDocuments();
+            Query proposalRef;
 
-                    for (DocumentSnapshot docSnap: docsList) {
-                        final Proposal proposal = new Proposal();
-                        proposal.title = docSnap.getString("title");
-                        proposal.description = docSnap.getString("description");
-                        proposal.summary = docSnap.getString("summary");
-                        Timestamp sentAt = docSnap.getTimestamp("createTime");
-                        proposal.OP = docSnap.getString("OP");
-                        Double supporter = docSnap.getDouble("supporter");
-                        Double opposition = docSnap.getDouble("opposition");
-                        proposal.supporter = (int) supporter.intValue();
-                        proposal.opposition = (int) opposition.intValue();
+            switch (locale.getLanguage()) {
+                case "de":
+                    proposalRef = db.collection("Campaigns").orderBy("supporter", Query.Direction.DESCENDING);
+                    break;
+                default:
+                    proposalRef = db.collection("Data").document("en").collection("campaigns").orderBy("supporter", Query.Direction.DESCENDING);
+                    break;
+            }
 
-                        Long timeNow = new Date().getTime();
+
+            if (justTenCampaigns) {
+                proposalRef = proposalRef.limit(10);
+            }
+
+            proposalRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        List<DocumentSnapshot> docsList = querySnapshot.getDocuments();
+
+                        for (DocumentSnapshot docSnap : docsList) {
+                            final Proposal proposal = new Proposal();
+                            proposal.title = docSnap.getString("title");
+                            proposal.description = docSnap.getString("description");
+                            proposal.summary = docSnap.getString("summary");
+                            Timestamp sentAt = docSnap.getTimestamp("createTime");
+                            proposal.OP = docSnap.getString("OP");
+                            Double supporter = docSnap.getDouble("supporter");
+                            Double opposition = docSnap.getDouble("opposition");
+                            proposal.supporter = (int) supporter.intValue();
+                            proposal.opposition = (int) opposition.intValue();
+
+                            Long timeNow = new Date().getTime();
 //                        String dateString = convertLongDateToAgoString(sentAt.toDate(),timeNow);
 
-                        proposalArray.add(proposal);
-                    }
+                            proposalArray.add(proposal);
+                        }
 
-                    callback.onCallback(proposalArray);
-                }else if(task.isCanceled()){
-                    System.out.println("Task Failed!");
+                        callback.onCallback(proposalArray);
+                    } else if (task.isCanceled()) {
+                        System.out.println("Task Failed!");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void setRecyclerView(ArrayList<Proposal> proposals) {
@@ -138,7 +156,20 @@ public class ProposalActivity extends AppCompatActivity {
     }
 
     public void uploadToFirebase(String title, String summary, String description) {
-        DocumentReference proposalRef = db.collection("Campaigns").document();
+        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+        DocumentReference proposalRef;
+
+        switch(locale.getLanguage()){
+            case "de":
+                proposalRef = db.collection("Campaigns").document();
+                break;
+            default:
+                proposalRef = db.collection("Data").document("en").collection("campaigns").document();
+                break;
+        }
+
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         HashMap<String,Object> data = new HashMap<>();
