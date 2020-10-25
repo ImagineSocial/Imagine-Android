@@ -36,7 +36,7 @@ import java.util.Map;
 public class HeaderViewHolder extends CustomViewHolder implements View.OnClickListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public View mItemView;
-    public static List<Community> facts;
+    public  List<Community> facts;
     public static String textOfTheWeek;
     public boolean isInitialized;
 
@@ -50,7 +50,7 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
         if(facts != null && facts.size() == 3 ){
             TextView weekylTextView = itemView.findViewById(R.id.topTopic_weeklyTextView);
             weekylTextView.setText(this.textOfTheWeek);
-            setFacts(HeaderViewHolder.facts);
+            setFacts(this.facts);
         }else{
             LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
             final Locale locale = localeList.get(0);
@@ -151,35 +151,39 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
     }
 
     public void setFacts(List<Community> facts) {
-        final Community community1 = facts.get(0);
-        final Community community2 = facts.get(1);
-        final Community community3 = facts.get(2);
-        this.facts = facts;
+        try{
+            final Community community1 = facts.get(0);
+            final Community community2 = facts.get(1);
+            final Community community3 = facts.get(2);
+            this.facts = facts;
 
-        ImageView firstImageView = itemView.findViewById(R.id.topTopic_firstImageView);
-        ImageView secondImageView = itemView.findViewById(R.id.topTopic_secondImageView);
-        ImageView thirdImageView = itemView.findViewById(R.id.topTopic_thirdImageView);
-        TextView firstTextView = itemView.findViewById(R.id.topTopic_firstCommButton);
-        TextView secondTextView = itemView.findViewById(R.id.topTopic_secondCommButton);
-        TextView thirdTextView = itemView.findViewById(R.id.topTopic_thirdCommButton);
+            ImageView firstImageView = itemView.findViewById(R.id.topTopic_firstImageView);
+            ImageView secondImageView = itemView.findViewById(R.id.topTopic_secondImageView);
+            ImageView thirdImageView = itemView.findViewById(R.id.topTopic_thirdImageView);
+            TextView firstTextView = itemView.findViewById(R.id.topTopic_firstCommButton);
+            TextView secondTextView = itemView.findViewById(R.id.topTopic_secondCommButton);
+            TextView thirdTextView = itemView.findViewById(R.id.topTopic_thirdCommButton);
 
-        firstImageView.setClipToOutline(true);
-        firstImageView.setOnClickListener(this);
-        Glide.with(itemView).load(community1.imageURL).into(firstImageView);
-        firstTextView.setText(community1.name);
-        firstTextView.setOnClickListener(this);
+            firstImageView.setClipToOutline(true);
+            firstImageView.setOnClickListener(this);
+            Glide.with(itemView).load(community1.imageURL).into(firstImageView);
+            firstTextView.setText(community1.name);
+            firstTextView.setOnClickListener(this);
 
-        secondImageView.setClipToOutline(true);
-        secondImageView.setOnClickListener(this);
-        Glide.with(itemView).load(community2.imageURL).into(secondImageView);
-        secondTextView.setText(community2.name);
-        secondTextView.setOnClickListener(this);
+            secondImageView.setClipToOutline(true);
+            secondImageView.setOnClickListener(this);
+            Glide.with(itemView).load(community2.imageURL).into(secondImageView);
+            secondTextView.setText(community2.name);
+            secondTextView.setOnClickListener(this);
 
-        thirdImageView.setClipToOutline(true);
-        thirdImageView.setOnClickListener(this);
-        Glide.with(itemView).load(community3.imageURL).into(thirdImageView);
-        thirdTextView.setText(community3.name);
-        thirdTextView.setOnClickListener(this);
+            thirdImageView.setClipToOutline(true);
+            thirdImageView.setOnClickListener(this);
+            Glide.with(itemView).load(community3.imageURL).into(thirdImageView);
+            thirdTextView.setText(community3.name);
+            thirdTextView.setOnClickListener(this);
+        }catch(IllegalArgumentException e){
+            System.out.println("IllegalArgumentException FeedHeader");
+        }
     }
 
     public void goToCommunity(Community community) {

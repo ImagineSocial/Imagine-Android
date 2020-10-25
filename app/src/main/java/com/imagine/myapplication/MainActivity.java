@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity{
         String langPref = "info_intro";
         SharedPreferences prefs = getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);
-        boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+        boolean alreadyLaunched = false;//prefs.getBoolean(langPref, false);
 
         if (!alreadyLaunched) {
             InfoDialogFragment frag = new InfoDialogFragment(this);
