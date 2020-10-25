@@ -71,7 +71,7 @@
     //---System.out´s hab ich so gelassen
     //Communities_Sub_Header
     <string name="communities_sub_header_trending">Trending</string>
-    <string name="communities_sub_header_current_discussions">Recent Diskussonen</string>
+    <string name="communities_sub_header_current_discussions">Recent discussions</string>
     <string name="communities_sub_header_followed_communities">Your Communities</string>
     //Community
     //--leer--
