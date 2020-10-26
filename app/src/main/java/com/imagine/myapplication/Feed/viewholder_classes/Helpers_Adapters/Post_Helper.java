@@ -1980,6 +1980,7 @@ public class Post_Helper {
                             String notLang = docSnap.getString("language");
                             LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
                             Locale locale = localeList.get(0);
+                            /*
                             if(notLang == null){
                                 if(locale.getLanguage().equals("de")){
                                     addNotification(docSnap);
@@ -1992,6 +1993,32 @@ public class Post_Helper {
                                 }else{
                                     continue;
                                 }
+                                */
+                            try{
+                                switch(notLang){
+                                    case "de":
+                                        System.out.println("!");
+                                        if(locale.getLanguage().equals("de")){
+                                            addNotification(docSnap);
+                                        }else{
+                                            continue;
+                                        }
+                                        break;
+                                    case "en":
+                                        System.out.println("!");
+                                        if(locale.getLanguage().equals("en")){
+                                            addNotification(docSnap);
+                                        }else{
+                                            continue;
+                                        }
+                                        break;
+                                    default:
+                                        continue;
+                                }
+                            }catch(NullPointerException exc){
+                                if(locale.getLanguage().equals("de")){
+                                    addNotification(docSnap);
+                                }else continue;
                             }
                         }
                         mergeNotifications(callback);

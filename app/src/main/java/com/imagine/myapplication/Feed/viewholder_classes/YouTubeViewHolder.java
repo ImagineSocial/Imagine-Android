@@ -116,29 +116,33 @@ public class YouTubeViewHolder extends CustomViewHolder {
 
     public void setName(final YouTubePost post){
         // sets up the users view
-        TextView username_textView = itemView.findViewById(R.id.name_textView);
-        ImageView profilePicture_imageView = itemView.findViewById(
-                R.id.profile_picture_imageView);
-        username_textView.setText(post.user.name);
-        if(post.user.imageURL == null || post.user.imageURL.equals("")){
-            Glide.with(itemView).load(R.drawable.default_user).into(
-                    profilePicture_imageView
-            );
-        }
-        else{
-            Glide.with(itemView).load(post.user.imageURL).into(
-                    profilePicture_imageView
-            );
-            profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Gson gson = new Gson();
-                    String userString = gson.toJson(userObj);
-                    Intent intent = new Intent(mContext, UserActivity.class);
-                    intent.putExtra("user",userString);
-                    mContext.startActivity(intent);
-                }
-            });
+        try{
+            TextView username_textView = itemView.findViewById(R.id.name_textView);
+            ImageView profilePicture_imageView = itemView.findViewById(
+                    R.id.profile_picture_imageView);
+            username_textView.setText(post.user.name);
+            if(post.user.imageURL == null || post.user.imageURL == ""){
+                Glide.with(itemView).load(R.drawable.default_user).into(
+                        profilePicture_imageView
+                );
+            }
+            else{
+                Glide.with(itemView).load(post.user.imageURL).into(
+                        profilePicture_imageView
+                );
+                profilePicture_imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Gson gson = new Gson();
+                        String userString = gson.toJson(userObj);
+                        Intent intent = new Intent(mContext, UserActivity.class);
+                        intent.putExtra("user",userString);
+                        mContext.startActivity(intent);
+                    }
+                });
+            }
+        } catch(IllegalArgumentException e){
+            System.out.println("IllegalArgumentException YouTubeVH");
         }
     }
 

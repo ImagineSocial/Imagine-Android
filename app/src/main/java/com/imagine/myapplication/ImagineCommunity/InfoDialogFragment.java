@@ -1,5 +1,6 @@
 package com.imagine.myapplication.ImagineCommunity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.bumptech.glide.Glide;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
+import com.imagine.myapplication.nav_fragments.Feed_Fragment;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -113,5 +116,14 @@ public class InfoDialogFragment extends AlertDialog {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if(MainActivity.feed_fragment != null && this.type == InfoDialogType.intro){
+            Feed_Fragment feed_frag = MainActivity.feed_fragment;
+            feed_frag.checkForIntro();
+        }
     }
 }

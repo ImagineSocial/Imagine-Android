@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 String error = e.getMessage();
-                Toast.makeText(mContext,getResources().getString(R.string.login_activity_loginfail)+error,duration).show();
+                Toast.makeText(mContext,getResources().getString(R.string.login_activity_loginfail)+error,Toast.LENGTH_LONG).show();
             }
         });
     }

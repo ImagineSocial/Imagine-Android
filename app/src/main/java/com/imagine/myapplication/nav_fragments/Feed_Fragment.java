@@ -68,20 +68,6 @@ public class Feed_Fragment extends Fragment {
             loadPosition();
         }
 
-        String langPref = "info_likes";
-        String introShown = "info_intro";
-
-        SharedPreferences prefs = getContext().getSharedPreferences("CommonPrefs",
-                Activity.MODE_PRIVATE);
-        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
-        Boolean alreadyShownIntro = prefs.getBoolean(introShown, false);
-
-        if (!alreadyLaunched && alreadyShownIntro) {
-            InfoDialogFragment frag = new InfoDialogFragment(getContext());
-            frag.type = InfoDialogType.likes;
-            frag.show();
-        }
-
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -190,5 +176,19 @@ public class Feed_Fragment extends Fragment {
         super.onResume();
         LocaleList localeList = getResources().getConfiguration().getLocales();
         Locale locale = getResources().getConfiguration().locale;
+    }
+
+    public void checkForIntro(){
+        System.out.println("!");
+        String langPref = "info_likes";
+        SharedPreferences prefs = getContext().getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
+
+        if (!alreadyLaunched) {
+            InfoDialogFragment frag = new InfoDialogFragment(getContext());
+            frag.type = InfoDialogType.likes;
+            frag.show();
+        }
     }
 }
