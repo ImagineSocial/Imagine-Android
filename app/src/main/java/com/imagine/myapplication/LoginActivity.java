@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
@@ -30,11 +31,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import javax.xml.datatype.Duration;
 
@@ -119,8 +122,19 @@ public class LoginActivity extends AppCompatActivity {
         gdpr_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+                Locale locale = localeList.get(0);
+                String gdprURL;
+
+                switch(locale.getLanguage()){
+                    case "de":
+                        gdprURL = "https://www.imagine.social/datenschutzerklaerung-app";
+                        break;
+                    default:
+                        gdprURL = "https://en.imagine.social/datenschutzerklaerung-app";
+                        break;
+                }
                 Intent intent = new Intent(Intent.ACTION_VIEW);
-                String gdprURL = "https://donmalte.github.io";
                 intent.setData(Uri.parse(gdprURL));
                 mContext.startActivity(intent);
             }

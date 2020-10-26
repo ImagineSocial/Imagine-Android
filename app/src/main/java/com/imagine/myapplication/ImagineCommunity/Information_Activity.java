@@ -84,14 +84,35 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
         Button germanButton = findViewById(R.id.setting_german_button);
         Button englishButton = findViewById(R.id.setting_english_button);
 
+        LocaleList localeList = this.getResources().getConfiguration().getLocales();
+        Locale locale = localeList.get(0);
+
         switch (v.getId()) {
             case R.id.toGDPRButton:
-                String gdprURL = "https://www.imagine.social/datenschutzerklärung-app";
+                String gdprURL;
+
+                switch(locale.getLanguage()){
+                    case "de":
+                        gdprURL = "https://www.imagine.social/datenschutzerklaerung-app";
+                        break;
+                    default:
+                        gdprURL = "https://en.imagine.social/datenschutzerklaerung-app";
+                        break;
+                }
                 intent.setData(Uri.parse(gdprURL));
                 this.startActivity(intent);
                 break;
             case R.id.goToWebsiteButton:
-                String url = "https://imagine.social";
+                String url;
+
+                switch(locale.getLanguage()){
+                    case "de":
+                        url = "https://imagine.social";
+                        break;
+                    default:
+                        url = "https://en.imagine.social";
+                        break;
+                }
                 intent.setData(Uri.parse(url));
                 this.startActivity(intent);
                 break;
