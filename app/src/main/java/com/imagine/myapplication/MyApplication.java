@@ -1,6 +1,7 @@
 package com.imagine.myapplication;
 
 import android.app.Application;
+import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
 
@@ -15,4 +16,10 @@ public class MyApplication extends Application {
         FirebaseApp.initializeApp(this);
     }
 
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        System.out.println("!");
+    }
 }

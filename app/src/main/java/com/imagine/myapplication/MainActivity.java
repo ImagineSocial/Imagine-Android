@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity{
     public static boolean languageChange = false;
     public TextView smallNotificationLabel;
     public Button deleteButton;
+    public static Context configContext;
 
     private static final String TAG = "MainActivity";
     @Override
@@ -513,13 +514,11 @@ public class MainActivity extends AppCompatActivity{
         saveLocale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf1 = getApplicationContext().getResources().getConfiguration();
-        conf1.setLocale(myLocale);
-        res.updateConfiguration(conf1, dm);
-        Configuration conf2 = getResources().getConfiguration();
-        conf2.setLocale(myLocale);
+        Configuration config = new Configuration(getResources().getConfiguration());
+        config.setLocale(myLocale);
         Locale.setDefault(myLocale);
-        res.updateConfiguration(conf2, dm);
+        res.updateConfiguration(config, dm);
+        MainActivity.configContext = createConfigurationContext(config);
     }
 
     public void saveLocale(String lang) {

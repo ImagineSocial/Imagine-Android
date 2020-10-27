@@ -34,6 +34,7 @@ import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.PostRef;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.ItemCallback;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.UserCallback;
 import com.imagine.myapplication.notifications.Notification;
 import com.imagine.myapplication.notifications.NotificationCallback;
@@ -280,7 +281,7 @@ public class Post_Helper {
         // whole postLists is returned
         moreFetch = true;
         lastSnapTimeSaver = lastSnapTime;
-        Configuration conf = mContext.getApplicationContext().getResources().getConfiguration();
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
         Locale locale = conf.locale;
         //LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
         //Locale locale = localeList.get(0);
