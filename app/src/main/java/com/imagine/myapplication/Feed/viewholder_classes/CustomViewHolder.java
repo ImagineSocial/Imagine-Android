@@ -57,6 +57,8 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
         ImageButton wowButton = mItemView.findViewById(R.id.wow_button);
         ImageButton haButton = mItemView.findViewById(R.id.ha_button);
         ImageButton niceButton = mItemView.findViewById(R.id.nice_button);
+        ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
+        linkedTopicImageView.setVisibility(View.INVISIBLE);
         thanksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +140,8 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
     }
 
     public void setUpLinkedCommunity(final Community comm){
-        final ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
+        ImageView linkedTopicImageView = itemView.findViewById(R.id.topicImageView);
+        linkedTopicImageView.setVisibility(View.VISIBLE);
         if (comm.imageURL != "") {
             Glide.with(itemView).load(comm.imageURL).into(linkedTopicImageView);
         } else {

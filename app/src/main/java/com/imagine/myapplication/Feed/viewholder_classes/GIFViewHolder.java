@@ -80,7 +80,9 @@ public class GIFViewHolder extends CustomViewHolder {
                 }
             });
         }
-        setLinkedFact(post.linkedFactId);
+        if(post.linkedFactId != null){
+            setLinkedFact(post.linkedFactId);
+        }
         ConstraintLayout videoFrame = itemView.findViewById(R.id.video_frame);
         videoFrame.setClipToOutline(true);
         //Adjust the videoView to show the right ratio

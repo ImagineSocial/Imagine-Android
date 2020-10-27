@@ -96,7 +96,9 @@ public class MultiPictureViewHolder extends  CustomViewHolder {
                 }
             });
         }
-        setLinkedFact(post.linkedFactId);
+        if(post.linkedFactId != null){
+            setLinkedFact(post.linkedFactId);
+        }
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

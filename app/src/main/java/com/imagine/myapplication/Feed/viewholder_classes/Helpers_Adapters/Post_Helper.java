@@ -202,7 +202,22 @@ public class Post_Helper {
     }
 
     public void getPostsFromCommunityIDs(final FirebaseCallback callback, ArrayList<String> commIDs){
-        CollectionReference topicRef = db.collection("TopicPosts");
+        CollectionReference topicRef;
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        Locale locale = conf.locale;
+        switch(locale.getLanguage()){
+            case "de":
+                 topicRef = db.collection("TopicPosts");
+                break;
+            case "en":
+                topicRef = db.collection("Data").document("en")
+                        .collection("topicPosts");
+                break;
+            default:
+                topicRef = db.collection("Data").document("en")
+                        .collection("topicPosts");
+                break;
+        }
         final int size = commIDs.size();
         final int [] count = {0};
         for(String id: commIDs){

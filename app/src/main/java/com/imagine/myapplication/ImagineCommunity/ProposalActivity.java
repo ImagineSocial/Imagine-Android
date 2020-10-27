@@ -2,6 +2,7 @@ package com.imagine.myapplication.ImagineCommunity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.util.AttributeSet;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.imagine.myapplication.Comment;
 import com.imagine.myapplication.CommentsCallback;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 
@@ -79,11 +81,9 @@ public class ProposalActivity extends AppCompatActivity {
         final ArrayList<Proposal> proposalArray = new ArrayList<>();
 
         if (context != null) {
-            LocaleList localeList = context.getResources().getConfiguration().getLocales();
-            Locale locale = localeList.get(0);
-
+            Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+            Locale locale = conf.locale;
             Query proposalRef;
-
             switch (locale.getLanguage()) {
                 case "de":
                     proposalRef = db.collection("Campaigns").orderBy("supporter", Query.Direction.DESCENDING);
