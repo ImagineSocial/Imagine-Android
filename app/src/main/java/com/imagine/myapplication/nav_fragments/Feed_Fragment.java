@@ -38,6 +38,7 @@ public class Feed_Fragment extends Fragment {
     public ArrayList<Post> postList = new ArrayList<Post>();
     public Post_Helper helper;
     public Activity mainActivity;
+    public FeedAdapter adapter;
     public boolean isloading;
 
     @Nullable
@@ -51,7 +52,9 @@ public class Feed_Fragment extends Fragment {
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         // fetches the post for the feed
         super.onViewCreated(view, savedInstanceState);
-        helper = new Post_Helper(getContext());
+        if(this.helper == null){
+            helper = new Post_Helper(getContext());
+        }
         final SwipeRefreshLayout swipe = view.findViewById(R.id.swipeMainFeed);
         if(postList.size() == 0){
             swipe.setRefreshing(true);
@@ -68,7 +71,6 @@ public class Feed_Fragment extends Fragment {
             initRecyclerView(view);
             loadPosition();
         }
-
         swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -99,11 +101,12 @@ public class Feed_Fragment extends Fragment {
         // initializes the recyclerView for the feed
         this.recyclerView = view.findViewById(R.id.feed_recyclerView);
         Context context = view.getContext();
-        FeedAdapter adapter = new FeedAdapter(postList,context);
+        if(this.adapter == null){
+            this.adapter = new FeedAdapter(postList,context);
+        }
         adapter.mainActivity = this.mainActivity;
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(this.adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             boolean loading = true;
             int previousTotal =0;
@@ -126,12 +129,9 @@ public class Feed_Fragment extends Fragment {
                    helper.getMorePostsForFeed(new FirebaseCallback() {
                        @Override
                        public void onCallback(ArrayList<Post> values) {
-
                            postList = sortPostList(values);
-                           FeedAdapter adapter = (FeedAdapter) recyclerView.getAdapter();
                            adapter.addMorePosts(postList);
                            adapter.notifyDataSetChanged();
-
                        }
                    });
                 }

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.ImageDecoder;
@@ -645,8 +646,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                 this.shareButton.setEnabled(true);
             }else{
                 DocumentReference docRef;
-                LocaleList localeList = getResources().getConfiguration().getLocales();
-                final Locale locale = localeList.get(0);
+                Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+                final Locale locale = conf.locale;
                 if(this.comm != null && this.new_post_activity != null){
                     switch(locale.getLanguage()){
                         case "de":
@@ -1105,8 +1106,8 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         // uploads the posts data to the communityDocument if it is shared inside a
         // community_topic
         String documentID = docRef.getId();
-        LocaleList localeList = getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         DocumentReference communityRef;
         switch(locale.getLanguage()){
             case "de":

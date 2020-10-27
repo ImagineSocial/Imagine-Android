@@ -2,6 +2,7 @@ package com.imagine.myapplication.Feed.viewholder_classes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.LocaleList;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.imagine.myapplication.Community.Community;
 import com.imagine.myapplication.Community.Community_ViewPager_Activity;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.user_classes.User;
 
@@ -52,8 +54,8 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
             weekylTextView.setText(this.textOfTheWeek);
             setFacts(this.facts);
         }else{
-            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-            final Locale locale = localeList.get(0);
+            Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+            final Locale locale = conf.locale;
             DocumentReference topTopicRef;
             switch(locale.getLanguage()){
                 case "de":
@@ -94,8 +96,8 @@ public class HeaderViewHolder extends CustomViewHolder implements View.OnClickLi
 
         final List<Community> facts = new ArrayList<Community>();
         for (final String factID : linkedFactIDs) {
-            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-            final Locale locale = localeList.get(0);
+            Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+            final Locale locale = conf.locale;
             DocumentReference factRef;
             switch(locale.getLanguage()){
                 case "de":

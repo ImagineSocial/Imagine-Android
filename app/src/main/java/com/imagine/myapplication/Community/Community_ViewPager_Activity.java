@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.view.View;
@@ -37,6 +38,7 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.ImagineCommunity.InfoDialogFragment;
 import com.imagine.myapplication.ImagineCommunity.InfoDialogType;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.nav_fragments.Communities_Fragment;
 
@@ -250,8 +252,8 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
     public void followCommunityTapped(final Community community) {
         if (currentUser != null) {
             DocumentReference topicRef = db.collection("Users").document(currentUser.getUid()).collection("topics").document(community.topicID);
-            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-            final Locale locale = localeList.get(0);
+            Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+            final Locale locale = conf.locale;
             HashMap<String,Object> dataMap = new HashMap<>();
             dataMap.put("createDate", Timestamp.now());
             dataMap.put("language",locale.getLanguage());

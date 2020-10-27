@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.LocaleList;
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 
 import java.sql.Time;
@@ -103,8 +105,8 @@ public class CommunityAddonsFragment extends Fragment {
 //        header.isHeader = true;
 //        header.community = this.community;
 //        addons.add(header);
-        LocaleList localeList = getContext().getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query ref;
         switch(locale.getLanguage()){
             case "de":

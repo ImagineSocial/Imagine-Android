@@ -64,8 +64,8 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
             deleteAccountButton.setEnabled(true);
         }
 
-        LocaleList localeList = getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
 
         switch(locale.getLanguage()) {
             case "de":
@@ -84,8 +84,8 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
         Button germanButton = findViewById(R.id.setting_german_button);
         Button englishButton = findViewById(R.id.setting_english_button);
 
-        LocaleList localeList = this.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
 
         switch (v.getId()) {
             case R.id.toGDPRButton:

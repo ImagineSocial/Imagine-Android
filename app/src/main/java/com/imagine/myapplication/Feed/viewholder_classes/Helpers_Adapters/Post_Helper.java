@@ -86,8 +86,8 @@ public class Post_Helper {
 
     public  void getPostsForMainFeed(final FirebaseCallback callback){
         // fetches the initial posts for the main feed
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        Locale locale = conf.locale;
         Query postsRef;
 
         switch(locale.getLanguage()){
@@ -365,8 +365,8 @@ public class Post_Helper {
             firstFetch = true;
         }
         this.commID = commID;
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query postsColl;
         switch(locale.getLanguage()){
             case "de":
@@ -499,8 +499,8 @@ public class Post_Helper {
         if(lastSnap == null || this.commID == null){
             return;
         }
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query postsColl;
         switch(locale.getLanguage()){
             case "de":
@@ -928,8 +928,8 @@ public class Post_Helper {
     public void addNotificationToFirebase(Post post, String body) {
         DocumentReference notificationsRef = db.collection("Users").document(post.originalPoster)
                 .collection("notifications").document();
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        Locale locale = conf.locale;
         HashMap<String,Object> data = new HashMap<>();
         data.put("type","comment");
         data.put("comment",body);
@@ -974,8 +974,8 @@ public class Post_Helper {
         stringArray.add("GIF");
         stringArray.add("multiPicture");
         stringArray.add("picture");
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query postsQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -1795,8 +1795,8 @@ public class Post_Helper {
 
     public void removePost(Post post){
         DocumentReference postRef;
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         if(post.isTopicPost){
             switch(locale.getLanguage()){
                 case "de":
@@ -1985,8 +1985,8 @@ public class Post_Helper {
                         List<DocumentSnapshot> nots = queryDocumentSnapshots.getDocuments();
                         for(DocumentSnapshot docSnap: nots){
                             String notLang = docSnap.getString("language");
-                            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-                            Locale locale = localeList.get(0);
+                            Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+                            final Locale locale = conf.locale;
                             /*
                             if(notLang == null){
                                 if(locale.getLanguage().equals("de")){

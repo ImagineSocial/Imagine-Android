@@ -234,7 +234,8 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-
+                    int itemID = item.getItemId();
+                    System.out.println("!");
                     switch(item.getItemId()){
                         case R.id.nav_feed:
                             if(feed_fragment == null){

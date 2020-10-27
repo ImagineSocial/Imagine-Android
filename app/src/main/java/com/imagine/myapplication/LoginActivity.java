@@ -2,6 +2,7 @@ package com.imagine.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.LocaleList;
@@ -122,8 +123,8 @@ public class LoginActivity extends AppCompatActivity {
         gdpr_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-                Locale locale = localeList.get(0);
+                Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+                final Locale locale = conf.locale;
                 String gdprURL;
 
                 switch(locale.getLanguage()){

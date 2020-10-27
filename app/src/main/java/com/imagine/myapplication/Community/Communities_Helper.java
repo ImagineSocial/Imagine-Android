@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Community;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.LocaleList;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.imagine.myapplication.ArgumentsCallback;
 import com.imagine.myapplication.CommunityCallback;
 import com.imagine.myapplication.LinkedCommunityCallback;
+import com.imagine.myapplication.MainActivity;
 
 import org.w3c.dom.Document;
 
@@ -67,8 +69,8 @@ public class Communities_Helper {
         }
 
         // Fetching the Communities
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query topicQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -253,8 +255,8 @@ public class Communities_Helper {
         if(lastTopic == null){
             return;
         }
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query commQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -306,8 +308,8 @@ public class Communities_Helper {
         if(linkedCommID != null && !linkedCommID.equals("")){
             Community comm = getCommFromCache(linkedCommID);
             if(comm == null){
-                LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-                Locale locale = localeList.get(0);
+                Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+                final Locale locale = conf.locale;
                 DocumentReference commRef;
                 switch(locale.getLanguage()){
                     case "de":
@@ -386,8 +388,8 @@ public class Communities_Helper {
         if(lastFact == null){
             return;
         }
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query commQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -438,8 +440,8 @@ public class Communities_Helper {
     public void getTopics(final CommunityCallback callback){
         // fetches  communities from the "Facts" collection when the
         // onScrollListener is triggered
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query commQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -488,8 +490,8 @@ public class Communities_Helper {
     public void getFacts(final CommunityCallback callback){
         // fetches  communities from the "Facts" collection when the
         // onScrollListener is triggered
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query commQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -549,8 +551,8 @@ public class Communities_Helper {
                     for(DocumentSnapshot docSnap : docMap){
                         DocumentReference docRef;
                         String commLang = docSnap.getString("language");
-                        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-                        final Locale locale = localeList.get(0);
+                        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+                        final Locale locale = conf.locale;
                         if(commLang == null){
                             if(locale.getLanguage().equals("de")){
                                 docRef = db.collection("Facts").document(docSnap.getId());
@@ -594,8 +596,8 @@ public class Communities_Helper {
 
     public void getProArguments(String commID,final ArgumentsCallback callback){
         final ArrayList<Argument> pros = new ArrayList<>();
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query proQuery;
         switch(locale.getLanguage()){
             case "de":
@@ -635,8 +637,8 @@ public class Communities_Helper {
 
     public void getContraArguments(String commID,final ArgumentsCallback callback){
         final ArrayList<Argument> cons = new ArrayList<>();
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         Query proQuery;
         switch(locale.getLanguage()){
             case "de":
