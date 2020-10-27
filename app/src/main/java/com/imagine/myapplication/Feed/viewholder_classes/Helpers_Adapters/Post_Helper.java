@@ -1,6 +1,7 @@
 package com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.LocaleList;
 import android.util.Log;
 
@@ -97,12 +98,11 @@ public class Post_Helper {
                     .orderBy("createTime",Query.Direction.DESCENDING).limit(15);
                 break;
             default:
-                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+                postsRef = db.collection("Data").document("en").collection("posts")
+                        .orderBy("createTime",Query.Direction.DESCENDING).limit(15);
                 break;
         }
-
         firstFetch = true;
-
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -280,20 +280,22 @@ public class Post_Helper {
         // whole postLists is returned
         moreFetch = true;
         lastSnapTimeSaver = lastSnapTime;
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = mContext.getApplicationContext().getResources().getConfiguration();
+        Locale locale = conf.locale;
+        //LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
+        //Locale locale = localeList.get(0);
         Query postsRef;
-
         switch(locale.getLanguage()){
             case "de":
-                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(15);
+                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).startAfter(this.lastSnap).limit(15);
                 break;
             case "en":
                 postsRef = db.collection("Data").document("en").collection("posts")
-                        .orderBy("createTime",Query.Direction.DESCENDING).startAfter(lastSnap).limit(15);
+                        .orderBy("createTime",Query.Direction.DESCENDING).startAfter(this.lastSnap).limit(15);
                 break;
             default:
-                postsRef = db.collection("Posts").orderBy("createTime",Query.Direction.DESCENDING).limit(15);
+                postsRef = db.collection("Data").document("en").collection("posts")
+                        .orderBy("createTime",Query.Direction.DESCENDING).startAfter(this.lastSnap).limit(15);
                 break;
         }
         postsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -343,7 +345,11 @@ public class Post_Helper {
                                 break;
                         }
                     }
-                    getFollowedCommunities(callback);
+                    if(auth.getCurrentUser() != null){
+                        getFollowedCommunities(callback);
+                    }else{
+                        mergeAndSortPostLists(callback);
+                    }
                     System.out.println("FERTIG");
                 }
             }
@@ -2021,8 +2027,13 @@ public class Post_Helper {
                                 }else continue;
                             }
                         }
-                        mergeNotifications(callback);
-                        notList = new ArrayList<>();
+                        if(notList.size() == 0){
+                            callback.onCallback(notList);
+                            notList = new ArrayList<>();
+                        }else{
+                            mergeNotifications(callback);
+                            notList = new ArrayList<>();
+                        }
                     }else{
                         callback.onCallback(notList);
                         notList = new ArrayList<>();

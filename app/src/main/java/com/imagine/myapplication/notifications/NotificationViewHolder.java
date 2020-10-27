@@ -149,48 +149,56 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "youTubeVideo":
                     intent = new Intent(itemView.getContext(), YouTubePostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "link":
                     intent = new Intent(itemView.getContext(), LinkPostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "GIF":
                     intent = new Intent(itemView.getContext(), GifPostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "picture":
                     intent = new Intent(itemView.getContext(), PicturePostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "multiPicture":
                     intent = new Intent(itemView.getContext(), MultiPicturePostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "translation":
                     intent = new Intent(itemView.getContext(), TranslationPostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "repost":
                     intent = new Intent(itemView.getContext(), RepostPostActivity.class);
                     postString = gson.toJson(not.post);
                     intent.putExtra("post",postString);
                     itemView.getContext().startActivity(intent);
+                    helper.deleteNotificationsFromPostID(not.post.documentID);
                     break;
                 case "singleTopic":
                     break;

@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,6 +92,8 @@ public class MainActivity extends AppCompatActivity{
     public View header;
     public Gson gson = new Gson();
     public static boolean languageChange = false;
+    public TextView smallNotificationLabel;
+    public Button deleteButton;
 
     private static final String TAG = "MainActivity";
     @Override
@@ -125,6 +130,7 @@ public class MainActivity extends AppCompatActivity{
                     if(noti_recyclerView != null){
                         adapter.nots = notifications;
                         adapter.notifyDataSetChanged();
+                        setUpNotificationViews(notifications);
                     }else{
                         setUpNotifications(notifications);
                     }
@@ -269,16 +275,43 @@ public class MainActivity extends AppCompatActivity{
                 }
             };
 
-    public void showFeed() {
-        Fragment selectedFragment = null;
+        public void showFeed() {
+            Fragment selectedFragment = null;
 
-        if (feed_fragment == null) {
-            feed_fragment = new Feed_Fragment();
+            if (feed_fragment == null) {
+                feed_fragment = new Feed_Fragment();
+            }
+            selectedFragment = feed_fragment;
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
+            feed_fragment.refreshFeed(null);
         }
-        selectedFragment = feed_fragment;
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
-        feed_fragment.refreshFeed(null);
-    }
+
+        public void setUpNotificationViews(ArrayList<Notification> nots){
+            TextView smallNotificationLabel = findViewById(R.id.toolbar_smallNotificationLabel);
+            Button deleteButton = header.findViewById(R.id.sideMenu_deleteNotificationsButton);
+            if (nots.size() != 0) {
+                GradientDrawable shape = new GradientDrawable();
+                shape.setCornerRadius(12);   //View is 12x12
+
+                shape.setColor(Color.RED);
+                smallNotificationLabel.setBackground(shape);
+                smallNotificationLabel.setClipToOutline(true);
+                smallNotificationLabel.setText(nots.size() + "");
+                smallNotificationLabel.setVisibility(View.VISIBLE);
+
+
+                deleteButton.setVisibility(View.VISIBLE);
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteAllNotifications();
+                    }
+                });
+            } else {
+                smallNotificationLabel.setVisibility(View.INVISIBLE);
+                deleteButton.setVisibility(View.INVISIBLE);
+            }
+        }
 
         public void setUpNotifications(ArrayList<Notification> nots){
         if (header != null) {
@@ -327,7 +360,6 @@ public class MainActivity extends AppCompatActivity{
                 @Override
                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-
                         DocumentReference ref = notRef.document(document.getId());
                         ref.delete().addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -479,10 +511,15 @@ public class MainActivity extends AppCompatActivity{
         }
         myLocale = new Locale(lang);
         saveLocale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf1 = getApplicationContext().getResources().getConfiguration();
+        conf1.setLocale(myLocale);
+        res.updateConfiguration(conf1, dm);
+        Configuration conf2 = getResources().getConfiguration();
+        conf2.setLocale(myLocale);
         Locale.setDefault(myLocale);
-        android.content.res.Configuration config = new android.content.res.Configuration();
-        config.locale = myLocale;
-        getBaseContext().getResources().updateConfiguration(config,getBaseContext().getResources().getDisplayMetrics());
+        res.updateConfiguration(conf2, dm);
     }
 
     public void saveLocale(String lang) {

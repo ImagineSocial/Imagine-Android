@@ -165,9 +165,9 @@ public abstract class CustomViewHolder extends RecyclerView.ViewHolder  {
                         Community[] recents = gson.fromJson(recentString,Community[].class);
                         ArrayList<Community> recentsList = new ArrayList<>();
                         int counter = 0;
-                        for(Community comm : recents){
-                            if(!comm.topicID.equals(comm.topicID)){
-                                recentsList.add(comm);
+                        for(Community community : recents){
+                            if(!community.topicID.equals(comm.topicID)){
+                                recentsList.add(community);
                                 counter++;
                                 if(counter == 10) break;
                             }

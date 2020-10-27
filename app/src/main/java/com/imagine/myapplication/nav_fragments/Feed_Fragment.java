@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.LocaleList;
+import android.os.health.SystemHealthManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +114,9 @@ public class Feed_Fragment extends Fragment {
                 int visibleItemCount = lm.getChildCount();
                 int totalItemCount = lm.getItemCount();
                 int pastVisibleItems = lm.findFirstVisibleItemPosition();
-
+                LocaleList localeList = getResources().getConfiguration().getLocales();
+                Locale locale = localeList.get(0);
+                System.out.println(locale.getLanguage());
                 if(loading && totalItemCount > previousTotal){
                     loading = false;
                     previousTotal = totalItemCount;
@@ -174,8 +177,6 @@ public class Feed_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        LocaleList localeList = getResources().getConfiguration().getLocales();
-        Locale locale = getResources().getConfiguration().locale;
     }
 
     public void checkForIntro(){
@@ -184,7 +185,6 @@ public class Feed_Fragment extends Fragment {
         SharedPreferences prefs = getContext().getSharedPreferences("CommonPrefs",
                 Activity.MODE_PRIVATE);
         Boolean alreadyLaunched = prefs.getBoolean(langPref, false);
-
         if (!alreadyLaunched) {
             InfoDialogFragment frag = new InfoDialogFragment(getContext());
             frag.type = InfoDialogType.likes;

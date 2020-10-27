@@ -286,7 +286,6 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
                             showPictureView();
                             break;
                     }
-
                     showPicture();
                 }
                 break;
@@ -429,6 +428,18 @@ public class New_Post_Fragment extends Fragment implements View.OnClickListener 
         if ((requestCode == PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) &&
                 (grantResults.length > 0 && grantResults[0] ==
                         PackageManager.PERMISSION_GRANTED)){
+            switch (type) {
+                case "link":
+                    hideLinkView(true);
+                    break;
+                case "picture":
+                    break;
+                case "multiPicture":
+                    break;
+                default:
+                    showPictureView();
+                    break;
+            }
                 showPicture();
         }
     }

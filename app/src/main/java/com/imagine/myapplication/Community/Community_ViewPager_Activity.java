@@ -69,6 +69,7 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         Gson gson = new Gson();
         this.comm = gson.fromJson(jsonComm, Community.class);
 
+
         HashMap<String,String> args = new HashMap<>();
         args.put("name", this.comm.name);
         args.put("description",this.comm.description);
@@ -324,4 +325,17 @@ public class Community_ViewPager_Activity extends AppCompatActivity {
         System.out.println("!");
     }
 
+    public void getRecents(){
+        String langPref = "recents";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+    }
+
+    public void setRecents(){
+        String langPref = "recents";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs",
+                Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.commit();
+    }
 }

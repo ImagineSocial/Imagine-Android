@@ -137,7 +137,7 @@ public class Information_Activity extends AppCompatActivity implements View.OnCl
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
+        conf.setLocale(myLocale);
         res.updateConfiguration(conf, dm);
         String langPref = "Language";
         SharedPreferences prefs = getSharedPreferences("CommonPrefs",
