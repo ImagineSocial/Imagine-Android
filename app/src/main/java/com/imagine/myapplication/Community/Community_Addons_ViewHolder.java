@@ -2,6 +2,7 @@ package com.imagine.myapplication.Community;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,11 +24,13 @@ import com.google.gson.Gson;
 import com.imagine.myapplication.Feed.viewholder_classes.Helpers_Adapters.Post_Helper;
 import com.imagine.myapplication.FirebaseCallback;
 import com.imagine.myapplication.ItemCallback;
+import com.imagine.myapplication.MainActivity;
 import com.imagine.myapplication.R;
 import com.imagine.myapplication.post_classes.Post;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
 
@@ -76,8 +79,23 @@ public class Community_Addons_ViewHolder extends RecyclerView.ViewHolder {
 
     public void fetchItemList(){
         this.refs = new ArrayList<>();
-        CollectionReference ref = db.collection("Facts").document(addon.community.topicID)
-                .collection("addOns").document(addon.addonID).collection("items");
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        CollectionReference ref;
+        final Locale locale = conf.locale;
+        switch(locale.getLanguage()){
+            case "de":
+                ref = db.collection("Facts").document(addon.community.topicID)
+                        .collection("addOns").document(addon.addonID).collection("items");
+                break;
+            case "en":
+                ref = db.collection("Data").document("en").collection("topics")
+                        .document(addon.community.topicID).collection("addOns").document(addon.addonID).collection("items");
+                break;
+            default:
+                ref = db.collection("Data").document("en").collection("topics")
+                        .document(addon.community.topicID).collection("addOns").document(addon.addonID).collection("items");
+                break;
+        }
         ref.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {

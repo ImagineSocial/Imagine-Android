@@ -1072,12 +1072,27 @@ public class Post_Helper {
     }
 
     public void fetchAddonItems(ArrayList<PostRef> postRefs, final ItemCallback callback){
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         for(PostRef ref : postRefs){
             final int size = postRefs.size();
             final int[] count = {0};
             switch(ref.type){
                 case "fact":
-                    DocumentReference communityRef = db.collection("Facts").document(ref.postID);
+                    DocumentReference communityRef;
+                    switch (locale.getLanguage()){
+                        case "de":
+                            communityRef = db.collection("Facts").document(ref.postID);
+                            break;
+                        case "en":
+                            communityRef = db.collection("Data").document("en")
+                                    .collection("topics").document(ref.postID);
+                            break;
+                        default:
+                            communityRef = db.collection("Data").document("en")
+                                    .collection("topics").document(ref.postID);
+                            break;
+                    }
                     communityRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -1094,7 +1109,20 @@ public class Post_Helper {
                     });
                     break;
                 case "post":
-                    DocumentReference postsRef = db.collection("Posts").document(ref.postID);
+                    DocumentReference postsRef;
+                    switch (locale.getLanguage()){
+                        case "de":
+                            postsRef = db.collection("Posts").document(ref.postID);
+                            break;
+                        case "en":
+                            postsRef = db.collection("Data").document("en")
+                                    .collection("posts").document(ref.postID);
+                            break;
+                        default:
+                            postsRef = db.collection("Data").document("en")
+                                    .collection("posts").document(ref.postID);
+                            break;
+                    }
                     postsRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -1149,7 +1177,20 @@ public class Post_Helper {
                     });
                     break;
                 case "topicPost":
-                    DocumentReference topicPostsRef = db.collection("TopicPosts").document(ref.postID);
+                    DocumentReference topicPostsRef;
+                    switch (locale.getLanguage()){
+                        case "de":
+                            topicPostsRef = db.collection("TopicPosts").document(ref.postID);
+                            break;
+                        case "en":
+                            topicPostsRef = db.collection("Data").document("en")
+                                    .collection("topicPosts").document(ref.postID);
+                            break;
+                        default:
+                            topicPostsRef = db.collection("Data").document("en")
+                                    .collection("topicPosts").document(ref.postID);
+                            break;
+                    }
                     topicPostsRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
