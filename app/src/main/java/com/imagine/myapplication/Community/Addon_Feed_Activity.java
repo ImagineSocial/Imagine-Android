@@ -49,7 +49,6 @@ public class Addon_Feed_Activity extends AppCompatActivity {
             imageViewParams.height = 0;
             headerImageView.setLayoutParams(imageViewParams);
         }
-
         this.initRecyclerView();
     }
 

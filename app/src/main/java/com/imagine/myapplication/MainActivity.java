@@ -509,6 +509,11 @@ public class MainActivity extends AppCompatActivity{
     public void changeLang(String lang) {
         Locale myLocale;
         if (lang.equalsIgnoreCase("")) {
+            Locale.getDefault().getDisplayLanguage();
+            Locale locale = new Locale(Locale.getDefault().getDisplayLanguage());
+            Configuration configuration = new Configuration(getResources().getConfiguration());
+            configuration.setLocale(locale);
+            MainActivity.configContext = createConfigurationContext(configuration);
             return;
         }
         myLocale = new Locale(lang);
