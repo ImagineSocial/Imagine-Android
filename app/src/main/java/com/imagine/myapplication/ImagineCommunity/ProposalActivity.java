@@ -156,8 +156,8 @@ public class ProposalActivity extends AppCompatActivity {
     }
 
     public void uploadToFirebase(String title, String summary, String description) {
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        Locale locale = conf.locale;
         DocumentReference proposalRef;
 
         switch(locale.getLanguage()){

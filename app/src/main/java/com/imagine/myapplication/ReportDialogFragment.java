@@ -1,6 +1,7 @@
 package com.imagine.myapplication;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.LocaleList;
 import android.view.View;
@@ -111,8 +112,8 @@ public class ReportDialogFragment extends AlertDialog {
     };
 
     public void upLoadReportData(){
-        LocaleList localeList = getContext().getResources().getConfiguration().getLocales();
-        final Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        final Locale locale = conf.locale;
         DocumentReference docRef = db.collection("Reports").document();
         HashMap<String,Object> data = new HashMap<>();
         data.put("language",locale.getLanguage());

@@ -189,8 +189,20 @@ public class Communities_Helper {
                                     continue;
                                 }
                             }else{
-                                docRef = db.collection("Data").document("en")
-                                        .collection("topics").document(docSnap.getId());
+                                if(locale.getLanguage().equals("en")){
+                                    docRef = db.collection("Data").document("en")
+                                            .collection("topics").document(docSnap.getId());
+                                }else{
+                                    count[0]++;
+                                    if(count[0] == size){
+                                        if(topicFinished[0] && factsFinished[0]){
+                                            addFooter(topics,facts,ownComms,callback);
+                                        }else{
+                                            ownCommsFinished[0] = true;
+                                        }
+                                    }
+                                    continue;
+                                }
                             }
                             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                 @Override

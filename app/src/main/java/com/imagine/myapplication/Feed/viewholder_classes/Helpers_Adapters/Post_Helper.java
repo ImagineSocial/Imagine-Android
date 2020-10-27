@@ -166,9 +166,8 @@ public class Post_Helper {
         if(user == null){
             callback.onCallback(postList);
         }else{
-            String userID = user.getUid();
-            CollectionReference factsColl = db.collection("Facts");
-            Query factsQuery = factsColl.whereArrayContains("follower",userID);
+            Query factsQuery = db.collection("Users").document(user.getUid())
+                    .collection("topics");
             factsQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -190,12 +189,44 @@ public class Post_Helper {
 
     public void getCommunityIDsFromFollowedCommunities(final FirebaseCallback callback, List<DocumentSnapshot> documentSnapshots){
         ArrayList<String> commIDs = new ArrayList<>();
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        Locale locale = conf.locale;
         if(documentSnapshots.size() == 0){
             callback.onCallback(postList);
         }else{
             for(DocumentSnapshot docSnap: documentSnapshots){
-                String communityID = docSnap.getId();
-                commIDs.add(communityID);
+
+                String notLang = docSnap.getString("language");
+                try{
+                    switch(notLang){
+                        case "de":
+                            System.out.println("!");
+                            if(locale.getLanguage().equals("de")){
+                                String communityID = docSnap.getId();
+                                commIDs.add(communityID);
+                            }else{
+                                continue;
+                            }
+                            break;
+                        case "en":
+                            System.out.println("!");
+                            if(locale.getLanguage().equals("en")){
+                                String communityID = docSnap.getId();
+                                commIDs.add(communityID);
+                            }else{
+                                continue;
+                            }
+                            break;
+                        default:
+                            continue;
+                    }
+                }catch(NullPointerException exc){
+                    if(locale.getLanguage().equals("de")){
+                        String communityID = docSnap.getId();
+                        commIDs.add(communityID);
+                    }else continue;
+                }
+
             }
             getPostsFromCommunityIDs(callback,commIDs);
         }
@@ -298,8 +329,6 @@ public class Post_Helper {
         lastSnapTimeSaver = lastSnapTime;
         Configuration conf = MainActivity.configContext.getResources().getConfiguration();
         Locale locale = conf.locale;
-        //LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        //Locale locale = localeList.get(0);
         Query postsRef;
         switch(locale.getLanguage()){
             case "de":

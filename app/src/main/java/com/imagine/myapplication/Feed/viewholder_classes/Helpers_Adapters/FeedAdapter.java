@@ -158,14 +158,9 @@ public class FeedAdapter extends RecyclerView.Adapter<CustomViewHolder> {
                 communityPostViewHolder.mainActivty = this.mainActivity;
                 return communityPostViewHolder;
             case R.layout.post_top_header:
-                if(this.header == null){
-                    view = inflater.inflate(R.layout.post_top_header,parent,false);
-                    this.header = new HeaderViewHolder(view);
-                    return this.header;
-                }else{
-                    this.header.isInitialized = true;
-                    return this.header;
-                }
+                view = inflater.inflate(R.layout.post_top_header,parent,false);
+                this.header = new HeaderViewHolder(view);
+                return this.header;
             default:
                 view = inflater.inflate(R.layout.post_default,parent,false);
                 return new DefaultViewHolder(view);

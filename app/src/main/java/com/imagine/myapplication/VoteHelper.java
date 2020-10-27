@@ -1,6 +1,7 @@
 package com.imagine.myapplication;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.LocaleList;
 
 import androidx.annotation.NonNull;
@@ -30,8 +31,8 @@ public class VoteHelper {
 
     public void updateVotes(String type, Post post){
         DocumentReference ref;
-        LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-        Locale locale = localeList.get(0);
+        Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+        Locale locale = conf.locale;
         if (post.isTopicPost) {
             switch(locale.getLanguage()){
                 case "de":
@@ -129,8 +130,8 @@ public class VoteHelper {
 
     public void notifyUser(String button, Post post) {
         if (!post.originalPoster.equals("") && !post.originalPoster.equals("anonym")) {
-            LocaleList localeList = mContext.getResources().getConfiguration().getLocales();
-            final Locale locale = localeList.get(0);
+            Configuration conf = MainActivity.configContext.getResources().getConfiguration();
+            Locale locale = conf.locale;
             DocumentReference ref = db.collection("Users").document(post.originalPoster)
                     .collection("notifications").document();
             HashMap<String,Object> data = new HashMap<>();
