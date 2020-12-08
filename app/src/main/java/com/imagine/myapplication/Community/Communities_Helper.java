@@ -708,7 +708,10 @@ public class Communities_Helper {
         List<String> follower = (List<String>) docSnap.get("follower");
         Community comm = new Community(name,imageURL,topicID,description);
         comm.displayOption = displayOption;
-        comm.popularity = (long) docSnap.getLong("popularity");
+        Double popularity = docSnap.getDouble("popularity");
+        if (popularity != null) {
+            comm.popularity = (long) popularity.longValue();
+        }
         comm.type = type;
         if (postCount!= null) {
             comm.postCount = postCount.intValue();

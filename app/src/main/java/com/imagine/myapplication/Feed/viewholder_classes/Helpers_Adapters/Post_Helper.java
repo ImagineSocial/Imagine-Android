@@ -251,6 +251,11 @@ public class Post_Helper {
         }
         final int size = commIDs.size();
         final int [] count = {0};
+        if (size == 0) {
+            mergeAndSortPostLists(callback);
+            return;
+        }
+
         for(String id: commIDs){
             Query postsQuery;
             if(lastSnapTimeSaver == null || firstFetch){
@@ -2184,7 +2189,16 @@ public class Post_Helper {
     public void fetchPostsForNotifications(final NotificationCallback callback, ArrayList<String> postIDs, final ArrayList<Notification> nots){
         final int size = postIDs.size();
         final int[] count = {0};
+
         for (final Notification not : nots){
+            if (not.postID == null) {
+                continue;
+            }
+
+            if (not.type.equals("friend")) {
+                continue;
+            }
+
             DocumentReference postRef;
             if(not.isTopicPost){
                 postRef = db.collection("TopicPosts").document(not.postID);

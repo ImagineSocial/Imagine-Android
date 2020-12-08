@@ -118,7 +118,7 @@ public class Feed_Fragment extends Fragment {
                 int pastVisibleItems = lm.findFirstVisibleItemPosition();
                 LocaleList localeList = getResources().getConfiguration().getLocales();
                 Locale locale = localeList.get(0);
-                System.out.println(locale.getLanguage());
+                System.out.println("** "+locale.getLanguage());
                 if(loading && totalItemCount > previousTotal){
                     loading = false;
                     previousTotal = totalItemCount;
