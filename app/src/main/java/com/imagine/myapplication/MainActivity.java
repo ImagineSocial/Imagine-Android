@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity{
     public TextView smallNotificationLabel;
     public Button deleteButton;
     public static Context configContext;
-
+    //TEST
     private static final String TAG = "MainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
